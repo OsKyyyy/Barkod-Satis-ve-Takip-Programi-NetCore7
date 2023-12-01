@@ -14,7 +14,17 @@ namespace Core.Utilities.Refit.Abstract
         [Post("/auth/login")]
         Task<DataResult<Login>> Login([Body] LoginRequest loginRequest);
 
-        [Get("/auth/GetInfoByMail")]
-        Task<DataResult<UserInfo>> GetInfoByMail([AliasAs("email")] string email);
+		[Post("/auth/register")]
+        Task<DataResult<Register>> Register([Header("Authorization")] string token, [Body] RegisterRequest registerRequest);
+
+        [Get("/user/List")]
+        Task<DataResult<List<UserInfo>>> List([Header("Authorization")] string token);
+
+		[Get("/user/ListByMail")]
+        Task<DataResult<UserInfo>> ListByMail([Header("Authorization")] string token, [AliasAs("email")] string email);
+
+        [Get("/user/ListById")]
+        Task<DataResult<UserInfo>> ListById([Header("Authorization")] string token, [AliasAs("id")] int id);
+
     }
 }

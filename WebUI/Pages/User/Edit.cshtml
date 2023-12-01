@@ -1,7 +1,7 @@
-﻿@page
-@model WebUI.Pages.User.AddModel
+﻿@page "{id:int}"
+@model WebUI.Pages.User.EditModel
 @{
-    ViewData["Title"] = "Kullanıcı Ekle";
+    ViewData["Title"] = "Kullanıcı Düzenle";
 }
 <div class="app-main flex-column flex-row-fluid " id="kt_app_main">
     <div class="d-flex flex-column flex-column-fluid">
@@ -35,16 +35,17 @@
                     </div>
 
                     <div id="kt_account_settings_profile_details" class="collapse show">
-                        <form class="form" method="post" asp-page-handler="Register">
+                        <form class="form" method="post" asp-page-handler="Edit">
+                            <input hidden asp-for="UserList.Id"/>
                             <div class="card-body border-top p-9">
 
                                 <div class="row mb-6">
                                     <label class="col-lg-4 col-form-label required fw-semibold fs-6">Ad</label>
 
                                     <div class="col-lg-8 fv-row">
-                                        <input asp-for="registerModel.FirstName" class="form-control form-control-lg form-control mb-3 mb-lg-0" autocomplete="off">
+                                        <input asp-for="UserList.FirstName" class="form-control form-control-lg form-control mb-3 mb-lg-0" autocomplete="off">
                                         <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
-                                            <span asp-validation-for="registerModel.FirstName"></span>
+                                            <span asp-validation-for="UserList.FirstName"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -53,9 +54,9 @@
                                     <label class="col-lg-4 col-form-label required fw-semibold fs-6">Soyad</label>
 
                                     <div class="col-lg-8 fv-row">
-                                        <input asp-for="registerModel.LastName" class="form-control form-control-lg form-control" autocomplete="off">
+                                        <input asp-for="UserList.LastName" class="form-control form-control-lg form-control" autocomplete="off">
                                         <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
-                                            <span asp-validation-for="registerModel.LastName"></span>
+                                            <span asp-validation-for="UserList.LastName"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -64,9 +65,9 @@
                                     <label class="col-lg-4 col-form-label fw-semibold fs-6">Telefon</label>
 
                                     <div class="col-lg-8 fv-row">
-                                        <input asp-for="registerModel.Phone" class="form-control form-control-lg form-control" placeholder="5XXXXXXXXX" autocomplete="off">
+                                        <input asp-for="UserList.Phone" class="form-control form-control-lg form-control" placeholder="5XXXXXXXXX" autocomplete="off">
                                         <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
-                                            <span asp-validation-for="registerModel.Phone"></span>
+                                            <span asp-validation-for="UserList.Phone"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -75,36 +76,19 @@
                                     <label class="col-lg-4 col-form-label fw-semibold fs-6 required">Eposta</label>
 
                                     <div class="col-lg-8 fv-row">
-                                        <input asp-for="registerModel.Email" class="form-control form-control-lg form-control" autocomplete="off">
+                                        <input asp-for="UserList.Email" class="form-control form-control-lg form-control" autocomplete="off">
                                         <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
-                                            <span asp-validation-for="registerModel.Email"></span>
+                                            <span asp-validation-for="UserList.Email"></span>
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="row mb-6">
-                                    <label class="col-lg-4 col-form-label fw-semibold fs-6 required">Şifre</label>
-
-                                    <div class="col-lg-8 fv-row">
-                                        <div class="input-group mb-7">
-                                            <input asp-for="registerModel.Password"  id="passwordInput" class="form-control form-control-lg form-control" autocomplete="off" aria-describedby="passwordIcon">
-                                            <span class="input-group-text" id="passwordIcon" role="button">
-                                                <i class="ki-solid ki-eye fs-4"></i>
-                                            </span>
-                                            <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
-                                                <span asp-validation-for="registerModel.Password"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
 
                                 <div class="row mb-6">
                                     <div id="kt_account_settings_deactivate" class="collapse show">
                                         <div class="card-body border-top p-9">
 
                                             <div class="notice d-flex bg-light-warning rounded border-warning border border-dashed mb-9 p-6">
-                                                <i class="ki-duotone ki-information fs-2tx text-warning me-4"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>        <!--end::Icon-->
+                                                <i class="ki-duotone ki-information fs-2tx text-warning me-4"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i> <!--end::Icon-->
                                                 <div class="d-flex flex-stack flex-grow-1 ">
                                                     <div class=" fw-semibold">
                                                         <h4 class="text-gray-900 fw-bold">Hesabı Devredışı Olarak Kaydet</h4>
@@ -113,9 +97,11 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="form-check form-check-solid fv-row">
-                                                <input asp-for="registerModel.Status" class="form-check-input" type="checkbox" id="deactivate">
+
+                                                <input asp-for="UserList.Status" class="form-check-input" type="checkbox" id="deactivate" />
+
                                                 <label class="form-check-label fw-semibold ps-2 fs-6" for="deactivate"><b>Aktif</b> olarak işaretle</label>
                                             </div>
                                         </div>

@@ -13,8 +13,8 @@ namespace Business.ValidationRules.FluentValidation.User
     {
         public LoginValidator()
         {
-            RuleFor(u => u.Email).NotNull();
-            RuleFor(u => u.Password).NotNull();
+            RuleFor(u => u.Email).NotEmpty().WithMessage("Bu alan boş olamaz");
+            RuleFor(u => u.Password).NotEmpty().WithMessage("Bu alan boş olamaz").Must(r => r.Length > 8).WithMessage("Bu alan en az 8 karakter olmalıdır");
         }
     }
 }

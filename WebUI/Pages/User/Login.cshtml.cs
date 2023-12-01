@@ -21,7 +21,7 @@ namespace WebUI.Pages.User
         }
 
         [ViewData]
-        public string Message { get; set; }
+        public string AlertError { get; set; }
 
         public IActionResult OnGet()
         {
@@ -39,14 +39,14 @@ namespace WebUI.Pages.User
         {
             LoginRequest loginRequest = new LoginRequest();
 
-            loginRequest.email = loginModel.Email;
-            loginRequest.password = loginModel.Password;
+            loginRequest.Email = loginModel.Email;
+            loginRequest.Password = loginModel.Password;
 
             var response = await _user.Login(loginRequest);
 
             if (response.Status)
             {
-                var responseInfo = await _user.GetInfoByMail(loginModel.Email);
+                var responseInfo = await _user.ListByMail("Bearer " + response.Data.Token,loginModel.Email);
 
                 var serializeData = JsonConvert.SerializeObject(responseInfo.Data);
 
@@ -56,7 +56,7 @@ namespace WebUI.Pages.User
                 return new RedirectToPageResult("../Index");
             }
 
-            Message = response.Message;
+            AlertError = response.Message;
             return Page();
 
         }

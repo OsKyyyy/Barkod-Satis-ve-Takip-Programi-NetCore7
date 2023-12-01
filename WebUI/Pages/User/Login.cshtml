@@ -43,7 +43,7 @@
                         <form class="form w-100" method="post" asp-page-handler="Login">
                             <div class="card-body">
                                 <div class="text-start mb-10">
-                                    <partial name="~/Pages/Shared/User/LoginError.cshtml" />
+                                    <partial name="~/Pages/Shared/Error.cshtml" />
                                     <h1 class="text-gray-900 mb-3 fs-3x" data-kt-translate="sign-in-title">
                                         Giriş Yap
                                     </h1>
@@ -53,14 +53,14 @@
                                 </div>
 
                                 <div class="fv-row mb-8">
-                                    <input asp-for="loginModel.Email" type="text" placeholder="E-Posta" autocomplete="off" class="form-control bg-transparent">
+                                    <input asp-for="loginModel.Email" placeholder="E-Posta" autocomplete="off" class="form-control bg-transparent">
                                     <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
                                         <span asp-validation-for="loginModel.Email"></span>
                                     </div>
                                 </div>
 
                                 <div class="input-group mb-7">    
-                                    <input asp-for="loginModel.Password" type="password" placeholder="Şifre" id="passwordInput" autocomplete="off" class="form-control bg-transparent" aria-describedby="passwordIcon">
+                                    <input asp-for="loginModel.Password" placeholder="Şifre" id="passwordInput" autocomplete="off" class="form-control bg-transparent" aria-describedby="passwordIcon">
                                     <span class="input-group-text" id="passwordIcon" role="button">
                                         <i class="ki-solid ki-eye fs-4"></i>
                                     </span>
@@ -103,7 +103,7 @@
         <script src="~/assets/js/pages/user/user.js"></script>
     
         <div class="d-none">
-            <input asp-for="Message" />
+            <input asp-for="AlertError" />
         </div>
     </body>
 </html>

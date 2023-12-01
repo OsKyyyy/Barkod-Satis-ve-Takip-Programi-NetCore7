@@ -42,30 +42,18 @@ namespace WebAPI.Controllers
             var userExists = _authService.UserExists(userForRegisterDto.Email);
             if (!userExists.Status)
             {
-                return BadRequest(userExists.Message);
+                return BadRequest(userExists);
             }
 
             var registerResult = _authService.Register(userForRegisterDto, userForRegisterDto.Password);
-            var result = _authService.CreateAccessToken(registerResult.Data);
-            if (result.Status)
+            //var result = _authService.CreateAccessToken(registerResult.Data);
+
+            if (registerResult.Status)
             {
-                return Ok(result);
+                return Ok(registerResult);
             }
 
-            return BadRequest(result);
-        }
-
-        [Route("GetInfoByMail")]
-        [HttpGet]
-        public ActionResult GetInfoByMail(string email)
-        {
-            var userToLogin = _authService.GetInfoByMail(email);
-            if (!userToLogin.Status)
-            {
-                return BadRequest(userToLogin);
-            }
-
-            return Ok(userToLogin);
+            return BadRequest(registerResult);
         }
     }
 }

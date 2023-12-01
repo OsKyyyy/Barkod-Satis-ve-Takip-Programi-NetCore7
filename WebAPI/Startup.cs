@@ -58,6 +58,11 @@ namespace WebAPI
                     };
                 });
 
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
+
             services.AddDependencyResolvers(new ICoreModule[]
             {
                 new CoreModule()

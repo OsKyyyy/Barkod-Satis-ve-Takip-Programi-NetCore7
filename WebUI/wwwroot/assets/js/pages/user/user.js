@@ -1,17 +1,71 @@
 ﻿var User = {
 
     Init: function () {
-        User.LoginError();
+        User.AlertError();
+        User.ToastrError();
+        User.ToastrSuccess();
         User.PasswordHideShow();
     },
-    LoginError: function () {
+    AlertError: function () {
 
-        let msg = $('#Message').val();
-        if (msg.length > 0) {
-            $("#LoginErrorContent").html(msg);
-            $("#LoginError").show();
+        let msg = $('#AlertError').val();
+        if (msg != undefined && msg.length > 0) {
+            $("#ErrorContent").html(msg);
+            $("#ErrorDiv").show();
         }
     },
+    ToastrError: function () {
+        
+        let msg = $('#ToastrError').val();
+        if (msg != undefined && msg.length > 0) {
+
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": true,
+                "positionClass": "toastr-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            };
+
+            toastr.error(msg, "Hata!");
+        }
+    },
+    ToastrSuccess: function () {
+        
+        let msg = $('#ToastrSuccess').val();
+        if (msg != undefined && msg.length > 0) {
+
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": true,
+                "positionClass": "toastr-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            };
+
+            toastr.success(msg, "Başarılı!");
+        }
+    },    
     PasswordHideShow: function () {
         $("#passwordIcon").on("click", function () {     
             

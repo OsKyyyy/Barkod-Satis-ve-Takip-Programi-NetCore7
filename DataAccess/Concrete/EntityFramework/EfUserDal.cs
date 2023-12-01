@@ -26,7 +26,27 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
-        public User GetInfoByMail(string email)
+        public List<User> List()
+        {
+	        using (var context = new DataBaseContext())
+	        {
+		        var result =
+			        from users in context.Users
+			        select new User
+			        {
+				        Id = users.Id,
+				        FirstName = users.FirstName,
+				        LastName = users.LastName,
+				        Email = users.Email,
+				        Phone = users.Phone,
+				        Status = users.Status,
+			        };
+
+		        return result.ToList();
+	        }
+        }
+
+		public User ListByMail(string email)
         {
             using (var context = new DataBaseContext())
             {
@@ -37,6 +57,27 @@ namespace DataAccess.Concrete.EntityFramework
                     {
                         Id = users.Id, 
                         FirstName = users.FirstName, 
+                        LastName = users.LastName,
+                        Email = users.Email,
+                        Phone = users.Phone,
+                        Status = users.Status,
+                    };
+
+                return result.FirstOrDefault();
+            }
+        }
+
+        public User ListById(int id)
+        {
+            using (var context = new DataBaseContext())
+            {
+                var result =
+                    from users in context.Users
+                    where users.Id == id
+                    select new User
+                    {
+                        Id = users.Id,
+                        FirstName = users.FirstName,
                         LastName = users.LastName,
                         Email = users.Email,
                         Phone = users.Phone,

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Business.BusinessAspects.Autofac;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Validation;
 using Business.ValidationRules.FluentValidation.User;
@@ -28,10 +29,13 @@ namespace Business.Concrete
             _tokenHelper = tokenHelper;
         }
 
+        [SecuredOperation("Admin")]
+		[ValidationAspect(typeof(RegisterValidator))]
         public IDataResult<User> Register(UserRegisterDto userForRegisterDto, string password)
         {
             byte[] passwordHash, passwordSalt;
             HashingHelper.CreatePasswordHash(password, out passwordHash, out passwordSalt);
+
             var user = new User
             {
                 Email = userForRegisterDto.Email,
@@ -40,9 +44,10 @@ namespace Business.Concrete
                 Phone = userForRegisterDto.Phone,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
-                Status = true
+                Status = userForRegisterDto.Status
             };
             _userService.Add(user);
+
             return new SuccessDataResult<User>(user, Messages.UserRegistered);
         }
 
@@ -63,22 +68,11 @@ namespace Business.Concrete
             return new SuccessDataResult<User>(userToCheck, Messages.SuccessfulLogin);
         }
 
-        public IDataResult<User> GetInfoByMail(string email)
-        {
-            var userToCheck = _userService.GetInfoByMail(email);
-            if (userToCheck == null)
-            {
-                return new ErrorDataResult<User>(Messages.UserNotFound);
-            }
-
-            return new SuccessDataResult<User>(userToCheck, Messages.UserInfoListed);
-        }
-
         public IResult UserExists(string email)
         {
             if (_userService.GetByMail(email) != null)
             {
-                return new ErrorResult(Messages.UserAlreadyExists);
+                return new ErrorDataResult<User>(Messages.UserAlreadyExists);
             }
             return new SuccessResult();
         }

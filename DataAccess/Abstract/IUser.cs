@@ -11,6 +11,8 @@ namespace DataAccess.Abstract
     public interface IUserDal : IEntityRepository<User>
     {
         List<OperationClaim> GetClaims(User user);
-        User GetInfoByMail(string email);
+        List<User> List();
+        User ListByMail(string email);
+        User ListById(int id);
     }
 }
