@@ -36,16 +36,16 @@
 
                     <div id="kt_account_settings_profile_details" class="collapse show">
                         <form class="form" method="post" asp-page-handler="Edit">
-                            <input hidden asp-for="UserList.Id"/>
+                            <input hidden asp-for="updateRequestModel.Id" />
                             <div class="card-body border-top p-9">
 
                                 <div class="row mb-6">
                                     <label class="col-lg-4 col-form-label required fw-semibold fs-6">Ad</label>
 
                                     <div class="col-lg-8 fv-row">
-                                        <input asp-for="UserList.FirstName" class="form-control form-control-lg form-control mb-3 mb-lg-0" autocomplete="off">
+                                        <input asp-for="updateRequestModel.FirstName" class="form-control form-control-lg form-control mb-3 mb-lg-0" autocomplete="off">
                                         <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
-                                            <span asp-validation-for="UserList.FirstName"></span>
+                                            <span asp-validation-for="updateRequestModel.FirstName"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -54,9 +54,9 @@
                                     <label class="col-lg-4 col-form-label required fw-semibold fs-6">Soyad</label>
 
                                     <div class="col-lg-8 fv-row">
-                                        <input asp-for="UserList.LastName" class="form-control form-control-lg form-control" autocomplete="off">
+                                        <input asp-for="updateRequestModel.LastName" class="form-control form-control-lg form-control" autocomplete="off">
                                         <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
-                                            <span asp-validation-for="UserList.LastName"></span>
+                                            <span asp-validation-for="updateRequestModel.LastName"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -65,9 +65,9 @@
                                     <label class="col-lg-4 col-form-label fw-semibold fs-6">Telefon</label>
 
                                     <div class="col-lg-8 fv-row">
-                                        <input asp-for="UserList.Phone" class="form-control form-control-lg form-control" placeholder="5XXXXXXXXX" autocomplete="off">
+                                        <input asp-for="updateRequestModel.Phone" class="form-control form-control-lg form-control" placeholder="5XXXXXXXXX" autocomplete="off">
                                         <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
-                                            <span asp-validation-for="UserList.Phone"></span>
+                                            <span asp-validation-for="updateRequestModel.Phone"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -76,9 +76,9 @@
                                     <label class="col-lg-4 col-form-label fw-semibold fs-6 required">Eposta</label>
 
                                     <div class="col-lg-8 fv-row">
-                                        <input asp-for="UserList.Email" class="form-control form-control-lg form-control" autocomplete="off">
+                                        <input asp-for="updateRequestModel.Email" class="form-control form-control-lg form-control" autocomplete="off">
                                         <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
-                                            <span asp-validation-for="UserList.Email"></span>
+                                            <span asp-validation-for="updateRequestModel.Email"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -88,19 +88,23 @@
                                         <div class="card-body border-top p-9">
 
                                             <div class="notice d-flex bg-light-warning rounded border-warning border border-dashed mb-9 p-6">
-                                                <i class="ki-duotone ki-information fs-2tx text-warning me-4"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i> <!--end::Icon-->
+                                                <i class="ki-duotone ki-information fs-2tx text-warning me-4">
+                                                    <span class="path1"></span>
+                                                    <span class="path2"></span>
+                                                    <span class="path3"></span>
+                                                </i>
                                                 <div class="d-flex flex-stack flex-grow-1 ">
                                                     <div class=" fw-semibold">
                                                         <h4 class="text-gray-900 fw-bold">Hesabı Devredışı Olarak Kaydet</h4>
 
-                                                        <div class="fs-6 text-gray-700 ">Aşağıda ki kutucuk işaretlemediğiniz takdirde eklenecek olan hesap devredışı olarak kaydedilir. Bu hesabın kullanılamayacağı anlamına gelir. Daha sonra hesap liste üzerinden aktifleştirilebilir.<br></div>
+                                                        <div class="fs-6 text-gray-700 ">Aşağıda ki kutucuk <b>işaretlemediğiniz</b> takdirde eklenecek olan hesap devredışı olarak kaydedilir. Bu hesabın kullanılamayacağı anlamına gelir. Daha sonra hesap liste üzerinden aktifleştirilebilir.<br></div>
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <div class="form-check form-check-solid fv-row">
 
-                                                <input asp-for="UserList.Status" class="form-check-input" type="checkbox" id="deactivate" />
+                                                <input asp-for="updateRequestModel.Status" class="form-check-input" type="checkbox" id="deactivate" />
 
                                                 <label class="form-check-label fw-semibold ps-2 fs-6" for="deactivate"><b>Aktif</b> olarak işaretle</label>
                                             </div>

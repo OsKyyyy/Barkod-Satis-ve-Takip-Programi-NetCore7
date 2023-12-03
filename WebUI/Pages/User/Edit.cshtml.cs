@@ -1,9 +1,9 @@
 using Core.Utilities.Refit.Abstract;
 using Core.Utilities.Refit.Models.Request;
-using Core.Utilities.Refit.Models.Response;
+using Core.Utilities.Refit.Models.Request.User;
+using Core.Utilities.Refit.Models.Response.User;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using WebUI.Models.User;
 
 namespace WebUI.Pages.User
 {
@@ -15,9 +15,8 @@ namespace WebUI.Pages.User
         [TempData]
         public string ToastrSuccess { get; set; }
 
-        public UserInfo UserList { get; set; }
-
-        public EditMdl editModel { get; set; }
+        [BindProperty]
+        public UpdateRequestModel updateRequestModel { get; set; }
 
         private readonly IUser _user;
 
@@ -47,7 +46,16 @@ namespace WebUI.Pages.User
 
             if (response.Status)
             {
-                UserList = response.Data;
+                UpdateRequestModel setModel = new UpdateRequestModel();
+
+                setModel.Id = response.Data.Id;
+                setModel.FirstName = response.Data.FirstName;
+                setModel.LastName = response.Data.LastName;
+                setModel.Phone = response.Data.Phone;
+                setModel.Email = response.Data.Email;
+                setModel.Status = response.Data.Status;
+
+                updateRequestModel = setModel;
             }
             else
             {
@@ -56,8 +64,25 @@ namespace WebUI.Pages.User
             return Page();
         }
 
-        public async Task<IActionResult> OnPostEditAsync(UserInfo userInfo)
+        public async Task<IActionResult> OnPostEditAsync(UpdateRequestModel updateRequestModel)
         {
+            var response = await _user.Update(SessionValues()[0], updateRequestModel);
+
+            if (response.Message == "Authentication Error")
+            {
+                HttpContext.Session.Remove("userToken");
+                HttpContext.Session.Remove("userInfo");
+
+                return new RedirectToPageResult("Login");
+            }
+
+            if (response.Status)
+            {
+                ToastrSuccess = response.Message;
+                return new RedirectToPageResult("Edit", response.Data.Id);
+            }
+
+            ToastrError = response.Message;
             return Page();
         }
 

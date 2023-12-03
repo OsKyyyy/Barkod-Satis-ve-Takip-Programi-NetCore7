@@ -15,7 +15,7 @@
         }
     },
     ToastrError: function () {
-        
+
         let msg = $('#ToastrError').val();
         if (msg != undefined && msg.length > 0) {
 
@@ -41,7 +41,7 @@
         }
     },
     ToastrSuccess: function () {
-        
+
         let msg = $('#ToastrSuccess').val();
         if (msg != undefined && msg.length > 0) {
 
@@ -65,22 +65,39 @@
 
             toastr.success(msg, "Başarılı!");
         }
-    },    
+    },
     PasswordHideShow: function () {
-        $("#passwordIcon").on("click", function () {     
-            
+        $("#passwordIcon").on("click", function () {
+
             let currentIcon = $(this).find("i").attr("class");
 
             if (currentIcon == "ki-solid ki-eye fs-4") {
 
                 $(this).find("i").attr("class", "ki-solid ki-eye-slash fs-4");
-                $("#passwordInput").attr("type","text");
+                $("#passwordInput").attr("type", "text");
                 return;
             }
 
             $(this).find("i").attr("class", "ki-solid ki-eye fs-4");
             $("#passwordInput").attr("type", "password");
 
+        });
+    },
+    DeleteConfirm: function (e) {
+
+        event.preventDefault(); 
+        var url = $(e).attr("href"); 
+        Swal.fire({
+            title: 'Emin misin?',
+            text: 'Kullanıcıyı silmek üzeresiniz. Bu işlem yapıldıktan sonra geri alınamaz',
+            icon: 'warning',
+            buttons: ['Vazgeç', 'Sil'],
+            showCancelButton: true
+        }).then((willDelete) => {
+
+            if (willDelete.isConfirmed) {
+                window.location.href = url;
+            }
         });
     }
 }

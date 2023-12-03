@@ -1,5 +1,6 @@
 ﻿using Core.Utilities.Refit.Abstract;
-using Core.Utilities.Refit.Models.Request;
+using Core.Utilities.Refit.Models.Request.User;
+using Core.Utilities.Refit.Models.Response.User;
 using Core.Utilities.Refit.Models.Response;
 using Refit;
 using System;
@@ -16,9 +17,9 @@ namespace Core.Utilities.Refit.Concrete
     {
         private IUser myAPI = RestService.For<IUser>("http://localhost:63067/api");
 
-        public async Task<DataResult<Login>> Login([Body] LoginRequest loginRequest)
+        public async Task<DataResult<LoginModel>> Login([Body] LoginRequestModel loginRequest)
         {
-            DataResult<Login> dataResult = new DataResult<Login>();
+            DataResult<LoginModel> dataResult = new DataResult<LoginModel>();
 
             try
             {
@@ -45,9 +46,9 @@ namespace Core.Utilities.Refit.Concrete
             }
         }
 
-        public async Task<DataResult<Register>> Register([Header("Authorization: Bearer")] string token, [Body] RegisterRequest registerRequest)
+        public async Task<DataResult<RegisterModel>> Register([Header("Authorization: Bearer")] string token, [Body] RegisterRequestModel registerRequest)
         {
-            DataResult<Register> dataResult = new DataResult<Register>();
+            DataResult<RegisterModel> dataResult = new DataResult<RegisterModel>();
 
             try
             {
@@ -74,9 +75,67 @@ namespace Core.Utilities.Refit.Concrete
             }
         }
 
-        public async Task<DataResult<List<UserInfo>>> List([Header("Authorization: Bearer")] string token)
+        public async Task<DataResult<UpdateModel>> Update([Header("Authorization: Bearer")] string token, [Body] UpdateRequestModel updateRequest)
         {
-	        DataResult<List<UserInfo>> dataResult = new DataResult<List<UserInfo>>();
+            DataResult<UpdateModel> dataResult = new DataResult<UpdateModel>();
+
+            try
+            {
+                dataResult = await myAPI.Update(token, updateRequest);
+
+                return dataResult;
+            }
+            catch (ApiException exception)
+            {
+                dynamic response = JsonConvert.DeserializeObject(exception.Content);
+
+                if (response.Status != null)
+                {
+                    dataResult.Message = response.Message;
+                    dataResult.Status = response.Status;
+
+                    return dataResult;
+                }
+
+                dataResult.Message = "Beklenmedik hata ile karşılaşıldı";
+                dataResult.Status = false;
+
+                return dataResult;
+            }
+        }
+
+        public async Task<DataResult<ViewModel>> Delete([Header("Authorization: Bearer")] string token, int id)
+        {
+            DataResult<ViewModel> dataResult = new DataResult<ViewModel>();
+
+            try
+            {
+                dataResult = await myAPI.Delete(token, id);
+
+                return dataResult;
+            }
+            catch (ApiException exception)
+            {
+                dynamic response = JsonConvert.DeserializeObject(exception.Content);
+
+                if (response.Status != null)
+                {
+                    dataResult.Message = response.Message;
+                    dataResult.Status = response.Status;
+
+                    return dataResult;
+                }
+
+                dataResult.Message = "Beklenmedik hata ile karşılaşıldı";
+                dataResult.Status = false;
+
+                return dataResult;
+            }
+        }
+
+        public async Task<DataResult<List<ViewModel>>> List([Header("Authorization: Bearer")] string token)
+        {
+	        DataResult<List<ViewModel>> dataResult = new DataResult<List<ViewModel>>();
 
 	        try
 	        {
@@ -103,9 +162,9 @@ namespace Core.Utilities.Refit.Concrete
 	        }
         }
 
-		public async Task<DataResult<UserInfo>> ListByMail([Header("Authorization: Bearer")] string token, string email)
+		public async Task<DataResult<ViewModel>> ListByMail([Header("Authorization: Bearer")] string token, string email)
         {
-            DataResult<UserInfo> dataResult = new DataResult<UserInfo>();
+            DataResult<ViewModel> dataResult = new DataResult<ViewModel>();
 
             try
             {
@@ -132,9 +191,9 @@ namespace Core.Utilities.Refit.Concrete
             }
         }
 
-        public async Task<DataResult<UserInfo>> ListById([Header("Authorization: Bearer")] string token, int id)
+        public async Task<DataResult<ViewModel>> ListById([Header("Authorization: Bearer")] string token, int id)
         {
-            DataResult<UserInfo> dataResult = new DataResult<UserInfo>();
+            DataResult<ViewModel> dataResult = new DataResult<ViewModel>();
 
             try
             {

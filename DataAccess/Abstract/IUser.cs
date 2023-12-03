@@ -10,9 +10,11 @@ namespace DataAccess.Abstract
 {
     public interface IUserDal : IEntityRepository<User>
     {
-        List<OperationClaim> GetClaims(User user);
+        User Update(User user);
+        User Delete(int id);
         List<User> List();
         User ListByMail(string email);
         User ListById(int id);
+        List<OperationClaim> GetClaims(User user);
     }
 }

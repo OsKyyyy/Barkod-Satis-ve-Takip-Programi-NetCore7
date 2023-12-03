@@ -1,18 +1,15 @@
 using Core.Utilities.Refit.Abstract;
-using Core.Utilities.Refit.Models.Request;
+using Core.Utilities.Refit.Models.Request.User;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json;
-using WebUI.Models.User;
 
 namespace WebUI.Pages.User
 {
     public class LoginModel : PageModel
     {
-        public LoginMdl loginModel { get; set; }
-
         private readonly IUser _user;
 
         public LoginModel(IUser user)
@@ -22,6 +19,8 @@ namespace WebUI.Pages.User
 
         [ViewData]
         public string AlertError { get; set; }
+
+        public LoginRequestModel loginModel { get; set; }
 
         public IActionResult OnGet()
         {
@@ -35,14 +34,9 @@ namespace WebUI.Pages.User
             return Page();
         }
 
-        public async Task<IActionResult> OnPostLoginAsync(LoginMdl loginModel)
+        public async Task<IActionResult> OnPostLoginAsync(LoginRequestModel loginModel)
         {
-            LoginRequest loginRequest = new LoginRequest();
-
-            loginRequest.Email = loginModel.Email;
-            loginRequest.Password = loginModel.Password;
-
-            var response = await _user.Login(loginRequest);
+            var response = await _user.Login(loginModel);
 
             if (response.Status)
             {

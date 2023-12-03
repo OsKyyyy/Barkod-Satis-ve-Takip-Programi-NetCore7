@@ -1,10 +1,8 @@
-using Azure;
 using Core.Utilities.Refit.Abstract;
 using Core.Utilities.Refit.Models.Request;
-using Core.Utilities.Refit.Models.Response;
+using Core.Utilities.Refit.Models.Response.User;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using WebUI.Models.User;
 
 namespace WebUI.Pages.User
 {
@@ -13,11 +11,10 @@ namespace WebUI.Pages.User
 	    [ViewData]
 	    public string ToastrError { get; set; }
 
-	    [TempData]
-	    public string ToastrSuccess { get; set; } 
+        [ViewData]
+        public string ToastrSuccess{ get; set; }
 
-        [BindProperty]
-        public List<UserInfo> UserList { get; set; }
+        public List<ViewModel> viewModel { get; set; }
 
         private readonly IUser _user;
 
@@ -28,7 +25,10 @@ namespace WebUI.Pages.User
 
 		public async Task<IActionResult> OnGetAsync()
 	    {
-		    var session = SessionValues();
+            this.ToastrError = TempData["ToastrError"] as string;
+            this.ToastrSuccess = TempData["ToastrSuccess"] as string;
+
+            var session = SessionValues();
 
 		    if (session[1] == null)
 		    {
@@ -47,7 +47,7 @@ namespace WebUI.Pages.User
 
 			if (response.Status)
             {
-                UserList = response.Data;
+                viewModel = response.Data;
             }
             else
             {

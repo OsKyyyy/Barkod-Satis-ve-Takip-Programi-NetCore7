@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace DataAccess.Concrete.EntityFramework
 {
@@ -26,44 +27,73 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
+        public User Update(User user)
+        {
+            using (var context = new DataBaseContext())
+            {
+      
+                var result = context.Users.FirstOrDefault(u => u.Id == user.Id);
+
+                result.FirstName = user.FirstName;
+                result.LastName = user.LastName;
+                result.Phone = user.Phone;
+                result.Email = user.Email;
+                result.Status = user.Status;
+
+                context.SaveChanges();
+
+                return user;
+            }
+        }
+
+        public User Delete(int id)
+        {
+            using (var context = new DataBaseContext())
+            {
+
+                var result = context.Users.FirstOrDefault(u => u.Id == id);
+                
+                context.Users.Remove(result);
+
+                context.SaveChanges();
+
+                return result;
+            }
+        }
+
         public List<User> List()
         {
 	        using (var context = new DataBaseContext())
 	        {
-		        var result =
-			        from users in context.Users
-			        select new User
-			        {
-				        Id = users.Id,
-				        FirstName = users.FirstName,
-				        LastName = users.LastName,
-				        Email = users.Email,
-				        Phone = users.Phone,
-				        Status = users.Status,
-			        };
+                var result = context.Users.Select(s => new User
+                {
+                    Id = s.Id,
+                    FirstName = s.FirstName,
+                    LastName = s.LastName,
+                    Phone = s.Phone,
+                    Email = s. Email,
+                    Status = s. Status,
+                }).ToList();
 
-		        return result.ToList();
-	        }
+                return result;
+            }
         }
 
 		public User ListByMail(string email)
         {
             using (var context = new DataBaseContext())
             {
-                var result = 
-                    from users in context.Users
-                    where users.Email == email
-                    select new User
-                    {
-                        Id = users.Id, 
-                        FirstName = users.FirstName, 
-                        LastName = users.LastName,
-                        Email = users.Email,
-                        Phone = users.Phone,
-                        Status = users.Status,
-                    };
+                var result = context.Users.Where(u => u.Email == email).Select(s => new User
+                {
+                    Id = s.Id,
+                    FirstName = s.FirstName,
+                    LastName = s.LastName,
+                    Phone = s.Phone,
+                    Email = s.Email,
+                    Status = s.Status,
+                }).FirstOrDefault();
 
-                return result.FirstOrDefault();
+                return result;
             }
         }
 
@@ -71,20 +101,17 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (var context = new DataBaseContext())
             {
-                var result =
-                    from users in context.Users
-                    where users.Id == id
-                    select new User
-                    {
-                        Id = users.Id,
-                        FirstName = users.FirstName,
-                        LastName = users.LastName,
-                        Email = users.Email,
-                        Phone = users.Phone,
-                        Status = users.Status,
-                    };
+                var result = context.Users.Where(u => u.Id == id).Select(s => new User
+                {
+                    Id = s.Id,
+                    FirstName = s.FirstName,
+                    LastName = s.LastName,
+                    Phone = s.Phone,
+                    Email = s.Email,
+                    Status = s.Status,
+                }).FirstOrDefault();
 
-                return result.FirstOrDefault();
+                return result;
             }
         }
     }

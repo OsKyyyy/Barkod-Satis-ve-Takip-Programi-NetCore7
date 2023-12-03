@@ -1,8 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace WebUI.Models.User
+namespace Core.Utilities.Refit.Models.Request.User
 {
-    public class RegisterMdl
+    public class RegisterRequestModel
     {
         [Required(ErrorMessage = "Bu alan zorunludur.")]
         [DataType(DataType.Text)]
@@ -24,7 +29,6 @@ namespace WebUI.Models.User
         [Required(ErrorMessage = "Bu alan zorunludur.")]
         [DataType(DataType.Password)]
         [MinLength(8, ErrorMessage = "Bu alan en az 8 karakter olmalıdır")]
-
         public string Password { get; set; }
 
         public bool Status { get; set; }

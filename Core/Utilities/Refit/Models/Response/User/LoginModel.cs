@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Utilities.Refit.Models.Response
+namespace Core.Utilities.Refit.Models.Response.User
 {
-    public class Login
+    public class LoginModel
     {
         [JsonProperty("token")]
         public string Token { get; set; }

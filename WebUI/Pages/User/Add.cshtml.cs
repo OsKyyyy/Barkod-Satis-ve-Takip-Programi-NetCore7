@@ -1,10 +1,9 @@
 using Core.Utilities.Refit.Abstract;
-using Core.Utilities.Refit.Models.Request;
+using Core.Utilities.Refit.Models.Request.User;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json;
-using WebUI.Models.User;
 
 namespace WebUI.Pages.User
 {
@@ -15,7 +14,7 @@ namespace WebUI.Pages.User
 	    [TempData]
 	    public string ToastrSuccess { get; set; }
 
-		public RegisterMdl registerModel { get; set; }
+		public RegisterRequestModel registerModel { get; set; }
 
         private readonly IUser _user;
         
@@ -36,18 +35,9 @@ namespace WebUI.Pages.User
             return Page();
         }
         
-        public async Task<IActionResult> OnPostRegisterAsync(RegisterMdl registerModel)
+        public async Task<IActionResult> OnPostRegisterAsync(RegisterRequestModel registerModel)
         {
-            RegisterRequest registerRequest = new RegisterRequest();
-
-            registerRequest.FirstName = registerModel.FirstName;
-            registerRequest.LastName = registerModel.LastName;
-            registerRequest.Phone = registerModel.Phone;
-            registerRequest.Email = registerModel.Email;
-            registerRequest.Password = registerModel.Password;
-            registerRequest.Status = registerModel.Status;
-
-            var response = await _user.Register(SessionValues()[0], registerRequest);
+            var response = await _user.Register(SessionValues()[0], registerModel);
             
             if (response.Message == "Authentication Error")
             {

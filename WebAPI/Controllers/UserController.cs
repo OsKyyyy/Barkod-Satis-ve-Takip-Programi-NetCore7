@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Entities.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -14,43 +15,83 @@ namespace WebAPI.Controllers
 			_userService = userService;
 		}
 
-		[Route("List")]
+        [Route("Update")]
+        [HttpPut]
+        public ActionResult Update(UserUpdateDto userUpdateDto)
+        {
+            var userExists = _userService.UserExistsByUpdate(userUpdateDto.Email, userUpdateDto.Id);
+            if (!userExists.Status)
+            {
+                return BadRequest(userExists);
+            }
+
+			var updateResult = _userService.Update(userUpdateDto);
+
+			if (updateResult.Status)
+			{
+				return Ok(updateResult);
+			}
+
+			return BadRequest(updateResult);
+		}
+
+        [Route("Delete")]
+        [HttpDelete]
+        public ActionResult Delete(int id)
+        {
+            var listById = _userService.ListById(id);
+            if (!listById.Status)
+            {
+                return BadRequest(listById);
+            }
+
+            var deleteResult = _userService.Delete(id);
+
+            if (deleteResult.Status)
+            {
+                return Ok(deleteResult);
+            }
+
+            return Ok(deleteResult);
+        }
+
+        [Route("List")]
 		[HttpGet]
 		public ActionResult List()
 		{
-			var userToLogin = _userService.List();
-			if (!userToLogin.Status)
+			var list = _userService.List();
+			if (!list.Status)
 			{
-				return BadRequest(userToLogin);
+				return BadRequest(list);
 			}
 
-			return Ok(userToLogin);
+			return Ok(list);
 		}
 
 		[Route("ListByMail")]
 		[HttpGet]
 		public ActionResult ListByMail(string email)
 		{
-			var userToLogin = _userService.ListByMail(email);
-			if (!userToLogin.Status)
+			var listByMail = _userService.ListByMail(email);
+			if (!listByMail.Status)
 			{
-				return BadRequest(userToLogin);
+				return BadRequest(listByMail);
 			}
 
-			return Ok(userToLogin);
+			return Ok(listByMail);
 		}
 
         [Route("ListById")]
         [HttpGet]
         public ActionResult ListById(int id)
         {
-            var userToLogin = _userService.ListById(id);
-            if (!userToLogin.Status)
+            var listById = _userService.ListById(id);
+            if (!listById.Status)
             {
-                return BadRequest(userToLogin);
+                return BadRequest(listById);
             }
 
-            return Ok(userToLogin);
+            return Ok(listById);
         }
     }
 }

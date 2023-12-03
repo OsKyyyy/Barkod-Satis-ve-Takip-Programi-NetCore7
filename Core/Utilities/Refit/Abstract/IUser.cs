@@ -1,5 +1,6 @@
 ﻿using Core.Utilities.Refit.Models.Response;
-using Core.Utilities.Refit.Models.Request;
+using Core.Utilities.Refit.Models.Response.User;
+using Core.Utilities.Refit.Models.Request.User;
 using Refit;
 using System;
 using System.Collections.Generic;
@@ -12,19 +13,25 @@ namespace Core.Utilities.Refit.Abstract
     public interface IUser
     {
         [Post("/auth/login")]
-        Task<DataResult<Login>> Login([Body] LoginRequest loginRequest);
+        Task<DataResult<LoginModel>> Login([Body] LoginRequestModel loginRequest);
 
 		[Post("/auth/register")]
-        Task<DataResult<Register>> Register([Header("Authorization")] string token, [Body] RegisterRequest registerRequest);
+        Task<DataResult<RegisterModel>> Register([Header("Authorization")] string token, [Body] RegisterRequestModel registerRequest);
+
+        [Put("/user/Update")]
+        Task<DataResult<UpdateModel>> Update([Header("Authorization")] string token, [Body] UpdateRequestModel editRequestModel);
+
+        [Delete("/user/Delete")]
+        Task<DataResult<ViewModel>> Delete([Header("Authorization")] string token, int id);
 
         [Get("/user/List")]
-        Task<DataResult<List<UserInfo>>> List([Header("Authorization")] string token);
+        Task<DataResult<List<ViewModel>>> List([Header("Authorization")] string token);
 
 		[Get("/user/ListByMail")]
-        Task<DataResult<UserInfo>> ListByMail([Header("Authorization")] string token, [AliasAs("email")] string email);
+        Task<DataResult<ViewModel>> ListByMail([Header("Authorization")] string token, [AliasAs("email")] string email);
 
         [Get("/user/ListById")]
-        Task<DataResult<UserInfo>> ListById([Header("Authorization")] string token, [AliasAs("id")] int id);
+        Task<DataResult<ViewModel>> ListById([Header("Authorization")] string token, [AliasAs("id")] int id);
 
     }
 }

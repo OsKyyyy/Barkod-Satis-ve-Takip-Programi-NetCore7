@@ -1,8 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace WebUI.Models.User
+namespace Core.Utilities.Refit.Models.Request.User
 {
-    public class EditMdl
+    public class UpdateRequestModel
     {
         public int Id { get; set; }
 

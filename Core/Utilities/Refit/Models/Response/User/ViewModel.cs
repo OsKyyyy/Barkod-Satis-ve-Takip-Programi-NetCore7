@@ -1,0 +1,31 @@
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Core.Utilities.Refit.Models.Response.User
+{
+    public class ViewModel
+    {
+        [JsonProperty("Id")]
+        public int Id { get; set; }
+
+        [JsonProperty("FirstName")]
+        public string FirstName { get; set; }
+
+        [JsonProperty("LastName")]
+        public string LastName { get; set; }
+
+        [JsonProperty("Email")]
+        public string Email { get; set; }
+
+        [JsonProperty("Phone")]
+        public string? Phone { get; set; }
+
+        [JsonProperty("Status")]
+        public bool Status { get; set; }
+    }
+}

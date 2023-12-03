@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Utilities.Refit.Models.Response
+namespace Core.Utilities.Refit.Models.Response.User
 {
-    public class Register
+    public class UpdateModel
     {
         [JsonProperty("Id")]
         public int Id { get; set; }
@@ -23,12 +23,6 @@ namespace Core.Utilities.Refit.Models.Response
 
         [JsonProperty("Phone")]
         public string? Phone { get; set; }
-
-        [JsonProperty("PasswordHash")]
-        public byte[] PasswordHash { get; set; }
-        
-        [JsonProperty("PasswordSalt")]
-        public byte[] PasswordSalt { get; set; }
 
         [JsonProperty("Status")]
         public bool Status { get; set; }
