@@ -54,7 +54,7 @@ namespace Business.Concrete
         [ValidationAspect(typeof(LoginValidator))]
         public IDataResult<User> Login(UserLoginDto userForLoginDto)
         {
-            var userToCheck = _userService.GetByMail(userForLoginDto.Email);
+            var userToCheck = _userService.GetByMail(userForLoginDto.Email, true);
             if (userToCheck == null)
             {
                 return new ErrorDataResult<User>(Messages.UserNotFound);

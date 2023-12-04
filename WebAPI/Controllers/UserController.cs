@@ -25,14 +25,14 @@ namespace WebAPI.Controllers
                 return BadRequest(userExists);
             }
 
-			var updateResult = _userService.Update(userUpdateDto);
+			var result = _userService.Update(userUpdateDto);
 
-			if (updateResult.Status)
+			if (result.Status)
 			{
-				return Ok(updateResult);
+				return Ok(result);
 			}
 
-			return BadRequest(updateResult);
+			return BadRequest(result);
 		}
 
         [Route("Delete")]
@@ -45,14 +45,14 @@ namespace WebAPI.Controllers
                 return BadRequest(listById);
             }
 
-            var deleteResult = _userService.Delete(id);
+            var result = _userService.Delete(id);
 
-            if (deleteResult.Status)
+            if (result.Status)
             {
-                return Ok(deleteResult);
+                return Ok(result);
             }
 
-            return Ok(deleteResult);
+            return Ok(result);
         }
 
         [Route("List")]

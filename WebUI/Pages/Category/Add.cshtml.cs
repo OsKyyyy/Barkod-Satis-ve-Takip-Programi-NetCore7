@@ -1,44 +1,42 @@
 using Core.Utilities.Refit.Abstract;
-using Core.Utilities.Refit.Models.Request.User;
+using Core.Utilities.Refit.Models.Request.Category;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Newtonsoft.Json;
 
-namespace WebUI.Pages.User
+namespace WebUI.Pages.Category
 {
     public class AddModel : PageModel
     {
-		public RegisterRequestModel registerModel { get; set; }
+        public AddRequestModel addModel { get; set; }
 
-        private readonly IUser _user;
-        
-		public AddModel(IUser user)
+        private readonly ICategory _category;
+
+        public AddModel(ICategory category)
         {
-            _user = user;
-		}
+            _category = category;
+        }
 
         [ViewData]
         public string ToastrError { get; set; }
         [TempData]
         public string ToastrSuccess { get; set; }
-
+        
         public IActionResult OnGet()
         {
             var session = SessionValues();
 
-			if (session[1] == null)
+            if (session[1] == null)
             {
-                return new RedirectToPageResult("Login");
+                return new RedirectToPageResult("../User/Login");
             }
 
             return Page();
         }
-        
-        public async Task<IActionResult> OnPostRegisterAsync(RegisterRequestModel registerModel)
+
+        public async Task<IActionResult> OnPostAddAsync(AddRequestModel addModel)
         {
-            var response = await _user.Register(SessionValues()[0], registerModel);
-            
+            var response = await _category.Add(SessionValues()[0], addModel);
+
             if (response.Message == "Authentication Error")
             {
                 HttpContext.Session.Remove("userToken");
@@ -57,13 +55,14 @@ namespace WebUI.Pages.User
             return Page();
         }
 
+
         public string[] SessionValues()
         {
-	        var user = "Bearer " + HttpContext.Session.GetString("userToken");
-	        var userInfo = HttpContext.Session.GetString("userInfo");
+            var user = "Bearer " + HttpContext.Session.GetString("userToken");
+            var userInfo = HttpContext.Session.GetString("userInfo");
 
-	        string[] values = new string[2] { user, userInfo };
-	        return values;
+            string[] values = new string[2] { user, userInfo };
+            return values;
         }
     }
 }

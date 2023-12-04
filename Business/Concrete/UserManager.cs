@@ -44,8 +44,12 @@ namespace Business.Concrete
             return new SuccessResult(Messages.UserDeleted);
         }
 
-        public User GetByMail(string email)
+        public User GetByMail(string email, bool status = false)
         {
+            if (status)
+            {
+                return _userDal.Get(u => u.Email == email && u.Status == true);
+            }
             return _userDal.Get(u => u.Email == email);
         }
 

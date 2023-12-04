@@ -20,5 +20,6 @@ namespace Business.Constants
         public static string UserInfoListed = "Kullanıcı Bilgileri Listelendi";
         public static string UserAlreadyExists = "Kullanıcı Zaten Mevcut";
         public static string AccessTokenCreated = "Giriş Başarılı";
+        public static string CategoryAdded = "Kategori Eklendi";
     }
 }
