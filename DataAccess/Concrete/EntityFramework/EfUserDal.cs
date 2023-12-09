@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using Core.Utilities.Refit.Abstract;
 
 namespace DataAccess.Concrete.EntityFramework
 {
@@ -52,10 +53,17 @@ namespace DataAccess.Concrete.EntityFramework
             {
 
                 var result = context.Users.FirstOrDefault(u => u.Id == id);
-                
-                context.Users.Remove(result);
+
+                result.Status = false;
 
                 context.SaveChanges();
+
+
+                //var result = context.Users.FirstOrDefault(u => u.Id == id);
+                
+                //context.Users.Remove(result);
+
+                //context.SaveChanges();
 
                 return result;
             }

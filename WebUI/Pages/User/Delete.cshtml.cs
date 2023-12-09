@@ -7,12 +7,6 @@ namespace WebUI.Pages.User
 {
     public class DeleteModel : PageModel
     {
-        //[ViewData]
-        //public string ToastrError { get; set; }
-
-        //[ViewData]
-        //public string ToastrSuccess { get; set; }
-
         private readonly IUser _user;
 
         public DeleteModel(IUser user)
@@ -28,7 +22,6 @@ namespace WebUI.Pages.User
             {
                 return new RedirectToPageResult("Login");
             }
-
 
             var response = await _user.Delete(SessionValues()[0], id);
 

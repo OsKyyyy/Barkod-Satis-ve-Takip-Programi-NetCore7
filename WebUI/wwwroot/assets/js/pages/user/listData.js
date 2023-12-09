@@ -11,12 +11,6 @@ var KTDatatablesExample = function () {
         // Set date data order
         const tableRows = table.querySelectorAll('tbody tr');
 
-        tableRows.forEach(row => {
-            const dateRow = row.querySelectorAll('td');
-            const realDate = moment(dateRow[3].innerHTML, "DD MMM YYYY, LT").format(); // select date from 4th column in table
-            dateRow[3].setAttribute('data-order', realDate);
-        });
-
         // Init datatable --- more info on datatables: https://datatables.net/manual/
         datatable = $(table).DataTable({
             "info": false,

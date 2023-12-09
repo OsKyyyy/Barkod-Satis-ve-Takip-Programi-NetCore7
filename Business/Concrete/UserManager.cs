@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Business.BusinessAspects.Autofac;
-using Business.Constants;
+using Business.Constant;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using Business.ValidationRules.FluentValidation.User;
@@ -54,7 +54,7 @@ namespace Business.Concrete
         }
 
         [SecuredOperation("Admin")]
-        [ValidationAspect(typeof(RegisterValidator))]
+        [ValidationAspect(typeof(UpdateValidator))]
         public IDataResult<User> Update(UserUpdateDto userUpdateDto)
         {
             var user = new User
@@ -72,37 +72,38 @@ namespace Business.Concrete
         }
 
         [SecuredOperation("Admin")]
-		public IDataResult<List<User>> List()
+        public IDataResult<List<User>> List()
         {
-	        var userToCheck = _userDal.List();
+	        var result = _userDal.List();
 
-	        return new SuccessDataResult<List<User>>(userToCheck, Messages.UsersListed);
+	        return new SuccessDataResult<List<User>>(result, Messages.UsersListed);
         }
 
         [SecuredOperation("Admin")]
-		public IDataResult<User> ListByMail(string email)
+        public IDataResult<User> ListByMail(string email)
         {
-	        var userToCheck = _userDal.ListByMail(email);
-	        if (userToCheck == null)
+	        var result = _userDal.ListByMail(email);
+	        if (result == null)
 	        {
 		        return new ErrorDataResult<User>(Messages.UserNotFound);
 	        }
 
-	        return new SuccessDataResult<User>(userToCheck, Messages.UserInfoListed);
+	        return new SuccessDataResult<User>(result, Messages.UserInfoListed);
         }
 
         [SecuredOperation("Admin")]
         public IDataResult<User> ListById(int id)
         {
-            var userToCheck = _userDal.ListById(id);
-            if (userToCheck == null)
+            var result = _userDal.ListById(id);
+            if (result == null)
             {
                 return new ErrorDataResult<User>(Messages.UserNotFound);
             }
 
-            return new SuccessDataResult<User>(userToCheck, Messages.UserInfoListed);
+            return new SuccessDataResult<User>(result, Messages.UserInfoListed);
         }
 
+        [SecuredOperation("Admin")]
         public IResult UserExistsByUpdate(string email, int Id)
         {
             if (_userDal.Get(u => u.Email == email && u.Id != Id) != null)

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Security;
-using Business.Constants;
+using Business.Constant;
 using Castle.DynamicProxy;
 using Core.Extensions;
 using Core.Utilities.Interceptors;

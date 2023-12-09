@@ -12,5 +12,6 @@ namespace Entities.Dtos
     {
         public string Name { get; set; }
         public bool Status { get; set; }
+        public int CreateUserId { get; set; }
     }
 }

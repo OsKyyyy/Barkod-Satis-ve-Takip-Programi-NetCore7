@@ -14,5 +14,17 @@ namespace Core.Utilities.Refit.Abstract
     {
         [Post("/category/add")]
         Task<DataResult<AddModel>> Add([Header("Authorization")] string token, [Body] AddRequestModel createRequest);
+
+        [Put("/category/Update")]
+        Task<DataResult<ViewModel>> Update([Header("Authorization")] string token, [Body] UpdateRequestModel editRequestModel);
+
+        [Get("/category/List")]
+        Task<DataResult<List<ViewModel>>> List([Header("Authorization")] string token);
+
+        [Delete("/category/Delete")]
+        Task<DataResult<ViewModel>> Delete([Header("Authorization")] string token, int id);
+
+        [Get("/category/ListById")]
+        Task<DataResult<ViewModel>> ListById([Header("Authorization")] string token, [AliasAs("id")] int id);
     }
 }

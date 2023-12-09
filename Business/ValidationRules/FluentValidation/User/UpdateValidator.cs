@@ -12,6 +12,7 @@ namespace Business.ValidationRules.FluentValidation.User
     {
         public UpdateValidator()
         {
+            RuleFor(r => r.Id).NotEmpty().WithMessage("Bu alan boş olamaz");
             RuleFor(r => r.FirstName).NotEmpty().WithMessage("Bu alan boş olamaz");
             RuleFor(r => r.LastName).NotEmpty().WithMessage("Bu alan boş olamaz");
             RuleFor(r => r.Email).NotEmpty().WithMessage("Bu alan boş olamaz");

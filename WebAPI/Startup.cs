@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Core.DependencyResolvers;
 using Core.Extensions;
@@ -36,8 +37,9 @@ namespace WebAPI
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
 
-            services.AddControllers()
-                .AddJsonOptions(options => { options.JsonSerializerOptions.PropertyNamingPolicy = null; });
+            services.AddControllers().AddJsonOptions(options => { options.JsonSerializerOptions.PropertyNamingPolicy = null; });
+
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
             //services.AddCors();
 

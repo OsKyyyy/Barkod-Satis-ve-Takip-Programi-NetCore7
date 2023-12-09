@@ -1,14 +1,14 @@
 using Core.Utilities.Refit.Abstract;
 using Core.Utilities.Refit.Models.Request.Category;
+using Core.Utilities.Refit.Models.Response.User;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json;
 
 namespace WebUI.Pages.Category
 {
     public class AddModel : PageModel
     {
-        public AddRequestModel addModel { get; set; }
-
         private readonly ICategory _category;
 
         public AddModel(ICategory category)
@@ -16,11 +16,13 @@ namespace WebUI.Pages.Category
             _category = category;
         }
 
+        public AddRequestModel addModel { get; set; }
+
         [ViewData]
         public string ToastrError { get; set; }
         [TempData]
         public string ToastrSuccess { get; set; }
-        
+
         public IActionResult OnGet()
         {
             var session = SessionValues();
@@ -35,6 +37,8 @@ namespace WebUI.Pages.Category
 
         public async Task<IActionResult> OnPostAddAsync(AddRequestModel addModel)
         {
+            addModel.CreateUserId = JsonConvert.DeserializeObject<ViewModel>(HttpContext.Session.GetString("userInfo")).Id;
+
             var response = await _category.Add(SessionValues()[0], addModel);
 
             if (response.Message == "Authentication Error")
@@ -54,7 +58,6 @@ namespace WebUI.Pages.Category
             ToastrError = response.Message;
             return Page();
         }
-
 
         public string[] SessionValues()
         {

@@ -22,6 +22,7 @@ namespace Core.DependencyResolvers
             serviceCollection.AddSingleton<ICacheManager, MemoryCacheManager>();
             serviceCollection.AddSingleton<IUser, UserManager>();
             serviceCollection.AddSingleton<ICategory, CategoryManager>();
+            serviceCollection.AddSingleton<IProduct, ProductManager>();
         }
     }
 }

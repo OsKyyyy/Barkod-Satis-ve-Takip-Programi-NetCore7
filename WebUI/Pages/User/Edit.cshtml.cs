@@ -11,7 +11,6 @@ namespace WebUI.Pages.User
     {
         [ViewData]
         public string ToastrError { get; set; }
-
         [TempData]
         public string ToastrSuccess { get; set; }
 
@@ -56,12 +55,14 @@ namespace WebUI.Pages.User
                 setModel.Status = response.Data.Status;
 
                 updateRequestModel = setModel;
+
+                return Page();
             }
             else
             {
-                ToastrError = response.Message;
+                TempData["ToastrError"] = response.Message;
+                return RedirectToPage("List");
             }
-            return Page();
         }
 
         public async Task<IActionResult> OnPostEditAsync(UpdateRequestModel updateRequestModel)
