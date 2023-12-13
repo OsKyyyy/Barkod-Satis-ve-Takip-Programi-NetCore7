@@ -24,13 +24,15 @@ namespace WebUI.Pages.Product
 
         [ViewData]
         public string ToastrError { get; set; }
+
         [TempData]
         public string ToastrSuccess { get; set; }
         
-        public AddRequestModel addModel { get; set; }
+        public AddRequestModel AddRequestModel { get; set; }
 
         [BindProperty]
         public ImageRequestModel Image { get; set; }
+
         public List<SelectListItem> Options { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
@@ -54,17 +56,9 @@ namespace WebUI.Pages.Product
 
             if (response.Status)
             {
-                List<SelectListItem> List = new List<SelectListItem>();
+                var list = response.Data.Select(item => new SelectListItem { Value = item.Id.ToString(), Text = item.Name }).ToList();
 
-                foreach (var item in response.Data)
-                {
-                    List.Add(new SelectListItem
-                    {
-                        Value = item.Id.ToString(),
-                        Text = item.Name
-                    });
-                }
-                Options = List;
+                Options = list;
             }
             else
             {
@@ -74,23 +68,22 @@ namespace WebUI.Pages.Product
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAddAsync(AddRequestModel addModel)
+        public async Task<IActionResult> OnPostAddAsync(AddRequestModel addRequestModel)
         {
-            string imageBase64String = null;
+            string? imageBase64String = null;
+
             if (Image.File != null)
             {
-                using (var ms = new MemoryStream())
-                {
-                    Image.File.CopyTo(ms);
-                    var fileBytes = ms.ToArray();
-                    imageBase64String = Convert.ToBase64String(fileBytes);
-                }
+                using var ms = new MemoryStream();
+                await Image.File.CopyToAsync(ms);
+                var fileBytes = ms.ToArray();
+                imageBase64String = Convert.ToBase64String(fileBytes);
             }
-            
-            addModel.CreateUserId = JsonConvert.DeserializeObject<ViewModel>(HttpContext.Session.GetString("userInfo")).Id;
-            addModel.Image = imageBase64String;
 
-            var response = await _product.Add(SessionValues()[0], addModel);
+            addRequestModel.CreateUserId = JsonConvert.DeserializeObject<ViewModel>(HttpContext.Session.GetString("userInfo")).Id;
+            addRequestModel.Image = imageBase64String;
+
+            var response = await _product.Add(SessionValues()[0], addRequestModel);
 
             if (response.Message == "Authentication Error")
             {
@@ -106,16 +99,28 @@ namespace WebUI.Pages.Product
                 return new RedirectToPageResult("Add");
             }
 
+            await GetCategoryList();
+
             ToastrError = response.Message;
             return Page();
         }
+        
         public string[] SessionValues()
         {
             var user = "Bearer " + HttpContext.Session.GetString("userToken");
             var userInfo = HttpContext.Session.GetString("userInfo");
 
-            string[] values = new string[2] { user, userInfo };
+            var values = new string[2] { user, userInfo };
             return values;
+        }
+
+        public async Task GetCategoryList()
+        {
+            var responseCategory = await _category.List(SessionValues()[0]);
+
+            var list = responseCategory.Data.Select(item => new SelectListItem { Value = item.Id.ToString(), Text = item.Name }).ToList();
+
+            Options = list;
         }
     }
 }
