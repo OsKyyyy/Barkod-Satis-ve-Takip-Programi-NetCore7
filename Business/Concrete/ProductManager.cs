@@ -10,10 +10,13 @@ using Business.Constant;
 using Business.ValidationRules.FluentValidation.Product;
 using Core.Aspects.Autofac.Validation;
 using Core.Entities.Concrete;
+using Core.Utilities.Refit.Models.Response.Product;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
+using DataAccess.Concrete.EntityFramework;
 using Entities.Dtos;
+using Microsoft.Extensions.Configuration;
 
 namespace Business.Concrete
 {
@@ -22,28 +25,31 @@ namespace Business.Concrete
     {
         private readonly CultureInfo _culture = new("en-US");
 
+        private readonly IConfiguration Configuration;
+
         private readonly IProductDal _productDal;
 
         private string Type { get; set; }
 
-        public ProductManager(IProductDal productDal)
+        public ProductManager(IProductDal productDal, IConfiguration configuration)
         {
             _productDal = productDal;
+            Configuration = configuration;
         }
 
         [ValidationAspect(typeof(AddValidator))]
         public IResult Add(ProductAddDto productAddDto)
         {
+            var imageUrl = "Uploads/Products/unknow.jpg";
+
             if (!string.IsNullOrEmpty(productAddDto.Image))
             {
-                var imageUrl = SaveFile(productAddDto.Image, productAddDto.Name);
+                imageUrl = SaveFile(productAddDto.Image, productAddDto.Name);
 
                 if (imageUrl == null)
                 {
                     return new ErrorResult(Messages.ImagePropertyError);
                 }
-
-                productAddDto.Image = imageUrl;
             }
             
             var product = new Product
@@ -54,17 +60,60 @@ namespace Business.Concrete
                 SalePrice = decimal.Parse(productAddDto.SalePrice, _culture),
                 Barcode = productAddDto.Barcode,
                 Stock = productAddDto.Stock,
-                Image = productAddDto.Image,
+                Image = imageUrl,
                 Favorite = productAddDto.Favorite,
                 Status = productAddDto.Status,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 CreateUserId = productAddDto.CreateUserId,
                 UpdateUserId = productAddDto.CreateUserId,
+                Deleted = false
             };
             _productDal.Add(product);
 
             return new SuccessResult(Messages.ProductAdded);
+        }
+
+        public IResult Delete(int id)
+        {
+            _productDal.Delete(id);
+            return new SuccessResult(Messages.ProductDeleted);
+        }
+
+        public IDataResult<List<ViewModel>> List()
+        {
+            var result = _productDal.List();
+
+            return new SuccessDataResult<List<ViewModel>>(result, Messages.ProductsListed);
+        }
+
+        public IDataResult<List<ViewModel>> InActiveList()
+        {
+            var result = _productDal.InActiveList();
+
+            return new SuccessDataResult<List<ViewModel>>(result, Messages.ProductsListed);
+        }
+
+        public IDataResult<ViewModel> ListById(int id)
+        {
+            var result = _productDal.ListById(id);
+            if (result == null)
+            {
+                return new ErrorDataResult<ViewModel>(Messages.ProductNotFound);
+            }
+
+            return new SuccessDataResult<ViewModel>(result, Messages.ProductInfoListed);
+        }
+
+        public IDataResult<ViewModel> CheckExistsByBarcode(string barcode)
+        {
+            var result = _productDal.CheckExistsByBarcode(barcode);
+            if (result == null)
+            {
+                return new SuccessDataResult<ViewModel>(Messages.ProductNotFound);
+            }
+
+            return new ErrorDataResult<ViewModel>(result, Messages.ProductAlreadyExists);
         }
 
         private string? SaveFile(string? base64String, string productName)
@@ -76,12 +125,10 @@ namespace Business.Concrete
                 return null;
             }
 
-            var imageUrl = productName.GenerateSlug() + "-" + DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString() + Type;
-
-            var fullPath = @"D:\Test\" + imageUrl;
+            var fullPath = "Uploads/Products/" + productName.GenerateSlug() + "-" + DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString() + Type;
             File.WriteAllBytes(fullPath, Convert.FromBase64String(base64String));
 
-            return imageUrl;
+            return fullPath;
         }
 
         protected bool CheckFileProperty(string? base64String)

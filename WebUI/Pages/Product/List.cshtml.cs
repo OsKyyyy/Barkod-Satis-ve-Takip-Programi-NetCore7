@@ -1,9 +1,9 @@
 using Core.Utilities.Refit.Abstract;
-using Core.Utilities.Refit.Models.Response.Category;
+using Core.Utilities.Refit.Models.Response.Product;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace WebUI.Pages.Category
+namespace WebUI.Pages.Product
 {
     public class ListModel : PageModel
     {
@@ -15,11 +15,11 @@ namespace WebUI.Pages.Category
 
         public List<ViewModel> viewModel { get; set; }
 
-        private readonly ICategory _category;
+        private readonly IProduct _product;
 
-        public ListModel(ICategory category)
+        public ListModel(IProduct product)
         {
-            _category = category;
+            _product = product;
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -34,7 +34,7 @@ namespace WebUI.Pages.Category
                 return new RedirectToPageResult("../User/Login");
             }
 
-            var response = await _category.List(SessionValues()[0]);
+            var response = await _product.List(SessionValues()[0]);
 
             if (response.Message == "Authentication Error")
             {

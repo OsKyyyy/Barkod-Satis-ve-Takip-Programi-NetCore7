@@ -46,7 +46,7 @@ namespace WebUI.Pages.Category
                 HttpContext.Session.Remove("userToken");
                 HttpContext.Session.Remove("userInfo");
 
-                return new RedirectToPageResult("Login");
+                return new RedirectToPageResult("../User/Login");
             }
 
             if (response.Status)

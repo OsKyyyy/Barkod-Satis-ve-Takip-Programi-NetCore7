@@ -84,3 +84,7 @@
 $(document).ready(function () {
     Category.Init();
 });
+
+$(window).on("load", function () {
+    $("#pageLoader").attr("style", "display:none");
+})

@@ -12,7 +12,7 @@ namespace Core.Utilities.Refit.Abstract
 {
     public interface ICategory
     {
-        [Post("/category/add")]
+        [Post("/category/Add")]
         Task<DataResult<AddModel>> Add([Header("Authorization")] string token, [Body] AddRequestModel createRequest);
 
         [Put("/category/Update")]
@@ -20,6 +20,9 @@ namespace Core.Utilities.Refit.Abstract
 
         [Get("/category/List")]
         Task<DataResult<List<ViewModel>>> List([Header("Authorization")] string token);
+        
+        [Get("/category/InActiveList")]
+        Task<DataResult<List<ViewModel>>> InActiveList([Header("Authorization")] string token);
 
         [Delete("/category/Delete")]
         Task<DataResult<ViewModel>> Delete([Header("Authorization")] string token, int id);

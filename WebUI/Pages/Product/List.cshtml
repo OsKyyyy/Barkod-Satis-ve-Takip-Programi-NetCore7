@@ -1,19 +1,22 @@
 ﻿@page
-@model WebUI.Pages.User.ListModel
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@model WebUI.Pages.Product.ListModel
 @{
-    ViewData["Title"] = "Kullanıcı Listesi";
+    ViewData["Title"] = "Ürün Listesi";
 }
 @section _Head
-{
+    {
     <link href="~/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
 }
+
 <div class="app-main flex-column flex-row-fluid " id="kt_app_main">
     <div class="d-flex flex-column flex-column-fluid">
         <div id="kt_app_toolbar" class="app-toolbar  py-3 py-lg-6 mb-10">
             <div id="kt_app_toolbar_container" class="app-container  container-xxl d-flex flex-stack ">
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3 ">
                     <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">
-                        Kullanıcı Listesi
+                        Ürün Listesi
                     </h1>
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                         <li class="breadcrumb-item text-muted">
@@ -23,7 +26,7 @@
                             <span class="bullet bg-gray-500 w-5px h-2px"></span>
                         </li>
                         <li class="breadcrumb-item text-muted">
-                            Kullanıcı İşlemleri
+                            Ürün İşlemleri
                         </li>
                     </ul>
                 </div>
@@ -41,7 +44,7 @@
                             <div id="kt_datatable_example_1_export" class="d-none"></div>
                         </div>
                         <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
-                            <a asp-page="/User/InActiveList" class="btn btn-light-danger">
+                            <a asp-page="/Product/InActiveList" class="btn btn-light-danger">
                                 <i class="ki-duotone ki-text-number">
                                     <span class="path1"></span>
                                     <span class="path2"></span>
@@ -53,7 +56,10 @@
                                 Pasif Listesi
                             </a>
                             <button type="button" class="btn btn-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                                <i class="ki-duotone ki-exit-down fs-2"><span class="path1"></span><span class="path2"></span></i>
+                                <i class="ki-duotone ki-exit-down fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>
                                 Dışa Aktar
                             </button>
                             <div id="kt_datatable_example_export_menu" class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-200px py-4" data-kt-menu="true">
@@ -80,10 +86,14 @@
                         <table class="table align-middle rounded table-row-dashed fs-6 g-5" id="kt_datatable_example">
                             <thead>
                                 <tr class="text-start fw-bold fs-7 text-uppercase">
+                                    <th class="min-w-100px">FOTOĞRAF</th>
+                                    <th class="min-w-100px">KATEGORİ</th>
                                     <th class="min-w-100px">AD</th>
-                                    <th class="min-w-100px">SOYAD</th>
-                                    <th class="min-w-100px">EPOSTA</th>
-                                    <th class="min-w-100px">TELEFON</th>
+                                    <th class="min-w-100px">BARKOD</th>
+                                    <th class="min-w-100px">STOK</th>
+                                    <th class="min-w-100px">ALIŞ FİYATI</th>
+                                    <th class="min-w-100px">SATIŞ FİYATI</th>
+                                    <th class="min-w-100px">SON İŞLEM TARİHİ</th>
                                     <th class="min-w-100px">DURUM</th>
                                     <th class="min-w-100px text-end">İŞLEMLER</th>
                                 </tr>
@@ -92,19 +102,20 @@
                                 @foreach (var item in Model.viewModel)
                                 {
                                     <tr class="odd">
-                                        <td>@item.FirstName</td>
-                                        <td>@item.LastName</td>
-                                        <td>@item.Email</td>
                                         <td>
-                                            @if (item.Phone == null)
-                                            {
-                                                <span>-</span>
-                                            }
-                                            else
-                                            {
-                                                <span>@item.Phone</span>
-                                            }
+                                            <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                                                <div class="symbol-label">
+                                                    <img src="@Configuration.GetValue(typeof(string), "BaseUrl")@item.Image" class="w-100">
+                                                </div>
+                                            </div>
                                         </td>
+                                        <td>@item.CategoryName</td>
+                                        <td>@item.Name</td>
+                                        <td>@item.Barcode</td>
+                                        <td>@item.Stock</td>
+                                        <td>@item.PurchasePrice &#8378;</td>
+                                        <td>@item.SalePrice &#8378;</td>
+                                        <td>@item.UpdateDate</td>
                                         <td>
                                             @if (item.Status)
                                             {
@@ -116,14 +127,15 @@
                                             }
                                         </td>
                                         <td class="text-end">
-                                            <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" asp-page="/User/Edit" asp-route-id="@item.Id">
+                                            <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" asp-page="/Product/Edit" asp-route-id="@item.Id">
                                                 <i class="ki-duotone ki-pencil fs-2">
                                                     <span class="path1"></span>
                                                     <span class="path2"></span>
                                                 </i>
                                             </a>
-                                            <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" asp-page="/User/Delete" asp-route-id="@item.Id" onclick="User.DeleteConfirm(this)">
-                                                <i class="ki-duotone ki-trash fs-2"><span class="path1"></span>
+                                            <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" asp-page="/Product/Delete" asp-route-id="@item.Id" onclick="Product.DeleteConfirm(this)">
+                                                <i class="ki-duotone ki-trash fs-2">
+                                                    <span class="path1"></span>
                                                     <span class="path2"></span><span class="path3"></span>
                                                     <span class="path4"></span><span class="path5"></span>
                                                 </i>
@@ -149,6 +161,6 @@
 @section _Foot
 {
     <script src="~/assets/plugins/custom/datatables/datatables.bundle.js"></script>
-    <script src="~/assets/js/pages/user/user.js"></script>
-    <script src="~/assets/js/pages/user/listData.js"></script>
+    <script src="~/assets/js/pages/product/product.js"></script>
+    <script src="~/assets/js/pages/product/listData.js"></script>
 }

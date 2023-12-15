@@ -62,6 +62,19 @@ namespace WebAPI.Controllers
             return Ok(list);
         }
 
+        [Route("InActiveList")]
+        [HttpGet]
+        public ActionResult InActiveList()
+        {
+            var list = _categoryService.InActiveList();
+            if (!list.Status)
+            {
+                return BadRequest(list);
+            }
+
+            return Ok(list);
+        }
+
         [Route("Delete")]
         [HttpDelete]
         public ActionResult Delete(int id)

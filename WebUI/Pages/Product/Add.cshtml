@@ -1,4 +1,6 @@
 ﻿@page
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
 @model WebUI.Pages.Product.AddModel
 @{
     ViewData["Title"] = "Ürün Ekle";
@@ -107,37 +109,26 @@
                                 
                                 <div class="row mb-6">
                                     <label class="col-lg-4 col-form-label fw-semibold fs-6">Fotoğraf</label>
-                                    <img src="C:\Users\Lehns\source\repos\MarketOtomasyon\WebAPI\Uploads\Products\unknow.jpg" />
-                                    <div class="col-lg-8 fv-row">
-                                        <div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url()">
-                                            <div class="image-input-wrapper w-125px h-125px" style="background-image: url(/assets/media/avatars/300-1.jpg)"></div>
 
-                                            <label class="btn btn-icon btn-circle btn-color-muted btn-active-color-primary w-25px h-25px bg-body shadow"
-                                                   data-kt-image-input-action="change"
-                                                   data-bs-toggle="tooltip"
-                                                   data-bs-dismiss="click"
-                                                   title="Change avatar">
-                                                <i class="ki-duotone ki-pencil fs-6"><span class="path1"></span><span class="path2"></span></i>
+                                    <div class="col-lg-8 fv-row">
+                                        <div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url(@Configuration.GetValue(typeof(string),"BaseUrl")Uploads/Products/unknow.jpg);background-size: contain;">
+                                            <div class="image-input-wrapper w-125px h-125px" style="background-image: url(@Configuration.GetValue(typeof(string),"BaseUrl")Uploads/Products/unknow.jpg);background-size: contain;"></div>
+
+                                            <label class="btn btn-icon btn-circle btn-color-muted btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" data-bs-dismiss="click" title="Değiştir">
+                                                <i class="ki-duotone ki-pencil fs-6">
+                                                    <span class="path1"></span>
+                                                    <span class="path2"></span>
+                                                </i>
 
                                                 <input type="file" asp-for="Image.File" />
                                                 <input type="hidden" name="avatar_remove" />
                                             </label>
 
-                                            <span class="btn btn-icon btn-circle btn-color-muted btn-active-color-primary w-25px h-25px bg-body shadow"
-                                                  data-kt-image-input-action="cancel"
-                                                  data-bs-toggle="tooltip"
-                                                  data-bs-dismiss="click"
-                                                  title="Cancel avatar">
+                                            <span class="btn btn-icon btn-circle btn-color-muted btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" data-bs-dismiss="click" title="İptal">
                                                 <i class="ki-outline ki-cross fs-3"></i>
                                             </span>
 
-                                            <span class="btn btn-icon btn-circle btn-color-muted btn-active-color-primary w-25px h-25px bg-body shadow"
-                                                  data-kt-image-input-action="remove"
-                                                  data-bs-toggle="tooltip"
-                                                  data-bs-dismiss="click"
-                                                  title="Remove avatar">
-                                                <i class="ki-outline ki-cross fs-3"></i>
-                                            </span>
+                                           
                                         </div>
                                     </div>
                                 </div>
@@ -150,9 +141,9 @@
                                                 <i class="ki-duotone ki-information fs-2tx text-warning me-4"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
                                                 <div class="d-flex flex-stack flex-grow-1 ">
                                                     <div class=" fw-semibold">
-                                                        <h4 class="text-gray-900 fw-bold">Kategoriyi Devredışı Olarak Kaydet</h4>
+                                                        <h4 class="text-gray-900 fw-bold">Ürünü Devredışı Olarak Kaydet</h4>
 
-                                                        <div class="fs-6 text-gray-700 ">Aşağıda ki kutucuk <b>işaretlenmediği</b> takdirde eklenecek olan kategori devredışı olarak kaydedilir. Bu kategorinin kullanılamayacağı anlamına gelir. Daha sonra kategori liste üzerinden aktifleştirilebilir.<br></div>
+                                                        <div class="fs-6 text-gray-700 ">Aşağıda ki kutucuk <b>işaretlenmediği</b> takdirde eklenecek olan ürün devredışı olarak kaydedilir. Bu ürünün kullanılamayacağı anlamına gelir. Daha sonra ürün liste üzerinden aktifleştirilebilir.<br></div>
                                                     </div>
                                                 </div>
                                             </div>

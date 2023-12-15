@@ -13,6 +13,7 @@ namespace DataAccess.Abstract
         User Update(User user);
         User Delete(int id);
         List<User> List();
+        List<User> InActiveList();
         User ListByMail(string email);
         User ListById(int id);
         List<OperationClaim> GetClaims(User user);

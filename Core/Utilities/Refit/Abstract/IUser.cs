@@ -12,10 +12,10 @@ namespace Core.Utilities.Refit.Abstract
 {
     public interface IUser
     {
-        [Post("/auth/login")]
+        [Post("/auth/Login")]
         Task<DataResult<LoginModel>> Login([Body] LoginRequestModel loginRequest);
 
-		[Post("/auth/register")]
+		[Post("/auth/Register")]
         Task<DataResult<RegisterModel>> Register([Header("Authorization")] string token, [Body] RegisterRequestModel registerRequest);
 
         [Put("/user/Update")]
@@ -27,7 +27,10 @@ namespace Core.Utilities.Refit.Abstract
         [Get("/user/List")]
         Task<DataResult<List<ViewModel>>> List([Header("Authorization")] string token);
 
-		[Get("/user/ListByMail")]
+        [Get("/user/InActiveList")]
+        Task<DataResult<List<ViewModel>>> InActiveList([Header("Authorization")] string token);
+
+        [Get("/user/ListByMail")]
         Task<DataResult<ViewModel>> ListByMail([Header("Authorization")] string token, [AliasAs("email")] string email);
 
         [Get("/user/ListById")]

@@ -80,6 +80,14 @@ namespace Business.Concrete
         }
 
         [SecuredOperation("Admin")]
+        public IDataResult<List<User>> InActiveList()
+        {
+            var result = _userDal.InActiveList();
+
+            return new SuccessDataResult<List<User>>(result, Messages.UsersListed);
+        }
+
+        [SecuredOperation("Admin")]
         public IDataResult<User> ListByMail(string email)
         {
 	        var result = _userDal.ListByMail(email);

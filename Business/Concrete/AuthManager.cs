@@ -44,7 +44,8 @@ namespace Business.Concrete
                 Phone = userForRegisterDto.Phone,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
-                Status = userForRegisterDto.Status
+                Status = userForRegisterDto.Status,
+                Deleted = false
             };
             _userService.Add(user);
 

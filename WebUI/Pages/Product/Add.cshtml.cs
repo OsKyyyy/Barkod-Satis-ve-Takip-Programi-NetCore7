@@ -1,3 +1,4 @@
+using System.Configuration;
 using Core.Entities.Concrete;
 using Core.Utilities.Refit.Abstract;
 using Core.Utilities.Refit.Models.Request;
@@ -51,7 +52,7 @@ namespace WebUI.Pages.Product
                 HttpContext.Session.Remove("userToken");
                 HttpContext.Session.Remove("userInfo");
 
-                return new RedirectToPageResult("Login");
+                return new RedirectToPageResult("../User/Login");
             }
 
             if (response.Status)

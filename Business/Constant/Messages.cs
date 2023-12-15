@@ -29,6 +29,11 @@ namespace Business.Constant
         public static string CategoriesListed = "Kategoriler Listelendi";
 
         public static string ProductAdded = "Ürün Eklendi";
+        public static string ProductsListed = "Ürünler Listelendi";
+        public static string ProductDeleted = "Ürün Silindi";
+        public static string ProductNotFound = "Ürün Bulunamadı";
+        public static string ProductInfoListed = "Ürün Bilgileri Listelendi";
+        public static string ProductAlreadyExists = "Ürün Zaten Mevcut";
         public static string ImagePropertyError = "Dosya 'PNG,JPG' formatında ve 2MB'dan az olmalıdır";
 
     }

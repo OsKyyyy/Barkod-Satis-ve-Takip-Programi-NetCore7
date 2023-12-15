@@ -15,5 +15,6 @@ namespace Core.Entities.Concrete
         public DateTime UpdateDate { get; set; }
         public int CreateUserId { get; set; }
         public int UpdateUserId { get; set; }
+        public bool Deleted { get; set; }
     }
 }

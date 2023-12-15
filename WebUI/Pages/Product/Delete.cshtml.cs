@@ -1,17 +1,16 @@
 using Core.Utilities.Refit.Abstract;
-using Core.Utilities.Refit.Models.Response.User;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace WebUI.Pages.User
+namespace WebUI.Pages.Product
 {
     public class DeleteModel : PageModel
     {
-        private readonly IUser _user;
+        private readonly IProduct _product;
 
-        public DeleteModel(IUser user)
+        public DeleteModel(IProduct product)
         {
-            _user = user;
+            _product = product;
         }
 
         public async Task<IActionResult> OnGetAsync(int id)
@@ -23,14 +22,14 @@ namespace WebUI.Pages.User
                 return new RedirectToPageResult("Login");
             }
 
-            var response = await _user.Delete(SessionValues()[0], id);
+            var response = await _product.Delete(SessionValues()[0], id);
 
             if (response.Message == "Authentication Error")
             {
                 HttpContext.Session.Remove("userToken");
                 HttpContext.Session.Remove("userInfo");
 
-                return new RedirectToPageResult("Login");
+                return new RedirectToPageResult("../User/Login");
             }
 
             if (response.Status)

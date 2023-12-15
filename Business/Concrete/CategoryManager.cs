@@ -39,6 +39,7 @@ namespace Business.Concrete
                 UpdateDate = DateTime.Now,
                 CreateUserId = categoryAddDto.CreateUserId,
                 UpdateUserId = categoryAddDto.CreateUserId,
+                Deleted = false
             };
             _categoryDal.Add(category);
 
@@ -70,6 +71,13 @@ namespace Business.Concrete
         public IDataResult<List<ViewModel>> List()
         {
             var result = _categoryDal.List();
+
+            return new SuccessDataResult<List<ViewModel>>(result, Messages.CategoriesListed);
+        }
+
+        public IDataResult<List<ViewModel>> InActiveList()
+        {
+            var result = _categoryDal.InActiveList();
 
             return new SuccessDataResult<List<ViewModel>>(result, Messages.CategoriesListed);
         }

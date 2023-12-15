@@ -15,8 +15,8 @@ namespace Business.Abstract
         IDataResult<Category> Add(CategoryAddDto category);
         IDataResult<Category> Update(CategoryUpdateDto category);
         IDataResult<List<ViewModel>> List();
+        IDataResult<List<ViewModel>> InActiveList();
         IResult Delete(int id);
         IDataResult<ViewModel> ListById(int id);
-
     }
 }

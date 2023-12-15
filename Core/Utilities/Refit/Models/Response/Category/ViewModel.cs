@@ -19,10 +19,10 @@ namespace Core.Utilities.Refit.Models.Response.Category
         [JsonProperty("Status")]
         public bool Status { get; set; }
 
-        [JsonProperty("Status")]
+        [JsonProperty("UpdateDate")]
         public DateTime UpdateDate { get; set; }
 
-        [JsonProperty("Status")]
+        [JsonProperty("UpdateUserName")]
         public string UpdateUserName { get; set; }
     }
 }

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace WebUI.Pages.Category
 {
-    public class ListModel : PageModel
+    public class InActiveListModel : PageModel
     {
         [ViewData]
         public string? ToastrError { get; set; }
@@ -17,7 +17,7 @@ namespace WebUI.Pages.Category
 
         private readonly ICategory _category;
 
-        public ListModel(ICategory category)
+        public InActiveListModel(ICategory category)
         {
             _category = category;
         }
@@ -34,7 +34,7 @@ namespace WebUI.Pages.Category
                 return new RedirectToPageResult("../User/Login");
             }
 
-            var response = await _category.List(SessionValues()[0]);
+            var response = await _category.InActiveList(SessionValues()[0]);
 
             if (response.Message == "Authentication Error")
             {

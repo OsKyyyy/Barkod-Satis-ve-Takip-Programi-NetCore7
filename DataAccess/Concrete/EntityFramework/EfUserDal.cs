@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using Core.Utilities.Refit.Abstract;
 
 namespace DataAccess.Concrete.EntityFramework
@@ -51,20 +50,13 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (var context = new DataBaseContext())
             {
-
                 var result = context.Users.FirstOrDefault(u => u.Id == id);
 
+                result.Deleted = true;
                 result.Status = false;
 
                 context.SaveChanges();
-
-
-                //var result = context.Users.FirstOrDefault(u => u.Id == id);
                 
-                //context.Users.Remove(result);
-
-                //context.SaveChanges();
-
                 return result;
             }
         }
@@ -73,7 +65,25 @@ namespace DataAccess.Concrete.EntityFramework
         {
 	        using (var context = new DataBaseContext())
 	        {
-                var result = context.Users.Select(s => new User
+                var result = context.Users.Where(x => x.Deleted == false).Where(x => x.Status == true).Select(s => new User
+                {
+                    Id = s.Id,
+                    FirstName = s.FirstName,
+                    LastName = s.LastName,
+                    Phone = s.Phone,
+                    Email = s. Email,
+                    Status = s. Status,
+                }).ToList();
+
+                return result;
+            }
+        }
+        
+        public List<User> InActiveList()
+        {
+	        using (var context = new DataBaseContext())
+	        {
+                var result = context.Users.Where(x => x.Deleted == false).Where(x => x.Status == false).Select(s => new User
                 {
                     Id = s.Id,
                     FirstName = s.FirstName,
@@ -91,7 +101,7 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (var context = new DataBaseContext())
             {
-                var result = context.Users.Where(u => u.Email == email).Select(s => new User
+                var result = context.Users.Where(x => x.Deleted == false).Select(s => new User
                 {
                     Id = s.Id,
                     FirstName = s.FirstName,
@@ -99,7 +109,7 @@ namespace DataAccess.Concrete.EntityFramework
                     Phone = s.Phone,
                     Email = s.Email,
                     Status = s.Status,
-                }).FirstOrDefault();
+                }).FirstOrDefault(u => u.Email == email);
 
                 return result;
             }
@@ -109,7 +119,7 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (var context = new DataBaseContext())
             {
-                var result = context.Users.Where(u => u.Id == id).Select(s => new User
+                var result = context.Users.Where(x => x.Deleted == false).Select(s => new User
                 {
                     Id = s.Id,
                     FirstName = s.FirstName,
@@ -117,7 +127,7 @@ namespace DataAccess.Concrete.EntityFramework
                     Phone = s.Phone,
                     Email = s.Email,
                     Status = s.Status,
-                }).FirstOrDefault();
+                }).FirstOrDefault(u => u.Id == id);
 
                 return result;
             }
