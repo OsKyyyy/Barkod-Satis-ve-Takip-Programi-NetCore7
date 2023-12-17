@@ -62,19 +62,6 @@ namespace WebAPI.Controllers
             return Ok(list);
         }
 
-        [Route("InActiveList")]
-        [HttpGet]
-        public ActionResult InActiveList()
-        {
-            var list = _categoryService.InActiveList();
-            if (!list.Status)
-            {
-                return BadRequest(list);
-            }
-
-            return Ok(list);
-        }
-
         [Route("Delete")]
         [HttpDelete]
         public ActionResult Delete(int id)
@@ -100,6 +87,19 @@ namespace WebAPI.Controllers
         public ActionResult ListById(int id)
         {
             var listById = _categoryService.ListById(id);
+            if (!listById.Status)
+            {
+                return BadRequest(listById);
+            }
+
+            return Ok(listById);
+        }
+
+        [Route("ListByActive")]
+        [HttpGet]
+        public ActionResult ListByActive()
+        {
+            var listById = _categoryService.ListByActive();
             if (!listById.Status)
             {
                 return BadRequest(listById);

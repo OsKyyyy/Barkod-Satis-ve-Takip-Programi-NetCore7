@@ -3,6 +3,7 @@
     Init: function () {
         Product.ToastrError();
         Product.ToastrSuccess();
+        Product.ChangeStatus();
     },
 
     ToastrError: function () {
@@ -79,6 +80,18 @@
                 window.location.href = url;
             }
         });
+    },
+    ChangeStatus: function () {
+        $("#statusSelect").on("change", function (e) {
+
+            $("#statusCircle").removeClass("bg-success");
+            $("#statusCircle").addClass("bg-danger");
+
+            if (this.value == "true") {
+                $("#statusCircle").removeClass("bg-danger");
+                $("#statusCircle").addClass("bg-success");
+            }            
+        });        
     }
 }
 
@@ -87,5 +100,6 @@ $(document).ready(function () {
 });
 
 $(window).on("load", function () {
-    $("#pageLoader").attr("style","display:none");
+    $("#pageLoader").attr("style", "display:none");
+    $("#statusSelect").trigger("change");
 })

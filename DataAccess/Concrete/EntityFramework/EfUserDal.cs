@@ -65,25 +65,7 @@ namespace DataAccess.Concrete.EntityFramework
         {
 	        using (var context = new DataBaseContext())
 	        {
-                var result = context.Users.Where(x => x.Deleted == false).Where(x => x.Status == true).Select(s => new User
-                {
-                    Id = s.Id,
-                    FirstName = s.FirstName,
-                    LastName = s.LastName,
-                    Phone = s.Phone,
-                    Email = s. Email,
-                    Status = s. Status,
-                }).ToList();
-
-                return result;
-            }
-        }
-        
-        public List<User> InActiveList()
-        {
-	        using (var context = new DataBaseContext())
-	        {
-                var result = context.Users.Where(x => x.Deleted == false).Where(x => x.Status == false).Select(s => new User
+                var result = context.Users.Where(x => x.Deleted == false).Select(s => new User
                 {
                     Id = s.Id,
                     FirstName = s.FirstName,

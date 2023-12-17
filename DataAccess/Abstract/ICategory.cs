@@ -14,7 +14,7 @@ namespace DataAccess.Abstract
         Category Add(Category category);
         Category Update(Category category);
         List<ViewModel> List();
-        List<ViewModel> InActiveList();
+        List<ViewModel> ListByActive();
         Category Delete(int id);
         ViewModel ListById(int id);
     }

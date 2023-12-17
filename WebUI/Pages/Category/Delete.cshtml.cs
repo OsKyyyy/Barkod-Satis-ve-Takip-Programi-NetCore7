@@ -19,7 +19,7 @@ namespace WebUI.Pages.Category
 
             if (session[1] == null)
             {
-                return new RedirectToPageResult("Login");
+                return new RedirectToPageResult("../User/Login");
             }
 
             var response = await _category.Delete(SessionValues()[0], id);

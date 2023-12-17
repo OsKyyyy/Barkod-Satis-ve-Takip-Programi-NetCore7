@@ -19,7 +19,7 @@ namespace WebUI.Pages.Product
 
             if (session[1] == null)
             {
-                return new RedirectToPageResult("Login");
+                return new RedirectToPageResult("../User/Login");
             }
 
             var response = await _product.Delete(SessionValues()[0], id);

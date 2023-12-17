@@ -27,9 +27,6 @@ namespace Core.Utilities.Refit.Abstract
         [Get("/user/List")]
         Task<DataResult<List<ViewModel>>> List([Header("Authorization")] string token);
 
-        [Get("/user/InActiveList")]
-        Task<DataResult<List<ViewModel>>> InActiveList([Header("Authorization")] string token);
-
         [Get("/user/ListByMail")]
         Task<DataResult<ViewModel>> ListByMail([Header("Authorization")] string token, [AliasAs("email")] string email);
 

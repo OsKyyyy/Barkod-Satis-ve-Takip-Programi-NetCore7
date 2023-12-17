@@ -75,9 +75,9 @@ namespace Business.Concrete
             return new SuccessDataResult<List<ViewModel>>(result, Messages.CategoriesListed);
         }
 
-        public IDataResult<List<ViewModel>> InActiveList()
+        public IDataResult<List<ViewModel>> ListByActive()
         {
-            var result = _categoryDal.InActiveList();
+            var result = _categoryDal.ListByActive();
 
             return new SuccessDataResult<List<ViewModel>>(result, Messages.CategoriesListed);
         }

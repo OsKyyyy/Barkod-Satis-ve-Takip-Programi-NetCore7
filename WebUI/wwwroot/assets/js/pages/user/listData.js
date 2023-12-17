@@ -16,6 +16,16 @@ var KTDatatablesExample = function () {
             "info": false,
             'order': [],
             'pageLength': 10,
+            initComplete: function () {
+                this.api()
+                    .columns()
+                    .every(function () {
+                        $("#chooseStatus").on("change", function () {
+                            var val = $(this).val();
+                            "all" === val && (val = ""), datatable.column(4).search(val).draw();
+                        });
+                    });
+            }
         });
     }
 

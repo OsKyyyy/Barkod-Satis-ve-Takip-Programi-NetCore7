@@ -9,8 +9,6 @@ namespace WebUI.Pages.User
 {
     public class AddModel : PageModel
     {
-		public RegisterRequestModel registerModel { get; set; }
-
         private readonly IUser _user;
         
 		public AddModel(IUser user)
@@ -20,8 +18,11 @@ namespace WebUI.Pages.User
 
         [ViewData]
         public string ToastrError { get; set; }
+
         [TempData]
         public string ToastrSuccess { get; set; }
+
+        public RegisterRequestModel RegisterModel { get; set; }
 
         public IActionResult OnGet()
         {

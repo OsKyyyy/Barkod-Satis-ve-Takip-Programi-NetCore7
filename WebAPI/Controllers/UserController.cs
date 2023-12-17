@@ -68,19 +68,6 @@ namespace WebAPI.Controllers
 			return Ok(list);
 		}
 
-        [Route("InActiveList")]
-        [HttpGet]
-        public ActionResult InActiveList()
-        {
-            var list = _userService.InActiveList();
-            if (!list.Status)
-            {
-                return BadRequest(list);
-            }
-
-            return Ok(list);
-        }
-
         [Route("ListByMail")]
 		[HttpGet]
 		public ActionResult ListByMail(string email)

@@ -66,19 +66,19 @@
                                 </div>
 
                                 <div class="fv-row mb-8">
-                                    <input asp-for="loginModel.Email" placeholder="E-Posta" autocomplete="off" class="form-control bg-transparent" value="oguzhaninan@outlook.com">
+                                    <input asp-for="LoginRequestModel.Email" placeholder="E-Posta" autocomplete="off" class="form-control bg-transparent" value="oguzhaninan@outlook.com">
                                     <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
-                                        <span asp-validation-for="loginModel.Email"></span>
+                                        <span asp-validation-for="LoginRequestModel.Email"></span>
                                     </div>
                                 </div>
 
                                 <div class="input-group mb-7">
-                                    <input asp-for="loginModel.Password" placeholder="Şifre" id="passwordInput" autocomplete="off" class="form-control bg-transparent" aria-describedby="passwordIcon" value="Oguzhan123.">
+                                    <input asp-for="LoginRequestModel.Password" placeholder="Şifre" id="passwordInput" autocomplete="off" class="form-control bg-transparent" aria-describedby="passwordIcon" value="Oguzhan123.">
                                     <span class="input-group-text" id="passwordIcon" role="button">
                                         <i class="ki-solid ki-eye fs-4"></i>
                                     </span>
                                     <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
-                                        <span asp-validation-for="loginModel.Password"></span>
+                                        <span asp-validation-for="LoginRequestModel.Password"></span>
                                     </div>
                                 </div>
 

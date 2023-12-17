@@ -16,10 +16,11 @@ namespace WebUI.Pages.Category
             _category = category;
         }
 
-        public AddRequestModel addModel { get; set; }
+        public AddRequestModel AddRequestModel { get; set; }
 
         [ViewData]
         public string ToastrError { get; set; }
+
         [TempData]
         public string ToastrSuccess { get; set; }
 
@@ -35,11 +36,11 @@ namespace WebUI.Pages.Category
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAddAsync(AddRequestModel addModel)
+        public async Task<IActionResult> OnPostAddAsync(AddRequestModel addRequestModel)
         {
-            addModel.CreateUserId = JsonConvert.DeserializeObject<ViewModel>(HttpContext.Session.GetString("userInfo")).Id;
+            addRequestModel.CreateUserId = JsonConvert.DeserializeObject<ViewModel>(HttpContext.Session.GetString("userInfo")).Id;
 
-            var response = await _category.Add(SessionValues()[0], addModel);
+            var response = await _category.Add(SessionValues()[0], addRequestModel);
 
             if (response.Message == "Authentication Error")
             {

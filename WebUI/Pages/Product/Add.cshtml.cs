@@ -45,7 +45,7 @@ namespace WebUI.Pages.Product
                 return new RedirectToPageResult("../User/Login");
             }
 
-            var response = await _category.List(SessionValues()[0]);
+            var response = await _category.ListByActive(SessionValues()[0]);
 
             if (response.Message == "Authentication Error")
             {
@@ -91,7 +91,7 @@ namespace WebUI.Pages.Product
                 HttpContext.Session.Remove("userToken");
                 HttpContext.Session.Remove("userInfo");
 
-                return new RedirectToPageResult("Login");
+                return new RedirectToPageResult("../User/Login");
             }
 
             if (response.Status)

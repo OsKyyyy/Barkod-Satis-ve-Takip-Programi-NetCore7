@@ -20,14 +20,14 @@ namespace Core.Utilities.Refit.Abstract
 
         [Get("/category/List")]
         Task<DataResult<List<ViewModel>>> List([Header("Authorization")] string token);
-        
-        [Get("/category/InActiveList")]
-        Task<DataResult<List<ViewModel>>> InActiveList([Header("Authorization")] string token);
 
         [Delete("/category/Delete")]
         Task<DataResult<ViewModel>> Delete([Header("Authorization")] string token, int id);
 
         [Get("/category/ListById")]
         Task<DataResult<ViewModel>> ListById([Header("Authorization")] string token, [AliasAs("id")] int id);
+
+        [Get("/category/ListByActive")]
+        Task<DataResult<List<ViewModel>>> ListByActive([Header("Authorization")] string token);
     }
 }

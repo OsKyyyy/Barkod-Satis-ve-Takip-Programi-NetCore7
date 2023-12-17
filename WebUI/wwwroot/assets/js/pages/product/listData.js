@@ -15,9 +15,17 @@ var KTDatatablesExample = function () {
         datatable = $(table).DataTable({
             "info": false,
             'order': [],
-            'pageLength': 10,
-            'processing': true,
-            'serverSide': false
+            'pageLength': 10,           
+            initComplete: function () {
+                this.api()
+                    .columns()
+                    .every(function () {
+                        $("#chooseStatus").on("change", function () {
+                            var val = $(this).val();
+                            "all" === val && (val = ""), datatable.column(7).search(val).draw();
+                        });
+                    });
+            }
         });
     }
 

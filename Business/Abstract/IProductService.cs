@@ -14,7 +14,6 @@ namespace Business.Abstract
     {
         IResult Add(ProductAddDto product);
         IDataResult<List<ViewModel>> List();
-        IDataResult<List<ViewModel>> InActiveList();
         IResult Delete(int id);
         IDataResult<ViewModel> ListById(int id);
         IDataResult<ViewModel> CheckExistsByBarcode(string barcode);

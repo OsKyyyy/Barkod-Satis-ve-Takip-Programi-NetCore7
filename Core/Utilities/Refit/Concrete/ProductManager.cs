@@ -74,35 +74,6 @@ namespace Core.Utilities.Refit.Concrete
             }
         }
 
-        public async Task<DataResult<List<ViewModel>>> InActiveList([Header("Authorization: Bearer")] string token)
-        {
-            DataResult<List<ViewModel>> dataResult = new DataResult<List<ViewModel>>();
-
-            try
-            {
-                dataResult = await myAPI.InActiveList(token);
-
-                return dataResult;
-            }
-            catch (ApiException exception)
-            {
-                dynamic response = JsonConvert.DeserializeObject(exception.Content);
-
-                if (response.Status != null)
-                {
-                    dataResult.Message = response.Message;
-                    dataResult.Status = response.Status;
-
-                    return dataResult;
-                }
-
-                dataResult.Message = "Beklenmedik hata ile karşılaşıldı";
-                dataResult.Status = false;
-
-                return dataResult;
-            }
-        }
-
         public async Task<DataResult<ViewModel>> Delete([Header("Authorization: Bearer")] string token, int id)
         {
             DataResult<ViewModel> dataResult = new DataResult<ViewModel>();

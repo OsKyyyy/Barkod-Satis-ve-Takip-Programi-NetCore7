@@ -48,7 +48,7 @@ namespace DataAccess.Concrete.EntityFramework
                     p => p.CategoryId,
                     c => c.Id, (p, c) => new { p, c }).Join(context.Users,
                     pu => pu.p.UpdateUserId,
-                    u => u.Id, (pu, u) => new { pu, u }).Where(x=>x.pu.p.Deleted == false).Where(x => x.pu.p.Status == true).Select(l => new ViewModel
+                    u => u.Id, (pu, u) => new { pu, u }).Where(x=>x.pu.p.Deleted == false).Select(l => new ViewModel
                 {
                     Id = l.pu.p.Id,
                     Name = l.pu.p.Name,
@@ -69,37 +69,7 @@ namespace DataAccess.Concrete.EntityFramework
                 return result;
             }
         }
-
-        public List<ViewModel> InActiveList()
-        {
-            using (var context = new DataBaseContext())
-            {
-                var result = context.Products.Join(context.Categories,
-                    p => p.CategoryId,
-                    c => c.Id, (p, c) => new { p, c }).Join(context.Users,
-                    pu => pu.p.UpdateUserId,
-                    u => u.Id, (pu, u) => new { pu, u }).Where(x => x.pu.p.Deleted == false).Where(x => x.pu.p.Status == false).Select(l => new ViewModel
-                {
-                    Id = l.pu.p.Id,
-                    Name = l.pu.p.Name,
-                    PurchasePrice = l.pu.p.PurchasePrice,
-                    SalePrice = l.pu.p.SalePrice,
-                    Barcode = l.pu.p.Barcode,
-                    Stock = l.pu.p.Stock,
-                    Image = l.pu.p.Image,
-                    Favorite = l.pu.p.Favorite,
-                    Status = l.pu.p.Status,
-                    UpdateDate = l.pu.p.UpdateDate,
-                    UpdateUserId = l.pu.p.UpdateUserId,
-                    UpdateUserName = l.u.FirstName + " " + l.u.LastName,
-                    CategoryId = l.pu.p.CategoryId,
-                    CategoryName = l.pu.c.Name,
-                }).ToList();
-
-                return result;
-            }
-        }
-
+        
         public ViewModel ListById(int id)
         {
             using (var context = new DataBaseContext())

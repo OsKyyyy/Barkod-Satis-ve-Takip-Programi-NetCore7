@@ -8,21 +8,21 @@ namespace WebUI.Pages.User
 {
     public class ListModel : PageModel
     {
-	    [ViewData]
+        private readonly IUser _user;
+
+        public ListModel(IUser user)
+        {
+            _user = user;
+        }
+
+        [ViewData]
 	    public string ToastrError { get; set; }
 
         [ViewData]
         public string ToastrSuccess{ get; set; }
 
-        public List<ViewModel> viewModel { get; set; }
-
-        private readonly IUser _user;
-
-	    public ListModel(IUser user)
-	    {
-		    _user = user;
-	    }
-
+        public List<ViewModel> ViewModel { get; set; }
+        
 		public async Task<IActionResult> OnGetAsync()
 	    {
             this.ToastrError = TempData["ToastrError"] as string;
@@ -47,7 +47,7 @@ namespace WebUI.Pages.User
 
 			if (response.Status)
             {
-                viewModel = response.Data;
+                ViewModel = response.Data;
             }
             else
             {

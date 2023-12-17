@@ -41,17 +41,23 @@
                             <div id="kt_datatable_example_1_export" class="d-none"></div>
                         </div>
                         <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
-                            <a asp-page="/Category/InActiveList" class="btn btn-light-danger">
-                                <i class="ki-duotone ki-text-number">
+                            <div class="w-100 mw-150px">
+                                <select class="form-select form-select-solid" id="chooseStatus" data-control="select2" data-hide-search="true" data-placeholder="Status" data-kt-ecommerce-product-filter="status">
+                                    <option value="all">Hepsi</option>
+                                    <option value="aktif">Aktif</option>
+                                    <option value="pasif">Pasif</option>
+                                </select>
+                            </div>
+
+                            <a asp-page="/Category/Add" class="btn btn-light-info">
+                                <i class="ki-duotone ki-plus-square fs-2">
                                     <span class="path1"></span>
                                     <span class="path2"></span>
                                     <span class="path3"></span>
-                                    <span class="path4"></span>
-                                    <span class="path5"></span>
-                                    <span class="path6"></span>
                                 </i>
-                                Pasif Listesi
+                                Yeni Kategori
                             </a>
+
                             <button type="button" class="btn btn-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
                                 <i class="ki-duotone ki-exit-down fs-2"><span class="path1"></span><span class="path2"></span></i>
                                 Dışa Aktar
@@ -88,7 +94,7 @@
                                 </tr>
                             </thead>
                             <tbody class="fw-semibold text-gray-600">
-                                @foreach (var item in Model.viewModel)
+                                @foreach (var item in Model.ViewModel)
                                 {
                                     <tr class="odd">
                                         <td>@item.Name</td>

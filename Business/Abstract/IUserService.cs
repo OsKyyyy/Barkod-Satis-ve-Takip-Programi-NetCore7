@@ -18,7 +18,6 @@ namespace Business.Abstract
         IResult Delete(int id);
         IDataResult<User> Update(UserUpdateDto user);
         IDataResult<List<User>> List();
-        IDataResult<List<User>> InActiveList();
         IResult UserExistsByUpdate(string email, int Id);
         IDataResult<User> ListByMail(string email);
         IDataResult<User> ListById(int id);

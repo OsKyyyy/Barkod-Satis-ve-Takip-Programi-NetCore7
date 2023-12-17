@@ -7,20 +7,20 @@ namespace WebUI.Pages.Category
 {
     public class ListModel : PageModel
     {
-        [ViewData]
-        public string? ToastrError { get; set; }
-
-        [ViewData]
-        public string? ToastrSuccess { get; set; }
-
-        public List<ViewModel> viewModel { get; set; }
-
         private readonly ICategory _category;
 
         public ListModel(ICategory category)
         {
             _category = category;
         }
+
+        [ViewData]
+        public string? ToastrError { get; set; }
+
+        [ViewData]
+        public string? ToastrSuccess { get; set; }
+
+        public List<ViewModel> ViewModel { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -46,7 +46,7 @@ namespace WebUI.Pages.Category
 
             if (response.Status)
             {
-                viewModel = response.Data;
+                ViewModel = response.Data;
             }
             else
             {

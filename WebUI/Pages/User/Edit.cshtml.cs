@@ -9,14 +9,6 @@ namespace WebUI.Pages.User
 {
     public class EditModel : PageModel
     {
-        [ViewData]
-        public string ToastrError { get; set; }
-        [TempData]
-        public string ToastrSuccess { get; set; }
-
-        [BindProperty]
-        public UpdateRequestModel updateRequestModel { get; set; }
-
         private readonly IUser _user;
 
         public EditModel(IUser user)
@@ -24,6 +16,15 @@ namespace WebUI.Pages.User
             _user = user;
         }
 
+        [ViewData]
+        public string ToastrError { get; set; }
+
+        [TempData]
+        public string ToastrSuccess { get; set; }
+
+        [BindProperty]
+        public UpdateRequestModel UpdateRequestModel { get; set; }
+        
         public async Task<IActionResult> OnGetAsync(int id)
         {
             var session = SessionValues();
@@ -54,7 +55,7 @@ namespace WebUI.Pages.User
                 setModel.Email = response.Data.Email;
                 setModel.Status = response.Data.Status;
 
-                updateRequestModel = setModel;
+                UpdateRequestModel = setModel;
 
                 return Page();
             }

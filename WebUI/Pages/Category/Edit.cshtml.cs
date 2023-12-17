@@ -9,27 +9,29 @@ namespace WebUI.Pages.Category
 {
     public class EditModel : PageModel
     {
-        [ViewData]
-        public string ToastrError { get; set; }
-        [TempData]
-        public string ToastrSuccess { get; set; }
-
-        [BindProperty]
-        public UpdateRequestModel updateRequestModel { get; set; }
-
         private readonly ICategory _category;
 
         public EditModel(ICategory category)
         {
             _category = category;
         }
+
+        [ViewData]
+        public string ToastrError { get; set; }
+
+        [TempData]
+        public string ToastrSuccess { get; set; }
+
+        [BindProperty]
+        public UpdateRequestModel UpdateRequestModel { get; set; }
+
         public async Task<IActionResult> OnGetAsync(int id)
         {
             var session = SessionValues();
 
             if (session[1] == null)
             {
-                return new RedirectToPageResult("Login");
+                return new RedirectToPageResult("../User/Login");
             }
 
             var response = await _category.ListById(SessionValues()[0], id);
@@ -50,7 +52,7 @@ namespace WebUI.Pages.Category
                 setModel.Name = response.Data.Name;
                 setModel.Status = response.Data.Status;
 
-                updateRequestModel = setModel;
+                UpdateRequestModel = setModel;
 
                 return Page();
             }
@@ -72,7 +74,7 @@ namespace WebUI.Pages.Category
                 HttpContext.Session.Remove("userToken");
                 HttpContext.Session.Remove("userInfo");
 
-                return new RedirectToPageResult("Login");
+                return new RedirectToPageResult("../User/Login");
             }
 
             if (response.Status)

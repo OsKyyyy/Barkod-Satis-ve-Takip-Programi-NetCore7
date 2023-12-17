@@ -65,7 +65,7 @@ namespace DataAccess.Concrete.EntityFramework
             {
                 var result = context.Categories.Join(context.Users,
                     c => c.UpdateUserId,
-                    u => u.Id, (c, u) => new { c, u }).Where(x => x.c.Deleted == false).Where(x=>x.c.Status == true).Select(l => new ViewModel
+                    u => u.Id, (c, u) => new { c, u }).Where(x => x.c.Deleted == false).Select(l => new ViewModel
                 {
                         Id = l.c.Id,
                         Name = l.c.Name,
@@ -78,13 +78,13 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
-        public List<ViewModel> InActiveList()
+        public List<ViewModel> ListByActive()
         {
             using (var context = new DataBaseContext())
             {
                 var result = context.Categories.Join(context.Users,
                     c => c.UpdateUserId,
-                    u => u.Id, (c, u) => new { c, u }).Where(x => x.c.Deleted == false).Where(x => x.c.Status == false).Select(l => new ViewModel
+                    u => u.Id, (c, u) => new { c, u }).Where(x => x.c.Deleted == false).Where(x => x.c.Status == true).Select(l => new ViewModel
                 {
                     Id = l.c.Id,
                     Name = l.c.Name,

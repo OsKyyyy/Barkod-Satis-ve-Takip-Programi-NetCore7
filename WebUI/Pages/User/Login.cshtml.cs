@@ -20,7 +20,7 @@ namespace WebUI.Pages.User
         [ViewData]
         public string AlertError { get; set; }
 
-        public LoginRequestModel loginModel { get; set; }
+        public LoginRequestModel LoginRequestModel { get; set; }
 
         public IActionResult OnGet()
         {
@@ -34,13 +34,13 @@ namespace WebUI.Pages.User
             return Page();
         }
 
-        public async Task<IActionResult> OnPostLoginAsync(LoginRequestModel loginModel)
+        public async Task<IActionResult> OnPostLoginAsync(LoginRequestModel loginRequestModel)
         {
-            var response = await _user.Login(loginModel);
+            var response = await _user.Login(loginRequestModel);
 
             if (response.Status)
             {
-                var responseInfo = await _user.ListByMail("Bearer " + response.Data.Token,loginModel.Email);
+                var responseInfo = await _user.ListByMail("Bearer " + response.Data.Token, loginRequestModel.Email);
 
                 var serializeData = JsonConvert.SerializeObject(responseInfo.Data);
 
