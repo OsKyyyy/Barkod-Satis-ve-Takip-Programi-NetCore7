@@ -40,7 +40,7 @@ namespace Business.Concrete
         [ValidationAspect(typeof(AddValidator))]
         public IResult Add(ProductAddDto productAddDto)
         {
-            var imageUrl = "Uploads/Products/unknow.jpg";
+            var imageUrl = "Uploads/Products/unknow.png";
 
             if (!string.IsNullOrEmpty(productAddDto.Image))
             {
@@ -72,6 +72,39 @@ namespace Business.Concrete
             _productDal.Add(product);
 
             return new SuccessResult(Messages.ProductAdded);
+        }
+
+        [ValidationAspect(typeof(UpdateValidator))]
+        public IResult Update(ProductUpdateDto productUpdateDto)
+        {
+            if (productUpdateDto.ImageChanged)
+            {
+                productUpdateDto.Image = SaveFile(productUpdateDto.Image, productUpdateDto.Name);
+
+                if (productUpdateDto.Image == null)
+                {
+                    return new ErrorResult(Messages.ImagePropertyError);
+                }
+            }
+
+            var category = new Product
+            {
+                Id = productUpdateDto.Id,
+                CategoryId = productUpdateDto.CategoryId,
+                Name = productUpdateDto.Name,
+                PurchasePrice = decimal.Parse(productUpdateDto.PurchasePrice, _culture),
+                SalePrice = decimal.Parse(productUpdateDto.SalePrice, _culture),
+                Barcode = productUpdateDto.Barcode,
+                Stock = productUpdateDto.Stock,
+                Image = productUpdateDto.Image,
+                Favorite = productUpdateDto.Favorite,
+                Status = productUpdateDto.Status,
+                UpdateDate = DateTime.Now,
+                UpdateUserId = productUpdateDto.UpdateUserId
+            };
+            _productDal.Update(category);
+
+            return new SuccessResult(Messages.ProductUpdated);
         }
 
         public IResult Delete(int id)

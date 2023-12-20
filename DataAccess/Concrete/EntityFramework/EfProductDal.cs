@@ -24,6 +24,28 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
+        public void Update(Product product)
+        {
+            using (var context = new DataBaseContext())
+            {
+                var result = context.Products.FirstOrDefault(c => c.Id == product.Id);
+
+                result.CategoryId = product.CategoryId;
+                result.Name = product.Name;
+                result.PurchasePrice = product.PurchasePrice;
+                result.SalePrice = product.SalePrice;
+                result.Barcode = product.Barcode;
+                result.Stock = product.Stock;
+                result.Image = product.Image;
+                result.Favorite = product.Favorite;
+                result.Status = product.Status;
+                result.UpdateDate = product.UpdateDate;
+                result.UpdateUserId = product.UpdateUserId;
+
+                context.SaveChanges();
+            }
+        }
+
         public Product Delete(int id)
         {
             using (var context = new DataBaseContext())

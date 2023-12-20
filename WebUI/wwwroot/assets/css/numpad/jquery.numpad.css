@@ -1,0 +1,12 @@
+﻿.numpad-key {
+    min-width: 90px !important;
+    font-weight: bold;
+    font-size: 30px;
+}
+.numpad-input{
+    font-size:3.1rem;
+    width:100% !important;
+}
+.numpad-action-button {
+    min-width: 170px !important;
+}

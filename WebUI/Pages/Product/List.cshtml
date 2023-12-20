@@ -6,7 +6,7 @@
     ViewData["Title"] = "Ürün Listesi";
 }
 @section _Head
-    {
+{
     <link href="~/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
 }
 
@@ -94,8 +94,8 @@
                                 <tr class="text-start fw-bold fs-7 text-uppercase">
                                     <th class="min-w-100px">ÜRÜN</th>
                                     <th class="min-w-100px">KATEGORİ</th>
-                                    <th class="min-w-100px">BARKOD</th>
-                                    <th class="min-w-100px">STOK</th>
+                                    <th class="min-w-100px text-end">BARKOD</th>
+                                    <th class="min-w-100px text-end">STOK</th>
                                     <th class="min-w-100px">ALIŞ FİYATI</th>
                                     <th class="min-w-100px">SATIŞ FİYATI</th>
                                     <th class="min-w-100px">SON İŞLEM TARİHİ</th>
@@ -118,12 +118,22 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>@item.CategoryName</td>
-                                        <td>@item.Barcode</td>
-                                        <td>@item.Stock</td>
-                                        <td>@item.PurchasePrice &#8378;</td>
-                                        <td>@item.SalePrice &#8378;</td>
-                                        <td>@item.UpdateDate</td>
+                                        <td><span class="fw-bold ms-3">@item.CategoryName</span></td>
+                                        <td class="text-end"><span class="fw-bold ms-3">@item.Barcode</span></td>
+                                        <td class="text-end">
+                                            @if (item.Stock <= 10 && item.Stock >= 1)
+                                            {
+                                                <span class="badge badge-light-warning">Kritik stok</span>
+                                            }
+                                            @if (item.Stock <= 0)
+                                            {
+                                                <span class="badge badge-light-danger">Tükendi</span>
+                                            }
+                                            <span class="fw-bold ms-3">@item.Stock</span>
+                                        </td>
+                                        <td><span class="fw-bold ms-3">@item.PurchasePrice &#8378;</span></td>
+                                        <td><span class="fw-bold ms-3">@item.SalePrice &#8378;</span></td>
+                                        <td><span class="fw-bold ms-3">@item.UpdateDate</span></td>
                                         <td>
                                             @if (item.Status)
                                             {

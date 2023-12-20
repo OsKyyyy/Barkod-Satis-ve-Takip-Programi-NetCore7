@@ -1,0 +1,327 @@
+﻿@page
+@model WebUI.Pages.Pos.SaleModel
+@{
+    ViewData["Title"] = "Perakende Satış";
+}
+@section _Head
+{
+    <link href="~/assets/css/numpad/jquery.numpad.css" rel="stylesheet" type="text/css" />
+}
+
+<div class="app-main flex-column flex-row-fluid " id="kt_app_main">
+    <div class="d-flex flex-column flex-column-fluid">
+        <div id="kt_app_toolbar" class="app-toolbar  py-3 py-lg-6">
+            <div id="kt_app_toolbar_container" class="app-container  container-xxl d-flex flex-stack " style="max-width:1500px">
+                <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3 ">
+                    <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">
+                        Perakende Satış
+                    </h1>
+                    <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+                        <li class="breadcrumb-item text-muted">
+                            Sayfalar
+                        </li>
+                        <li class="breadcrumb-item">
+                            <span class="bullet bg-gray-500 w-5px h-2px"></span>
+                        </li>
+                        <li class="breadcrumb-item text-muted">
+                            Perakende Satış
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="kt_app_content" class="app-content  flex-column-fluid ">
+            <div id="kt_app_content_container" class="app-container container-xxl" style="max-width:1500px">
+                <div class="d-flex flex-column flex-xl-row">
+                    <div class="d-flex flex-row-fluid me-xl-9 mb-10 mb-xl-0">
+                        <div class="card card-flush card-p-0 bg-transparent border-0 ">
+                            <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+                                <div class="card-title">
+                                    <div class="d-flex align-items-center position-relative my-1">
+                                        <img src="https://cdn-icons-png.flaticon.com/128/39/39881.png" class="w-25px fs-1 position-absolute ms-4" />
+                                        <input type="text" id="barcodeNo" data-kt-filter="search" class="form-control form-control w-300px ps-14" placeholder="Barkod No" autofocus />
+                                    </div>
+                                    <div class="d-flex align-items-center position-relative my-1" style="margin-left:10px">
+                                        <span class="text-gray-800 fw-bold fs-1 d-block">*</span>
+                                    </div>
+                                    <div class="d-flex align-items-center position-relative my-1" style="margin-left:10px">
+                                        <input type="text" data-kt-filter="search" class="form-control w-100px" placeholder="Adet" />
+                                    </div>
+                                </div>
+                                <div class="card-toolbar flex-row-fluid justify-content-end gap-5" style="display:block;">
+                                    <button type="button" class="btn btn-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                                        <i class="ki-duotone ki-search-list fs-2">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                            <span class="path3"></span>
+                                        </i>
+                                        Fiyat Bul
+                                    </button>
+                                    <button type="button" class="btn btn-light-info" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                                        <i class="ki-duotone ki-profile-user fs-2">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                            <span class="path3"></span>
+                                            <span class="path4"></span>
+                                        </i>
+                                        Cari Hesaplar
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="tab-content">
+                                    <div class="tab-pane fade show active" id="kt_pos_food_content_1">
+                                        <div class="d-flex flex-wrap d-grid gap-5 gap-xxl-9"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-row-auto w-xl-450px">
+
+                        <div class="card card-flush bg-body " id="kt_pos_form">
+                            <div class="card-header pt-5 mb-11">
+                                <h3 class="card-title fw-bold text-gray-800 fs-2qx">KASA</h3>
+                                <div class="d-flex flex-equal gap-1 px-0 mb-1 justify-content-end">
+                                    <div class="image-input-wrapper w-50px h-50px" style="background-image: url(https://cdn-icons-png.flaticon.com/128/6785/6785304.png);background-size: contain;"></div>
+                                    <div class="image-input-wrapper w-50px h-50px" style="background-image: url(https://cdn-icons-png.flaticon.com/128/5974/5974771.png);background-size: contain;"></div>
+                                    <div class="image-input-wrapper w-50px h-50px" style="background-image: url(https://cdn-icons-png.flaticon.com/512/2657/2657138.png);background-size: contain;"></div>
+                                </div>
+                            </div>
+                            <div class="card-body pt-0">
+
+                                <div class="d-flex flex-stack bg-info rounded-3 p-6 mb-11">
+                                    <div class="fs-6 fw-bold text-white">
+                                        <span class="d-block fs-2qx lh-1">Toplam</span>
+                                    </div>
+                                    <div class="fs-6 fw-bold text-white text-end">
+                                        <span class="d-block fs-2qx lh-1" data-kt-pos-element="grant-total">$93.46</span>
+                                    </div>
+                                </div>
+                                <ul class="nav nav-pills d-flex justify-content-between nav-pills-custom gap-3 mb-6" role="tablist">
+                                    <li class="nav-item mb-3 me-0" role="presentation">
+                                        <a data-bs-toggle="modal" data-bs-target="#addMoneyNumpad" class="nav-link nav-link-border-solid btn btn-outline btn-flex btn-active-color-primary flex-column flex-stack pt-5 pb-3 page-bg show active" data-bs-toggle="pill" style="width:120px;" aria-selected="true" role="tab">
+                                            <div class="nav-icon mb-3">
+                                                <img src="~/assets/media/other/save-money.png" class="w-50px" alt="">
+                                            </div>
+                                            <div class="">
+                                                <span class="text-gray-800 fw-bold fs-4 d-block">Para Ekle</span>
+                                                <span class="text-danger fw-bold fs-4 d-block">0 &#8378;</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item mb-3 me-0" role="presentation">
+                                        <a data-bs-toggle="modal" data-bs-target="#receivedMoneyNumpad" class="nav-link nav-link-border-solid btn btn-outline btn-flex btn-active-color-primary flex-column flex-stack pt-5 pb-3 page-bg show active" data-bs-toggle="pill" href="#kt_pos_food_content_1" style="width:120px;" aria-selected="true" role="tab">
+                                            <div class="nav-icon mb-3">
+                                                <img src="~/assets/media/other/income.png" class="w-50px" alt="">
+                                            </div>
+                                            <div class="">
+                                                <span class="text-gray-800 fw-bold fs-4 d-block">Alınan Para</span>
+                                                <span class="text-danger fw-bold fs-4 d-block">0 &#8378;</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item mb-3 me-0" role="presentation">
+                                        <a class="nav-link nav-link-border-solid btn btn-outline btn-flex btn-active-color-primary flex-column flex-stack pt-5 pb-3 page-bg show active" data-bs-toggle="pill" href="#kt_pos_food_content_1" style="width:120px;" aria-selected="true" role="tab">
+                                            <div class="nav-icon mb-3">
+                                                <img src="~/assets/media/other/loan.png" class="w-50px" alt="">
+                                            </div>
+                                            <div class="">
+                                                <span class="text-gray-800 fw-bold fs-4 d-block">Para Üstü</span>
+                                                <span class="text-danger fw-bold fs-4 d-block">0 &#8378;</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="m-0">
+                                    <h1 class="fw-bold text-gray-800 mb-5">Ödeme Yöntemi</h1>
+                                    <div class="d-flex flex-equal gap-5 gap-xxl-9 px-0 mb-12" data-kt-buttons="true" data-kt-buttons-target="[data-kt-button]">
+                                        <label class="btn bg-light btn-color-gray-600 btn-active-text-gray-800 border border-3 border-gray-100 border-active-primary btn-active-light-primary w-100 px-4 active" data-kt-button="true">
+                                            <input class="btn-check" type="radio" name="method" value="0">
+                                            <i class="ki-duotone ki-dollar fs-2hx mb-2 pe-0">
+                                                <span class="path1"></span>
+                                                <span class="path2"></span>
+                                                <span class="path3"></span>
+                                            </i>
+                                            <span class="fs-7 fw-bold d-block">Nakit</span>
+                                        </label>
+                                        <label class="btn bg-light btn-color-gray-600 btn-active-text-gray-800 border border-3 border-gray-100 border-active-primary btn-active-light-primary w-100 px-4 " data-kt-button="true">
+                                            <input class="btn-check" type="radio" name="method" value="1">
+                                            <i class="ki-duotone ki-credit-cart fs-2hx mb-2 pe-0">
+                                                <span class="path1"></span>
+                                                <span class="path2"></span>
+                                            </i>
+                                            <span class="fs-7 fw-bold d-block">Kart</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="addMoneyNumpad">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form class="form" asp-page-handler="AddMoney" method="post">
+                    <input asp-for="AddMoneyRequestModel.AddMoneyNumpadInput" type="text" class="form-control ps-14 mb-10 numpad-input" id="addMoneyNumpadInput" autofocus/>
+                    <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                        <span asp-validation-for="AddMoneyRequestModel.AddMoneyNumpadInput"></span>
+                    </div>
+                    <table>
+                        <tbody>
+                        <tr>
+                            <td>
+                                    <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('7','addMoneyNumpadInput')">7</button>
+                            </td>
+                            <td>
+                                    <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('8','addMoneyNumpadInput')">8</button>
+                            </td>
+                            <td>
+                                    <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('9','addMoneyNumpadInput')">9</button>
+                            </td>
+                            <td>
+                                    <button type="button" class="btn btn-secondary numpad-key numpad-action-button" onclick="NumPad.SetSymbol('CE','addMoneyNumpadInput')">CE</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                    <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('4','addMoneyNumpadInput')">4</button>
+                            </td>
+                            <td>
+                                    <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('5','addMoneyNumpadInput')">5</button>
+                            </td>
+                            <td>
+                                    <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('6','addMoneyNumpadInput')">6</button>
+                            </td>
+                            <td>
+                                    <button type="button" class="btn btn-secondary numpad-key numpad-action-button" onclick="NumPad.SetSymbol('C','addMoneyNumpadInput')">C</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                    <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('1','addMoneyNumpadInput')">1</button>
+                            </td>
+                            <td>
+                                    <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('2','addMoneyNumpadInput')">2</button>
+                            </td>
+                            <td>
+                                    <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('3','addMoneyNumpadInput')">3</button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-secondary numpad-key numpad-action-button" data-bs-dismiss="modal">&#10060;</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                    <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('00','addMoneyNumpadInput')">00</button>
+                            </td>
+                            <td>
+                                    <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('0','addMoneyNumpadInput')">0</button>
+                            </td>
+                            <td>
+                                    <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('.','addMoneyNumpadInput')">.</button>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-secondary numpad-key numpad-action-button">&#9989;</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" id="receivedMoneyNumpad">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form class="form" asp-page-handler="ReceivedMoney" method="post">
+                    <input asp-for="ReceivedMoneyRequestModel.ReceivedMoneyNumpadInput" type="text" class="form-control ps-14 mb-10 numpad-input" id="receivedMoneyNumpadInput" autofocus />
+                    <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                        <span asp-validation-for="ReceivedMoneyRequestModel.ReceivedMoneyNumpadInput"></span>
+                    </div>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('7','receivedMoneyNumpadInput')">7</button>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('8','receivedMoneyNumpadInput')">8</button>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('9','receivedMoneyNumpadInput')">9</button>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-secondary numpad-key numpad-action-button" onclick="NumPad.SetSymbol('CE','receivedMoneyNumpadInput')">CE</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('4','receivedMoneyNumpadInput')">4</button>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('5','receivedMoneyNumpadInput')">5</button>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('6','receivedMoneyNumpadInput')">6</button>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-secondary numpad-key numpad-action-button" onclick="NumPad.SetSymbol('C','receivedMoneyNumpadInput')">C</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('1','receivedMoneyNumpadInput')">1</button>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('2','receivedMoneyNumpadInput')">2</button>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('3','receivedMoneyNumpadInput')">3</button>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-secondary numpad-key numpad-action-button" data-bs-dismiss="modal">&#10060;</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('00','receivedMoneyNumpadInput')">00</button>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('0','receivedMoneyNumpadInput')">0</button>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('.','receivedMoneyNumpadInput')">.</button>
+                                </td>
+                                <td>
+                                    <button type="submit" class="btn btn-secondary numpad-key numpad-action-button">&#9989;</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* <div class="d-none">
+    <input asp-for="ToastrError" />
+</div>
+<div class="d-none">
+    <input asp-for="ToastrSuccess" />
+</div> *@
+
+@section _Foot{
+
+    <script src="~/assets/js/pages/pos/pos.js"></script>
+    <script src="~/assets/js/custom/numpad/jquery.numpad.js"></script>
+}

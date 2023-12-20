@@ -35,6 +35,26 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        [Route("Update")]
+        [HttpPut]
+        public ActionResult Update(ProductUpdateDto productUpdateDto)
+        {
+            var listById = _productService.ListById(productUpdateDto.Id);
+            if (!listById.Status)
+            {
+                return BadRequest(listById);
+            }
+
+            var result = _productService.Update(productUpdateDto);
+
+            if (result.Status)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
+
         [Route("List")]
         [HttpGet]
         public ActionResult List()
@@ -66,6 +86,19 @@ namespace WebAPI.Controllers
             }
 
             return Ok(result);
+        }
+
+        [Route("ListById")]
+        [HttpGet]
+        public ActionResult ListById(int id)
+        {
+            var listById = _productService.ListById(id);
+            if (!listById.Status)
+            {
+                return BadRequest(listById);
+            }
+
+            return Ok(listById);
         }
     }
 }

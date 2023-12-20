@@ -12,6 +12,7 @@ namespace DataAccess.Abstract
     public interface IProductDal : IEntityRepository<Product>
     {
         void Add(Product product);
+        void Update(Product product);
         List<ViewModel> List();
         Product Delete(int id);
         ViewModel ListById(int id);

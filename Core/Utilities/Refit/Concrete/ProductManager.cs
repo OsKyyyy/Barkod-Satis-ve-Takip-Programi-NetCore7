@@ -45,6 +45,35 @@ namespace Core.Utilities.Refit.Concrete
             }
         }
 
+        public async Task<Result> Update([Header("Authorization: Bearer")] string token, [Body] UpdateRequestModel updateRequestModel)
+        {
+            Result dataResult = new Result();
+
+            try
+            {
+                dataResult = await myAPI.Update(token, updateRequestModel);
+
+                return dataResult;
+            }
+            catch (ApiException exception)
+            {
+                dynamic response = JsonConvert.DeserializeObject(exception.Content);
+
+                if (response.Status != null)
+                {
+                    dataResult.Message = response.Message;
+                    dataResult.Status = response.Status;
+
+                    return dataResult;
+                }
+
+                dataResult.Message = "Beklenmedik hata ile karşılaşıldı";
+                dataResult.Status = false;
+
+                return dataResult;
+            }
+        }
+
         public async Task<DataResult<List<ViewModel>>> List([Header("Authorization: Bearer")] string token)
         {
             DataResult<List<ViewModel>> dataResult = new DataResult<List<ViewModel>>();
@@ -103,5 +132,33 @@ namespace Core.Utilities.Refit.Concrete
             }
         }
 
+        public async Task<DataResult<ViewModel>> ListById([Header("Authorization: Bearer")] string token, int id)
+        {
+            DataResult<ViewModel> dataResult = new DataResult<ViewModel>();
+
+            try
+            {
+                dataResult = await myAPI.ListById(token, id);
+
+                return dataResult;
+            }
+            catch (ApiException exception)
+            {
+                dynamic response = JsonConvert.DeserializeObject(exception.Content);
+
+                if (response.Status != null)
+                {
+                    dataResult.Message = response.Message;
+                    dataResult.Status = response.Status;
+
+                    return dataResult;
+                }
+
+                dataResult.Message = "Beklenmedik hata ile karşılaşıldı";
+                dataResult.Status = false;
+
+                return dataResult;
+            }
+        }
     }
 }

@@ -50,7 +50,7 @@ namespace WebUI.Pages.Category
             var user = "Bearer " + HttpContext.Session.GetString("userToken");
             var userInfo = HttpContext.Session.GetString("userInfo");
 
-            string[] values = new string[2] { user, userInfo };
+            var values = new string[2] { user, userInfo };
             return values;
         }
     }

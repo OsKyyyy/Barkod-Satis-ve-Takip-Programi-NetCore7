@@ -13,6 +13,7 @@ namespace Business.Abstract
     public interface IProductService
     {
         IResult Add(ProductAddDto product);
+        IResult Update(ProductUpdateDto product);
         IDataResult<List<ViewModel>> List();
         IResult Delete(int id);
         IDataResult<ViewModel> ListById(int id);

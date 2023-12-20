@@ -71,18 +71,15 @@ namespace WebUI.Pages.Product
 
         public async Task<IActionResult> OnPostAddAsync(AddRequestModel addRequestModel)
         {
-            string? imageBase64String = null;
-
             if (Image.File != null)
             {
                 using var ms = new MemoryStream();
                 await Image.File.CopyToAsync(ms);
                 var fileBytes = ms.ToArray();
-                imageBase64String = Convert.ToBase64String(fileBytes);
+                addRequestModel.Image = Convert.ToBase64String(fileBytes);
             }
 
             addRequestModel.CreateUserId = JsonConvert.DeserializeObject<ViewModel>(HttpContext.Session.GetString("userInfo")).Id;
-            addRequestModel.Image = imageBase64String;
 
             var response = await _product.Add(SessionValues()[0], addRequestModel);
 

@@ -16,13 +16,13 @@ namespace Core.Utilities.Refit.Concrete
     {
         private ICategory myAPI = RestService.For<ICategory>("http://localhost:63067/api");
 
-        public async Task<DataResult<AddModel>> Add([Header("Authorization")] string token, [Body] AddRequestModel createRequest)
+        public async Task<DataResult<AddModel>> Add([Header("Authorization")] string token, [Body] AddRequestModel addRequestModel)
         {
             DataResult<AddModel> dataResult = new DataResult<AddModel>();
 
             try
             {
-                dataResult = await myAPI.Add(token, createRequest);
+                dataResult = await myAPI.Add(token, addRequestModel);
 
                 return dataResult;
             }
@@ -45,13 +45,13 @@ namespace Core.Utilities.Refit.Concrete
             }
         }
 
-        public async Task<DataResult<ViewModel>> Update([Header("Authorization: Bearer")] string token, [Body] UpdateRequestModel updateRequest)
+        public async Task<DataResult<ViewModel>> Update([Header("Authorization: Bearer")] string token, [Body] UpdateRequestModel updateRequestModel)
         {
             DataResult<ViewModel> dataResult = new DataResult<ViewModel>();
 
             try
             {
-                dataResult = await myAPI.Update(token, updateRequest);
+                dataResult = await myAPI.Update(token, updateRequestModel);
 
                 return dataResult;
             }
