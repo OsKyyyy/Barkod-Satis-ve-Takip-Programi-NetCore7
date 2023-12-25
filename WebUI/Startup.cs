@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Core.DependencyResolvers;
-//using Core.DependencyResolvers.Refit.Abstract;
 using Core.Extensions;
 using Core.Utilities.IoC;
 using Core.Utilities.Security.Encryption;
@@ -35,10 +34,6 @@ namespace WebUI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddRefitClient<IMyApi>()
-            //    .ConfigureHttpClient(c => c.BaseAddress = new Uri("http://jsonplaceholder.typicode.com"));
-            //services.AddControllers();
-
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(10);
@@ -69,6 +64,22 @@ namespace WebUI
             app.UseStaticFiles();
 
             app.UseSession();
+
+            app.Use(async (context, next) =>
+            {
+                string CurrentUserIDSession = context.Session.GetString("userToken");
+                if (!context.Request.Path.Value.Contains("/User/Login"))
+                {
+                    if (string.IsNullOrEmpty(CurrentUserIDSession))
+                    {
+                        var path = $"/User/Login?ReturnUrl={context.Request.Path}";
+                        context.Response.Redirect(path);
+                        return;
+                    }
+
+                }
+                await next();
+            });
 
             app.UseRouting();
 

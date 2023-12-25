@@ -14,6 +14,12 @@
             $("#receivedMoneyNumpadInput").val("");
             $("#barcodeNo").focus();
         });
+        $("#addMoneyNumpadInput").on("keyup", function () {
+            $(this).val($(this).val().replace(",","."));
+        })
+        $("#receivedMoneyNumpadInput").on("keyup", function () {
+            $(this).val($(this).val().replace(",", "."));
+        })
     },
     SetSymbol: function (value,input) {
         if (value == "CE") {
@@ -86,6 +92,17 @@
         }
         $("#" + input).focus();
     },
+    ReceivedMoney: function () {
+
+        var val = $("#receivedMoneyNumpadInput").val();
+
+        $("#receivedMoneyNumpadSpan").html((Math.round(val * 100) / 100).toFixed(2).replace(".",",") + " &#8378;");
+        $("#receivedMoneyNumpad").modal("hide");
+
+        var remainder = $("#caseTotal").html().split(" ")[0].replace(",",".");
+            
+        $("#remainderMoneyNumpadSpan").html((Math.round((val - remainder) * 100) / 100).toFixed(2).replace(".", ",") + " &#8378;");
+    }
 }
 $(document).ready(function () {
     NumPad.Init();

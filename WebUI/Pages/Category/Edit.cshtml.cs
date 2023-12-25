@@ -78,7 +78,7 @@ namespace WebUI.Pages.Category
             if (response.Status)
             {
                 ToastrSuccess = response.Message;
-                return new RedirectToPageResult("Edit", response.Data.Id);
+                return new RedirectToPageResult("Edit", UpdateRequestModel.Id);
             }
 
             ToastrError = response.Message;

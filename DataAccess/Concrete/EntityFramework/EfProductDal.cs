@@ -122,6 +122,36 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
+        public ViewModel ListToPos(string barcode)
+        {
+            using (var context = new DataBaseContext())
+            {
+                var result = context.Products.Join(context.Categories,
+                    p => p.CategoryId,
+                    c => c.Id, (p, c) => new { p, c }).Join(context.Users,
+                    p2 => p2.p.UpdateUserId,
+                    u => u.Id, (p2, u) => new { p2, u }).Where(x => x.p2.p.Status == true).Where(x => x.p2.p.Deleted == false).Select(l => new ViewModel
+                {
+                    Id = l.p2.p.Id,
+                    Name = l.p2.p.Name,
+                    PurchasePrice = l.p2.p.PurchasePrice,
+                    SalePrice = l.p2.p.SalePrice,
+                    Barcode = l.p2.p.Barcode,
+                    Stock = l.p2.p.Stock,
+                    Image = l.p2.p.Image,
+                    Favorite = l.p2.p.Favorite,
+                    Status = l.p2.p.Status,
+                    UpdateDate = l.p2.p.UpdateDate,
+                    UpdateUserId = l.p2.p.UpdateUserId,
+                    UpdateUserName = l.u.FirstName + " " + l.u.LastName,
+                    CategoryId = l.p2.p.CategoryId,
+                    CategoryName = l.p2.c.Name,
+                }).FirstOrDefault(p => p.Barcode == barcode);
+
+                return result;
+            }
+        }
+
         public ViewModel CheckExistsByBarcode(string barcode)
         {
             using (var context = new DataBaseContext())

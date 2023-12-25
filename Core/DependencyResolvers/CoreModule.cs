@@ -23,6 +23,7 @@ namespace Core.DependencyResolvers
             serviceCollection.AddSingleton<IUser, UserManager>();
             serviceCollection.AddSingleton<ICategory, CategoryManager>();
             serviceCollection.AddSingleton<IProduct, ProductManager>();
+            serviceCollection.AddSingleton<IPos, PosManager>();
         }
     }
 }

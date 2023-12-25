@@ -28,6 +28,9 @@ namespace Business.DependencyResolvers.Autofac
             
             builder.RegisterType<ProductManager>().As<IProductService>();
             builder.RegisterType<EfProductDal>().As<IProductDal>();
+            
+            builder.RegisterType<PosManager>().As<IPosService>();
+            builder.RegisterType<EfPosDal>().As<IPosDal>();
 
             builder.RegisterType<AuthManager>().As<IAuthService>();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();

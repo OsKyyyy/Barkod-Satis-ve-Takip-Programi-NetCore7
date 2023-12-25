@@ -9,8 +9,12 @@ namespace Core.Utilities.Refit.Models.Request.Pos
 {
     public class AddMoneyRequestModel
     {
+        public string? ProductName { get; set; }
+
         [Required(ErrorMessage = "Bu alan zorunludur.")]
         [RegularExpression(@"^\d{0,8}(\.\d{1,2})?$", ErrorMessage = "Tutar 0.00 - 9999999999.99 aralığında olmalıdır. ")]
-        public string AddMoneyNumpadInput { get; set; }
+        public string ProductUnitPrice { get; set; }
+
+        public int? CreateUserId { get; set; }
     }
 }

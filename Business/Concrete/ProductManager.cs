@@ -131,6 +131,17 @@ namespace Business.Concrete
             return new SuccessDataResult<ViewModel>(result, Messages.ProductInfoListed);
         }
 
+        public IDataResult<ViewModel> ListToPos(string barcode)
+        {
+            var result = _productDal.ListToPos(barcode);
+            if (result == null)
+            {
+                return new ErrorDataResult<ViewModel>(Messages.ProductNotFound);
+            }
+
+            return new SuccessDataResult<ViewModel>(result, Messages.ProductInfoListed);
+        }
+
         public IDataResult<ViewModel> CheckExistsByBarcode(string barcode)
         {
             var result = _productDal.CheckExistsByBarcode(barcode);

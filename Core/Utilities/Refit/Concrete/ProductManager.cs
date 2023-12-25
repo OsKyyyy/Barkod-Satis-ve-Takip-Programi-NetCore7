@@ -103,9 +103,9 @@ namespace Core.Utilities.Refit.Concrete
             }
         }
 
-        public async Task<DataResult<ViewModel>> Delete([Header("Authorization: Bearer")] string token, int id)
+        public async Task<Result> Delete([Header("Authorization: Bearer")] string token, int id)
         {
-            DataResult<ViewModel> dataResult = new DataResult<ViewModel>();
+            Result dataResult = new Result();
 
             try
             {
