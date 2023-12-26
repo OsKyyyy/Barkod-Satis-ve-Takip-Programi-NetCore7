@@ -38,21 +38,14 @@ namespace WebUI.Pages.Product
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var session = SessionValues();
-
-            if (session[1] == null)
-            {
-                return new RedirectToPageResult("../User/Login");
-            }
-
-            var response = await _category.ListByActive(SessionValues()[0]);
+            var response = await _category.ListByActive("Bearer " + HttpContext.Session.GetString("userToken"));
 
             if (response.Message == "Authentication Error")
             {
                 HttpContext.Session.Remove("userToken");
                 HttpContext.Session.Remove("userInfo");
 
-                return new RedirectToPageResult("../User/Login");
+                return RedirectToPage("../User/Login");
             }
 
             if (response.Status)
@@ -81,20 +74,20 @@ namespace WebUI.Pages.Product
 
             addRequestModel.CreateUserId = JsonConvert.DeserializeObject<ViewModel>(HttpContext.Session.GetString("userInfo")).Id;
 
-            var response = await _product.Add(SessionValues()[0], addRequestModel);
+            var response = await _product.Add("Bearer " + HttpContext.Session.GetString("userToken"), addRequestModel);
 
             if (response.Message == "Authentication Error")
             {
                 HttpContext.Session.Remove("userToken");
                 HttpContext.Session.Remove("userInfo");
 
-                return new RedirectToPageResult("../User/Login");
+                return RedirectToPage("../User/Login");
             }
 
             if (response.Status)
             {
                 ToastrSuccess = response.Message;
-                return new RedirectToPageResult("Add");
+                return RedirectToPage("Add");
             }
 
             await GetCategoryList();
@@ -102,19 +95,10 @@ namespace WebUI.Pages.Product
             ToastrError = response.Message;
             return Page();
         }
-        
-        public string[] SessionValues()
-        {
-            var user = "Bearer " + HttpContext.Session.GetString("userToken");
-            var userInfo = HttpContext.Session.GetString("userInfo");
-
-            var values = new string[2] { user, userInfo };
-            return values;
-        }
 
         public async Task GetCategoryList()
         {
-            var responseCategory = await _category.List(SessionValues()[0]);
+            var responseCategory = await _category.List("Bearer " + HttpContext.Session.GetString("userToken"));
 
             var list = responseCategory.Data.Select(item => new SelectListItem { Value = item.Id.ToString(), Text = item.Name }).ToList();
 

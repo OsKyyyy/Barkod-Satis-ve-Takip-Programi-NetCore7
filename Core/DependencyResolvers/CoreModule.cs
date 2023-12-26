@@ -24,6 +24,7 @@ namespace Core.DependencyResolvers
             serviceCollection.AddSingleton<ICategory, CategoryManager>();
             serviceCollection.AddSingleton<IProduct, ProductManager>();
             serviceCollection.AddSingleton<IPos, PosManager>();
+            serviceCollection.AddSingleton<ICustomer, CustomerManager>();
         }
     }
 }

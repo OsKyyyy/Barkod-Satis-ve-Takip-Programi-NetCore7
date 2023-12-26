@@ -15,43 +15,27 @@ namespace WebUI.Pages.Category
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            var session = SessionValues();
-
-            if (session[1] == null)
-            {
-                return new RedirectToPageResult("../User/Login");
-            }
-
-            var response = await _category.Delete(SessionValues()[0], id);
+            var response = await _category.Delete("Bearer " + HttpContext.Session.GetString("userToken"), id);
 
             if (response.Message == "Authentication Error")
             {
                 HttpContext.Session.Remove("userToken");
                 HttpContext.Session.Remove("userInfo");
 
-                return new RedirectToPageResult("../User/Login");
+                return RedirectToPage("../User/Login");
             }
 
             if (response.Status)
             {
                 TempData["ToastrSuccess"] = response.Message;
-                return RedirectToPage("List");
 
             }
             else
             {
                 TempData["ToastrError"] = response.Message;
-                return RedirectToPage("List");
             }
-        }
 
-        public string[] SessionValues()
-        {
-            var user = "Bearer " + HttpContext.Session.GetString("userToken");
-            var userInfo = HttpContext.Session.GetString("userInfo");
-
-            var values = new string[2] { user, userInfo };
-            return values;
+            return RedirectToPage("List");
         }
     }
 }

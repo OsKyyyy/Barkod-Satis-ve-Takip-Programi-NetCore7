@@ -30,7 +30,7 @@ namespace Core.Utilities.Refit.Concrete
             {
                 dynamic response = JsonConvert.DeserializeObject(exception.Content);
 
-                if (response.Status != null)
+                if (response != null && response.Status != null)
                 {
                     dataResult.Message = response.Message;
                     dataResult.Status = response.Status;
@@ -59,7 +59,7 @@ namespace Core.Utilities.Refit.Concrete
             {
                 dynamic response = JsonConvert.DeserializeObject(exception.Content);
 
-                if (response.Status != null)
+                if (response != null && response.Status != null)
                 {
                     dataResult.Message = response.Message;
                     dataResult.Status = response.Status;
@@ -88,7 +88,7 @@ namespace Core.Utilities.Refit.Concrete
             {
                 dynamic response = JsonConvert.DeserializeObject(exception.Content);
 
-                if (response.Status != null)
+                if (response != null && response.Status != null)
                 {
                     dataResult.Message = response.Message;
                     dataResult.Status = response.Status;
@@ -117,7 +117,7 @@ namespace Core.Utilities.Refit.Concrete
             {
                 dynamic response = JsonConvert.DeserializeObject(exception.Content);
 
-                if (response.Status != null)
+                if (response != null && response.Status != null)
                 {
                     dataResult.Message = response.Message;
                     dataResult.Status = response.Status;
@@ -146,7 +146,7 @@ namespace Core.Utilities.Refit.Concrete
             {
                 dynamic response = JsonConvert.DeserializeObject(exception.Content);
 
-                if (response.Status != null)
+                if (response != null && response.Status != null)
                 {
                     dataResult.Message = response.Message;
                     dataResult.Status = response.Status;
@@ -175,7 +175,7 @@ namespace Core.Utilities.Refit.Concrete
             {
                 dynamic response = JsonConvert.DeserializeObject(exception.Content);
 
-                if (response.Status != null)
+                if (response != null && response.Status != null)
                 {
                     dataResult.Message = response.Message;
                     dataResult.Status = response.Status;
@@ -189,7 +189,5 @@ namespace Core.Utilities.Refit.Concrete
                 return dataResult;
             }
         }
-
-
     }
 }

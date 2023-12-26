@@ -15,18 +15,16 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfCategoryDal : EfEntityRepositoryBase<Category, DataBaseContext>, ICategoryDal
     {
-        public Category Add(Category category)
+        public void Add(Category category)
         {
             using (var context = new DataBaseContext())
             {
                 context.Entry(category).State = EntityState.Added;
                 context.SaveChanges();
-
-                return category;
             }
         }
 
-        public Category Update(Category category)
+        public void Update(Category category)
         {
             using (var context = new DataBaseContext())
             {
@@ -39,12 +37,10 @@ namespace DataAccess.Concrete.EntityFramework
                 result.UpdateUserId = category.UpdateUserId;
 
                 context.SaveChanges();
-
-                return category;
             }
         }
       
-        public Category Delete(int id)
+        public void Delete(int id)
         {
             using (var context = new DataBaseContext())
             {
@@ -54,8 +50,6 @@ namespace DataAccess.Concrete.EntityFramework
                 result.Status = false;
 
                 context.SaveChanges();
-
-                return result;
             }
         }
         

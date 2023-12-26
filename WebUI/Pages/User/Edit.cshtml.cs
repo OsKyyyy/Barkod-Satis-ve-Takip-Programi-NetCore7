@@ -27,21 +27,14 @@ namespace WebUI.Pages.User
         
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            var session = SessionValues();
-
-            if (session[1] == null)
-            {
-                return new RedirectToPageResult("Login");
-            }
-
-            var response = await _user.ListById(SessionValues()[0], id);
+            var response = await _user.ListById("Bearer " + HttpContext.Session.GetString("userToken"), id);
 
             if (response.Message == "Authentication Error")
             {
                 HttpContext.Session.Remove("userToken");
                 HttpContext.Session.Remove("userInfo");
 
-                return new RedirectToPageResult("Login");
+                return RedirectToPage("Login");
             }
 
             if (response.Status)
@@ -66,33 +59,24 @@ namespace WebUI.Pages.User
 
         public async Task<IActionResult> OnPostEditAsync(UpdateRequestModel updateRequestModel)
         {
-            var response = await _user.Update(SessionValues()[0], updateRequestModel);
+            var response = await _user.Update("Bearer " + HttpContext.Session.GetString("userToken"), updateRequestModel);
 
             if (response.Message == "Authentication Error")
             {
                 HttpContext.Session.Remove("userToken");
                 HttpContext.Session.Remove("userInfo");
 
-                return new RedirectToPageResult("Login");
+                return RedirectToPage("Login");
             }
 
             if (response.Status)
             {
                 ToastrSuccess = response.Message;
-                return new RedirectToPageResult("Edit", response.Data.Id);
+                return RedirectToPage("Edit", response.Data.Id);
             }
 
             ToastrError = response.Message;
             return Page();
-        }
-
-        public string[] SessionValues()
-        {
-            var user = "Bearer " + HttpContext.Session.GetString("userToken");
-            var userInfo = HttpContext.Session.GetString("userInfo");
-
-            var values = new string[2] { user, userInfo };
-            return values;
         }
     }
 }

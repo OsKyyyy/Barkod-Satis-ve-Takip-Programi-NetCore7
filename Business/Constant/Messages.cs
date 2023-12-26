@@ -42,6 +42,12 @@ namespace Business.Constant
         public static string PosQuantityChange = "Sepet Adet Bilgisi Güncellendi";
         public static string PosDeleted = "Ürün Sepetten Silindi";
 
+        public static string CustomerAdded = "Müşteri Eklendi";
+        public static string CustomersListed = "Müşteriler Listelendi";
+        public static string CustomerUpdated = "Müşteri Güncellendi";
+        public static string CustomerDeleted = "Müşteri Silindi";
+        public static string CustomerNotFound = "Müşteri Bulunamadı";
+        public static string CustomerInfoListed = "Müşteri Bilgileri Listelendi";
     }
 
 }

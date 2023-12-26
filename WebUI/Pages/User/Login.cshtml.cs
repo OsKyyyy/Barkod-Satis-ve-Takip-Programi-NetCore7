@@ -1,6 +1,7 @@
 using Core.Utilities.Refit.Abstract;
 using Core.Utilities.Refit.Models.Request.User;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -28,7 +29,7 @@ namespace WebUI.Pages.User
 
             if (user != null)
             {
-                return new RedirectToPageResult("../Index");
+                return RedirectToPage("../Index");
             }
 
             return Page();
@@ -47,12 +48,12 @@ namespace WebUI.Pages.User
                 HttpContext.Session.SetString("userInfo", serializeData);
                 HttpContext.Session.SetString("userToken", response.Data.Token);
 
-                return new RedirectToPageResult("../Index");
+                return RedirectToPage("../Index");
             }
 
             AlertError = response.Message;
-            return Page();
 
+            return Page();
         }
     }
 }

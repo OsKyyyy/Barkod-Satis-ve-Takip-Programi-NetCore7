@@ -24,24 +24,17 @@ namespace WebUI.Pages.Product
 
         public async Task<IActionResult> OnGetAsync()
         {
-            this.ToastrError = TempData["ToastrError"] as string;
-            this.ToastrSuccess = TempData["ToastrSuccess"] as string;
+            ToastrError = TempData["ToastrError"] as string;
+            ToastrSuccess = TempData["ToastrSuccess"] as string;
 
-            var session = SessionValues();
-
-            if (session[1] == null)
-            {
-                return new RedirectToPageResult("../User/Login");
-            }
-
-            var response = await _product.List(SessionValues()[0]);
+            var response = await _product.List("Bearer " + HttpContext.Session.GetString("userToken"));
 
             if (response.Message == "Authentication Error")
             {
                 HttpContext.Session.Remove("userToken");
                 HttpContext.Session.Remove("userInfo");
 
-                return new RedirectToPageResult("../User/Login");
+                return RedirectToPage("../User/Login");
             }
 
             if (response.Status)
@@ -53,15 +46,6 @@ namespace WebUI.Pages.Product
                 ToastrError = response.Message;
             }
             return Page();
-        }
-
-        public string[] SessionValues()
-        {
-            var user = "Bearer " + HttpContext.Session.GetString("userToken");
-            var userInfo = HttpContext.Session.GetString("userInfo");
-
-            var values = new string[2] { user, userInfo };
-            return values;
         }
     }
 }

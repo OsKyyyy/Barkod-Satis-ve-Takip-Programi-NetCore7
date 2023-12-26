@@ -25,17 +25,10 @@ namespace WebUI.Pages.User
         
 		public async Task<IActionResult> OnGetAsync()
 	    {
-            this.ToastrError = TempData["ToastrError"] as string;
-            this.ToastrSuccess = TempData["ToastrSuccess"] as string;
+            ToastrError = TempData["ToastrError"] as string;
+            ToastrSuccess = TempData["ToastrSuccess"] as string;
 
-            var session = SessionValues();
-
-		    if (session[1] == null)
-		    {
-			    return new RedirectToPageResult("Login");
-		    }
-
-			var response = await _user.List(SessionValues()[0]);
+			var response = await _user.List("Bearer " + HttpContext.Session.GetString("userToken"));
 
             if (response.Message == "Authentication Error")
             {
@@ -53,17 +46,8 @@ namespace WebUI.Pages.User
             {
                 ToastrError = response.Message;
             }
+
             return Page();
 	    }
-
-		public string[] SessionValues()
-	    {
-		    var user = "Bearer " + HttpContext.Session.GetString("userToken");
-		    var userInfo = HttpContext.Session.GetString("userInfo");
-
-		    var values = new string[2] { user, userInfo };
-		    return values;
-	    }
-
 	}
 }

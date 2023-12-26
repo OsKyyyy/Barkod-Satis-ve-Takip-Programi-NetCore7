@@ -72,7 +72,7 @@ namespace WebUI
                 {
                     if (string.IsNullOrEmpty(CurrentUserIDSession))
                     {
-                        var path = $"/User/Login?ReturnUrl={context.Request.Path}";
+                        var path = $"/User/Login";
                         context.Response.Redirect(path);
                         return;
                     }

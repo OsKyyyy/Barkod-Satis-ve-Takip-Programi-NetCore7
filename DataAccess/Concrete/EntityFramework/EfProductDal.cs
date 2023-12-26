@@ -46,7 +46,7 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
-        public Product Delete(int id)
+        public void Delete(int id)
         {
             using (var context = new DataBaseContext())
             {
@@ -57,8 +57,6 @@ namespace DataAccess.Concrete.EntityFramework
                 result.Status = false;
 
                 context.SaveChanges();
-
-                return result;
             }
         }
 
@@ -130,7 +128,11 @@ namespace DataAccess.Concrete.EntityFramework
                     p => p.CategoryId,
                     c => c.Id, (p, c) => new { p, c }).Join(context.Users,
                     p2 => p2.p.UpdateUserId,
-                    u => u.Id, (p2, u) => new { p2, u }).Where(x => x.p2.p.Status == true).Where(x => x.p2.p.Deleted == false).Select(l => new ViewModel
+                    u => u.Id, (p2, u) => new { p2, u })
+                    .Where(x => x.p2.p.Status == true)
+                    .Where(x => x.p2.p.Deleted == false)
+                    .Where(x => x.p2.c.Status == true)
+                    .Select(l => new ViewModel
                 {
                     Id = l.p2.p.Id,
                     Name = l.p2.p.Name,

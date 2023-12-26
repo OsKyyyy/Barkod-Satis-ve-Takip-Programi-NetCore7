@@ -12,8 +12,8 @@ namespace Business.Abstract
 {
     public interface ICategoryService
     {
-        IDataResult<Category> Add(CategoryAddDto category);
-        IDataResult<Category> Update(CategoryUpdateDto category);
+        IResult Add(CategoryAddDto category);
+        IResult Update(CategoryUpdateDto category);
         IDataResult<List<ViewModel>> List();
         IResult Delete(int id);
         IDataResult<ViewModel> ListById(int id);

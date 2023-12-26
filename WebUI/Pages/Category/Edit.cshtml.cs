@@ -27,21 +27,14 @@ namespace WebUI.Pages.Category
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            var session = SessionValues();
-
-            if (session[1] == null)
-            {
-                return new RedirectToPageResult("../User/Login");
-            }
-
-            var response = await _category.ListById(SessionValues()[0], id);
+            var response = await _category.ListById("Bearer " + HttpContext.Session.GetString("userToken"), id);
 
             if (response.Message == "Authentication Error")
             {
                 HttpContext.Session.Remove("userToken");
                 HttpContext.Session.Remove("userInfo");
 
-                return new RedirectToPageResult("../User/Login");
+                return RedirectToPage("../User/Login");
             }
 
             if (response.Status)
@@ -58,6 +51,7 @@ namespace WebUI.Pages.Category
             }
 
             TempData["ToastrError"] = response.Message;
+
             return RedirectToPage("List");
         }
 
@@ -65,33 +59,24 @@ namespace WebUI.Pages.Category
         {
             updateRequestModel.UpdateUserId = JsonConvert.DeserializeObject<ViewModel>(HttpContext.Session.GetString("userInfo")).Id;
 
-            var response = await _category.Update(SessionValues()[0], updateRequestModel);
+            var response = await _category.Update("Bearer " + HttpContext.Session.GetString("userToken"), updateRequestModel);
 
             if (response.Message == "Authentication Error")
             {
                 HttpContext.Session.Remove("userToken");
                 HttpContext.Session.Remove("userInfo");
 
-                return new RedirectToPageResult("../User/Login");
+                return RedirectToPage("../User/Login");
             }
 
             if (response.Status)
             {
                 ToastrSuccess = response.Message;
-                return new RedirectToPageResult("Edit", UpdateRequestModel.Id);
+                return RedirectToPage("Edit", UpdateRequestModel.Id);
             }
 
             ToastrError = response.Message;
             return Page();
-        }
-
-        public string[] SessionValues()
-        {
-            var user = "Bearer " + HttpContext.Session.GetString("userToken");
-            var userInfo = HttpContext.Session.GetString("userInfo");
-
-            var values = new string[2] { user, userInfo };
-            return values;
         }
     }
 }

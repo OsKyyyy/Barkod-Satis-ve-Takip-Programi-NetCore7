@@ -38,21 +38,14 @@ namespace WebUI.Pages.Product
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            var session = SessionValues();
-
-            if (session[1] == null)
-            {
-                return new RedirectToPageResult("../User/Login");
-            }
-
-            var response = await _product.ListById(SessionValues()[0], id);
+            var response = await _product.ListById("Bearer " + HttpContext.Session.GetString("userToken"), id);
 
             if (response.Message == "Authentication Error")
             {
                 HttpContext.Session.Remove("userToken");
                 HttpContext.Session.Remove("userInfo");
 
-                return new RedirectToPageResult("../User/Login");
+                return RedirectToPage("../User/Login");
             }
 
             if (response.Status)
@@ -79,6 +72,7 @@ namespace WebUI.Pages.Product
             }
 
             TempData["ToastrError"] = response.Message;
+
             return RedirectToPage("List");
         }
 
@@ -95,44 +89,36 @@ namespace WebUI.Pages.Product
 
             updateRequestModel.UpdateUserId = JsonConvert.DeserializeObject<ViewModel>(HttpContext.Session.GetString("userInfo")).Id;
 
-            var response = await _product.Update(SessionValues()[0], updateRequestModel);
+            var response = await _product.Update("Bearer " + HttpContext.Session.GetString("userToken"), updateRequestModel);
 
             if (response.Message == "Authentication Error")
             {
                 HttpContext.Session.Remove("userToken");
                 HttpContext.Session.Remove("userInfo");
 
-                return new RedirectToPageResult("../User/Login");
+                return RedirectToPage("../User/Login");
             }
 
             if (response.Status)
             {
                 ToastrSuccess = response.Message;
-                return new RedirectToPageResult("Edit", updateRequestModel.Id);
+                return RedirectToPage("Edit", updateRequestModel.Id);
             }
 
             await GetCategories(updateRequestModel.CategoryId);
 
             ToastrError = response.Message;
+
             return Page();
         }
 
         public async Task GetCategories(int categoryId)
         {
-            var response = await _category.ListByActive(SessionValues()[0]);
+            var response = await _category.ListByActive("Bearer " + HttpContext.Session.GetString("userToken"));
 
             var list = (from item in response.Data let selected = categoryId == item.Id select new SelectListItem { Value = item.Id.ToString(), Text = item.Name, Selected = selected }).ToList();
 
             Options = list;
-        }
-
-        public string[] SessionValues()
-        {
-            var user = "Bearer " + HttpContext.Session.GetString("userToken");
-            var userInfo = HttpContext.Session.GetString("userInfo");
-
-            var values = new string[2] { user, userInfo };
-            return values;
         }
     }
 }

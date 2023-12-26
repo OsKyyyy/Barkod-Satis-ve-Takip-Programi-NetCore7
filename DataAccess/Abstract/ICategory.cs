@@ -11,11 +11,11 @@ namespace DataAccess.Abstract
 {
     public interface ICategoryDal : IEntityRepository<Category>
     {
-        Category Add(Category category);
-        Category Update(Category category);
+        void Add(Category category);
+        void Update(Category category);
         List<ViewModel> List();
         List<ViewModel> ListByActive();
-        Category Delete(int id);
+        void Delete(int id);
         ViewModel ListById(int id);
     }
 }

@@ -29,7 +29,7 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(AddValidator))]
-        public IDataResult<Category> Add(CategoryAddDto categoryAddDto)
+        public IResult Add(CategoryAddDto categoryAddDto)
         {
             var category = new Category
             {
@@ -43,11 +43,11 @@ namespace Business.Concrete
             };
             _categoryDal.Add(category);
 
-            return new SuccessDataResult<Category>(category, Messages.CategoryAdded);
+            return new SuccessResult(Messages.CategoryAdded);
         }
 
         [ValidationAspect(typeof(UpdateValidator))]
-        public IDataResult<Category> Update(CategoryUpdateDto categoryUpdateDto)
+        public IResult Update(CategoryUpdateDto categoryUpdateDto)
         {
             var category = new Category
             {
@@ -59,7 +59,7 @@ namespace Business.Concrete
             };
             _categoryDal.Update(category);
 
-            return new SuccessDataResult<Category>(category, Messages.CategoryUpdated);
+            return new SuccessResult(Messages.CategoryUpdated);
         }
 
         public IResult Delete(int id)

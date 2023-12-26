@@ -128,7 +128,7 @@
                                     <label class="col-lg-4 col-form-label required fw-semibold fs-6">Alış Fiyatı</label>
 
                                     <div class="col-lg-8 fv-row">
-                                        <input asp-for="AddRequestModel.PurchasePrice" class="form-control form-control-lg form-control mb-3 mb-lg-0" autocomplete="off">
+                                        <input asp-for="AddRequestModel.PurchasePrice" id="purchasePriceInput" class="form-control form-control-lg form-control mb-3 mb-lg-0" autocomplete="off">
                                         <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
                                             <span asp-validation-for="AddRequestModel.PurchasePrice"></span>
                                         </div>
@@ -139,7 +139,7 @@
                                     <label class="col-lg-4 col-form-label required fw-semibold fs-6">Satış Fiyatı</label>
 
                                     <div class="col-lg-8 fv-row">
-                                        <input asp-for="AddRequestModel.SalePrice" class="form-control form-control-lg form-control mb-3 mb-lg-0" autocomplete="off">
+                                        <input asp-for="AddRequestModel.SalePrice" id="salePriceInput"  class="form-control form-control-lg form-control mb-3 mb-lg-0" autocomplete="off">
                                         <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
                                             <span asp-validation-for="AddRequestModel.SalePrice"></span>
                                         </div>

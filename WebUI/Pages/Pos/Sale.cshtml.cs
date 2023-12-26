@@ -33,6 +33,8 @@ namespace WebUI.Pages.Pos
 
         public async Task<IActionResult> OnGetAsync()
         {
+            ToastrError = TempData["ToastrError"] as string;
+
             var CreateUserId = JsonConvert.DeserializeObject<UserViewModel>(HttpContext.Session.GetString("userInfo")).Id;
 
             var response = await _pos.List("Bearer " + HttpContext.Session.GetString("userToken"), CreateUserId);
@@ -42,7 +44,7 @@ namespace WebUI.Pages.Pos
                 HttpContext.Session.Remove("userToken");
                 HttpContext.Session.Remove("userInfo");
 
-                return new RedirectToPageResult("../User/Login");
+                return RedirectToPage("../User/Login");
             }
 
             if (response.Status)
@@ -71,12 +73,12 @@ namespace WebUI.Pages.Pos
                 HttpContext.Session.Remove("userToken");
                 HttpContext.Session.Remove("userInfo");
 
-                return new RedirectToPageResult("../User/Login");
+                return RedirectToPage("../User/Login");
             }
 
             if (response.Status)
             {
-                return new RedirectToPageResult("Sale");
+                return RedirectToPage("Sale");
             }
 
             var responseList = await _pos.List("Bearer " + HttpContext.Session.GetString("userToken"), addRequestModel.CreateUserId);
@@ -97,15 +99,16 @@ namespace WebUI.Pages.Pos
                 HttpContext.Session.Remove("userToken");
                 HttpContext.Session.Remove("userInfo");
 
-                return new RedirectToPageResult("../User/Login");
+                return RedirectToPage("../User/Login");
             }
 
             if (response.Status)
             {
-                return new RedirectToPageResult("Sale");
+                return RedirectToPage("Sale");
             }
 
             ToastrError = response.Message;
+
             return Page();
         }
         

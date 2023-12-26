@@ -5,6 +5,12 @@
         Product.ToastrSuccess();
         Product.ChangeStatus();
         Product.ChangeFavorite();
+        $("#purchasePriceInput").on("keyup", function () {
+            $(this).val($(this).val().replace(",", "."));
+        })
+        $("#salePriceInput").on("keyup", function () {
+            $(this).val($(this).val().replace(",", "."));
+        })
     },
 
     ToastrError: function () {
