@@ -1,16 +1,15 @@
-﻿@page
-@model WebUI.Pages.Customer.AddModel
+﻿@page "{id:int}"
+@model WebUI.Pages.WholeSaler.EditModel
 @{
-    ViewData["Title"] = "Müşteri Ekle";
+    ViewData["Title"] = "Kategori Düzenle";
 }
-
 <div class="app-main flex-column flex-row-fluid " id="kt_app_main">
     <div class="d-flex flex-column flex-column-fluid">
         <div id="kt_app_toolbar" class="app-toolbar  py-3 py-lg-6 mb-10">
             <div id="kt_app_toolbar_container" class="app-container  container-xxl d-flex flex-stack ">
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3 ">
                     <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">
-                        Müşteri Ekle
+                        Toptancı Düzenle
                     </h1>
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                         <li class="breadcrumb-item text-muted">
@@ -20,7 +19,7 @@
                             <span class="bullet bg-gray-500 w-5px h-2px"></span>
                         </li>
                         <li class="breadcrumb-item text-muted">
-                            Müşteri İşlemleri
+                            Toptancı İşlemleri
                         </li>
                     </ul>
                 </div>
@@ -28,7 +27,8 @@
         </div>
         <div id="kt_app_content" class="app-content  flex-column-fluid ">
             <div id="kt_app_content_container" class="app-container  container-xxl ">
-                <form class="form d-flex flex-column flex-lg-row" method="post" asp-page-handler="Add">
+                <form class="form d-flex flex-column flex-lg-row" method="post" asp-page-handler="Edit">
+                    <input hidden asp-for="UpdateRequestModel.Id" />
                     <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">
                         <div class="card card-flush py-4">
                             <div class="card-header">
@@ -40,11 +40,11 @@
                                 </div>
                             </div>
                             <div class="card-body pt-0">
-                                <select asp-for="AddRequestModel.Status" class="form-select mb-2" data-control="select2" data-hide-search="true" id="statusSelect">
-                                    <option value="true" selected="">Aktif</option>
+                                <select asp-for="UpdateRequestModel.Status" class="form-select mb-2" data-control="select2" data-hide-search="true" id="statusSelect">
+                                    <option value="true">Aktif</option>
                                     <option value="false">Pasif</option>
                                 </select>
-                                <div class="text-muted fs-7">Müşterinin pasif olarak seçilmesi, müşterinin kullanılamayacağı anlamına gelir. Daha sonra müşteri, liste üzerinden aktifleştirilebilir.</div>
+                                <div class="text-muted fs-7">Toptancının pasif olarak seçilmesi, toptancının kullanılamayacağı anlamına gelir. Daha sonra toptancı, liste üzerinden aktifleştirilebilir.</div>
                             </div>
                         </div>
                     </div>
@@ -52,27 +52,27 @@
                         <div class="card card-flush py-4">
                             <div class="card-header">
                                 <div class="card-title">
-                                    <h2>Müşteri Bilgileri</h2>
+                                    <h2>Totpancı Bilgileri</h2>
                                 </div>
                             </div>
                             <div class="card-body pt-0">
                                 <div class="row mb-6">
-                                    <label class="col-lg-4 col-form-label required fw-semibold fs-6">Müşteri Adı</label>
+                                    <label class="col-lg-4 col-form-label required fw-semibold fs-6">Toptancı Adı</label>
 
                                     <div class="col-lg-8 fv-row">
-                                        <input asp-for="AddRequestModel.Name" class="form-control form-control-lg form-control mb-3 mb-lg-0" autocomplete="off">
+                                        <input asp-for="UpdateRequestModel.Name" class="form-control form-control-lg form-control mb-3 mb-lg-0" autocomplete="off">
                                         <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
-                                            <span asp-validation-for="AddRequestModel.Name"></span>
+                                            <span asp-validation-for="UpdateRequestModel.Name"></span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row mb-6">
-                                    <label class="col-lg-4 col-form-label required fw-semibold fs-6">Adres</label>
+                                    <label class="col-lg-4 col-form-label required fw-semibold fs-6">Yetkili Kişi</label>
 
                                     <div class="col-lg-8 fv-row">
-                                        <input asp-for="AddRequestModel.Address" class="form-control form-control-lg form-control mb-3 mb-lg-0" autocomplete="off">
+                                        <input asp-for="UpdateRequestModel.AuthorizedPerson" class="form-control form-control-lg form-control mb-3 mb-lg-0" autocomplete="off">
                                         <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
-                                            <span asp-validation-for="AddRequestModel.Address"></span>
+                                            <span asp-validation-for="UpdateRequestModel.AuthorizedPerson"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -80,9 +80,9 @@
                                     <label class="col-lg-4 col-form-label fw-semibold fs-6">Telefon</label>
 
                                     <div class="col-lg-8 fv-row">
-                                        <input asp-for="AddRequestModel.Phone" class="form-control form-control-lg form-control mb-3 mb-lg-0" autocomplete="off">
+                                        <input asp-for="UpdateRequestModel.Phone" class="form-control form-control-lg form-control mb-3 mb-lg-0" autocomplete="off">
                                         <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
-                                            <span asp-validation-for="AddRequestModel.Phone"></span>
+                                            <span asp-validation-for="UpdateRequestModel.Phone"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -90,9 +90,19 @@
                                     <label class="col-lg-4 col-form-label fw-semibold fs-6">E-Posta</label>
 
                                     <div class="col-lg-8 fv-row">
-                                        <input asp-for="AddRequestModel.Email" class="form-control form-control-lg form-control mb-3 mb-lg-0" autocomplete="off">
+                                        <input asp-for="UpdateRequestModel.Email" class="form-control form-control-lg form-control mb-3 mb-lg-0" autocomplete="off">
                                         <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
-                                            <span asp-validation-for="AddRequestModel.Email"></span>
+                                            <span asp-validation-for="UpdateRequestModel.Email"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-6">
+                                    <label class="col-lg-4 col-form-label fw-semibold fs-6">Adres</label>
+
+                                    <div class="col-lg-8 fv-row">
+                                        <input asp-for="UpdateRequestModel.Address" class="form-control form-control-lg form-control mb-3 mb-lg-0" autocomplete="off">
+                                        <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                                            <span asp-validation-for="UpdateRequestModel.Address"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -111,7 +121,6 @@
         </div>
     </div>
 </div>
-
 <div class="d-none">
     <input asp-for="ToastrError" />
 </div>
@@ -120,5 +129,5 @@
 </div>
 
 @section _Foot{
-    <script src="~/assets/js/pages/customer/customer.js"></script>
+    <script src="~/assets/js/pages/category/category.js"></script>
 }

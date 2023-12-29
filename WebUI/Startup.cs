@@ -36,7 +36,7 @@ namespace WebUI
         {
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromMinutes(10);
+                options.IdleTimeout = TimeSpan.FromHours(1);
             });
 
             services.AddRazorPages();

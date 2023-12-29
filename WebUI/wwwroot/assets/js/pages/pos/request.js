@@ -23,7 +23,7 @@
         })
     },
     FindPrice: function () {
-
+        
         var value = $("#findPriceBarcodeNo").val();
 
         if (value == "") {
@@ -63,16 +63,18 @@
                     $('input:hidden[name="__RequestVerificationToken"]').val()
             },
             success: function (response) {
+                
                 if (response.status) {
                     $("#findPriceTable").show();
-                    $("#findPriceTableProductName").html(response.name);
-                    $("#findPriceTableBarcode").html(response.barcode);
-                    $("#findPriceTableSalePrice").html((Math.round(response.salePrice * 100) / 100).toFixed(2).replace(".", ",") + " &#8378;");
+                    $("#findPriceTableProductName").html(response.data.name);
+                    $("#findPriceTableBarcode").html(response.data.barcode);
+                    $("#findPriceTableSalePrice").html((Math.round(response.data.salePrice * 100) / 100).toFixed(2).replace(".", ",") + " &#8378;");
                 }
                 if (response.message == "Authentication Error") {
                     window.location.reload();
                 }
-                else {
+                if (!response.status) {
+
                     toastr.options = {
                         "closeButton": true,
                         "debug": false,
@@ -96,10 +98,17 @@
             },        
         })
     },
-    AddAjax: function () {
-        
-        var value = $("#findPriceTableBarcode").html();
-        var addModel = { "Barcode": value };
+    AddAjax: function (method,counter) {
+        debugger;
+        if (method == 1) {
+            var value = $("#findPriceTableBarcode").html();
+            var addModel = { "Barcode": value };
+        }
+        else {
+            var barcode = $("#favoriteAddBarcode_" + counter).val();
+            var quantity = $("#favoriteAddQuantity_" + counter).val();
+            var addModel = { "Barcode": barcode, "Quantity": quantity };
+        }
 
         $.ajax({
             type: "POST",
@@ -140,7 +149,8 @@
             },
         })
 
-    }
+    },
+    
 }
 $(document).ready(function () {
     Request.Init();

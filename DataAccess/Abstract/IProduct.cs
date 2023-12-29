@@ -17,6 +17,7 @@ namespace DataAccess.Abstract
         void Delete(int id);
         ViewModel ListById(int id);
         ViewModel ListToPos(string barcode);
+        List<ViewModel> ListByFavorite();
         ViewModel CheckExistsByBarcode(string barcode);
     }
 }

@@ -79,7 +79,7 @@ namespace WebAPI.Controllers
                 return Ok(result);
             }
 
-            return Ok(result);
+            return BadRequest(result);
         }
 
         [Route("ListById")]

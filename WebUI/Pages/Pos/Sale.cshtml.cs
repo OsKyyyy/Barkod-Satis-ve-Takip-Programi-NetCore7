@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using Newtonsoft.Json;
 using System;
 using UserViewModel = Core.Utilities.Refit.Models.Response.User.ViewModel;
+using ProductViewModel = Core.Utilities.Refit.Models.Response.Product.ViewModel;
 
 namespace WebUI.Pages.Pos
 {
@@ -31,6 +32,8 @@ namespace WebUI.Pages.Pos
         
         public List<ViewModel> ViewModel { get; set; }
 
+        public List<ProductViewModel> ViewModelFavorite { get; set; }
+
         public async Task<IActionResult> OnGetAsync()
         {
             ToastrError = TempData["ToastrError"] as string;
@@ -38,8 +41,9 @@ namespace WebUI.Pages.Pos
             var CreateUserId = JsonConvert.DeserializeObject<UserViewModel>(HttpContext.Session.GetString("userInfo")).Id;
 
             var response = await _pos.List("Bearer " + HttpContext.Session.GetString("userToken"), CreateUserId);
+            var responseFavorite = await _pos.ListByFavorite("Bearer " + HttpContext.Session.GetString("userToken"));
 
-            if (response.Message == "Authentication Error")
+            if (response.Message == "Authentication Error" || responseFavorite.Message == "Authentication Error")
             {
                 HttpContext.Session.Remove("userToken");
                 HttpContext.Session.Remove("userInfo");
@@ -50,10 +54,21 @@ namespace WebUI.Pages.Pos
             if (response.Status)
             {
                 ViewModel = response.Data;
-                return Page();
+            }
+            else
+            {
+                ToastrError = response.Message;
             }
 
-            ToastrError = response.Message;
+            if (responseFavorite.Status)
+            {
+                ViewModelFavorite = responseFavorite.Data;
+            }
+            else
+            {
+                ToastrError = responseFavorite.Message;
+            }
+
             return Page();
         }
 

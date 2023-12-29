@@ -6,20 +6,20 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomerController : Controller
+    public class WholeSalerController : Controller
     {
-        private ICustomerService _customerService;
+        private IWholeSalerService _wholeSalerService;
 
-        public CustomerController(ICustomerService customerService)
+        public WholeSalerController(IWholeSalerService wholeSalerService)
         {
-            _customerService = customerService;
+            _wholeSalerService = wholeSalerService;
         }
 
         [Route("Add")]
         [HttpPost]
-        public ActionResult Add(CustomerAddDto customerAddDto)
+        public ActionResult Add(WholeSalerAddDto wholeSalerAddDto)
         {
-            var result = _customerService.Add(customerAddDto);
+            var result = _wholeSalerService.Add(wholeSalerAddDto);
 
             if (result.Status)
             {
@@ -31,15 +31,15 @@ namespace WebAPI.Controllers
 
         [Route("Update")]
         [HttpPut]
-        public ActionResult Update(CustomerUpdateDto customerUpdateDto)
+        public ActionResult Update(WholeSalerUpdateDto wholeSalerUpdateDto)
         {
-            var listById = _customerService.ListById(customerUpdateDto.Id);
+            var listById = _wholeSalerService.ListById(wholeSalerUpdateDto.Id);
             if (!listById.Status)
             {
                 return BadRequest(listById);
             }
 
-            var result = _customerService.Update(customerUpdateDto);
+            var result = _wholeSalerService.Update(wholeSalerUpdateDto);
 
             if (result.Status)
             {
@@ -53,7 +53,7 @@ namespace WebAPI.Controllers
         [HttpGet]
         public ActionResult List()
         {
-            var list = _customerService.List();
+            var list = _wholeSalerService.List();
             if (!list.Status)
             {
                 return BadRequest(list);
@@ -62,30 +62,17 @@ namespace WebAPI.Controllers
             return Ok(list);
         }
 
-        [Route("ListById")]
-        [HttpGet]
-        public ActionResult ListById(int id)
-        {
-            var listById = _customerService.ListById(id);
-            if (!listById.Status)
-            {
-                return BadRequest(listById);
-            }
-
-            return Ok(listById);
-        }
-
         [Route("Delete")]
         [HttpDelete]
         public ActionResult Delete(int id)
         {
-            var listById = _customerService.ListById(id);
+            var listById = _wholeSalerService.ListById(id);
             if (!listById.Status)
             {
                 return BadRequest(listById);
             }
 
-            var result = _customerService.Delete(id);
+            var result = _wholeSalerService.Delete(id);
 
             if (result.Status)
             {
@@ -93,6 +80,19 @@ namespace WebAPI.Controllers
             }
 
             return BadRequest(result);
+        }
+
+        [Route("ListById")]
+        [HttpGet]
+        public ActionResult ListById(int id)
+        {
+            var listById = _wholeSalerService.ListById(id);
+            if (!listById.Status)
+            {
+                return BadRequest(listById);
+            }
+
+            return Ok(listById);
         }
     }
 }

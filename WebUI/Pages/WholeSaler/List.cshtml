@@ -1,7 +1,7 @@
 ﻿@page
-@model WebUI.Pages.Category.ListModel
+@model WebUI.Pages.WholeSaler.ListModel
 @{
-    ViewData["Title"] = "Kategori Listesi";
+    ViewData["Title"] = "Toptancı Listesi";
 }
 @section _Head
     {
@@ -13,17 +13,17 @@
             <div id="kt_app_toolbar_container" class="app-container  container-xxl d-flex flex-stack ">
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3 ">
                     <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">
-                        Kategori Listesi
+                        Toptancı Listesi
                     </h1>
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                         <li class="breadcrumb-item text-muted">
-                            Ürün
+                            Cari Hesaplar
                         </li>
                         <li class="breadcrumb-item">
                             <span class="bullet bg-gray-500 w-5px h-2px"></span>
                         </li>
                         <li class="breadcrumb-item text-muted">
-                            Kategori İşlemleri
+                            Toptancı İşlemleri
                         </li>
                     </ul>
                 </div>
@@ -49,13 +49,13 @@
                                 </select>
                             </div>
 
-                            <a asp-page="/Category/Add" class="btn btn-light-info">
+                            <a asp-page="/WholeSaler/Add" class="btn btn-light-info">
                                 <i class="ki-duotone ki-plus-square fs-2">
                                     <span class="path1"></span>
                                     <span class="path2"></span>
                                     <span class="path3"></span>
                                 </i>
-                                Yeni Kategori
+                                Yeni Toptancı
                             </a>
 
                             <button type="button" class="btn btn-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
@@ -87,6 +87,10 @@
                             <thead>
                                 <tr class="text-start fw-bold fs-7 text-uppercase">
                                     <th class="min-w-100px">AD</th>
+                                    <th class="min-w-100px">YETKİLİ KİŞİ</th>
+                                    <th class="min-w-100px">TELEFON</th>
+                                    <th class="min-w-100px">E-POSTA</th>
+                                    <th class="min-w-100px">ADRES</th>
                                     <th class="min-w-100px">SON İŞLEM YAPAN</th>
                                     <th class="min-w-100px">SON İŞLEM TARİHİ</th>
                                     <th class="min-w-100px">DURUM</th>
@@ -98,6 +102,37 @@
                                 {
                                     <tr class="odd">
                                         <td>@item.Name</td>
+                                        <td>@item.AuthorizedPerson</td>
+                                        <td>
+                                            @if (String.IsNullOrEmpty(item.Phone))
+                                            {
+                                                <span>-</span>
+                                            }
+                                            else
+                                            {
+                                                @item.Phone;
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (String.IsNullOrEmpty(item.Email))
+                                            {
+                                                <span>-</span>
+                                            }
+                                            else
+                                            {
+                                                @item.Email;
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (String.IsNullOrEmpty(item.Address))
+                                            {
+                                                <span>-</span>
+                                            }
+                                            else
+                                            {
+                                                @item.Address;
+                                            }
+                                        </td>
                                         <td>@item.UpdateUserName</td>
                                         <td>@item.UpdateDate</td>
                                         <td>
@@ -111,13 +146,13 @@
                                             }
                                         </td>
                                         <td class="text-end">
-                                            <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" asp-page="/Category/Edit" asp-route-id="@item.Id">
+                                            <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" asp-page="/WholeSaler/Edit" asp-route-id="@item.Id">
                                                 <i class="ki-duotone ki-pencil fs-2">
                                                     <span class="path1"></span>
                                                     <span class="path2"></span>
                                                 </i>
                                             </a>
-                                            <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" asp-page="/Category/Delete" asp-route-id="@item.Id" onclick="Category.DeleteConfirm(this)">
+                                            <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" asp-page="/WholeSaler/Delete" asp-route-id="@item.Id" onclick="WholeSaler.DeleteConfirm(this)">
                                                 <i class="ki-duotone ki-trash fs-2">
                                                     <span class="path1"></span>
                                                     <span class="path2"></span><span class="path3"></span>
@@ -145,6 +180,6 @@
 @section _Foot
     {
     <script src="~/assets/plugins/custom/datatables/datatables.bundle.js"></script>
-    <script src="~/assets/js/pages/category/category.js"></script>
-    <script src="~/assets/js/pages/category/listData.js"></script>
+    <script src="~/assets/js/pages/wholesaler/wholesaler.js"></script>
+    <script src="~/assets/js/pages/wholesaler/listData.js"></script>
 }

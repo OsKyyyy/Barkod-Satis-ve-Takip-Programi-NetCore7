@@ -142,6 +142,13 @@ namespace Business.Concrete
             return new SuccessDataResult<ViewModel>(result, Messages.ProductInfoListed);
         }
 
+        public IDataResult<List<ViewModel>> ListByFavorite()
+        {
+            var result = _productDal.ListByFavorite();
+
+            return new SuccessDataResult<List<ViewModel>>(result, Messages.FavoriteProductsListed);
+        }
+
         public IDataResult<ViewModel> CheckExistsByBarcode(string barcode)
         {
             var result = _productDal.CheckExistsByBarcode(barcode);

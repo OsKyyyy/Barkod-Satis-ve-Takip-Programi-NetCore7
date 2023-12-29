@@ -74,6 +74,19 @@ namespace WebAPI.Controllers
             return Ok(list);
         }
 
+        [Route("ListByFavorite")]
+        [HttpGet]
+        public ActionResult ListByFavorite()
+        {
+            var list = _productService.ListByFavorite();
+            if (!list.Status)
+            {
+                return BadRequest(list);
+            }
+
+            return Ok(list);
+        }
+
         [Route("QuantityIncrease")]
         [HttpPut]
         public ActionResult QuantityIncrease(int id)
@@ -131,7 +144,7 @@ namespace WebAPI.Controllers
                 return Ok(result);
             }
 
-            return Ok(result);
+            return BadRequest(result);
         }
 
         [Route("ListByBarcode")]

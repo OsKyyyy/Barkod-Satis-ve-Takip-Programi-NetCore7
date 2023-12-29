@@ -31,6 +31,7 @@ namespace Business.Constant
         public static string ProductAdded = "Ürün Eklendi";
         public static string ProductUpdated = "Ürün Güncellendi";
         public static string ProductsListed = "Ürünler Listelendi";
+        public static string FavoriteProductsListed = "Favori Ürünler Listelendi";
         public static string ProductDeleted = "Ürün Silindi";
         public static string ProductNotFound = "Ürün Bulunamadı";
         public static string ProductInfoListed = "Ürün Bilgileri Listelendi";
@@ -48,6 +49,12 @@ namespace Business.Constant
         public static string CustomerDeleted = "Müşteri Silindi";
         public static string CustomerNotFound = "Müşteri Bulunamadı";
         public static string CustomerInfoListed = "Müşteri Bilgileri Listelendi";
+
+        public static string WholeSalerAdded = "Toptancı Eklendi";
+        public static string WholeSalerListed = "Toptancılar Listelendi";
+        public static string WholeDeleted = "Toptancı Silindi";
+        public static string WholeSalerNotFound = "Toptancı Bulunamadı";
+        public static string WholeSalerInfoListed = "Toptancı Bilgileri Listelendi";
     }
 
 }

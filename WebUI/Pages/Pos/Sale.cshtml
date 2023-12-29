@@ -1,5 +1,6 @@
 ﻿@page
-@using Core.Utilities.Refit.Models.Response.Pos
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
 @model WebUI.Pages.Pos.SaleModel
 @Html.AntiForgeryToken()
 @{
@@ -22,7 +23,7 @@
                     </h1>
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                         <li class="breadcrumb-item text-muted">
-                            Sayfalar
+                            Ürün
                         </li>
                         <li class="breadcrumb-item">
                             <span class="bullet bg-gray-500 w-5px h-2px"></span>
@@ -67,6 +68,15 @@
                                         </i>
                                         Fiyat Bul
                                     </a>
+                                    <button type="button" class="btn btn-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" id="kt_app_layout_builder_toggle">
+                                        <i class="ki-duotone ki-ranking fs-2">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                            <span class="path3"></span>
+                                            <span class="path4"></span>
+                                        </i>
+                                        Hızlı Satış Ürünleri
+                                    </button>
                                     <button type="button" class="btn btn-light-info" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
                                         <i class="ki-duotone ki-profile-user fs-2">
                                             <span class="path1"></span>
@@ -82,16 +92,16 @@
                                 <div class="table-responsive mb-8">
                                     <table class="table align-middle table-row-dashed gs-0 gy-4 my-0">
                                         <thead>
-                                            <tr class="fw-bold fs-4 text-uppercase">
-                                                <th class="w-350px text-left">ÜRÜN ADI</th>
-                                                <th class="w-150px text-center">BİRİM FİYATI</th>
-                                                <th class="w-150px text-center">ADET</th>
-                                                <th class="w-150px text-center">TOPLAM FİYAT</th>
-                                                <th class="w-100px text-center">İŞLEM</th>
-                                            </tr>
+                                        <tr class="fw-bold fs-4 text-uppercase">
+                                            <th class="w-350px text-left">ÜRÜN ADI</th>
+                                            <th class="w-150px text-center">BİRİM FİYATI</th>
+                                            <th class="w-150px text-center">ADET</th>
+                                            <th class="w-150px text-center">TOPLAM FİYAT</th>
+                                            <th class="w-100px text-center">İŞLEM</th>
+                                        </tr>
                                         </thead>
                                         <tbody>
-                                       
+
                                         @foreach (var item in Model.ViewModel)
                                         {
                                             <tr data-kt-pos-element="item">
@@ -234,7 +244,63 @@
         </div>
     </div>
 </div>
+<div id="kt_app_layout_builder" class="bg-body" data-kt-drawer="true" data-kt-drawer-name="app-settings" data-kt-drawer-activate="true" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'300px', 'lg': '580px'}" data-kt-drawer-direction="end" data-kt-drawer-toggle="#kt_app_layout_builder_toggle" data-kt-drawer-close="#kt_app_layout_builder_close">
 
+    <div class="card border-0 shadow-none rounded-0 w-100">
+        <div class="card-header bgi-position-y-bottom bgi-position-x-end bgi-size-cover bgi-no-repeat rounded-0 border-0 py-4" id="kt_app_layout_builder_header" style="background-image:url('../assets/media/other/customizer-header-bg.jpg')">
+            <h3 class="card-title fs-3 fw-bold text-white flex-column m-0">
+                Hızlı Satış Ürünleri
+
+                <small class="text-white opacity-50 fs-7 fw-semibold pt-1">
+                    ürünlerinizi burada bulamıyorsanız, ürününüzü Favorilere eklemeyi deneyin!
+                </small>
+            </h3>
+            <div class="card-toolbar">
+                <button type="button" class="btn btn-sm btn-icon btn-color-white p-0 w-20px h-20px rounded-1" id="kt_app_layout_builder_close">
+                    <i class="ki-duotone ki-cross-square fs-2"><span class="path1"></span><span class="path2"></span></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body position-relative" id="kt_app_layout_builder_body">
+            <div id="kt_app_settings_content" class="position-relative scroll-y me-n5 pe-5" data-kt-scroll="true" data-kt-scroll-height="auto" data-kt-scroll-wrappers="#kt_app_layout_builder_body" data-kt-scroll-dependencies="#kt_app_layout_builder_header, #kt_app_layout_builder_footer" data-kt-scroll-offset="5px">
+              
+                <ul class="nav nav-pills nav-pills-custom gap-3 mb-6" role="tablist">
+                    @{
+                        var counter = 0;
+                    }
+                    @foreach (var item in Model.ViewModelFavorite)
+                    {
+                        counter++;
+                        <li class="nav-item mb-3 me-0" role="presentation">
+                            <div class="nav-link nav-link-border-solid btn btn-outline btn-flex btn-active-color-primary flex-column flex-stack pt-5 pb-3 page-bg show active" data-bs-toggle="pill" style="width:250px;" aria-selected="true" role="tab">
+                                <div class="nav-icon mb-3">
+                                    <img src="@Configuration.GetValue(typeof(string), "BaseUrl")@item.Image" class="w-100px" alt="">
+                                </div>
+                                <div class="">
+                                    <span class="text-gray-800 fw-bold fs-4 d-block" style="min-height: 75px">@item.Name</span>
+                                    <div class="position-relative d-flex align-items-center justify-content-center" data-kt-dialer="true" data-kt-dialer-min="1" data-kt-dialer-step="1" data-kt-dialer-decimals="0"  style="margin:auto">
+                                        <input id="favoriteAddBarcode_@counter" value="@item.Barcode" hidden />
+                                        <button class="btn btn-icon btn-sm btn-light btn-icon-gray-500" data-kt-dialer-control="decrease">
+                                            <i class="ki-duotone ki-minus fs-3x"></i>
+                                        </button>
+                                        <input id="favoriteAddQuantity_@counter" type="text" class="form-control border-0 text-center px-0 fs-3 fw-bold text-gray-800 w-30px" data-kt-dialer-control="input" placeholder="Amount" readonly="">
+                                        <button class="btn btn-icon btn-sm btn-light btn-icon-gray-500" data-kt-dialer-control="increase">
+                                            <i class="ki-duotone ki-plus fs-3x"></i>
+                                        </button>
+                                        <button class="btn btn-icon btn-success fw-bold fs-4 d-block fs-8" onclick="Request.AddAjax(2,@counter)">
+                                            <i class="ki-duotone ki-handcart text-white fs-2"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade" tabindex="-1" id="addMoneyNumpad">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -428,7 +494,7 @@
                                 </div>
                             </td>
                             <td class="pe-0">
-                                <button class="btn btn-light me-2 mb-2 d-flex align-items-center justify-content-center" onclick="Request.AddAjax()">
+                                <button class="btn btn-light me-2 mb-2 d-flex align-items-center justify-content-center" onclick="Request.AddAjax(1)">
                                     <i class="ki-duotone ki-handcart fs-1">
                                        
                                     </i>
