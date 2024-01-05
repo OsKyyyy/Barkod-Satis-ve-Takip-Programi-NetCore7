@@ -50,11 +50,23 @@ namespace Business.Constant
         public static string CustomerNotFound = "Müşteri Bulunamadı";
         public static string CustomerInfoListed = "Müşteri Bilgileri Listelendi";
 
+        public static string CustomerMovementAdded = "Müşteri Hareketi Eklendi";
+        public static string CustomerMovementInfoListed = "Müşteri Hareket Bilgileri Listelendi";
+        public static string CustomerMovementDeleted = "Müşteri Hareketi Silindi";
+        public static string CustomerMovementNotFound = "Müşteri Hareketi Bulunamadı";
+        public static string CustomerMovementUpdated = "Müşteri Hareketi Güncellendi";
+
         public static string WholeSalerAdded = "Toptancı Eklendi";
         public static string WholeSalerListed = "Toptancılar Listelendi";
-        public static string WholeDeleted = "Toptancı Silindi";
+        public static string WholeSalerDeleted = "Toptancı Silindi";
         public static string WholeSalerNotFound = "Toptancı Bulunamadı";
         public static string WholeSalerInfoListed = "Toptancı Bilgileri Listelendi";
+
+        public static string WholeSalerMovementAdded = "Toptancı Hareketi Eklendi";
+        public static string WholeSalerMovementInfoListed = "Toptancı Hareket Bilgileri Listelendi";
+        public static string WholeSalerMovementDeleted = "Toptancı Hareketi Silindi";
+        public static string WholeSalerMovementNotFound = "Toptancı Hareketi Bulunamadı";
+        public static string WholeSalerMovementUpdated = "Toptancı Hareketi Güncellendi";
     }
 
 }

@@ -19,7 +19,7 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (var context = new DataBaseContext())
             {
-                var result = context.Pos.Where(p => p.CreateUserId == pos.CreateUserId).FirstOrDefault(c => c.Barcode == pos.Barcode);
+                var result = context.Pos.Where(p => p.Basket == pos.Basket).Where(p => p.CreateUserId == pos.CreateUserId).FirstOrDefault(c => c.Barcode == pos.Barcode);
 
                 if (result == null)
                 {
@@ -41,7 +41,7 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (var context = new DataBaseContext())
             {
-                var result = context.Pos.Where(p => p.CreateUserId == pos.CreateUserId).FirstOrDefault(c => c.ProductName == pos.ProductName);
+                var result = context.Pos.Where(p => p.Basket == pos.Basket).Where(p => p.CreateUserId == pos.CreateUserId).FirstOrDefault(c => c.ProductName == pos.ProductName);
 
                 if (result == null)
                 {
@@ -66,6 +66,7 @@ namespace DataAccess.Concrete.EntityFramework
                 var result = context.Pos.Where(p => p.CreateUserId == createUserId).Select(s => new ViewModel
                 {
                     Id = s.Id,
+                    Basket = s.Basket,
                     ProductName = s.ProductName,
                     ProductQuantity = s.ProductQuantity,
                     ProductUnitPrice = s.ProductUnitPrice
@@ -82,6 +83,7 @@ namespace DataAccess.Concrete.EntityFramework
                 var result = context.Pos.Select(s => new ViewModel
                 {
                     Id = s.Id,
+                    Basket = s.Basket,
                     ProductName = s.ProductName,
                     ProductQuantity = s.ProductQuantity,
                     ProductUnitPrice = s.ProductUnitPrice

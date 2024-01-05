@@ -94,14 +94,21 @@
     },
     ReceivedMoney: function () {
 
+        basket = localStorage.getItem("basket");
+        
         var val = $("#receivedMoneyNumpadInput").val();
 
-        $("#receivedMoneyNumpadSpan").html((Math.round(val * 100) / 100).toFixed(2).replace(".",",") + " &#8378;");
-        $("#receivedMoneyNumpad").modal("hide");
-
-        var remainder = $("#caseTotal").html().split(" ")[0].replace(",",".");
-            
-        $("#remainderMoneyNumpadSpan").html((Math.round((val - remainder) * 100) / 100).toFixed(2).replace(".", ",") + " &#8378;");
+        if (basket == 1) {
+            $("#receivedMoneyNumpadSpan").html((Math.round(val * 100) / 100).toFixed(2).replace(".", ",") + " &#8378;");
+            var remainder = $("#caseTotal").html().split(" ")[0].replace(",", ".");
+            $("#remainderMoneyNumpadSpan").html((Math.round((val - remainder) * 100) / 100).toFixed(2).replace(".", ",") + " &#8378;");
+        }
+        else {
+            $("#receivedMoneyNumpadSpan2").html((Math.round(val * 100) / 100).toFixed(2).replace(".", ",") + " &#8378;");
+            var remainder = $("#caseTotal2").html().split(" ")[0].replace(",", ".");
+            $("#remainderMoneyNumpadSpan2").html((Math.round((val - remainder) * 100) / 100).toFixed(2).replace(".", ",") + " &#8378;");
+        }
+        $("#receivedMoneyNumpad").modal("hide");            
     }
 }
 $(document).ready(function () {

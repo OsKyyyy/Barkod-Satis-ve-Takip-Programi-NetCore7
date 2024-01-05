@@ -13,6 +13,9 @@ namespace Core.Utilities.Refit.Models.Response.Pos
         [JsonProperty("Id")]
         public int Id { get; set; }
 
+        [JsonProperty("Basket")]
+        public byte Basket { get; set; }
+
         [JsonProperty("Barcode")]
         public string Barcode { get; set; }
 

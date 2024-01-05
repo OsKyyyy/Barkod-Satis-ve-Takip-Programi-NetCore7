@@ -13,6 +13,7 @@ namespace Core.Entities.Concrete
         public string Name { get; set; }
         public Decimal PurchasePrice { get; set; }
         public Decimal SalePrice { get; set; }
+        public Decimal PreviousSellingPrice { get; set; }
         public string Barcode { get; set; }
         public int Stock { get; set; }
         public string? Image { get; set; }

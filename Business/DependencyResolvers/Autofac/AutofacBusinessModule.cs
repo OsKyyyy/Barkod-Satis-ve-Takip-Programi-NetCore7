@@ -33,13 +33,20 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<EfPosDal>().As<IPosDal>();
 
             builder.RegisterType<CustomerManager>().As<ICustomerService>();
-            builder.RegisterType<EfCustomerDal>().As<ICustomerDal>(); 
-            
+            builder.RegisterType<EfCustomerDal>().As<ICustomerDal>();
+
+            builder.RegisterType<CustomerMovementManager>().As<ICustomerMovementService>();
+            builder.RegisterType<EfCustomerMovementDal>().As<ICustomerMovementDal>();
+
             builder.RegisterType<WholeSalerManager>().As<IWholeSalerService>();
             builder.RegisterType<EfWholeSalerDal>().As<IWholeSalerDal>();
 
+            builder.RegisterType<WholeSalerMovementManager>().As<IWholeSalerMovementService>();
+            builder.RegisterType<EfWholeSalerMovementDal>().As<IWholeSalerMovementDal>();
+
             builder.RegisterType<AuthManager>().As<IAuthService>();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
+
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 

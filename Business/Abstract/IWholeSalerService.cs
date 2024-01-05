@@ -13,7 +13,7 @@ namespace Business.Abstract
     public interface IWholeSalerService
     {
         IResult Add(WholeSalerAddDto wholeSaler);
-        IResult Update(WholeSalerUpdateDto category);
+        IResult Update(WholeSalerUpdateDto wholeSaler);
         IDataResult<List<ViewModel>> List();
         IResult Delete(int id);
         IDataResult<ViewModel> ListById(int id);

@@ -9,6 +9,7 @@ namespace Core.Utilities.Refit.Models.Request.Pos
 {
     public class AddMoneyRequestModel
     {
+        public byte Basket { get; set; }
         public string? ProductName { get; set; }
 
         [Required(ErrorMessage = "Bu alan zorunludur.")]

@@ -98,9 +98,10 @@
                                     <th class="min-w-100px text-end">STOK</th>
                                     <th class="min-w-100px">ALIŞ FİYATI</th>
                                     <th class="min-w-100px">SATIŞ FİYATI</th>
+                                    <th class="min-w-100px">ÖNCEKİ SATIŞ FİYATI</th>
                                     <th class="min-w-100px">SON İŞLEM TARİHİ</th>
                                     <th class="min-w-100px">DURUM</th>
-                                    <th class="min-w-100px text-end">İŞLEMLER</th>
+                                    <th class="min-w-100px">İŞLEMLER</th>
                                 </tr>
                             </thead>
                             <tbody class="fw-semibold text-gray-600">
@@ -133,6 +134,7 @@
                                         </td>
                                         <td><span class="fw-bold ms-3">@item.PurchasePrice &#8378;</span></td>
                                         <td><span class="fw-bold ms-3">@item.SalePrice &#8378;</span></td>
+                                        <td><span class="fw-bold ms-3">@item.PreviousSellingPrice &#8378;</span></td>
                                         <td><span class="fw-bold ms-3">@item.UpdateDate</span></td>
                                         <td>
                                             @if (item.Status)
@@ -144,7 +146,7 @@
                                                 <div class="badge badge-light-danger">Pasif</div>
                                             }
                                         </td>
-                                        <td class="text-end">
+                                        <td>
                                             <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" asp-page="/Product/Edit" asp-route-id="@item.Id">
                                                 <i class="ki-duotone ki-pencil fs-2">
                                                     <span class="path1"></span>

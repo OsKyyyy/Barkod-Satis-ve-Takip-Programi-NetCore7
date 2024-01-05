@@ -10,6 +10,7 @@ namespace Core.Utilities.Refit.Models.Request.Pos
     public class AddRequestModel
     {
         [Required(ErrorMessage = "Bu alan zorunludur.")]
+        public byte Basket { get; set; }
         public string Barcode { get; set; }
         public int? Quantity { get; set; }
         public string ProductName { get; set; }

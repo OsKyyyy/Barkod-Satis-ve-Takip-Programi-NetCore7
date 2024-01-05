@@ -80,7 +80,7 @@ namespace Business.Concrete
         public IResult Delete(int id)
         {
             _wholeSalerDal.Delete(id);
-            return new SuccessResult(Messages.WholeDeleted);
+            return new SuccessResult(Messages.WholeSalerDeleted);
         }
 
         public IDataResult<ViewModel> ListById(int id)

@@ -93,7 +93,7 @@
                                     <th class="min-w-100px">SON İŞLEM YAPAN</th>
                                     <th class="min-w-100px">SON İŞLEM TARİHİ</th>
                                     <th class="min-w-100px">DURUM</th>
-                                    <th class="min-w-100px text-end">İŞLEMLER</th>
+                                    <th class="min-w-100px">İŞLEMLER</th>
                                 </tr>
                             </thead>
                             <tbody class="fw-semibold text-gray-600">
@@ -134,7 +134,14 @@
                                                 <div class="badge badge-light-danger">Pasif</div>
                                             }
                                         </td>
-                                        <td class="text-end">
+                                        <td>
+                                            <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" asp-page="/Customer/Movements" asp-route-id="@item.Id">
+                                                <i class="ki-duotone ki-eye fs-2">
+                                                    <span class="path1"></span>
+                                                    <span class="path2"></span>
+                                                    <span class="path3"></span>
+                                                </i>
+                                            </a>
                                             <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" asp-page="/Customer/Edit" asp-route-id="@item.Id">
                                                 <i class="ki-duotone ki-pencil fs-2">
                                                     <span class="path1"></span>

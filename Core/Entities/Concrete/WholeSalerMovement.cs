@@ -12,7 +12,9 @@ namespace Core.Entities.Concrete
         public int WholeSalerId { get; set; }
         public byte ProcessType { get; set; }
         public Decimal Amount { get; set; }
-        public string Note { get; set; }
+        public DateTime InvoiceDate { get; set; }
+        public string? Note { get; set; }
+        public string? Image { get; set; }
         public bool Status { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }

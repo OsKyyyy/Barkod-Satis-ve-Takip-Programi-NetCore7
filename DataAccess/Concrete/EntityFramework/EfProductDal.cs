@@ -30,6 +30,10 @@ namespace DataAccess.Concrete.EntityFramework
             {
                 var result = context.Products.FirstOrDefault(c => c.Id == product.Id);
 
+                if (result.SalePrice != product.SalePrice)
+                {
+                    result.PreviousSellingPrice = result.SalePrice;
+                }
                 result.CategoryId = product.CategoryId;
                 result.Name = product.Name;
                 result.PurchasePrice = product.PurchasePrice;
@@ -74,6 +78,7 @@ namespace DataAccess.Concrete.EntityFramework
                     Name = l.pu.p.Name,
                     PurchasePrice = l.pu.p.PurchasePrice,
                     SalePrice = l.pu.p.SalePrice,
+                    PreviousSellingPrice = l.pu.p.PreviousSellingPrice,
                     Barcode = l.pu.p.Barcode,
                     Stock = l.pu.p.Stock,
                     Image = l.pu.p.Image,
@@ -104,6 +109,7 @@ namespace DataAccess.Concrete.EntityFramework
                     Name = l.pu.p.Name,
                     PurchasePrice = l.pu.p.PurchasePrice,
                     SalePrice = l.pu.p.SalePrice,
+                    PreviousSellingPrice = l.pu.p.PreviousSellingPrice,
                     Barcode = l.pu.p.Barcode,
                     Stock = l.pu.p.Stock,
                     Image = l.pu.p.Image,
@@ -134,6 +140,7 @@ namespace DataAccess.Concrete.EntityFramework
                     Name = l.p2.p.Name,
                     PurchasePrice = l.p2.p.PurchasePrice,
                     SalePrice = l.p2.p.SalePrice,
+                    PreviousSellingPrice = l.p2.p.PreviousSellingPrice,
                     Barcode = l.p2.p.Barcode,
                     Stock = l.p2.p.Stock,
                     Image = l.p2.p.Image,
@@ -168,6 +175,7 @@ namespace DataAccess.Concrete.EntityFramework
                     Name = l.p2.p.Name,
                     PurchasePrice = l.p2.p.PurchasePrice,
                     SalePrice = l.p2.p.SalePrice,
+                    PreviousSellingPrice = l.p2.p.PreviousSellingPrice,
                     Barcode = l.p2.p.Barcode,
                     Stock = l.p2.p.Stock,
                     Image = l.p2.p.Image,
@@ -198,6 +206,7 @@ namespace DataAccess.Concrete.EntityFramework
                     Name = l.p2.p.Name,
                     PurchasePrice = l.p2.p.PurchasePrice,
                     SalePrice = l.p2.p.SalePrice,
+                    PreviousSellingPrice = l.p2.p.PreviousSellingPrice,
                     Barcode = l.p2.p.Barcode,
                     Stock = l.p2.p.Stock,
                     Image = l.p2.p.Image,

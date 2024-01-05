@@ -10,6 +10,7 @@ namespace Entities.Dtos
 {
     public class PosAddMoneyDto : IDto
     {
+        public byte Basket { get; set; }
         public string? ProductName { get; set; }
         public Decimal ProductUnitPrice { get; set; }
         public int CreateUserId { get; set; }

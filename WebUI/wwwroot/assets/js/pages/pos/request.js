@@ -7,20 +7,7 @@
             $("#findPriceBarcodeNo").val("");
             $("#findPriceTable").hide();
             $("#barcodeNo").focus();
-        });
-        $("#barcodeNo").on("keyup", function (event) {
-            
-            var value = $(this).val();
-            if (event.keyCode == 39) {
-                if (value.charAt(0) == "*") {
-                    var substr = value.substr(1);
-                    if (substr != "") {
-                        $("#quantity").val(substr);
-                        $("#barcodeNo").val("");
-                    }
-                }
-            }            
-        })
+        });        
     },
     FindPrice: function () {
         
@@ -75,6 +62,10 @@
                 }
                 if (!response.status) {
 
+                    if (response.message == "Ürün Bulunamadı") {
+                        var audio = new Audio("../assets/media/music/barcode-beep.m4a")
+                        audio.play()
+                    }
                     toastr.options = {
                         "closeButton": true,
                         "debug": false,
@@ -98,16 +89,18 @@
             },        
         })
     },
-    AddAjax: function (method,counter) {
-        debugger;
+    AddAjax: function (method, counter) {
+
+        basket = localStorage.getItem("basket");
+        
         if (method == 1) {
             var value = $("#findPriceTableBarcode").html();
-            var addModel = { "Barcode": value };
+            var addModel = { "Barcode": value, "Basket": basket };
         }
         else {
             var barcode = $("#favoriteAddBarcode_" + counter).val();
             var quantity = $("#favoriteAddQuantity_" + counter).val();
-            var addModel = { "Barcode": barcode, "Quantity": quantity };
+            var addModel = { "Barcode": barcode, "Quantity": quantity, "Basket": basket };
         }
 
         $.ajax({

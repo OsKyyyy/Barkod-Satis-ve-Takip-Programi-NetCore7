@@ -22,6 +22,9 @@ namespace Core.Utilities.Refit.Models.Response.Product
         [JsonProperty("SalePrice")]
         public Decimal SalePrice { get; set; }
         
+        [JsonProperty("PreviousSellingPrice")]
+        public Decimal PreviousSellingPrice { get; set; }
+        
         [JsonProperty("Barcode")]
         public string Barcode { get; set; }
         

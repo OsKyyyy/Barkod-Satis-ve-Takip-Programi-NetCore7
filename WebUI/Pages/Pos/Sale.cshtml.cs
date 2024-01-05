@@ -91,16 +91,8 @@ namespace WebUI.Pages.Pos
                 return RedirectToPage("../User/Login");
             }
 
-            if (response.Status)
-            {
-                return RedirectToPage("Sale");
-            }
-
-            var responseList = await _pos.List("Bearer " + HttpContext.Session.GetString("userToken"), addRequestModel.CreateUserId);
-            ViewModel = responseList.Data;
-
-            ToastrError = response.Message;
-            return Page();
+            TempData["ToastrError"] = response.Message;
+            return RedirectToPage("Sale");
         }
 
         public async Task<IActionResult> OnPostAddMoneyAsync(AddMoneyRequestModel addMoneyRequestModel)

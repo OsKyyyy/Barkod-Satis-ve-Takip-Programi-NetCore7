@@ -58,6 +58,7 @@ namespace Business.Concrete
                 Name = productAddDto.Name,
                 PurchasePrice = decimal.Parse(productAddDto.PurchasePrice, _culture),
                 SalePrice = decimal.Parse(productAddDto.SalePrice, _culture),
+                PreviousSellingPrice = decimal.Parse(productAddDto.SalePrice, _culture),
                 Barcode = productAddDto.Barcode,
                 Stock = productAddDto.Stock,
                 Image = imageUrl,

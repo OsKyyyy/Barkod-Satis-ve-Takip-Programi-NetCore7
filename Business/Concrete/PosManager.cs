@@ -31,6 +31,7 @@ namespace Business.Concrete
         {
             var pos = new Pos
             {
+                Basket = posAddDto.Basket,
                 Barcode = posAddDto.Barcode,
                 ProductName = posAddDto.ProductName,
                 ProductUnitPrice = posAddDto.ProductUnitPrice,
@@ -46,6 +47,7 @@ namespace Business.Concrete
         {
             var pos = new Pos
             {
+                Basket = posAddDto.Basket,
                 Barcode = "0",
                 ProductName = "Extra Para",
                 ProductUnitPrice = posAddDto.ProductUnitPrice,

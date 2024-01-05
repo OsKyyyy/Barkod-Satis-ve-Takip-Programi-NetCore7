@@ -30,6 +30,7 @@ namespace WebAPI.Controllers
 
             PosAddDto newPosAddDto = new PosAddDto
             {
+                Basket = posAddDto.Basket,
                 Barcode = posAddDto.Barcode,
                 ProductName = ListToPos.Data.Name,
                 ProductUnitPrice = ListToPos.Data.SalePrice,

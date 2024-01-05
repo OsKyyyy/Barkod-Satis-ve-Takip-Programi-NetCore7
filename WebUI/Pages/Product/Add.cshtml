@@ -46,7 +46,7 @@
                                             <span class="path1"></span>
                                             <span class="path2"></span>
                                         </i>
-                                        <input type="file" asp-for="Image.File">
+                                        <input type="file" asp-for="Image.File" accept=".png, .jpg, .jpeg">
                                         <input type="hidden" name="avatar_remove">
                                     </label>
                                     <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="İptal">
@@ -127,11 +127,24 @@
                                 <div class="row mb-6">
                                     <label class="col-lg-4 col-form-label required fw-semibold fs-6">Alış Fiyatı</label>
 
-                                    <div class="col-lg-8 fv-row">
+                                    <div class="col-lg-5 fv-row">
                                         <input asp-for="AddRequestModel.PurchasePrice" id="purchasePriceInput" class="form-control form-control-lg form-control mb-3 mb-lg-0" autocomplete="off">
                                         <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
                                             <span asp-validation-for="AddRequestModel.PurchasePrice"></span>
                                         </div>
+                                    </div>
+                                    <label class="col-lg-1 col-form-label fw-semibold fs-6">KDV</label>
+
+                                    <div class="col-lg-2 fv-row">
+                                        <select class="form-select mb-2" data-control="select2" data-hide-search="true" id="vat">
+                                            <option value="0" selected="">Oran seç</option>
+                                            <option value="10">%10</option>
+                                            <option value="15">%15</option>
+                                            <option value="18">%18</option>
+                                            <option value="20">%20</option>
+                                            <option value="25">%25</option>
+                                            <option value="40">%40</option>
+                                        </select>
                                     </div>
                                 </div>
 
