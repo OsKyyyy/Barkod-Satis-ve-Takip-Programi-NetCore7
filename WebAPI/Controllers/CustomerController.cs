@@ -62,6 +62,19 @@ namespace WebAPI.Controllers
             return Ok(list);
         }
 
+        [Route("ListActive")]
+        [HttpGet]
+        public ActionResult ListActive()
+        {
+            var list = _customerService.ListActive();
+            if (!list.Status)
+            {
+                return BadRequest(list);
+            }
+
+            return Ok(list);
+        }
+
         [Route("ListById")]
         [HttpGet]
         public ActionResult ListById(int id)

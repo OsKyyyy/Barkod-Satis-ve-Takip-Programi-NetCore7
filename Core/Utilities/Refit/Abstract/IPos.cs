@@ -36,5 +36,8 @@ namespace Core.Utilities.Refit.Abstract
 
         [Delete("/pos/Delete")]
         Task<Result> Delete([Header("Authorization")] string token, int id);
+
+        [Get("/pos/CancelSale")]
+        Task<Result> CancelSale([Header("Authorization")] string token, int basket);
     }
 }

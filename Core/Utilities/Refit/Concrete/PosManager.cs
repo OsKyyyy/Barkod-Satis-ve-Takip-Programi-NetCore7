@@ -248,5 +248,35 @@ namespace Core.Utilities.Refit.Concrete
                 return dataResult;
             }
         }
+
+        public async Task<Result> CancelSale([Header("Authorization: Bearer")] string token, int basket)
+        {
+            Result dataResult = new Result();
+
+            try
+            {
+                dataResult = await myAPI.CancelSale(token, basket);
+
+                return dataResult;
+            }
+            catch (ApiException exception)
+            {
+                dynamic response = JsonConvert.DeserializeObject(exception.Content);
+
+                if (response != null && response.Status != null)
+                {
+                    dataResult.Message = response.Message;
+                    dataResult.Status = response.Status;
+
+                    return dataResult;
+                }
+
+                dataResult.Message = "Beklenmedik hata ile karşılaşıldı";
+                dataResult.Status = false;
+
+                return dataResult;
+            }
+        }
+
     }
 }

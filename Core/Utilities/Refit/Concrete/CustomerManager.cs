@@ -102,6 +102,35 @@ namespace Core.Utilities.Refit.Concrete
                 return dataResult;
             }
         }
+        
+        public async Task<DataResult<List<ViewModel>>> ListActive([Header("Authorization: Bearer")] string token)
+        {
+            DataResult<List<ViewModel>> dataResult = new DataResult<List<ViewModel>>();
+
+            try
+            {
+                dataResult = await myAPI.ListActive(token);
+
+                return dataResult;
+            }
+            catch (ApiException exception)
+            {
+                dynamic response = JsonConvert.DeserializeObject(exception.Content);
+
+                if (response != null && response.Status != null)
+                {
+                    dataResult.Message = response.Message;
+                    dataResult.Status = response.Status;
+
+                    return dataResult;
+                }
+
+                dataResult.Message = "Beklenmedik hata ile karşılaşıldı";
+                dataResult.Status = false;
+
+                return dataResult;
+            }
+        }
 
         public async Task<Result> Delete([Header("Authorization: Bearer")] string token, int id)
         {

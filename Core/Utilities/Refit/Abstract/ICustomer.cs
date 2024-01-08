@@ -21,6 +21,9 @@ namespace Core.Utilities.Refit.Abstract
         [Get("/customer/List")]
         Task<DataResult<List<ViewModel>>> List([Header("Authorization")] string token);
 
+        [Get("/customer/ListActive")]
+        Task<DataResult<List<ViewModel>>> ListActive([Header("Authorization")] string token);
+
         [Delete("/customer/Delete")]
         Task<Result> Delete([Header("Authorization")] string token, int id);
 

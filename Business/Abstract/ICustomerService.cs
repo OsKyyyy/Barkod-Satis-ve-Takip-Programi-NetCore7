@@ -15,6 +15,7 @@ namespace Business.Abstract
         IResult Add(CustomerAddDto customer);
         IResult Update(CustomerUpdateDto customer);
         IDataResult<List<ViewModel>> List();
+        IDataResult<List<ViewModel>> ListActive();
         IResult Delete(int id);
         IDataResult<ViewModel> ListById(int id);
     }

@@ -12,6 +12,7 @@
 }
 @section _Head
 {
+    <link href="~/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
     <link href="~/assets/css/numpad/jquery.numpad.css" rel="stylesheet" type="text/css" />
 }
 
@@ -48,13 +49,13 @@
                                         <input asp-for="AddRequestModel.Basket" value="1" id="currentBasket" hidden />
                                         <div class="d-flex align-items-center position-relative my-1">
                                             <img src="https://cdn-icons-png.flaticon.com/128/39/39881.png" class="w-25px fs-1 position-absolute ms-4"/>
-                                            <input asp-for="AddRequestModel.Barcode" type="text" id="barcodeNo" data-kt-filter="search" class="form-control form-control w-300px ps-14" placeholder="Barkod No" autofocus autocomplete="off"/>
+                                            <input asp-for="AddRequestModel.Barcode" type="text" id="barcodeNo" class="form-control form-control w-300px ps-14" placeholder="Barkod No" autofocus autocomplete="off"/>
                                         </div>
                                         <div class="d-flex align-items-center position-relative my-1" style="margin-left:10px">
                                             <span class="text-gray-800 fw-bold fs-1 d-block">*</span>
                                         </div>
                                         <div class="d-flex align-items-center position-relative my-1" style="margin-left:10px">
-                                            <input asp-for="AddRequestModel.Quantity" type="text" id="quantity" data-kt-filter="search" class="form-control w-100px" placeholder="Adet"/>
+                                            <input asp-for="AddRequestModel.Quantity" type="text" id="quantity" class="form-control w-100px" placeholder="Adet"/>
                                             <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
                                                 <span asp-validation-for="AddRequestModel.Quantity"></span>
                                             </div>
@@ -80,7 +81,7 @@
                                         </i>
                                         Hızlı Satış Ürünleri
                                     </button>
-                                    <button type="button" class="btn btn-light-info" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                                    <button type="button" class="btn btn-light-info" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-bs-toggle="modal" data-bs-target="#customers">
                                         <i class="ki-duotone ki-profile-user fs-2">
                                             <span class="path1"></span>
                                             <span class="path2"></span>
@@ -92,14 +93,44 @@
                                 </div>
                             </div>
                             <div class="card-body">
+                                <div class="d-none notice d-flex bg-light-primary rounded border-primary border border-dashed rounded-3 p-6 mb-10" id="selectedCustomerCard">
+                                    <div class="d-flex flex-stack flex-grow-1 ">
+                                        <div class=" fw-semibold">
+                                            <h4 class="text-gray-900 fw-bold">Seçilen Cari :</h4>
+                                            <div class="fs-6 text-gray-700" id="selectedCustomerInfo"></div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-danger" onclick="Pos.RemoveCustomer(1)">
+                                        <i class="ki-duotone ki-cross-square fs-1">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                        </i>
+                                        Cari Seçimini Kaldır
+                                    </button>
+                                </div>
+                                <div class="d-none notice d-flex bg-light-primary rounded border-primary border border-dashed rounded-3 p-6 mb-10" id="selectedCustomerCard2">
+                                    <div class="d-flex flex-stack flex-grow-1 ">
+                                        <div class=" fw-semibold">
+                                            <h4 class="text-gray-900 fw-bold">Seçilen Cari :</h4>
+                                            <div class="fs-6 text-gray-700" id="selectedCustomerInfo2"></div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-danger" onclick="Pos.RemoveCustomer(2)">
+                                        <i class="ki-duotone ki-cross-square fs-1">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                        </i>
+                                        Cari Seçimini Kaldır
+                                    </button>
+                                </div>
                                 <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-semibold mb-8 mb-10">
-                                    <li class="nav-item" onclick="Pos.ChangeBasket(1)" id="basket_1_item">
-                                        <a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab" href="#basket_1">
+                                    <li class="nav-item" >
+                                        <a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab" href="#basket_1" onclick="Pos.ChangeBasket(1)" id="basket_1_item">
                                             <i class="ki-duotone ki-handcart fs-2"></i>&nbsp;Sepet 1
                                         </a>
                                     </li>
-                                    <li class="nav-item" onclick="Pos.ChangeBasket(2)" id="basket_2_item">
-                                        <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab" href="#basket_2">
+                                    <li class="nav-item">
+                                        <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab" href="#basket_2" onclick="Pos.ChangeBasket(2)" id="basket_2_item">
                                             <i class="ki-duotone ki-handcart fs-2"></i>&nbsp;Sepet 2
                                         </a>
                                     </li>
@@ -109,70 +140,70 @@
                                         <div class="table-responsive mb-8">
                                             <table class="table align-middle table-row-dashed gs-0 gy-4 my-0">
                                                 <thead>
-                                                    <tr class="fw-bold fs-4 text-uppercase">
-                                                        <th class="w-350px text-left">ÜRÜN ADI</th>
-                                                        <th class="w-150px text-center">BİRİM FİYATI</th>
-                                                        <th class="w-150px text-center">ADET</th>
-                                                        <th class="w-150px text-center">TOPLAM FİYAT</th>
-                                                        <th class="w-100px text-center">İŞLEM</th>
-                                                    </tr>
+                                                <tr class="fw-bold fs-4 text-uppercase">
+                                                    <th class="w-350px text-left">ÜRÜN ADI</th>
+                                                    <th class="w-150px text-center">BİRİM FİYATI</th>
+                                                    <th class="w-150px text-center">ADET</th>
+                                                    <th class="w-150px text-center">TOPLAM FİYAT</th>
+                                                    <th class="w-100px text-center">İŞLEM</th>
+                                                </tr>
                                                 </thead>
                                                 <tbody>
 
-                                                    @foreach (var item in Model.ViewModel)
+                                                @foreach (var item in Model.ViewModel)
+                                                {
+                                                    if (item.Basket == 1)
                                                     {
-                                                        if (item.Basket == 1)
-                                                        {
-                                                            <tr data-kt-pos-element="item">
-                                                                <td class="pe-0">
-                                                                    <div class="d-flex align-items-center">
-                                                                        <span class="fw-bold text-gray-600 fs-6 me-1">@item.ProductName</span>
+                                                        <tr data-kt-pos-element="item">
+                                                            <td class="pe-0">
+                                                                <div class="d-flex align-items-center">
+                                                                    <span class="fw-bold text-gray-600 fs-6 me-1">@item.ProductName</span>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <span class="fw-bold text-primary fs-2 d-flex align-items-center justify-content-center" data-kt-pos-element="item-total">@item.ProductUnitPrice &#8378;</span>
+                                                            </td>
+                                                            <td class="pe-0">
+                                                                @if (item.ProductName != "Muhtelif Tutar")
+                                                                {
+                                                                    <div class="position-relative d-flex align-items-center justify-content-center" data-kt-dialer="true" data-kt-dialer-min="1" data-kt-dialer-step="1" data-kt-dialer-decimals="0">
+                                                                        <a asp-page="/Pos/QuantityReduce" asp-route-id="@item.Id" class="btn btn-icon btn-sm btn-light btn-icon-gray-500">
+                                                                            <i class="ki-duotone ki-minus fs-3x"></i>
+                                                                        </a>
+                                                                        <input type="text" class="form-control border-0 text-center px-0 fs-3 fw-bold text-gray-800 w-30px" data-kt-dialer-control="input" placeholder="Amount" name="manageBudget" readonly="" value="@item.ProductQuantity">
+                                                                        <a asp-page="/Pos/QuantityIncrease" asp-route-id="@item.Id" class="btn btn-icon btn-sm btn-light btn-icon-gray-500">
+                                                                            <i class="ki-duotone ki-plus fs-3x"></i>
+                                                                        </a>
                                                                     </div>
-                                                                </td>
-                                                                <td>
-                                                                    <span class="fw-bold text-primary fs-2 d-flex align-items-center justify-content-center" data-kt-pos-element="item-total">@item.ProductUnitPrice &#8378;</span>
-                                                                </td>
-                                                                <td class="pe-0">
-                                                                    @if (item.ProductName != "Extra Para")
-                                                                    {
-                                                                        <div class="position-relative d-flex align-items-center justify-content-center" data-kt-dialer="true" data-kt-dialer-min="1" data-kt-dialer-step="1" data-kt-dialer-decimals="0">
-                                                                            <a asp-page="/Pos/QuantityReduce" asp-route-id="@item.Id" class="btn btn-icon btn-sm btn-light btn-icon-gray-500">
-                                                                                <i class="ki-duotone ki-minus fs-3x"></i>
-                                                                            </a>
-                                                                            <input type="text" class="form-control border-0 text-center px-0 fs-3 fw-bold text-gray-800 w-30px" data-kt-dialer-control="input" placeholder="Amount" name="manageBudget" readonly="" value="@item.ProductQuantity">
-                                                                            <a asp-page="/Pos/QuantityIncrease" asp-route-id="@item.Id" class="btn btn-icon btn-sm btn-light btn-icon-gray-500">
-                                                                                <i class="ki-duotone ki-plus fs-3x"></i>
-                                                                            </a>
-                                                                        </div>
+                                                                }
+                                                                else
+                                                                {
+                                                                    extraMoney = item.ProductUnitPrice;
+                                                                }
+                                                            </td>
+                                                            <td>
+                                                                <span class="fw-bold text-primary fs-2 d-flex align-items-center justify-content-center" data-kt-pos-element="item-total">
+                                                                    @{
+                                                                        var totalPrice = item.ProductUnitPrice * item.ProductQuantity;
+                                                                        caseTotal += totalPrice;
                                                                     }
-                                                                    else
-                                                                    {
-                                                                        extraMoney = item.ProductUnitPrice;
-                                                                    }
-                                                                </td>
-                                                                <td>
-                                                                    <span class="fw-bold text-primary fs-2 d-flex align-items-center justify-content-center" data-kt-pos-element="item-total">
-                                                                        @{
-                                                                            var totalPrice = item.ProductUnitPrice * item.ProductQuantity;
-                                                                            caseTotal += totalPrice;
-                                                                        }
-                                                                        @totalPrice &#8378;
-                                                                    </span>
-                                                                </td>
-                                                                <td>
-                                                                    <a asp-page="/Pos/Delete" asp-route-id="@item.Id" class="me-2 mb-2 d-flex align-items-center justify-content-center">
-                                                                        <i class="ki-duotone ki-trash text-danger fs-1">
-                                                                            <span class="path1"></span>
-                                                                            <span class="path2"></span>
-                                                                            <span class="path3"></span>
-                                                                            <span class="path4"></span>
-                                                                            <span class="path5"></span>
-                                                                        </i>
-                                                                    </a>
-                                                                </td>
-                                                            </tr>
-                                                        }
+                                                                    @totalPrice &#8378;
+                                                                </span>
+                                                            </td>
+                                                            <td>
+                                                                <a asp-page="/Pos/Delete" asp-route-id="@item.Id" class="me-2 mb-2 d-flex align-items-center justify-content-center">
+                                                                    <i class="ki-duotone ki-trash text-danger fs-1">
+                                                                        <span class="path1"></span>
+                                                                        <span class="path2"></span>
+                                                                        <span class="path3"></span>
+                                                                        <span class="path4"></span>
+                                                                        <span class="path5"></span>
+                                                                    </i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
                                                     }
+                                                }
                                                 </tbody>
                                             </table>
                                         </div>
@@ -181,70 +212,70 @@
                                         <div class="table-responsive mb-8">
                                             <table class="table align-middle table-row-dashed gs-0 gy-4 my-0">
                                                 <thead>
-                                                    <tr class="fw-bold fs-4 text-uppercase">
-                                                        <th class="w-350px text-left">ÜRÜN ADI</th>
-                                                        <th class="w-150px text-center">BİRİM FİYATI</th>
-                                                        <th class="w-150px text-center">ADET</th>
-                                                        <th class="w-150px text-center">TOPLAM FİYAT</th>
-                                                        <th class="w-100px text-center">İŞLEM</th>
-                                                    </tr>
+                                                <tr class="fw-bold fs-4 text-uppercase">
+                                                    <th class="w-350px text-left">ÜRÜN ADI</th>
+                                                    <th class="w-150px text-center">BİRİM FİYATI</th>
+                                                    <th class="w-150px text-center">ADET</th>
+                                                    <th class="w-150px text-center">TOPLAM FİYAT</th>
+                                                    <th class="w-100px text-center">İŞLEM</th>
+                                                </tr>
                                                 </thead>
                                                 <tbody>
 
-                                                    @foreach (var item in Model.ViewModel)
+                                                @foreach (var item in Model.ViewModel)
+                                                {
+                                                    if (item.Basket == 2)
                                                     {
-                                                        if (item.Basket == 2)
-                                                        {
-                                                            <tr data-kt-pos-element="item">
-                                                                <td class="pe-0">
-                                                                    <div class="d-flex align-items-center">
-                                                                        <span class="fw-bold text-gray-600 fs-6 me-1">@item.ProductName</span>
+                                                        <tr data-kt-pos-element="item">
+                                                            <td class="pe-0">
+                                                                <div class="d-flex align-items-center">
+                                                                    <span class="fw-bold text-gray-600 fs-6 me-1">@item.ProductName</span>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <span class="fw-bold text-primary fs-2 d-flex align-items-center justify-content-center" data-kt-pos-element="item-total">@item.ProductUnitPrice &#8378;</span>
+                                                            </td>
+                                                            <td class="pe-0">
+                                                                @if (item.ProductName != "Muhtelif Tutar")
+                                                                {
+                                                                    <div class="position-relative d-flex align-items-center justify-content-center" data-kt-dialer="true" data-kt-dialer-min="1" data-kt-dialer-step="1" data-kt-dialer-decimals="0">
+                                                                        <a asp-page="/Pos/QuantityReduce" asp-route-id="@item.Id" class="btn btn-icon btn-sm btn-light btn-icon-gray-500">
+                                                                            <i class="ki-duotone ki-minus fs-3x"></i>
+                                                                        </a>
+                                                                        <input type="text" class="form-control border-0 text-center px-0 fs-3 fw-bold text-gray-800 w-30px" data-kt-dialer-control="input" placeholder="Amount" name="manageBudget" readonly="" value="@item.ProductQuantity">
+                                                                        <a asp-page="/Pos/QuantityIncrease" asp-route-id="@item.Id" class="btn btn-icon btn-sm btn-light btn-icon-gray-500">
+                                                                            <i class="ki-duotone ki-plus fs-3x"></i>
+                                                                        </a>
                                                                     </div>
-                                                                </td>
-                                                                <td>
-                                                                    <span class="fw-bold text-primary fs-2 d-flex align-items-center justify-content-center" data-kt-pos-element="item-total">@item.ProductUnitPrice &#8378;</span>
-                                                                </td>
-                                                                <td class="pe-0">
-                                                                    @if (item.ProductName != "Extra Para")
-                                                                    {
-                                                                        <div class="position-relative d-flex align-items-center justify-content-center" data-kt-dialer="true" data-kt-dialer-min="1" data-kt-dialer-step="1" data-kt-dialer-decimals="0">
-                                                                            <a asp-page="/Pos/QuantityReduce" asp-route-id="@item.Id" class="btn btn-icon btn-sm btn-light btn-icon-gray-500">
-                                                                                <i class="ki-duotone ki-minus fs-3x"></i>
-                                                                            </a>
-                                                                            <input type="text" class="form-control border-0 text-center px-0 fs-3 fw-bold text-gray-800 w-30px" data-kt-dialer-control="input" placeholder="Amount" name="manageBudget" readonly="" value="@item.ProductQuantity">
-                                                                            <a asp-page="/Pos/QuantityIncrease" asp-route-id="@item.Id" class="btn btn-icon btn-sm btn-light btn-icon-gray-500">
-                                                                                <i class="ki-duotone ki-plus fs-3x"></i>
-                                                                            </a>
-                                                                        </div>
+                                                                }
+                                                                else
+                                                                {
+                                                                    extraMoney2 = item.ProductUnitPrice;
+                                                                }
+                                                            </td>
+                                                            <td>
+                                                                <span class="fw-bold text-primary fs-2 d-flex align-items-center justify-content-center" data-kt-pos-element="item-total">
+                                                                    @{
+                                                                        var totalPrice = item.ProductUnitPrice * item.ProductQuantity;
+                                                                        caseTotal2 += totalPrice;
                                                                     }
-                                                                    else
-                                                                    {
-                                                                        extraMoney2 = item.ProductUnitPrice;
-                                                                    }
-                                                                </td>
-                                                                <td>
-                                                                    <span class="fw-bold text-primary fs-2 d-flex align-items-center justify-content-center" data-kt-pos-element="item-total">
-                                                                        @{
-                                                                            var totalPrice = item.ProductUnitPrice * item.ProductQuantity;
-                                                                            caseTotal2 += totalPrice;
-                                                                        }
-                                                                        @totalPrice &#8378;
-                                                                    </span>
-                                                                </td>
-                                                                <td>
-                                                                    <a asp-page="/Pos/Delete" asp-route-id="@item.Id" class="me-2 mb-2 d-flex align-items-center justify-content-center">
-                                                                        <i class="ki-duotone ki-trash text-danger fs-1">
-                                                                            <span class="path1"></span>
-                                                                            <span class="path2"></span>
-                                                                            <span class="path3"></span>
-                                                                            <span class="path4"></span>
-                                                                            <span class="path5"></span>
-                                                                        </i>
-                                                                    </a>
-                                                                </td>
-                                                            </tr>
-                                                        }
+                                                                    @totalPrice &#8378;
+                                                                </span>
+                                                            </td>
+                                                            <td>
+                                                                <a asp-page="/Pos/Delete" asp-route-id="@item.Id" class="me-2 mb-2 d-flex align-items-center justify-content-center">
+                                                                    <i class="ki-duotone ki-trash text-danger fs-1">
+                                                                        <span class="path1"></span>
+                                                                        <span class="path2"></span>
+                                                                        <span class="path3"></span>
+                                                                        <span class="path4"></span>
+                                                                        <span class="path5"></span>
+                                                                    </i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
                                                     }
+                                                }
                                                 </tbody>
                                             </table>
                                         </div>
@@ -258,9 +289,9 @@
                             <div class="card-header pt-5 mb-11">
                                 <h3 class="card-title fw-bold text-gray-800 fs-2qx">KASA</h3>
                                 <div class="d-flex flex-equal gap-1 px-0 mb-1 justify-content-end">
-                                    <div class="image-input-wrapper w-50px h-50px" style="background-image: url(https://cdn-icons-png.flaticon.com/128/6785/6785304.png);background-size: contain;"></div>
-                                    <div class="image-input-wrapper w-50px h-50px" style="background-image: url(https://cdn-icons-png.flaticon.com/128/5974/5974771.png);background-size: contain;"></div>
-                                    <div class="image-input-wrapper w-50px h-50px" style="background-image: url(https://cdn-icons-png.flaticon.com/512/2657/2657138.png);background-size: contain;"></div>
+                                    <button id="complateSale" onclick="Request_.ComplateSale()" class="image-input-wrapper w-50px h-50px" style="background-image: url(https://cdn-icons-png.flaticon.com/128/6785/6785304.png);background-size: contain;border: none;background-color: transparent;"></button>
+                                    <button id="cancelSale" onclick="Request_.CancelSale()" class="image-input-wrapper w-50px h-50px" style="background-image: url(https://cdn-icons-png.flaticon.com/128/5974/5974771.png);background-size: contain;border: none;background-color: transparent;"></button>
+                                    <button class="image-input-wrapper w-50px h-50px" style="background-image: url(https://cdn-icons-png.flaticon.com/512/2657/2657138.png);background-size: contain;border: none;background-color: transparent;"></button>
                                 </div>
                             </div>
                             <div class="card-body pt-0">
@@ -385,7 +416,7 @@
                                         <button class="btn btn-icon btn-sm btn-light btn-icon-gray-500" data-kt-dialer-control="increase">
                                             <i class="ki-duotone ki-plus fs-3x"></i>
                                         </button>
-                                        <button class="btn btn-icon btn-success fw-bold fs-4 d-block fs-8" onclick="Request.AddAjax(2,@counter)">
+                                        <button class="btn btn-icon btn-success fw-bold fs-4 d-block fs-8" onclick="Request_.AddAjax(2,@counter)">
                                             <i class="ki-duotone ki-handcart text-white fs-2"></i>
                                         </button>
                                     </div>
@@ -562,46 +593,124 @@
             </div>
 
             <div class="modal-body">
-                <form action="javascript:;" onsubmit="Request.FindPrice()">
+                <form action="javascript:;" onsubmit="Request_.FindPrice()">
                     <input type="text" class="form-control ps-14 mb-10 numpad-input" id="findPriceBarcodeNo" placeholder="Barkod No"/>
                     <button type="submit" hidden></button>
                 </form>
                 <table id="findPriceTable" style="display:none;">
                     <thead>
-                        <tr class="fw-bold fs-4 text-uppercase">
-                            <th class="w-350px text-left">ÜRÜN ADI</th>
-                            <th class="w-200px text-left">BARKOD</th>
-                            <th class="w-150px text-left">SATIŞ fİYATI</th>
-                            <th class="w-50px text-left">İŞLEM</th>
-                        </tr>
+                    <tr class="fw-bold fs-4 text-uppercase">
+                        <th class="w-350px text-left">ÜRÜN ADI</th>
+                        <th class="w-200px text-left">BARKOD</th>
+                        <th class="w-150px text-left">SATIŞ fİYATI</th>
+                        <th class="w-50px text-left">İŞLEM</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td class="pe-0">
-                                <div class="d-flex align-items-center">
-                                    <span class="fw-bold text-gray-600 fs-3 me-1" id="findPriceTableProductName"></span>
-                                </div>
-                            </td>
-                            <td class="pe-0">
-                                <div class="d-flex align-items-center ">
-                                    <span class="fw-bold text-gray-600 fs-3 me-1" id="findPriceTableBarcode"></span>
-                                </div>
-                            </td>
-                            <td class="pe-0">
-                                <div class="d-flex align-items-center ">
-                                    <span class="fw-bold text-gray-600 fs-1 me-1" id="findPriceTableSalePrice"></span>
-                                </div>
-                            </td>
-                            <td class="pe-0">
-                                <button class="btn btn-light me-2 mb-2 d-flex align-items-center justify-content-center" onclick="Request.AddAjax(1)">
-                                    <i class="ki-duotone ki-handcart fs-1">
+                    <tr>
+                        <td class="pe-0">
+                            <div class="d-flex align-items-center">
+                                <span class="fw-bold text-gray-600 fs-3 me-1" id="findPriceTableProductName"></span>
+                            </div>
+                        </td>
+                        <td class="pe-0">
+                            <div class="d-flex align-items-center ">
+                                <span class="fw-bold text-gray-600 fs-3 me-1" id="findPriceTableBarcode"></span>
+                            </div>
+                        </td>
+                        <td class="pe-0">
+                            <div class="d-flex align-items-center ">
+                                <span class="fw-bold text-gray-600 fs-1 me-1" id="findPriceTableSalePrice"></span>
+                            </div>
+                        </td>
+                        <td class="pe-0">
+                            <button class="btn btn-light me-2 mb-2 d-flex align-items-center justify-content-center" onclick="Request_.AddAjax(1)">
+                                <i class="ki-duotone ki-handcart fs-1">
                                        
+                                </i>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" id="customers">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Cari Seç</h3>
+
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
+                </div>
+            </div>
+
+            <div class="modal-body">
+                <div class="d-flex align-items-center position-relative my-1">
+                    <i class="ki-duotone ki-magnifier fs-1 position-absolute ms-4"><span class="path1"></span><span class="path2"></span></i>
+                    <input type="text" data-kt-filter="search" class="form-control form-control w-250px ps-14" placeholder="Ara..." />
+                </div>
+                <table class="table align-middle rounded table-row-dashed fs-6 g-5" id="kt_datatable_example">
+                    <thead>
+                    <tr class="text-start fw-bold fs-7 text-uppercase">
+                        <th class="min-w-100px">ID</th>
+                        <th class="min-w-100px">MÜŞTERİ ADI</th>
+                        <th class="min-w-100px">ADRES</th>
+                        <th class="min-w-100px">TELEFON</th>
+                        <th class="min-w-100px">E-POSTA</th>
+                        <th class="min-w-100px">İŞLEMLER</th>
+                    </tr>
+                    </thead>
+                    <tbody class="fw-semibold text-gray-600">
+                    @foreach (var item in Model.ViewModelCustomer)
+                    {
+                        <tr class="odd">
+                            <td>@item.Id</td>
+                            <td>@item.Name</td>
+                            <td>@item.Address</td>
+                            <td>
+                                @if (String.IsNullOrEmpty(item.Phone))
+                                {
+                                    <span>-</span>
+                                }
+                                else
+                                {
+                                    @item.Address
+                                }
+                            </td>
+                            <td>
+                                @if (String.IsNullOrEmpty(item.Email))
+                                {
+                                    <span>-</span>
+                                }
+                                else
+                                {
+                                    @item.Email
+                                }
+                            </td>
+                            <td>
+                                <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" >
+                                    <i class="ki-duotone ki-click fs-2">
+                                        <span class="path1"></span>
+                                        <span class="path2"></span>
+                                        <span class="path3"></span>
+                                        <span class="path4"></span>
+                                        <span class="path5"></span>
                                     </i>
                                 </button>
                             </td>
                         </tr>
+                    }
                     </tbody>
                 </table>
+
             </div>
 
             <div class="modal-footer">
@@ -616,8 +725,9 @@
 </div>
 
 @section _Foot{
-
+    <script src="~/assets/plugins/custom/datatables/datatables.bundle.js"></script>
     <script src="~/assets/js/pages/pos/request.js"></script>
     <script src="~/assets/js/pages/pos/pos.js"></script>
+    <script src="~/assets/js/pages/pos/listData.js"></script>
     <script src="~/assets/js/custom/numpad/jquery.numpad.js"></script>
 }

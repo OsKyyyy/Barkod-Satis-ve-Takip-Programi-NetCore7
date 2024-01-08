@@ -75,6 +75,13 @@ namespace Business.Concrete
             return new SuccessDataResult<List<ViewModel>>(result, Messages.CustomersListed);
         }
 
+        public IDataResult<List<ViewModel>> ListActive()
+        {
+            var result = _customerDal.ListActive();
+
+            return new SuccessDataResult<List<ViewModel>>(result, Messages.CustomersListed);
+        }
+
         public IResult Delete(int id)
         {
             _customerDal.Delete(id);

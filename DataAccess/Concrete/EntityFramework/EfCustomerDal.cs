@@ -65,6 +65,28 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
+        public List<ViewModel> ListActive()
+        {
+            using (var context = new DataBaseContext())
+            {
+                var result = context.Customers.Join(context.Users,
+                    c => c.UpdateUserId,
+                    u => u.Id, (c, u) => new { c, u }).Where(x => x.c.Status == true).Where(x => x.c.Deleted == false).Select(l => new ViewModel
+                {
+                    Id = l.c.Id,
+                    Name = l.c.Name,
+                    Address = l.c.Address,
+                    Phone = l.c.Phone,
+                    Email = l.c.Email,
+                    Status = l.c.Status,
+                    UpdateDate = l.c.UpdateDate,
+                    UpdateUserName = l.u.FirstName + " " + l.u.LastName,
+                }).ToList();
+
+                return result;
+            }
+        }
+
         public void Delete(int id)
         {
             using (var context = new DataBaseContext())

@@ -15,7 +15,7 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfPosDal : EfEntityRepositoryBase<Pos, DataBaseContext>, IPosDal
     {
-        public Pos Add(Pos pos)
+        public void Add(Pos pos)
         {
             using (var context = new DataBaseContext())
             {
@@ -32,12 +32,10 @@ namespace DataAccess.Concrete.EntityFramework
 
                     context.SaveChanges();
                 }
-
-                return pos;
             }
         }
 
-        public Pos AddMoney(Pos pos)
+        public void AddMoney(Pos pos)
         {
             using (var context = new DataBaseContext())
             {
@@ -54,8 +52,6 @@ namespace DataAccess.Concrete.EntityFramework
 
                     context.SaveChanges();
                 }
-
-                return pos;
             }
         }
 
@@ -93,7 +89,24 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
-        public Pos Delete(int id)
+        public ViewModel ListByBasket(int basket)
+        {
+            using (var context = new DataBaseContext())
+            {
+                var result = context.Pos.Select(s => new ViewModel
+                {
+                    Id = s.Id,
+                    Basket = s.Basket,
+                    ProductName = s.ProductName,
+                    ProductQuantity = s.ProductQuantity,
+                    ProductUnitPrice = s.ProductUnitPrice
+                }).FirstOrDefault(c => c.Basket == basket);
+
+                return result;
+            }
+        }
+
+        public void Delete(int id)
         {
             using (var context = new DataBaseContext())
             {
@@ -101,8 +114,17 @@ namespace DataAccess.Concrete.EntityFramework
 
                 context.Pos.Remove(result);
                 context.SaveChanges();
+            }
+        }
 
-                return result;
+        public void CancelSale(int basket)
+        {
+            using (var context = new DataBaseContext())
+            {
+                var result = context.Pos.Where(x => x.Basket == basket).ToList();
+
+                context.Pos.RemoveRange(result);
+                context.SaveChanges();
             }
         }
 

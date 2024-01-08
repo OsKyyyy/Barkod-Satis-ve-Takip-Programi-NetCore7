@@ -160,5 +160,25 @@ namespace WebAPI.Controllers
 
             return Ok(list);
         }
+
+        [Route("CancelSale")]
+        [HttpGet]
+        public ActionResult CancelSale(int basket)
+        {
+            var ListByBasket = _posService.ListByBasket(basket);
+            if (!ListByBasket.Status)
+            {
+                return BadRequest(ListByBasket);
+            }
+
+            var result = _posService.CancelSale(basket);
+
+            if (result.Status)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
     }
 }

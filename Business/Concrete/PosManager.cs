@@ -49,7 +49,7 @@ namespace Business.Concrete
             {
                 Basket = posAddDto.Basket,
                 Barcode = "0",
-                ProductName = "Extra Para",
+                ProductName = "Muhtelif Tutar",
                 ProductUnitPrice = posAddDto.ProductUnitPrice,
                 ProductQuantity = 1,
                 CreateUserId = posAddDto.CreateUserId
@@ -77,6 +77,17 @@ namespace Business.Concrete
             return new SuccessDataResult<ViewModel>(result, Messages.PosListed);
         }
 
+        public IDataResult<ViewModel> ListByBasket(int basket)
+        {
+            var result = _posDal.ListByBasket(basket);
+            if (result == null)
+            {
+                return new ErrorDataResult<ViewModel>(Messages.PosNotFound);
+            }
+
+            return new SuccessDataResult<ViewModel>(result, Messages.PosListed);
+        }
+
         public IResult QuantityIncrease(int id)
         {
             _posDal.QuantityIncrease(id);
@@ -96,5 +107,12 @@ namespace Business.Concrete
             _posDal.Delete(id);
             return new SuccessResult(Messages.PosDeleted);
         }
+
+        public IResult CancelSale(int basket)
+        {
+            _posDal.CancelSale(basket);
+            return new SuccessResult(Messages.PosCancel);
+        }
+
     }
 }

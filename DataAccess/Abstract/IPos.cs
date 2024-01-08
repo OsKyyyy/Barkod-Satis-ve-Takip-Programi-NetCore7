@@ -11,12 +11,14 @@ namespace DataAccess.Abstract
 {
     public interface IPosDal : IEntityRepository<Pos>
     {
-        Pos Add(Pos pos);
-        Pos AddMoney(Pos pos);
-        Pos Delete(int id);
+        void Add(Pos pos);
+        void AddMoney(Pos pos);
+        void Delete(int id);
+        void CancelSale(int basket);
         int QuantityIncrease(int id);
         int QuantityReduce(int id);
         List<ViewModel> List(int createUserId);
         ViewModel ListById(int id);
+        ViewModel ListByBasket(int basket);
     }
 }

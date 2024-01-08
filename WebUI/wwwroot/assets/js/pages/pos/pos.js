@@ -4,6 +4,13 @@
         Pos.ToastrError();
         Pos.ToastrSuccess();
 
+        if (localStorage.getItem("customerId") != null) {
+            $("#selectedCustomerInfo").html(localStorage.getItem("customerInfo"));
+        }
+        if (localStorage.getItem("customerId2") != null) {
+            $("#selectedCustomerInfo2").html(localStorage.getItem("customerInfo2"));
+        }
+
         $("#barcodeNo").on("keyup", function (event) {
 
             var value = $(this).val();
@@ -47,7 +54,7 @@
 
             $("#basket_1").addClass("active show");
             $("#basket_2").removeClass("active show");
-        }
+        }        
     },
 
     ToastrError: function () {
@@ -107,13 +114,13 @@
         }
     },    
     ChangeBasket: function (value) {
-
+        
         if (value == 1) {
             localStorage.removeItem("basket");
             localStorage.setItem("basket", "1");
 
             $("#currentBasket").val(1);
-            $("#currentBasketModal").val(1);
+            $("#currentBasketModal").val(1);            
 
             $("#caseTotal").addClass("d-block");
             $("#caseTotal").removeClass("d-none");
@@ -133,15 +140,23 @@
             $("#remainderMoneyNumpadSpan").addClass("d-block");
             $("#remainderMoneyNumpadSpan").removeClass("d-none");
             $("#remainderMoneyNumpadSpan2").addClass("d-none");
-            $("#remainderMoneyNumpadSpan2").removeClass("d-block");
+            $("#remainderMoneyNumpadSpan2").removeClass("d-block");         
 
+            var selectedCustomer = localStorage.getItem("customerId");
+
+            if (selectedCustomer != null) {
+                $("#selectedCustomerCard").addClass("d-block");
+                $("#selectedCustomerCard").removeClass("d-none");
+            }
+            $("#selectedCustomerCard2").removeClass("d-block");
+            $("#selectedCustomerCard2").addClass("d-none");
         }
         else {
             localStorage.removeItem("basket");
-            localStorage.setItem("basket", "2");
+            localStorage.setItem("basket", "2");           
 
             $("#currentBasket").val(2);
-            $("#currentBasketModal").val(2);
+            $("#currentBasketModal").val(2);           
 
             $("#caseTotal").removeClass("d-block");
             $("#caseTotal").addClass("d-none");
@@ -163,7 +178,26 @@
             $("#remainderMoneyNumpadSpan2").addClass("d-block");
             $("#remainderMoneyNumpadSpan2").removeClass("d-none");
 
+            var selectedCustomer = localStorage.getItem("customerId2");
+
+            if (selectedCustomer != null) {
+                $("#selectedCustomerCard2").addClass("d-block");
+                $("#selectedCustomerCard2").removeClass("d-none");                
+            }
+            $("#selectedCustomerCard").removeClass("d-block");
+            $("#selectedCustomerCard").addClass("d-none");
         }
+    },
+    RemoveCustomer: function (value) {
+        if (value == 1) {
+            localStorage.removeItem("customerId");
+            localStorage.removeItem("customerInfo");
+        }
+        else {
+            localStorage.removeItem("customerId2");
+            localStorage.removeItem("customerInfo2");
+        }
+        window.location.reload();
     }
 }
 $(document).ready(function () {

@@ -38,10 +38,11 @@ namespace Business.Constant
         public static string ProductAlreadyExists = "Ürün Zaten Mevcut";
         public static string ImagePropertyError = "Dosya 'PNG,JPG' formatında ve 2MB'dan az olmalıdır";
 
-        public static string PosNotFound = "Ürün Sepette Bulunamadı";
+        public static string PosNotFound = "Sepette Ürün Bulunamadı";
         public static string PosListed = "Ürün Sepet Bilgileri Listelendi";
         public static string PosQuantityChange = "Sepet Adet Bilgisi Güncellendi";
         public static string PosDeleted = "Ürün Sepetten Silindi";
+        public static string PosCancel = "Sepet İptal Edildi";
 
         public static string CustomerAdded = "Müşteri Eklendi";
         public static string CustomersListed = "Müşteriler Listelendi";

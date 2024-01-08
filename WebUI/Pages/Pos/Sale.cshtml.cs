@@ -9,16 +9,19 @@ using Newtonsoft.Json;
 using System;
 using UserViewModel = Core.Utilities.Refit.Models.Response.User.ViewModel;
 using ProductViewModel = Core.Utilities.Refit.Models.Response.Product.ViewModel;
+using CustomerViewModel = Core.Utilities.Refit.Models.Response.Customer.ViewModel;
 
 namespace WebUI.Pages.Pos
 {
     public class SaleModel : PageModel
     {
         private readonly IPos _pos;
+        private readonly ICustomer _customer;
 
-        public SaleModel(IPos pos)
+        public SaleModel(IPos pos, ICustomer customer)
         {
             _pos = pos;
+            _customer = customer;
         }
 
         [ViewData]
@@ -34,6 +37,8 @@ namespace WebUI.Pages.Pos
 
         public List<ProductViewModel> ViewModelFavorite { get; set; }
 
+        public List<CustomerViewModel> ViewModelCustomer { get; set; }
+
         public async Task<IActionResult> OnGetAsync()
         {
             ToastrError = TempData["ToastrError"] as string;
@@ -42,6 +47,7 @@ namespace WebUI.Pages.Pos
 
             var response = await _pos.List("Bearer " + HttpContext.Session.GetString("userToken"), CreateUserId);
             var responseFavorite = await _pos.ListByFavorite("Bearer " + HttpContext.Session.GetString("userToken"));
+            var responseCustomer = await _customer.ListActive("Bearer " + HttpContext.Session.GetString("userToken"));
 
             if (response.Message == "Authentication Error" || responseFavorite.Message == "Authentication Error")
             {
@@ -67,6 +73,15 @@ namespace WebUI.Pages.Pos
             else
             {
                 ToastrError = responseFavorite.Message;
+            }
+
+            if (responseCustomer.Status)
+            {
+                ViewModelCustomer = responseCustomer.Data;
+            }
+            else
+            {
+                ToastrError = responseCustomer.Message;
             }
 
             return Page();
@@ -136,6 +151,13 @@ namespace WebUI.Pages.Pos
             }
 
             var response = await _pos.Add("Bearer " + HttpContext.Session.GetString("userToken"), addRequestModel);
+
+            return new JsonResult(response);
+        }
+
+        public async Task<IActionResult> OnPostCancelSaleAsync(int basket)
+        {
+            var response = await _pos.CancelSale("Bearer " + HttpContext.Session.GetString("userToken"), basket);
 
             return new JsonResult(response);
         }

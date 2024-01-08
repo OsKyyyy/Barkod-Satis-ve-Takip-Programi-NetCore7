@@ -1,4 +1,4 @@
-﻿var Request = {
+﻿var Request_ = {
     Init: function () {     
         $("#findPrice").on('shown.bs.modal', function () {
             $('#findPriceBarcodeNo').focus();
@@ -143,8 +143,60 @@
         })
 
     },
-    
+    CancelSale: function () {
+
+        basket = localStorage.getItem("basket");
+        var data = { basket: parseInt(basket) };
+
+        $.ajax({
+            type: "POST",
+            url: "Sale?handler=CancelSale",
+            contentType: 'application/x-www-form-urlencoded',
+            data: data,
+            headers: {
+                RequestVerificationToken:
+                    $('input:hidden[name="__RequestVerificationToken"]').val()
+            },
+            success: function (response) {                
+                if (!response.status) {
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": true,
+                        "positionClass": "toastr-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    };
+
+                    toastr.error(response.message, "Hata!");
+                    return;
+                }
+                else {
+                    if (response.status) {
+                        if (basket == 1) {
+                            localStorage.removeItem("customerId");
+                            localStorage.removeItem("customerInfo");
+                        }
+                        else {
+                            localStorage.removeItem("customerId2");
+                            localStorage.removeItem("customerInfo2");
+                        }
+                    }
+                    window.location.reload();
+                }
+            },
+        })
+    }
 }
 $(document).ready(function () {
-    Request.Init();
+    Request_.Init();
 })

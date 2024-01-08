@@ -133,17 +133,16 @@
         var total = 0.00;
         var valuemovementsTotal = parseInt($("#movementsTotal").val());
         for (var i = valuemovementsTotal; i >= 1; i--) {
-           
             var value = parseFloat($("#amountHidden_" + i).val().replace(",", "."));            
             var plus = $("#amountHidden_" + i).attr("plus");
 
             if (plus == "true") {                
                 total += value;
-                $("#amountTotalHidden_" + i).html(total.toString().replace(".", ",") + " &#8378;")
+                $("#amountTotalHidden_" + i).html((Math.round(total * 100) / 100).toFixed(2).replace(".", ",") + " &#8378;")
             }
             else {
                 total -= value
-                $("#amountTotalHidden_" + i).html(total.toString().replace(".", ",") + " &#8378;")
+                $("#amountTotalHidden_" + i).html((Math.round(total * 100) / 100).toFixed(2).replace(".", ",") + " &#8378;")
             }
         }
 
@@ -160,7 +159,7 @@
             $("#amountTotal").addClass("text-success");
         }
 
-        $("#amountTotal").html(total.toString().replace(".", ",") + " &#8378;");
+        $("#amountTotal").html((Math.round(total * 100) / 100).toFixed(2).replace(".", ",") + " &#8378;");
     },
     EditModal: function (id) {
 
