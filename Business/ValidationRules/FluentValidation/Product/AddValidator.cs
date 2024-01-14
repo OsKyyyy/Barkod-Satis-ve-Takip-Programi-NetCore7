@@ -12,7 +12,7 @@ namespace Business.ValidationRules.FluentValidation.Product
     {
         public AddValidator()
         {
-            RuleFor(r => r.CategoryId).NotEmpty().WithMessage("Bu alan boş olamaz").GreaterThan(0).WithMessage("Bu alan 0'dan büyük değer olmalıdır"); ;
+            RuleFor(r => r.CategoryId).NotEmpty().WithMessage("Bu alan boş olamaz").GreaterThan(0).WithMessage("Bu alan 0'dan büyük değer olmalıdır");
             RuleFor(r => r.Name).NotEmpty().WithMessage("Bu alan boş olamaz");
             RuleFor(r => r.PurchasePrice).NotEmpty().WithMessage("Bu alan boş olamaz").Matches("^\\d{0,8}(\\.\\d{1,2})?$").WithMessage("Bu alan Decimal(10,2) formatında olmalıdır");
             RuleFor(r => r.SalePrice).NotEmpty().WithMessage("Bu alan boş olamaz").Matches("^\\d{0,8}(\\.\\d{1,2})?$").WithMessage("Bu alan Decimal(10,2) formatında olmalıdır"); ;

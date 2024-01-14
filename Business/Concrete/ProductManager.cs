@@ -108,6 +108,13 @@ namespace Business.Concrete
             return new SuccessResult(Messages.ProductUpdated);
         }
 
+        public IResult UpdateStock(string barcode, int quantity)
+        {
+            _productDal.UpdateStock(barcode, quantity);
+
+            return new SuccessResult(Messages.ProductsListed);
+        }
+
         public IResult Delete(int id)
         {
             _productDal.Delete(id);
@@ -132,12 +139,24 @@ namespace Business.Concrete
             return new SuccessDataResult<ViewModel>(result, Messages.ProductInfoListed);
         }
 
+        public IDataResult<List<ViewModel>> ListByName(string name)
+        {
+            var result = _productDal.ListByName(name);
+
+            return new SuccessDataResult<List<ViewModel>>(result, Messages.ProductsListed);
+        }
+
         public IDataResult<ViewModel> ListToPos(string barcode)
         {
             var result = _productDal.ListToPos(barcode);
             if (result == null)
             {
                 return new ErrorDataResult<ViewModel>(Messages.ProductNotFound);
+            }
+
+            if (result.Stock < 1)
+            {
+                return new ErrorDataResult<ViewModel>(Messages.ProductOutOfStock);
             }
 
             return new SuccessDataResult<ViewModel>(result, Messages.ProductInfoListed);

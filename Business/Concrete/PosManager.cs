@@ -77,15 +77,15 @@ namespace Business.Concrete
             return new SuccessDataResult<ViewModel>(result, Messages.PosListed);
         }
 
-        public IDataResult<ViewModel> ListByBasket(int basket)
+        public IDataResult<List<ViewModel>> ListByBasket(int basket, int creteUserId)
         {
-            var result = _posDal.ListByBasket(basket);
+            var result = _posDal.ListByBasket(basket, creteUserId);
             if (result == null)
             {
-                return new ErrorDataResult<ViewModel>(Messages.PosNotFound);
+                return new ErrorDataResult<List<ViewModel>>(Messages.PosNotFound);
             }
 
-            return new SuccessDataResult<ViewModel>(result, Messages.PosListed);
+            return new SuccessDataResult<List<ViewModel>>(result, Messages.PosListed);
         }
 
         public IResult QuantityIncrease(int id)

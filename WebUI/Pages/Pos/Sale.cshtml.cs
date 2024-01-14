@@ -10,6 +10,7 @@ using System;
 using UserViewModel = Core.Utilities.Refit.Models.Response.User.ViewModel;
 using ProductViewModel = Core.Utilities.Refit.Models.Response.Product.ViewModel;
 using CustomerViewModel = Core.Utilities.Refit.Models.Response.Customer.ViewModel;
+using SaleAddRequestModel = Core.Utilities.Refit.Models.Request.Sale.AddRequestModel;
 
 namespace WebUI.Pages.Pos
 {
@@ -17,15 +18,22 @@ namespace WebUI.Pages.Pos
     {
         private readonly IPos _pos;
         private readonly ICustomer _customer;
+        private readonly IProduct _product;
+        private readonly ISale _sale;
 
-        public SaleModel(IPos pos, ICustomer customer)
+        public SaleModel(IPos pos, ICustomer customer, IProduct product, ISale sale)
         {
             _pos = pos;
             _customer = customer;
+            _product = product;
+            _sale = sale;
         }
 
         [ViewData]
         public string ToastrError { get; set; }
+        
+        [BindProperty]
+        public string ToastrSuccess { get; set; }
 
         public AddRequestModel AddRequestModel { get; set; }
 
@@ -46,7 +54,7 @@ namespace WebUI.Pages.Pos
             var CreateUserId = JsonConvert.DeserializeObject<UserViewModel>(HttpContext.Session.GetString("userInfo")).Id;
 
             var response = await _pos.List("Bearer " + HttpContext.Session.GetString("userToken"), CreateUserId);
-            var responseFavorite = await _pos.ListByFavorite("Bearer " + HttpContext.Session.GetString("userToken"));
+            var responseFavorite = await _product.ListByFavorite("Bearer " + HttpContext.Session.GetString("userToken"));
             var responseCustomer = await _customer.ListActive("Bearer " + HttpContext.Session.GetString("userToken"));
 
             if (response.Message == "Authentication Error" || responseFavorite.Message == "Authentication Error")
@@ -133,10 +141,17 @@ namespace WebUI.Pages.Pos
 
             return Page();
         }
-        
+
+        public async Task<IActionResult> OnPostSearchProductAsync([FromBody] SearchProductRequestModel searchProductRequestModel)
+        {
+            var response = await _product.ListByName("Bearer " + HttpContext.Session.GetString("userToken"), searchProductRequestModel.Name);
+
+            return new JsonResult(response);
+        }
+
         public async Task<IActionResult> OnPostFindPriceAsync([FromBody] FindPriceRequestModel findPriceRequestModel)
         {
-            var response = await _pos.ListByBarcode("Bearer " + HttpContext.Session.GetString("userToken"), findPriceRequestModel.Barcode);
+            var response = await _product.ListByBarcode("Bearer " + HttpContext.Session.GetString("userToken"), findPriceRequestModel.Barcode);
             
             return new JsonResult(response);
         }
@@ -157,9 +172,21 @@ namespace WebUI.Pages.Pos
 
         public async Task<IActionResult> OnPostCancelSaleAsync(int basket)
         {
-            var response = await _pos.CancelSale("Bearer " + HttpContext.Session.GetString("userToken"), basket);
+            var CreateUserId = JsonConvert.DeserializeObject<UserViewModel>(HttpContext.Session.GetString("userInfo")).Id;
+
+            var response = await _pos.CancelSale("Bearer " + HttpContext.Session.GetString("userToken"), basket, CreateUserId);
 
             return new JsonResult(response);
         }
+
+        public async Task<IActionResult> OnPostComplateSaleAsync([FromBody] SaleAddRequestModel addRequestModel)
+        {
+            addRequestModel.CreateUserId = JsonConvert.DeserializeObject<UserViewModel>(HttpContext.Session.GetString("userInfo")).Id;
+
+            var response = await _sale.Add("Bearer " + HttpContext.Session.GetString("userToken"), addRequestModel);
+
+            return new JsonResult(response);
+        }
+
     }
 }

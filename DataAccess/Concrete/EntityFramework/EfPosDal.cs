@@ -63,6 +63,7 @@ namespace DataAccess.Concrete.EntityFramework
                 {
                     Id = s.Id,
                     Basket = s.Basket,
+                    Barcode = s.Barcode,
                     ProductName = s.ProductName,
                     ProductQuantity = s.ProductQuantity,
                     ProductUnitPrice = s.ProductUnitPrice
@@ -80,6 +81,7 @@ namespace DataAccess.Concrete.EntityFramework
                 {
                     Id = s.Id,
                     Basket = s.Basket,
+                    Barcode = s.Barcode,
                     ProductName = s.ProductName,
                     ProductQuantity = s.ProductQuantity,
                     ProductUnitPrice = s.ProductUnitPrice
@@ -89,18 +91,19 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
-        public ViewModel ListByBasket(int basket)
+        public List<ViewModel> ListByBasket(int basket, int createUserId)
         {
             using (var context = new DataBaseContext())
             {
-                var result = context.Pos.Select(s => new ViewModel
+                var result = context.Pos.Where(x => x.CreateUserId == createUserId).Where(x => x.Basket == basket).Select(s => new ViewModel
                 {
                     Id = s.Id,
                     Basket = s.Basket,
+                    Barcode = s.Barcode,
                     ProductName = s.ProductName,
                     ProductQuantity = s.ProductQuantity,
                     ProductUnitPrice = s.ProductUnitPrice
-                }).FirstOrDefault(c => c.Basket == basket);
+                }).ToList();
 
                 return result;
             }

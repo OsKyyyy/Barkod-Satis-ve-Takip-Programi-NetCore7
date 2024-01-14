@@ -13,10 +13,12 @@ namespace DataAccess.Abstract
     {
         void Add(Product product);
         void Update(Product product);
+        void UpdateStock(string barcode, int quantity);
         List<ViewModel> List();
         void Delete(int id);
         ViewModel ListById(int id);
         ViewModel ListToPos(string barcode);
+        List<ViewModel> ListByName(string name);
         List<ViewModel> ListByFavorite();
         ViewModel CheckExistsByBarcode(string barcode);
     }

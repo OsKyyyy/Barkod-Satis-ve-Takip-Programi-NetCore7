@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.Constant;
+using Core.Utilities.Results.Concrete;
 using Entities.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
@@ -75,27 +77,21 @@ namespace WebAPI.Controllers
             return Ok(list);
         }
 
-        [Route("ListByFavorite")]
-        [HttpGet]
-        public ActionResult ListByFavorite()
-        {
-            var list = _productService.ListByFavorite();
-            if (!list.Status)
-            {
-                return BadRequest(list);
-            }
-
-            return Ok(list);
-        }
-
         [Route("QuantityIncrease")]
         [HttpPut]
-        public ActionResult QuantityIncrease(int id)
+        public ActionResult QuantityIncrease(int id, string barcode)
         {
             var listById = _posService.ListById(id);
             if (!listById.Status)
             {
                 return BadRequest(listById);
+            }
+
+            var listByBarcode = _productService.ListToPos(barcode);
+            if (!listByBarcode.Status || listByBarcode.Data.Stock < listById.Data.ProductQuantity + 1)
+            {
+                return BadRequest(new ErrorResult(Messages.MaximumStockReached));
+
             }
 
             var result = _posService.QuantityIncrease(id);
@@ -148,24 +144,11 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [Route("ListByBarcode")]
-        [HttpGet]
-        public ActionResult ListByBarcode(string barcode)
-        {
-            var list = _productService.ListToPos(barcode);
-            if (!list.Status)
-            {
-                return BadRequest(list);
-            }
-
-            return Ok(list);
-        }
-
         [Route("CancelSale")]
         [HttpGet]
-        public ActionResult CancelSale(int basket)
+        public ActionResult CancelSale(int basket, int creteUserId)
         {
-            var ListByBasket = _posService.ListByBasket(basket);
+            var ListByBasket = _posService.ListByBasket(basket, creteUserId);
             if (!ListByBasket.Status)
             {
                 return BadRequest(ListByBasket);

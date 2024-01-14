@@ -26,5 +26,14 @@ namespace Core.Utilities.Refit.Abstract
 
         [Get("/product/ListById")]
         Task<DataResult<ViewModel>> ListById([Header("Authorization")] string token, [AliasAs("id")] int id);
+
+        [Get("/product/ListByFavorite")]
+        Task<DataResult<List<ViewModel>>> ListByFavorite([Header("Authorization")] string token);
+
+        [Get("/product/ListByBarcode")]
+        Task<DataResult<ViewModel>> ListByBarcode([Header("Authorization")] string token, string barcode);
+
+        [Get("/product/ListByName")]
+        Task<DataResult<List<ViewModel>>> ListByName([Header("Authorization")] string token, string name);
     }
 }

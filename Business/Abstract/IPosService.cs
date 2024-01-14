@@ -16,7 +16,7 @@ namespace Business.Abstract
         IResult AddMoney(PosAddMoneyDto pos);
         IDataResult<List<ViewModel>> List(int createUserId);
         IDataResult<ViewModel> ListById(int id);
-        IDataResult<ViewModel> ListByBasket(int basket);
+        IDataResult<List<ViewModel>> ListByBasket(int basket, int createUserId);
         IResult Delete(int id);
         IResult CancelSale(int basket);
         IResult QuantityIncrease(int id);

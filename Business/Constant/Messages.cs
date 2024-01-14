@@ -1,5 +1,6 @@
 ﻿using Core.Entities.Concrete;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -34,6 +35,8 @@ namespace Business.Constant
         public static string FavoriteProductsListed = "Favori Ürünler Listelendi";
         public static string ProductDeleted = "Ürün Silindi";
         public static string ProductNotFound = "Ürün Bulunamadı";
+        public static string ProductOutOfStock = "Ürün Stokta Yok";
+        public static string MaximumStockReached = "Kullanılabilir Maximum Stoka Ulaşıldı";
         public static string ProductInfoListed = "Ürün Bilgileri Listelendi";
         public static string ProductAlreadyExists = "Ürün Zaten Mevcut";
         public static string ImagePropertyError = "Dosya 'PNG,JPG' formatında ve 2MB'dan az olmalıdır";
@@ -68,6 +71,9 @@ namespace Business.Constant
         public static string WholeSalerMovementDeleted = "Toptancı Hareketi Silindi";
         public static string WholeSalerMovementNotFound = "Toptancı Hareketi Bulunamadı";
         public static string WholeSalerMovementUpdated = "Toptancı Hareketi Güncellendi";
+
+        public static string SaleAdded = "Sipariş Tamamlandı";
+
     }
 
 }

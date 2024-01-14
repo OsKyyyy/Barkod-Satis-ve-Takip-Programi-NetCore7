@@ -44,6 +44,9 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<WholeSalerMovementManager>().As<IWholeSalerMovementService>();
             builder.RegisterType<EfWholeSalerMovementDal>().As<IWholeSalerMovementDal>();
 
+            builder.RegisterType<SaleManager>().As<ISaleService>();
+            builder.RegisterType<EfSaleDal>().As<ISaleDal>();
+
             builder.RegisterType<AuthManager>().As<IAuthService>();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
 

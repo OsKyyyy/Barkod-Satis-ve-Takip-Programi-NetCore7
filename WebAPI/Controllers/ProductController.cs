@@ -100,5 +100,44 @@ namespace WebAPI.Controllers
 
             return Ok(listById);
         }
+
+        [Route("ListByFavorite")]
+        [HttpGet]
+        public ActionResult ListByFavorite()
+        {
+            var list = _productService.ListByFavorite();
+            if (!list.Status)
+            {
+                return BadRequest(list);
+            }
+
+            return Ok(list);
+        }
+
+        [Route("ListByBarcode")]
+        [HttpGet]
+        public ActionResult ListByBarcode(string barcode)
+        {
+            var list = _productService.ListToPos(barcode);
+            if (!list.Status)
+            {
+                return BadRequest(list);
+            }
+
+            return Ok(list);
+        }
+
+        [Route("ListByName")]
+        [HttpGet]
+        public ActionResult ListByName(string name)
+        {
+            var list = _productService.ListByName(name);
+            if (!list.Status)
+            {
+                return BadRequest(list);
+            }
+
+            return Ok(list);
+        }
     }
 }

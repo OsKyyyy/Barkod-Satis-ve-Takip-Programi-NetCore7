@@ -19,6 +19,6 @@ namespace DataAccess.Abstract
         int QuantityReduce(int id);
         List<ViewModel> List(int createUserId);
         ViewModel ListById(int id);
-        ViewModel ListByBasket(int basket);
+        List<ViewModel> ListByBasket(int basket, int createUserId);
     }
 }

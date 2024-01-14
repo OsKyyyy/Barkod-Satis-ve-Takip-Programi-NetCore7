@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Runtime.ConstrainedExecution;
 using Core.Entities;
 using Core.Utilities.Refit.Models.Response.Product;
+using Core.Utilities.Refit.Abstract;
 
 namespace DataAccess.Concrete.EntityFramework
 {
@@ -45,6 +46,18 @@ namespace DataAccess.Concrete.EntityFramework
                 result.Status = product.Status;
                 result.UpdateDate = product.UpdateDate;
                 result.UpdateUserId = product.UpdateUserId;
+
+                context.SaveChanges();
+            }
+        }
+
+        public void UpdateStock(string barcode, int quantity)
+        {
+            using (var context = new DataBaseContext())
+            {
+                var result = context.Products.FirstOrDefault(x => x.Barcode == barcode);
+
+                result.Stock -= quantity;
 
                 context.SaveChanges();
             }
@@ -104,6 +117,37 @@ namespace DataAccess.Concrete.EntityFramework
                     c => c.Id, (p, c) => new { p, c }).Join(context.Users,
                     pu => pu.p.UpdateUserId,
                     u => u.Id, (pu, u) => new { pu, u }).Where(x => x.pu.p.Deleted == false).Where(x => x.pu.p.Favorite == true).Select(l => new ViewModel
+                {
+                    Id = l.pu.p.Id,
+                    Name = l.pu.p.Name,
+                    PurchasePrice = l.pu.p.PurchasePrice,
+                    SalePrice = l.pu.p.SalePrice,
+                    PreviousSellingPrice = l.pu.p.PreviousSellingPrice,
+                    Barcode = l.pu.p.Barcode,
+                    Stock = l.pu.p.Stock,
+                    Image = l.pu.p.Image,
+                    Favorite = l.pu.p.Favorite,
+                    Status = l.pu.p.Status,
+                    UpdateDate = l.pu.p.UpdateDate,
+                    UpdateUserId = l.pu.p.UpdateUserId,
+                    UpdateUserName = l.u.FirstName + " " + l.u.LastName,
+                    CategoryId = l.pu.p.CategoryId,
+                    CategoryName = l.pu.c.Name,
+                }).ToList();
+
+                return result;
+            }
+        }
+
+        public List<ViewModel> ListByName(string name)
+        {
+            using (var context = new DataBaseContext())
+            {
+                var result = context.Products.Join(context.Categories,
+                    p => p.CategoryId,
+                    c => c.Id, (p, c) => new { p, c }).Join(context.Users,
+                    pu => pu.p.UpdateUserId,
+                    u => u.Id, (pu, u) => new { pu, u }).Where(x => x.pu.p.Deleted == false).Where(x => x.pu.p.Name.Contains(name)).Select(l => new ViewModel
                 {
                     Id = l.pu.p.Id,
                     Name = l.pu.p.Name,

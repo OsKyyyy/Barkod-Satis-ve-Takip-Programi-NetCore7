@@ -104,71 +104,13 @@ namespace Core.Utilities.Refit.Concrete
             }
         }
 
-        public async Task<DataResult<List<ProductViewModel>>> ListByFavorite([Header("Authorization: Bearer")] string token)
-        {
-            DataResult<List<ProductViewModel>> dataResult = new DataResult<List<ProductViewModel>>();
-
-            try
-            {
-                dataResult = await myAPI.ListByFavorite(token);
-
-                return dataResult;
-            }
-            catch (ApiException exception)
-            {
-                dynamic response = JsonConvert.DeserializeObject(exception.Content);
-
-                if (response != null && response.Status != null)
-                {
-                    dataResult.Message = response.Message;
-                    dataResult.Status = response.Status;
-
-                    return dataResult;
-                }
-
-                dataResult.Message = "Beklenmedik hata ile karşılaşıldı";
-                dataResult.Status = false;
-
-                return dataResult;
-            }
-        }
-
-        public async Task<DataResult<ProductViewModel>> ListByBarcode([Header("Authorization: Bearer")] string token, string barcode)
-        {
-            DataResult<ProductViewModel> dataResult = new DataResult<ProductViewModel>();
-
-            try
-            {
-                dataResult = await myAPI.ListByBarcode(token, barcode);
-
-                return dataResult;
-            }
-            catch (ApiException exception)
-            {
-                dynamic response = JsonConvert.DeserializeObject(exception.Content);
-
-                if (response != null && response.Status != null)
-                {
-                    dataResult.Message = response.Message;
-                    dataResult.Status = response.Status;
-
-                    return dataResult;
-                }
-
-                dataResult.Message = "Beklenmedik hata ile karşılaşıldı";
-                dataResult.Status = false;
-
-                return dataResult;
-            }
-        }
-
-        public async Task<Result> QuantityIncrease([Header("Authorization: Bearer")] string token, int id)
+        public async Task<Result> QuantityIncrease([Header("Authorization: Bearer")] string token, int id, string barcode)
         {
             Result dataResult = new Result();
 
             try
             {
-                dataResult = await myAPI.QuantityIncrease(token, id);
+                dataResult = await myAPI.QuantityIncrease(token, id, barcode);
 
                 return dataResult;
             }
@@ -249,13 +191,13 @@ namespace Core.Utilities.Refit.Concrete
             }
         }
 
-        public async Task<Result> CancelSale([Header("Authorization: Bearer")] string token, int basket)
+        public async Task<Result> CancelSale([Header("Authorization: Bearer")] string token, int basket, int createUserId)
         {
             Result dataResult = new Result();
 
             try
             {
-                dataResult = await myAPI.CancelSale(token, basket);
+                dataResult = await myAPI.CancelSale(token, basket, createUserId);
 
                 return dataResult;
             }

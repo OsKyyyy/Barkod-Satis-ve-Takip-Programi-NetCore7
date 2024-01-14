@@ -14,13 +14,12 @@
         $("#barcodeNo").on("keyup", function (event) {
 
             var value = $(this).val();
-            if (event.keyCode == 120) {
-                if (value.charAt(0) == "*") {
-                    var substr = value.substr(1);
-                    if (substr != "") {
-                        $("#quantity").val(substr);
-                        $("#barcodeNo").val("");
-                    }
+            var indexOf = value.indexOf("*");
+            if (event.keyCode == 106 || event.keyCode == 223) {
+                if (indexOf != -1) {
+                    var quantity = value.slice(0, indexOf).replace(/\s/g, '');                   
+                    $("#quantity").val(quantity);
+                    $("#barcodeNo").val("");                    
                 }
             }
         })
@@ -60,7 +59,7 @@
     ToastrError: function () {
 
         let msg = $('#ToastrError').val();
-        if (msg == "Ürün Bulunamadı") {
+        if (msg == "Ürün Bulunamadı" || msg == "Ürün Stokta Yok") {
             var audio = new Audio("../assets/media/music/barcode-beep.m4a")
             audio.play()                       
         }
@@ -117,7 +116,7 @@
         
         if (value == 1) {
             localStorage.removeItem("basket");
-            localStorage.setItem("basket", "1");
+            localStorage.setItem("basket", "1");            
 
             $("#currentBasket").val(1);
             $("#currentBasketModal").val(1);            
@@ -186,6 +185,17 @@
             }
             $("#selectedCustomerCard").removeClass("d-block");
             $("#selectedCustomerCard").addClass("d-none");
+        }
+    },
+    ChangePaymentType: function (value) {
+
+        if (value == 1) {
+            $("#cashPaymentType").attr("checked", "checked");
+            $("#cardPaymentType").removeAttr("checked", "checked");
+        }
+        else {
+            $("#cashPaymentType").removeAttr("checked", "checked");
+            $("#cardPaymentType").attr("checked", "checked");
         }
     },
     RemoveCustomer: function (value) {

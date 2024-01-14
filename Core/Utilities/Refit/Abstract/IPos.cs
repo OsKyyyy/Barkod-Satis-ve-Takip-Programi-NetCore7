@@ -22,14 +22,8 @@ namespace Core.Utilities.Refit.Abstract
         [Get("/pos/List")]
         Task<DataResult<List<ViewModel>>> List([Header("Authorization")] string token, int createUserId);
 
-        [Get("/pos/ListByFavorite")]
-        Task<DataResult<List<ProductViewModel>>> ListByFavorite([Header("Authorization")] string token);
-
-        [Get("/pos/ListByBarcode")]
-        Task<DataResult<ProductViewModel>> ListByBarcode([Header("Authorization")] string token, string barcode);
-
         [Put("/pos/QuantityIncrease")]
-        Task<Result> QuantityIncrease([Header("Authorization")] string token, int id);
+        Task<Result> QuantityIncrease([Header("Authorization")] string token, int id, string barcode);
         
         [Put("/pos/QuantityReduce")]
         Task<Result> QuantityReduce([Header("Authorization")] string token, int id);
@@ -38,6 +32,6 @@ namespace Core.Utilities.Refit.Abstract
         Task<Result> Delete([Header("Authorization")] string token, int id);
 
         [Get("/pos/CancelSale")]
-        Task<Result> CancelSale([Header("Authorization")] string token, int basket);
+        Task<Result> CancelSale([Header("Authorization")] string token, int basket, int createUserId);
     }
 }

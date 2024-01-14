@@ -13,9 +13,9 @@ namespace WebUI.Pages.Pos
             _pos = pos;
         }
 
-        public async Task<IActionResult> OnGetAsync(int id)
+        public async Task<IActionResult> OnGetAsync(int id, string barcode)
         {
-            var response = await _pos.QuantityIncrease("Bearer " + HttpContext.Session.GetString("userToken"), id);
+            var response = await _pos.QuantityIncrease("Bearer " + HttpContext.Session.GetString("userToken"), id, barcode);
 
             if (response.Message == "Authentication Error")
             {
