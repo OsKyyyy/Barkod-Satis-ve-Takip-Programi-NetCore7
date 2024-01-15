@@ -122,18 +122,18 @@
                                         <td><span class="fw-bold ms-3">@item.CategoryName</span></td>
                                         <td class="text-end"><span class="fw-bold ms-3">@item.Barcode</span></td>
                                         <td class="text-end">
-                                            @if (item.Stock <= 10 && item.Stock >= 1)
+                                            @if (item.Stock <= item.CriticalStock && item.Stock >= 1)
                                             {
-                                                <span class="badge badge-light-warning">Kritik stok</span>
+                                                <span class="badge badge-light-warning">Kritik Stok</span>
                                             }
                                             @if (item.Stock <= 0)
                                             {
-                                                <span class="badge badge-light-danger">Tükendi</span>
+                                                <span class="badge badge-light-danger">Stokta Yok</span>
                                             }
                                             <span class="fw-bold ms-3">@item.Stock</span>
                                         </td>
                                         <td><span class="fw-bold ms-3">@item.PurchasePrice &#8378;</span></td>
-                                        <td><span class="fw-bold ms-3">@item.SalePrice &#8378;</span></td>
+                                        <td><span class="fw-bold ms-3 text-gray-800">@item.SalePrice &#8378;</span></td>
                                         <td><span class="fw-bold ms-3">@item.PreviousSellingPrice &#8378;</span></td>
                                         <td><span class="fw-bold ms-3">@item.UpdateDate</span></td>
                                         <td>

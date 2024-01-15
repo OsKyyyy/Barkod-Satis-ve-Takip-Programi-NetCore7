@@ -231,7 +231,7 @@
 
     },
     ComplateSale: function () {
-        debugger;
+        
         var customerId;
         var amount;
         var paymentType = parseInt($('input[name="paymentType"]:checked').val());
@@ -243,7 +243,7 @@
         }
         else {
             customerId = parseInt(localStorage.getItem("customerId2"));
-            amount = $("#caseTotal2").html();
+            amount = $("#caseTotal2").html().split(" ")[0].replace(",", ".");
         }
 
         if (amount > 1) {
@@ -264,7 +264,19 @@
                     },
                     success: function (response) {
                         
-                        if (response.message == "Authentication Error" || response.status) {
+                        if (response.message == "Authentication Error") {
+
+                            window.location.reload();
+                        }
+                        if (response.status) {
+
+                            if (customerId != null && basket == 1) {
+                                localStorage.removeItem("customerId");
+                            }
+                            if (customerId != null && basket == 2) {
+                                localStorage.removeItem("customerId2");
+                            }
+
                             window.location.reload();
                         }
                         if (!response.status) {

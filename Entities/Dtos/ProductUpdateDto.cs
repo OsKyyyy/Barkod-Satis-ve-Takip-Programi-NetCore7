@@ -21,6 +21,7 @@ namespace Entities.Dtos
         public string? Image { get; set; }
         public bool ImageChanged { get; set; }
         public int Stock { get; set; }
+        public int CriticalStock { get; set; }
         public bool Favorite { get; set; }
         public bool Status { get; set; }
         public int UpdateUserId { get; set; }

@@ -41,6 +41,7 @@ namespace DataAccess.Concrete.EntityFramework
                 result.SalePrice = product.SalePrice;
                 result.Barcode = product.Barcode;
                 result.Stock = product.Stock;
+                result.CriticalStock = product.CriticalStock;
                 result.Image = product.Image;
                 result.Favorite = product.Favorite;
                 result.Status = product.Status;
@@ -94,6 +95,7 @@ namespace DataAccess.Concrete.EntityFramework
                     PreviousSellingPrice = l.pu.p.PreviousSellingPrice,
                     Barcode = l.pu.p.Barcode,
                     Stock = l.pu.p.Stock,
+                    CriticalStock = l.pu.p.CriticalStock,
                     Image = l.pu.p.Image,
                     Favorite = l.pu.p.Favorite,
                     Status = l.pu.p.Status,
@@ -125,6 +127,7 @@ namespace DataAccess.Concrete.EntityFramework
                     PreviousSellingPrice = l.pu.p.PreviousSellingPrice,
                     Barcode = l.pu.p.Barcode,
                     Stock = l.pu.p.Stock,
+                    CriticalStock = l.pu.p.CriticalStock,
                     Image = l.pu.p.Image,
                     Favorite = l.pu.p.Favorite,
                     Status = l.pu.p.Status,
@@ -156,6 +159,7 @@ namespace DataAccess.Concrete.EntityFramework
                     PreviousSellingPrice = l.pu.p.PreviousSellingPrice,
                     Barcode = l.pu.p.Barcode,
                     Stock = l.pu.p.Stock,
+                    CriticalStock = l.pu.p.CriticalStock,
                     Image = l.pu.p.Image,
                     Favorite = l.pu.p.Favorite,
                     Status = l.pu.p.Status,
@@ -187,6 +191,7 @@ namespace DataAccess.Concrete.EntityFramework
                     PreviousSellingPrice = l.p2.p.PreviousSellingPrice,
                     Barcode = l.p2.p.Barcode,
                     Stock = l.p2.p.Stock,
+                    CriticalStock = l.p2.p.CriticalStock,
                     Image = l.p2.p.Image,
                     Favorite = l.p2.p.Favorite,
                     Status = l.p2.p.Status,
@@ -222,6 +227,7 @@ namespace DataAccess.Concrete.EntityFramework
                     PreviousSellingPrice = l.p2.p.PreviousSellingPrice,
                     Barcode = l.p2.p.Barcode,
                     Stock = l.p2.p.Stock,
+                    CriticalStock = l.p2.p.CriticalStock,
                     Image = l.p2.p.Image,
                     Favorite = l.p2.p.Favorite,
                     Status = l.p2.p.Status,
@@ -253,6 +259,7 @@ namespace DataAccess.Concrete.EntityFramework
                     PreviousSellingPrice = l.p2.p.PreviousSellingPrice,
                     Barcode = l.p2.p.Barcode,
                     Stock = l.p2.p.Stock,
+                    CriticalStock = l.p2.p.CriticalStock,
                     Image = l.p2.p.Image,
                     Favorite = l.p2.p.Favorite,
                     Status = l.p2.p.Status,

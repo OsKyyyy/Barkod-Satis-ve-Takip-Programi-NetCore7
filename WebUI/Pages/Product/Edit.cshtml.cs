@@ -59,6 +59,7 @@ namespace WebUI.Pages.Product
                 setModel.Barcode = response.Data.Barcode;
                 setModel.Image = response.Data.Image;
                 setModel.Stock = response.Data.Stock;
+                setModel.CriticalStock = response.Data.CriticalStock;
                 setModel.Favorite = response.Data.Favorite;
                 setModel.Status = response.Data.Status;
                 setModel.CategoryId = response.Data.CategoryId;

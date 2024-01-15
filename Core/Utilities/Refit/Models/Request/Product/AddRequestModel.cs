@@ -37,6 +37,10 @@ namespace Core.Utilities.Refit.Models.Request.Product
         [RegularExpression(@"^[1-9][0-9]*$", ErrorMessage = "Lütfen geçerli bir stok sayısı girin")]
         public int Stock { get; set; }
 
+        [Required(ErrorMessage = "Bu alan zorunludur.")]
+        [RegularExpression(@"^[1-9][0-9]*$", ErrorMessage = "Lütfen geçerli bir kritik stok sayısı girin")]
+        public int CriticalStock { get; set; }
+
         public bool Favorite { get; set; }
 
         public bool Status { get; set; }

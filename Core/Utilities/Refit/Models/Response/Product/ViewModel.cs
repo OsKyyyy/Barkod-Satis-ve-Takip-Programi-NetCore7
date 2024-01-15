@@ -31,6 +31,9 @@ namespace Core.Utilities.Refit.Models.Response.Product
         [JsonProperty("Stock")]
         public int Stock { get; set; }
         
+        [JsonProperty("CriticalStock")]
+        public int CriticalStock { get; set; }
+        
         [JsonProperty("Image")]
         public string? Image { get; set; }
         

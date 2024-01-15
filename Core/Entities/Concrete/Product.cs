@@ -16,6 +16,7 @@ namespace Core.Entities.Concrete
         public Decimal PreviousSellingPrice { get; set; }
         public string Barcode { get; set; }
         public int Stock { get; set; }
+        public int CriticalStock { get; set; }
         public string? Image { get; set; }
         public bool Favorite { get; set; }
         public bool Status { get; set; }

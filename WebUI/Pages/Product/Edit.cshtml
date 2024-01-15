@@ -182,6 +182,17 @@
                                         </div>
                                     </div>
                                 </div>
+                                
+                                <div class="row mb-6">
+                                    <label class="col-lg-4 col-form-label required fw-semibold fs-6">Kritik Stok</label>
+
+                                    <div class="col-lg-8 fv-row">
+                                        <input asp-for="UpdateRequestModel.CriticalStock" class="form-control form-control-lg form-control mb-3 mb-lg-0" autocomplete="off">
+                                        <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                                            <span asp-validation-for="UpdateRequestModel.CriticalStock"></span>
+                                        </div>
+                                    </div>
+                                </div>
 
                             </div>
                         </div>
