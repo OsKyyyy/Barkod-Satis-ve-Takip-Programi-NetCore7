@@ -29,6 +29,7 @@ namespace Core.DependencyResolvers
             serviceCollection.AddSingleton<IWholeSaler, WholeSalerManager>();
             serviceCollection.AddSingleton<IWholeSalerMovement, WholeSalerMovementManager>();
             serviceCollection.AddSingleton<ISale, SaleManager>();
+            serviceCollection.AddSingleton<IReport, ReportManager>();
         }
     }
 }

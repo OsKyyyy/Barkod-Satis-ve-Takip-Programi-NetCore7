@@ -220,7 +220,7 @@
                                                         <td class="pe-0">
                                                             @if (item.Image != "Uploads/Invoices/unknow.png")
                                                             {
-                                                                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" target="_blank" href="@Configuration.GetValue(typeof(string), "BaseUrl")@item.Image">
+                                                                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" target="_blank" href="@Configuration.GetValue(typeof(string), "ImageUrl")@item.Image">
                                                                     <i class="ki-duotone ki-search-list fs-2">
                                                                         <span class="path1"></span>
                                                                         <span class="path2"></span>
@@ -319,8 +319,8 @@
                         
                         <div class="col-lg-8 fv-row">
 
-                            <div class="image-input image-input-empty image-input-outline mb-3" data-kt-image-input="true" style="background-image: url(@Configuration.GetValue(typeof(string),"BaseUrl")Uploads/Products/unknow.png);background-size: contain;">
-                                <div class="image-input-wrapper w-150px h-150px" style="background-image: url(@Configuration.GetValue(typeof(string),"BaseUrl")Uploads/Products/unknow.png);background-size: contain;"></div>
+                            <div class="image-input image-input-empty image-input-outline mb-3" data-kt-image-input="true" style="background-image: url(@Configuration.GetValue(typeof(string),"ImageUrl")Uploads/Products/unknow.png);background-size: contain;">
+                                <div class="image-input-wrapper w-150px h-150px" style="background-image: url(@Configuration.GetValue(typeof(string),"ImageUrl")Uploads/Products/unknow.png);background-size: contain;"></div>
                                 <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Değiştir">
                                     <i class="ki-duotone ki-pencil fs-7">
                                         <span class="path1"></span>
@@ -410,8 +410,8 @@
 
                         <div class="col-lg-8 fv-row">
 
-                            <div class="image-input image-input-empty image-input-outline mb-3" id="image2Edit" data-kt-image-input="true" style="background-image: url(@Configuration.GetValue(typeof(string),"BaseUrl")Uploads/Products/unknow.png);background-size: contain;">
-                                <div class="image-input-wrapper w-150px h-150px" id="image3Edit" style="background-image: url(@Configuration.GetValue(typeof(string),"BaseUrl")Uploads/Products/unknow.png);background-size: contain;"></div>
+                            <div class="image-input image-input-empty image-input-outline mb-3" id="image2Edit" data-kt-image-input="true" style="background-image: url(@Configuration.GetValue(typeof(string),"ImageUrl")Uploads/Products/unknow.png);background-size: contain;">
+                                <div class="image-input-wrapper w-150px h-150px" id="image3Edit" style="background-image: url(@Configuration.GetValue(typeof(string),"ImageUrl")Uploads/Products/unknow.png);background-size: contain;"></div>
                                 <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Değiştir">
                                     <i class="ki-duotone ki-pencil fs-7">
                                         <span class="path1"></span>

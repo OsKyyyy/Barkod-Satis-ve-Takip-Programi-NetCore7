@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Utilities.Refit.Models.Response.Report;
 using Entities.Dtos;
 
 namespace DataAccess.Concrete.EntityFramework
@@ -15,7 +16,7 @@ namespace DataAccess.Concrete.EntityFramework
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=OSKYY;Database=Market;Trusted_Connection=True;TrustServerCertificate=True");
+            optionsBuilder.UseSqlServer(@"Server=OsKyy;Database=Market;Trusted_Connection=True;TrustServerCertificate=True");
         }
 
         public DbSet<User> Users { get; set; }

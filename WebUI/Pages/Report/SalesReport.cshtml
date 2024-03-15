@@ -1,22 +1,19 @@
 ﻿@page
-@using Microsoft.Extensions.Configuration
-@inject IConfiguration Configuration
-@model WebUI.Pages.Product.ListModel
+@model WebUI.Pages.Report.SalesReportModel
 @{
-    ViewData["Title"] = "Ürün Listesi";
+    ViewData["Title"] = "Satış Raporları";
 }
 @section _Head
-{
+    {
     <link href="~/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
 }
-
 <div class="app-main flex-column flex-row-fluid " id="kt_app_main">
     <div class="d-flex flex-column flex-column-fluid">
         <div id="kt_app_toolbar" class="app-toolbar  py-3 py-lg-6 mb-10">
             <div id="kt_app_toolbar_container" class="app-container  container-xxl d-flex flex-stack ">
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3 ">
                     <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">
-                        Ürün Listesi
+                        Kategori Listesi
                     </h1>
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                         <li class="breadcrumb-item text-muted">
@@ -26,7 +23,7 @@
                             <span class="bullet bg-gray-500 w-5px h-2px"></span>
                         </li>
                         <li class="breadcrumb-item text-muted">
-                            Ürün İşlemleri
+                            Kategori İşlemleri
                         </li>
                     </ul>
                 </div>
@@ -52,20 +49,17 @@
                                 </select>
                             </div>
 
-                            <a asp-page="/Product/Add" class="btn btn-light-info">
+                            <a asp-page="/Category/Add" class="btn btn-light-info">
                                 <i class="ki-duotone ki-plus-square fs-2">
                                     <span class="path1"></span>
                                     <span class="path2"></span>
                                     <span class="path3"></span>
                                 </i>
-                                Yeni Ürün
+                                Yeni Kategori
                             </a>
 
                             <button type="button" class="btn btn-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                                <i class="ki-duotone ki-exit-down fs-2">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
-                                </i>
+                                <i class="ki-duotone ki-exit-down fs-2"><span class="path1"></span><span class="path2"></span></i>
                                 Dışa Aktar
                             </button>
                             <div id="kt_datatable_example_export_menu" class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-200px py-4" data-kt-menu="true">
@@ -92,50 +86,20 @@
                         <table class="table align-middle rounded table-row-dashed fs-6 g-5" id="kt_datatable_example">
                             <thead>
                                 <tr class="text-start fw-bold fs-7 text-uppercase">
-                                    <th class="min-w-100px">ÜRÜN</th>
-                                    <th class="min-w-100px">KATEGORİ</th>
-                                    <th class="min-w-100px text-end">BARKOD</th>
-                                    <th class="min-w-100px text-end">STOK</th>
-                                    <th class="min-w-100px">ALIŞ FİYATI</th>
-                                    <th class="min-w-100px">SATIŞ FİYATI</th>
-                                    <th class="min-w-100px">ÖNCEKİ SATIŞ FİYATI</th>
+                                    <th class="min-w-100px">AD</th>
+                                    <th class="min-w-100px">SON İŞLEM YAPAN</th>
                                     <th class="min-w-100px">SON İŞLEM TARİHİ</th>
                                     <th class="min-w-100px">DURUM</th>
-                                    <th class="min-w-100px">İŞLEMLER</th>
+                                    <th class="min-w-100px text-end">İŞLEMLER</th>
                                 </tr>
                             </thead>
                             <tbody class="fw-semibold text-gray-600">
-                                @foreach (var item in Model.ViewModel)
+                                @* @foreach (var item in Model.SalesReportViewModel)
                                 {
-                                    <tr class="odd">
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <a asp-page="/Product/Edit" asp-route-id="@item.Id" class="symbol symbol-50px">
-                                                    <span class="symbol-label" style="background-image:url(@Configuration.GetValue(typeof(string), "ImageUrl")@item.Image);"></span>
-                                                </a>
-
-                                                <div class="ms-5">
-                                                    <a asp-page="/Product/Edit" asp-route-id="@item.Id" class="text-gray-800 text-hover-primary fs-5 fw-bold">@item.Name</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td><span class="fw-bold ms-3">@item.CategoryName</span></td>
-                                        <td class="text-end"><span class="fw-bold ms-3">@item.Barcode</span></td>
-                                        <td class="text-end">
-                                            @if (item.Stock <= item.CriticalStock && item.Stock >= 1)
-                                            {
-                                                <span class="badge badge-light-warning">Kritik Stok</span>
-                                            }
-                                            @if (item.Stock <= 0)
-                                            {
-                                                <span class="badge badge-light-danger">Stokta Yok</span>
-                                            }
-                                            <span class="fw-bold ms-3">@item.Stock</span>
-                                        </td>
-                                        <td><span class="fw-bold ms-3">@item.PurchasePrice &#8378;</span></td>
-                                        <td><span class="fw-bold ms-3 text-gray-800">@item.SalePrice &#8378;</span></td>
-                                        <td><span class="fw-bold ms-3">@item.PreviousSellingPrice &#8378;</span></td>
-                                        <td><span class="fw-bold ms-3">@item.UpdateDate</span></td>
+                                     <tr class="odd">
+                                        <td>@item.Name</td>
+                                        <td>@item.UpdateUserName</td>
+                                        <td>@item.UpdateDate</td>
                                         <td>
                                             @if (item.Status)
                                             {
@@ -146,14 +110,14 @@
                                                 <div class="badge badge-light-danger">Pasif</div>
                                             }
                                         </td>
-                                        <td>
-                                            <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" asp-page="/Product/Edit" asp-route-id="@item.Id">
+                                        <td class="text-end">
+                                            <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" asp-page="/Category/Edit" asp-route-id="@item.Id">
                                                 <i class="ki-duotone ki-pencil fs-2">
                                                     <span class="path1"></span>
                                                     <span class="path2"></span>
                                                 </i>
                                             </a>
-                                            <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" asp-page="/Product/Delete" asp-route-id="@item.Id" onclick="Product.DeleteConfirm(this)">
+                                            <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" asp-page="/Category/Delete" asp-route-id="@item.Id" onclick="Category.DeleteConfirm(this)">
                                                 <i class="ki-duotone ki-trash fs-2">
                                                     <span class="path1"></span>
                                                     <span class="path2"></span><span class="path3"></span>
@@ -162,7 +126,7 @@
                                             </a>
                                         </td>
                                     </tr>
-                                }
+                                } *@
                             </tbody>
                         </table>
                     </div>
@@ -179,8 +143,8 @@
 </div>
 
 @section _Foot
-{
+    {
     <script src="~/assets/plugins/custom/datatables/datatables.bundle.js"></script>
-    <script src="~/assets/js/pages/product/product.js"></script>
-    <script src="~/assets/js/pages/product/listData.js"></script>
+    <script src="~/assets/js/pages/category/category.js"></script>
+    <script src="~/assets/js/pages/category/listData.js"></script>
 }
