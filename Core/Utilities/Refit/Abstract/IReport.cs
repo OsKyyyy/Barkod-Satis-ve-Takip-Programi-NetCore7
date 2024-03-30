@@ -12,6 +12,9 @@ namespace Core.Utilities.Refit.Abstract
     public interface IReport
     {       
         [Get("/report/SalesReport")]
-        Task<DataResult<List<SalesReportViewModel>>> SalesReport([Header("Authorization")] string token);        
+        Task<DataResult<List<SalesReportViewModel>>> SalesReport([Header("Authorization")] string token);
+
+        [Get("/report/SalesDetailReport")]
+        Task<DataResult<List<SalesDetailReportViewModel>>> SalesDetailReport([Header("Authorization")] string token, DateTime date);               
     }
 }

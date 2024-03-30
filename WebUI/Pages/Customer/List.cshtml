@@ -100,7 +100,7 @@
                                 @foreach (var item in Model.ViewModel)
                                 {
                                     <tr class="odd">
-                                        <td><a asp-page="/Customer/Movements" asp-route-id="@item.Id">@item.Name</a></td>
+                                        <td><a class="text-gray-600" asp-page="/Customer/Movements" asp-route-id="@item.Id">@item.Name</a></td>
                                         <td>@item.Address</td>
                                         <td>
                                             @if (String.IsNullOrEmpty(item.Phone))

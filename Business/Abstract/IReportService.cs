@@ -13,5 +13,6 @@ namespace Business.Abstract
     public interface IReportService
     {
         IDataResult<List<SalesReportViewModel>> SalesReport();
+        IDataResult<List<SalesDetailReportViewModel>> SalesDetailReport(DateTime date);
     }
 }

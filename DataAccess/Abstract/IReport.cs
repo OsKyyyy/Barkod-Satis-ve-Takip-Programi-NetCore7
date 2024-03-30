@@ -12,5 +12,6 @@ namespace DataAccess.Abstract
     public interface IReportDal : IEntityRepository<Sale>
     {
         List<SalesReportViewModel> SalesReport();
+        List<SalesDetailReportViewModel> SalesDetailReport(DateTime date);
     }
 }

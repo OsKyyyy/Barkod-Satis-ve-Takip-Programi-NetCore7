@@ -27,5 +27,18 @@ namespace WebAPI.Controllers
 
             return Ok(list);
         }
+
+        [Route("SalesDetailReport")]
+        [HttpGet]
+        public ActionResult SalesDetailReport(DateTime date)
+        {
+            var list = _reportService.SalesDetailReport(date);
+            if (!list.Status)
+            {
+                return BadRequest(list);
+            }
+
+            return Ok(list);
+        }
     }
 }

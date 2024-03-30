@@ -15,7 +15,7 @@ var KTDatatablesExample = function () {
         datatable = $(table).DataTable({
             "info": false,
             'order': [],
-            'pageLength': 10,           
+            'pageLength': 10,            
             initComplete: function () {
                 this.api()
                     .columns()

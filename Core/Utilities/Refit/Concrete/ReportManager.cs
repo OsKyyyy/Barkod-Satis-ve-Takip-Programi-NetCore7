@@ -13,7 +13,7 @@ namespace Core.Utilities.Refit.Concrete
 {
     public class ReportManager : IReport
     {
-        private IReport myAPI = RestService.For<IReport>("http://localhost:63067/api");
+        private IReport myAPI = RestService.For<IReport>("http://localhost:63067/api");       
 
         public async Task<DataResult<List<SalesReportViewModel>>> SalesReport([Header("Authorization: Bearer")] string token)
         {
@@ -43,5 +43,34 @@ namespace Core.Utilities.Refit.Concrete
                 return dataResult;
             }
         }
+
+        public async Task<DataResult<List<SalesDetailReportViewModel>>> SalesDetailReport([Header("Authorization")] string token,DateTime date)
+        {
+            DataResult<List<SalesDetailReportViewModel>> dataResult = new DataResult<List<SalesDetailReportViewModel>>();
+
+            try
+            {
+                dataResult = await myAPI.SalesDetailReport(token,date);
+
+                return dataResult;
+            }
+            catch (ApiException exception)
+            {
+                dynamic response = JsonConvert.DeserializeObject(exception.Content);
+
+                if (response != null && response.Status != null)
+                {
+                    dataResult.Message = response.Message;
+                    dataResult.Status = response.Status;
+
+                    return dataResult;
+                }
+
+                dataResult.Message = "Beklenmedik hata ile karşılaşıldı";
+                dataResult.Status = false;
+
+                return dataResult;
+            }
+        }        
     }
 }

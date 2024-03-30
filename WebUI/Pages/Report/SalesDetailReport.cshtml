@@ -1,13 +1,15 @@
 ﻿@page
 @using System.Globalization
-@model WebUI.Pages.Report.SalesReportModel
+@model WebUI.Pages.Report.SalesDetailReportModel
 @{
-    ViewData["Title"] = "Satış Raporları";
+    ViewData["Title"] = "Satış Detay Raporları";
 }
 @section _Head
     {
     <link href="~/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+   @*  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css"> *@
 }
+<form method="post"></form>
 <div class="app-main flex-column flex-row-fluid " id="kt_app_main">
     <div class="d-flex flex-column flex-column-fluid">
         <div id="kt_app_toolbar" class="app-toolbar  py-3 py-lg-6 mb-10">
@@ -38,6 +40,13 @@
                             <div class="d-flex align-items-center position-relative my-1">
                                 <i class="ki-duotone ki-magnifier fs-1 position-absolute ms-4"><span class="path1"></span><span class="path2"></span></i>
                                 <input type="text" data-kt-filter="search" class="form-control form-control w-250px ps-14" placeholder="Ara..."/>
+                                    @* <input type="text" class="form-control form-control w-250px ps-14" id="datepicker"> *@
+                                <div class="input-group" id="kt_td_picker_date_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
+                                    <input id="kt_td_picker_date_only_input" type="text" class="form-control" data-td-target="#kt_td_picker_date_only" />
+                                    <span class="input-group-text" data-td-target="#kt_td_picker_date_only" data-td-toggle="datetimepicker">
+                                        <i class="ki-duotone ki-calendar fs-2"><span class="path1"></span><span class="path2"></span></i>
+                                    </span>
+                                </div>
                             </div>
                             <div id="kt_datatable_example_1_export" class="d-none"></div>
                         </div>
@@ -67,28 +76,29 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <table class="table align-middle rounded table-row-dashed fs-6 g-5" id="kt_datatable_example">
-                            <thead>
-                                <tr class="text-start fw-bold fs-7 text-uppercase">
+                        <table class="table align-middle rounded table-row-dashed fs-6 g-5 fw-semibold text-gray-600" id="kt_datatable_example">
+                            <thead style="color: black !important;">
+                                <tr class="text-start fw-bold fs-7 text-uppercase">                                   
                                     <th class="min-w-100px">TARİH</th>
+                                    <th class="min-w-200px">MÜŞTERİ</th>
                                     <th class="min-w-100px">TOPLAM TUTAR</th>
-                                    <th class="min-w-100px">SATIŞ ADEDİ</th>
+                                    <th class="min-w-100px">ÖDEME TİPİ</th>
+                                    <th class="min-w-100px">DURUM</th>
                                     <th class="min-w-100px text-end">İŞLEMLER</th>
                                 </tr>
                             </thead>
-                            <tbody class="fw-semibold text-gray-600">
-                                @foreach (var item in Model.SalesReportViewModel)
+                            
+                             <tbody class="fw-semibold text-gray-600">
+                                @foreach (var item in Model.SalesDetailReportViewModel)
                                 {
                                     <tr class="odd">
+                                                                                
+                                        <td>@item.CreateDate</td>
+                                        <td>@item.CustomerName </td>
+                                        <td>@item.Amount</td>
+                                        <td>@item.PaymentType</td>
+                                        <td>@item.Deleted</td>
                                         <td>
-                                            @{
-                                                string s = item.CreateDate.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
-                                            }
-                                            @s
-                                        </td>
-                                        <td class="fw-bold text-gray-800">@item.Amount &#8378;</td>
-                                        <td>@item.Piece</td>                                    
-                                        <td class="text-end">
                                             <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" asp-page="/Category/Edit" asp-route-id="@item.CreateDate">
                                                 <i class="ki-duotone ki-pencil fs-2">
                                                     <span class="path1"></span>
@@ -105,7 +115,7 @@
                                         </td>
                                     </tr>
                                 }
-                            </tbody>
+                            </tbody> 
                         </table>
                     </div>
                 </div>
@@ -121,8 +131,88 @@
 </div>
 
 @section _Foot
-    {
+{
+    @* <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script> *@
     <script src="~/assets/plugins/custom/datatables/datatables.bundle.js"></script>
-    <script src="~/assets/js/pages/category/category.js"></script>
-    <script src="~/assets/js/pages/category/listData.js"></script>
+    <script src="~/assets/js/pages/report/saledetailreport.js"></script>
+    <script src="~/assets/js/pages/report/saleDetailListData.js"></script>
+  @*   <script>
+        $(function () {
+            $("#datepicker").datepicker({
+                dateFormat: 'dd-mm-yy',
+                regional: 'tr'
+            });
+        });
+    </script> *@
+    <script>
+        new tempusDominus.TempusDominus(document.getElementById("kt_td_picker_date_only"), {
+            display: {
+                viewMode: "calendar",
+                components: {
+                    decades: true,
+                    year: true,
+                    month: true,
+                    date: true,
+                    hours: false,
+                    minutes: false,
+                    seconds: false
+                }
+            }
+        });
+    </script>
+    <script>
+        const linkedPicker1Element = document.getElementById("kt_td_picker_date_only");
+
+        linkedPicker1Element.addEventListener(tempusDominus.Namespace.events.change, (e) => {
+            var startDate = e.detail.date;
+            var formattedStartDate = new Date(startDate).toISOString();
+
+            var saleDetailModel = { "Date": formattedStartDate };
+
+            $.ajax({
+                type: "POST",
+                url: "SalesDetailReport?handler=List",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(saleDetailModel),
+                headers: {
+                    RequestVerificationToken:
+                        $('input:hidden[name="__RequestVerificationToken"]').val()
+                },
+                success: function (response) {
+
+                    $('#kt_datatable_example').DataTable().clear().rows.add(response.data).draw();
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        })
+        // $('#kt_td_picker_date_only').on('change', function () {
+        //     debugger;
+        //     var startDate = $(this).val();
+        //     var formattedStartDate = new Date(startDate).toISOString();
+
+        //     var saleDetailModel = { "Date": formattedStartDate };
+
+        //     $.ajax({
+        //         type: "POST",
+        //         url: "SalesDetailReport?handler=List",
+        //         contentType: "application/json; charset=utf-8",
+        //         dataType: "json",
+        //         data: JSON.stringify(saleDetailModel),
+        //         headers: {
+        //             RequestVerificationToken:
+        //                 $('input:hidden[name="__RequestVerificationToken"]').val()
+        //         },
+        //         success: function (response) {                
+
+        //             $('#kt_datatable_example').DataTable().clear().rows.add(response.data).draw();
+        //         },
+        //         error: function (xhr, status, error) {
+        //             console.error(error);
+        //         }
+        //     });
+        // });
+    </script>
 }

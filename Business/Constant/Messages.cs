@@ -74,6 +74,10 @@ namespace Business.Constant
 
         public static string SaleAdded = "Sipariş Tamamlandı";
 
+        public static string SaleReportListed = "Satış Raporları Listelendi";
+        public static string SaleDetailReportListed = "Satış Detay Raporları Listelendi";
+
+
     }
 
 }

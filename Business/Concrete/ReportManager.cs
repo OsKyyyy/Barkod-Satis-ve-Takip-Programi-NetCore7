@@ -31,7 +31,14 @@ namespace Business.Concrete
         {
             var result = _reportDal.SalesReport();
 
-            return new SuccessDataResult<List<SalesReportViewModel>>(result, Messages.CategoriesListed);
+            return new SuccessDataResult<List<SalesReportViewModel>>(result, Messages.SaleReportListed);
         }
+
+        public IDataResult<List<SalesDetailReportViewModel>> SalesDetailReport(DateTime date)
+        {
+            var result = _reportDal.SalesDetailReport(date);
+
+            return new SuccessDataResult<List<SalesDetailReportViewModel>>(result, Messages.SaleDetailReportListed);
+        }               
     }
 }
