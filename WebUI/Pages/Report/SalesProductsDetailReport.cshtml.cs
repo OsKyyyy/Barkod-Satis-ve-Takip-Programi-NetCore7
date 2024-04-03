@@ -1,24 +1,18 @@
 using Core.Utilities.Refit.Abstract;
-using Core.Utilities.Refit.Models.Request.Pos;
 using Core.Utilities.Refit.Models.Response.Report;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WebUI.Pages.Report
 {
-    public class SalesDetailReportModel : PageModel
+    public class SalesProductsDetailReportModel : PageModel
     {
         private readonly IReport _report;
 
-        public SalesDetailReportModel(IReport report)
+        public SalesProductsDetailReportModel(IReport report)
         {
             _report = report;
         }
-
-        [BindProperty]
-        public DateTime Datee { get; set; }
 
         [ViewData]
         public string? ToastrError { get; set; }
@@ -26,14 +20,14 @@ namespace WebUI.Pages.Report
         [ViewData]
         public string? ToastrSuccess { get; set; }
 
-        public List<SalesDetailReportViewModel> SalesDetailReportViewModel { get; set; }
+        public List<SalesProductsDetailReportViewModel> SalesProductsDetailReportViewModel { get; set; }
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(int id)
         {
             ToastrError = TempData["ToastrError"] as string;
             ToastrSuccess = TempData["ToastrSuccess"] as string;
-            
-            var response = await _report.SalesDetailReport("Bearer " + HttpContext.Session.GetString("userToken"), DateTime.Now);
+
+            var response = await _report.SalesProductsDetailReport("Bearer " + HttpContext.Session.GetString("userToken"), id);
 
             if (response.Message == "Authentication Error")
             {
@@ -45,7 +39,7 @@ namespace WebUI.Pages.Report
 
             if (response.Status)
             {
-                SalesDetailReportViewModel = response.Data;
+                SalesProductsDetailReportViewModel = response.Data;
             }
             else
             {
@@ -54,13 +48,5 @@ namespace WebUI.Pages.Report
 
             return Page();
         }
-
-        public async Task<IActionResult> OnPostListAsync([FromBody] SaleDetailRequestModel saleDetailRequestModel)
-        {
-            var response = await _report.SalesDetailReport("Bearer " + HttpContext.Session.GetString("userToken"), saleDetailRequestModel.Date);
-
-            return new JsonResult(response);
-        }
     }
 }
-

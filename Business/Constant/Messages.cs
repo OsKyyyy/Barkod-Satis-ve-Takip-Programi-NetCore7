@@ -76,8 +76,10 @@ namespace Business.Constant
 
         public static string SaleReportListed = "Satış Raporları Listelendi";
         public static string SaleDetailReportListed = "Satış Detay Raporları Listelendi";
-
-
+        public static string SaleProductsDetailReportListed = "Satış Ürün Detay Raporları Listelendi";
+        public static string SaleDetailReportNotFound = "Satış Detay Raporları Bulunamadı";
+        public static string SalesDeleted = "Satış Silindi, Stoklar Güncellendi";
+        public static string SalesUpdateStock = "Stoklar Güncellendi";
     }
 
 }

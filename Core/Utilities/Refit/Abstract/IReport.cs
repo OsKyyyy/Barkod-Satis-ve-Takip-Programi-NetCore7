@@ -15,6 +15,12 @@ namespace Core.Utilities.Refit.Abstract
         Task<DataResult<List<SalesReportViewModel>>> SalesReport([Header("Authorization")] string token);
 
         [Get("/report/SalesDetailReport")]
-        Task<DataResult<List<SalesDetailReportViewModel>>> SalesDetailReport([Header("Authorization")] string token, DateTime date);               
+        Task<DataResult<List<SalesDetailReportViewModel>>> SalesDetailReport([Header("Authorization")] string token, DateTime date);
+
+        [Get("/report/SalesProductsDetailReport")]
+        Task<DataResult<List<SalesProductsDetailReportViewModel>>> SalesProductsDetailReport([Header("Authorization")] string token, int id);
+
+        [Delete("/report/SalesDelete")]
+        Task<Result> SalesDelete([Header("Authorization")] string token, int id);
     }
 }

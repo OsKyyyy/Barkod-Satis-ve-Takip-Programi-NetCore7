@@ -16,6 +16,16 @@ var KTDatatablesExample = function () {
             "info": false,
             'order': [],
             'pageLength': 10,
+            initComplete: function () {
+                this.api()
+                    .columns()
+                    .every(function () {
+                        $("#chooseStatus").on("change", function () {                            
+                            var val = $(this).val();
+                            "all" === val && (val = ""), datatable.column(4).search(val).draw();
+                        });
+                    });
+            },
             columnDefs: [
                 {
                     targets: 0,
@@ -105,10 +115,33 @@ var KTDatatablesExample = function () {
                     targets: 5,   
                     className: 'text-end',
                     render: function (data, type, row) {
-                        
-                        return "<a class='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1' asp-page='/Category/Edit' asp-route-id='@item.CreateDate'><i class='ki-duotone ki-pencil fs-2'><span class='path1'></span><span class='path2'></span></i></a><a class='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1' asp-page='/Category/Delete' asp-route-id='@item.CreateDate' onclick='Category.DeleteConfirm(this)'><i class='ki-duotone ki-trash fs-2'><span class='path1'></span><span class='path2'></span><span class='path3'></span><span class='path4'></span><span class='path5'></span></i></a>";                        
+                        debugger;
+                        if (row.deleted == "True" || row.deleted == true) {
+                            return "<a class='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1' href='/Report/SalesProductsDetailReport/" + row.id + "'><i class='ki-duotone ki-eye fs-2'><span class='path1'></span><span class='path2'></span><span class='path3'></span></i></a>";                        
+                        }
+                        return "<a class='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1' href='/Report/SalesProductsDetailReport/" + row.id + "'><i class='ki-duotone ki-eye fs-2'><span class='path1'></span><span class='path2'></span><span class='path3'></span></i></a><a class='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1' href = '/Report/SalesDelete/" + row.id +"' onclick='Report.DeleteConfirm(this)'><i class='ki-duotone ki-trash fs-2'><span class='path1'></span><span class='path2'></span><span class='path3'></span><span class='path4'></span><span class='path5'></span></i></a>";                        
                     }
-                }
+                },
+                {
+                    targets: 6,
+                    visible: false,
+                    data: "id",
+                    name: "Id",
+                    render: function (data, type, row) {
+                        
+                        return data;
+                    }
+                },
+                {
+                    targets: 7,
+                    visible: false,
+                    data: "customerId",
+                    name: "CustomerId",
+                    render: function (data, type, row) {
+
+                        return data;
+                    }
+                }  
             ]                     
         });       
     }

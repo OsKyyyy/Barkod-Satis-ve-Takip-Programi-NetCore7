@@ -40,5 +40,46 @@ namespace WebAPI.Controllers
 
             return Ok(list);
         }
+
+
+        [Route("SalesProductsDetailReport")]
+        [HttpGet]
+        public ActionResult SalesProductsDetailReport(int id)
+        {
+            var list = _reportService.SalesProductsDetailReport(id);
+            if (!list.Status)
+            {
+                return BadRequest(list);
+            }
+
+            return Ok(list);
+        }
+
+        [Route("SalesDelete")]
+        [HttpDelete]
+        public ActionResult SalesDelete(int id)
+        {
+            var listById = _reportService.SalesDetailReportById(id);
+            if (!listById.Status)
+            {
+                return BadRequest(listById);
+            }
+
+            var result = _reportService.SalesDelete(id);
+
+            if (result.Status)
+            {
+                var salesProducts = _reportService.SalesProductsDetailReport(id);
+
+                foreach (var item in salesProducts.Data)
+                {
+                    _reportService.UpdateStock(item.ProductBarcode, item.ProductQuantity);
+                }
+
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
     }
 }

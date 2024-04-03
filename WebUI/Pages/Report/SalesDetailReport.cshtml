@@ -7,7 +7,6 @@
 @section _Head
     {
     <link href="~/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
-   @*  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css"> *@
 }
 <form method="post"></form>
 <div class="app-main flex-column flex-row-fluid " id="kt_app_main">
@@ -16,7 +15,7 @@
             <div id="kt_app_toolbar_container" class="app-container  container-xxl d-flex flex-stack ">
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3 ">
                     <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">
-                        Satış Listesi
+                        Satış Detay Listesi
                     </h1>
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                         <li class="breadcrumb-item text-muted">
@@ -38,19 +37,31 @@
                     <div class="card-header align-items-center py-5 gap-2 gap-md-5">
                         <div class="card-title">
                             <div class="d-flex align-items-center position-relative my-1">
-                                <i class="ki-duotone ki-magnifier fs-1 position-absolute ms-4"><span class="path1"></span><span class="path2"></span></i>
+                                <i class="ki-duotone ki-magnifier fs-1 position-absolute ms-4">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>
                                 <input type="text" data-kt-filter="search" class="form-control form-control w-250px ps-14" placeholder="Ara..."/>
-                                    @* <input type="text" class="form-control form-control w-250px ps-14" id="datepicker"> *@
-                                <div class="input-group" id="kt_td_picker_date_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
+                                <div class="input-group" id="kt_td_picker_date_only" data-td-target-input="nearest" data-td-target-toggle="nearest" style="left:10px">
                                     <input id="kt_td_picker_date_only_input" type="text" class="form-control" data-td-target="#kt_td_picker_date_only" />
                                     <span class="input-group-text" data-td-target="#kt_td_picker_date_only" data-td-toggle="datetimepicker">
-                                        <i class="ki-duotone ki-calendar fs-2"><span class="path1"></span><span class="path2"></span></i>
-                                    </span>
+                                        <i class="ki-duotone ki-calendar fs-2">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                        </i>
+                                    </span>                                    
                                 </div>
                             </div>
                             <div id="kt_datatable_example_1_export" class="d-none"></div>
                         </div>
-                        <div class="card-toolbar flex-row-fluid justify-content-end gap-5">                         
+                        <div class="card-toolbar flex-row-fluid justify-content-end gap-5">    
+                            <div class="w-100 mw-150px">
+                                <select class="form-select form-select-solid" id="chooseStatus" data-control="select2" data-hide-search="true" data-placeholder="Status" data-kt-ecommerce-product-filter="status">
+                                    <option value="all">Hepsi</option>
+                                    <option value="Tamamlandı">Tamamlandı</option>
+                                    <option value="İptal Edildi">İptal Edildi</option>
+                                </select>
+                            </div>
                             <button type="button" class="btn btn-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
                                 <i class="ki-duotone ki-exit-down fs-2"><span class="path1"></span><span class="path2"></span></i>
                                 Dışa Aktar
@@ -85,6 +96,8 @@
                                     <th class="min-w-100px">ÖDEME TİPİ</th>
                                     <th class="min-w-100px">DURUM</th>
                                     <th class="min-w-100px text-end">İŞLEMLER</th>
+                                    <th class="min-w-100px text-end">ID</th>
+                                    <th class="min-w-100px text-end">CUSTOMERID</th>
                                 </tr>
                             </thead>
                             
@@ -99,13 +112,13 @@
                                         <td>@item.PaymentType</td>
                                         <td>@item.Deleted</td>
                                         <td>
-                                            <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" asp-page="/Category/Edit" asp-route-id="@item.CreateDate">
+                                            <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" >
                                                 <i class="ki-duotone ki-pencil fs-2">
                                                     <span class="path1"></span>
                                                     <span class="path2"></span>
                                                 </i>
                                             </a>
-                                            <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" asp-page="/Category/Delete" asp-route-id="@item.CreateDate" onclick="Category.DeleteConfirm(this)">
+                                            <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                                 <i class="ki-duotone ki-trash fs-2">
                                                     <span class="path1"></span>
                                                     <span class="path2"></span><span class="path3"></span>
@@ -113,6 +126,8 @@
                                                 </i>
                                             </a>
                                         </td>
+                                        <td>@item.Id</td>
+                                        <td>@item.CustomerId</td>
                                     </tr>
                                 }
                             </tbody> 
@@ -132,87 +147,7 @@
 
 @section _Foot
 {
-    @* <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script> *@
     <script src="~/assets/plugins/custom/datatables/datatables.bundle.js"></script>
-    <script src="~/assets/js/pages/report/saledetailreport.js"></script>
+    <script src="~/assets/js/pages/report/saleDetailReport.js"></script>
     <script src="~/assets/js/pages/report/saleDetailListData.js"></script>
-  @*   <script>
-        $(function () {
-            $("#datepicker").datepicker({
-                dateFormat: 'dd-mm-yy',
-                regional: 'tr'
-            });
-        });
-    </script> *@
-    <script>
-        new tempusDominus.TempusDominus(document.getElementById("kt_td_picker_date_only"), {
-            display: {
-                viewMode: "calendar",
-                components: {
-                    decades: true,
-                    year: true,
-                    month: true,
-                    date: true,
-                    hours: false,
-                    minutes: false,
-                    seconds: false
-                }
-            }
-        });
-    </script>
-    <script>
-        const linkedPicker1Element = document.getElementById("kt_td_picker_date_only");
-
-        linkedPicker1Element.addEventListener(tempusDominus.Namespace.events.change, (e) => {
-            var startDate = e.detail.date;
-            var formattedStartDate = new Date(startDate).toISOString();
-
-            var saleDetailModel = { "Date": formattedStartDate };
-
-            $.ajax({
-                type: "POST",
-                url: "SalesDetailReport?handler=List",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                data: JSON.stringify(saleDetailModel),
-                headers: {
-                    RequestVerificationToken:
-                        $('input:hidden[name="__RequestVerificationToken"]').val()
-                },
-                success: function (response) {
-
-                    $('#kt_datatable_example').DataTable().clear().rows.add(response.data).draw();
-                },
-                error: function (xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        })
-        // $('#kt_td_picker_date_only').on('change', function () {
-        //     debugger;
-        //     var startDate = $(this).val();
-        //     var formattedStartDate = new Date(startDate).toISOString();
-
-        //     var saleDetailModel = { "Date": formattedStartDate };
-
-        //     $.ajax({
-        //         type: "POST",
-        //         url: "SalesDetailReport?handler=List",
-        //         contentType: "application/json; charset=utf-8",
-        //         dataType: "json",
-        //         data: JSON.stringify(saleDetailModel),
-        //         headers: {
-        //             RequestVerificationToken:
-        //                 $('input:hidden[name="__RequestVerificationToken"]').val()
-        //         },
-        //         success: function (response) {                
-
-        //             $('#kt_datatable_example').DataTable().clear().rows.add(response.data).draw();
-        //         },
-        //         error: function (xhr, status, error) {
-        //             console.error(error);
-        //         }
-        //     });
-        // });
-    </script>
 }

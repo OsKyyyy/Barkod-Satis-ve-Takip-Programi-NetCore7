@@ -14,7 +14,7 @@ namespace Business.Abstract
     {
         IResult Add(ProductAddDto product);
         IResult Update(ProductUpdateDto product);
-        IResult UpdateStock(string barcode, int quantity);
+        IResult UpdateStock(string barcode, int quantity);        
         IDataResult<List<ViewModel>> List();
         IResult Delete(int id);
         IDataResult<ViewModel> ListById(int id);

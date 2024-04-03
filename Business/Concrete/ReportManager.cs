@@ -39,6 +39,37 @@ namespace Business.Concrete
             var result = _reportDal.SalesDetailReport(date);
 
             return new SuccessDataResult<List<SalesDetailReportViewModel>>(result, Messages.SaleDetailReportListed);
-        }               
+        }
+
+        public IDataResult<List<SalesProductsDetailReportViewModel>> SalesProductsDetailReport(int id)
+        {
+            var result = _reportDal.SalesProductsDetailReport(id);
+
+            return new SuccessDataResult<List<SalesProductsDetailReportViewModel>>(result, Messages.SaleProductsDetailReportListed);
+        }
+
+        public IDataResult<SalesDetailReportViewModel> SalesDetailReportById(int id)
+        {
+            var result = _reportDal.SalesDetailReportById(id);
+            if (result == null)
+            {
+                return new ErrorDataResult<SalesDetailReportViewModel>(Messages.SaleDetailReportNotFound);
+            }
+
+            return new SuccessDataResult<SalesDetailReportViewModel>(result, Messages.SaleDetailReportListed);
+        }
+
+        public IResult SalesDelete(int id)
+        {
+            _reportDal.SalesDelete(id);
+            return new SuccessResult(Messages.SalesDeleted);
+        }
+
+        public IResult UpdateStock(string barcode, int quantity)
+        {
+            _reportDal.UpdateStock(barcode, quantity);
+
+            return new SuccessResult(Messages.SalesUpdateStock);
+        }
     }
 }

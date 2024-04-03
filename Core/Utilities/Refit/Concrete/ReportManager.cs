@@ -71,6 +71,64 @@ namespace Core.Utilities.Refit.Concrete
 
                 return dataResult;
             }
-        }        
+        }
+
+        public async Task<DataResult<List<SalesProductsDetailReportViewModel>>> SalesProductsDetailReport([Header("Authorization")] string token, int id)
+        {
+            DataResult<List<SalesProductsDetailReportViewModel>> dataResult = new DataResult<List<SalesProductsDetailReportViewModel>>();
+
+            try
+            {
+                dataResult = await myAPI.SalesProductsDetailReport(token, id);
+
+                return dataResult;
+            }
+            catch (ApiException exception)
+            {
+                dynamic response = JsonConvert.DeserializeObject(exception.Content);
+
+                if (response != null && response.Status != null)
+                {
+                    dataResult.Message = response.Message;
+                    dataResult.Status = response.Status;
+
+                    return dataResult;
+                }
+
+                dataResult.Message = "Beklenmedik hata ile karşılaşıldı";
+                dataResult.Status = false;
+
+                return dataResult;
+            }
+        }
+
+        public async Task<Result> SalesDelete([Header("Authorization: Bearer")] string token, int id)
+        {
+            Result dataResult = new Result();
+
+            try
+            {
+                dataResult = await myAPI.SalesDelete(token, id);
+
+                return dataResult;
+            }
+            catch (ApiException exception)
+            {
+                dynamic response = JsonConvert.DeserializeObject(exception.Content);
+
+                if (response != null && response.Status != null)
+                {
+                    dataResult.Message = response.Message;
+                    dataResult.Status = response.Status;
+
+                    return dataResult;
+                }
+
+                dataResult.Message = "Beklenmedik hata ile karşılaşıldı";
+                dataResult.Status = false;
+
+                return dataResult;
+            }
+        }
     }
 }

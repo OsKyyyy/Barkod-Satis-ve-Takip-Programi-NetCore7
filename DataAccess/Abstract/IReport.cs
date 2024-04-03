@@ -13,5 +13,9 @@ namespace DataAccess.Abstract
     {
         List<SalesReportViewModel> SalesReport();
         List<SalesDetailReportViewModel> SalesDetailReport(DateTime date);
+        List<SalesProductsDetailReportViewModel> SalesProductsDetailReport(int id);
+        SalesDetailReportViewModel SalesDetailReportById(int id);
+        void SalesDelete(int id);
+        void UpdateStock(string barcode, int quantity);
     }
 }

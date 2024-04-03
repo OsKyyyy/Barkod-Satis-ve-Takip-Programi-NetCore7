@@ -1,0 +1,321 @@
+﻿@page "{id:int}"
+@using System.Globalization
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@model WebUI.Pages.Report.SalesProductsDetailReportModel
+@{
+    ViewData["Title"] = "Satış Ürün Raporları";
+    Random random = new Random();
+    string[] color = { "success", "danger", "info", "primary", "warning" };
+    int randomColor = random.Next(0, color.Length);
+    decimal grandTotal = 0.00m;
+}
+@section _Head
+{
+    <link href="~/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+}
+<div class="app-main flex-column flex-row-fluid " id="kt_app_main">
+    <div class="d-flex flex-column flex-column-fluid">
+        <div id="kt_app_toolbar" class="app-toolbar  py-3 py-lg-6 mb-10">
+            <div id="kt_app_toolbar_container" class="app-container  container-xxl d-flex flex-stack ">
+                <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3 ">
+                    <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">
+                        Satış Ürün Detay Listesi
+                    </h1>
+                    <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+                        <li class="breadcrumb-item text-muted">
+                            Rapor
+                        </li>
+                        <li class="breadcrumb-item">
+                            <span class="bullet bg-gray-500 w-5px h-2px"></span>
+                        </li>
+                        <li class="breadcrumb-item text-muted">
+                            Satış Raporları
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="kt_app_content" class="app-content  flex-column-fluid ">
+            <div id="kt_app_content_container" class="app-container  container-xxl ">
+                <div class="d-flex flex-column gap-7 gap-lg-10">                    
+                    <div class="d-flex flex-column flex-xl-row gap-7 gap-lg-10">
+                        <div class="card card-flush py-4 flex-row-fluid">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <h2>Sipariş Detayları</h2>
+                                </div>
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="table-responsive">
+                                    <table class="table align-middle table-row-bordered mb-0 fs-6 gy-5 min-w-300px">
+                                        <tbody class="fw-semibold text-gray-600">
+                                            <tr>
+                                                <td class="text-muted">
+                                                    <div class="d-flex align-items-center">
+                                                        <i class="ki-duotone ki-calendar fs-2 me-2">
+                                                            <span class="path1"></span>
+                                                            <span class="path2"></span>
+                                                        </i>
+                                                        Sipariş Tarihi
+                                                    </div>
+                                                </td>
+                                                <td class="fw-bold text-end">
+                                                    @Model.SalesProductsDetailReportViewModel[0].CreateDate
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-muted">
+                                                    <div class="d-flex align-items-center">
+                                                        <i class="ki-duotone ki-wallet fs-2 me-2">
+                                                            <span class="path1"></span>
+                                                            <span class="path2"></span>
+                                                            <span class="path3"></span>
+                                                            <span class="path4"></span>
+                                                        </i>
+                                                        Ödeme Tipi
+                                                    </div>
+                                                </td>
+                                                <td class="fw-bold text-end">
+                                                    @if (Model.SalesProductsDetailReportViewModel[0].PaymentType == 1)
+                                                    {
+                                                        <span>Nakit</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>Kredi Kartı</span>
+                                                    }
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-muted">
+                                                    <div class="d-flex align-items-center">
+                                                        <i class="ki-duotone ki-cheque fs-2 me-2">
+                                                            <span class="path1"></span>
+                                                            <span class="path2"></span>
+                                                            <span class="path3"></span>
+                                                            <span class="path4"></span>
+                                                            <span class="path5"></span>
+                                                            <span class="path6"></span>
+                                                            <span class="path7"></span>
+                                                        </i>
+                                                        Durumu
+                                                    </div>
+                                                </td>
+                                                <td class="fw-bold text-end">
+                                                    @if (Model.SalesProductsDetailReportViewModel[0].Deleted == false)
+                                                    {
+                                                        <div class="badge badge-light-success">Tamamlandı</div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="badge badge-light-danger">İptal Edildi</div>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card card-flush py-4 flex-row-fluid">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <h2>Müşteri Detayları</h2>
+                                </div>
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="table-responsive">
+                                    <table class="table align-middle table-row-bordered mb-0 fs-6 gy-5 min-w-300px">
+                                        <tbody class="fw-semibold text-gray-600">
+                                            <tr>
+                                                <td class="text-muted">
+                                                    <div class="d-flex align-items-center">
+                                                        <i class="ki-duotone ki-profile-circle fs-2 me-2">
+                                                            <span class="path1"></span>
+                                                            <span class="path2"></span>
+                                                            <span class="path3"></span>
+                                                        </i> 
+                                                        Müşteri
+                                                    </div>
+                                                </td>                                                
+                                                <td class="fw-bold text-end">
+                                                    @if (string.IsNullOrEmpty(Model.SalesProductsDetailReportViewModel[0].CustomerName))
+                                                    {
+                                                        <span>-</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="d-flex align-items-center justify-content-end">
+                                                            <div class="symbol symbol-circle symbol-25px overflow-hidden me-3">
+                                                                <a asp-page="/Customer/Movements" asp-route-id="@Model.SalesProductsDetailReportViewModel[0].CustomerId">
+                                                                    <div class="symbol-label fs-3 bg-light-@color[randomColor] text-@color[randomColor]">
+                                                                        @{
+                                                                            string text = Model.SalesProductsDetailReportViewModel[0].CustomerName;
+                                                                            char firstCharUpper = char.ToUpper(text[0]);
+                                                                        }
+                                                                        @firstCharUpper
+                                                                    </div>
+                                                                </a>
+                                                            </div>
+                                                            <a asp-page="/Customer/Movements" asp-route-id="@Model.SalesProductsDetailReportViewModel[0].CustomerId" class="text-gray-600 text-hover-primary fs-5 fw-bold">
+                                                                @Model.SalesProductsDetailReportViewModel[0].CustomerName
+                                                            </a>
+                                                        </div>
+                                                    }                                                    
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-muted">
+                                                    <div class="d-flex align-items-center">
+                                                        <i class="ki-duotone ki-sms fs-2 me-2">
+                                                            <span class="path1"></span>
+                                                            <span class="path2"></span>
+                                                        </i>                                
+                                                        E-Posta
+                                                    </div>
+                                                </td>
+                                                <td class="fw-bold text-end">
+                                                    @if (string.IsNullOrEmpty(Model.SalesProductsDetailReportViewModel[0].CustomerEmail))
+                                                    {
+                                                        <span>-</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        @Model.SalesProductsDetailReportViewModel[0].CustomerEmail
+                                                    }
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-muted">
+                                                    <div class="d-flex align-items-center">
+                                                        <i class="ki-duotone ki-phone fs-2 me-2">
+                                                            <span class="path1"></span>
+                                                            <span class="path2"></span>
+                                                        </i>                                
+                                                        Telefon
+                                                    </div>
+                                                </td>
+                                                <td class="fw-bold text-end">
+                                                    @if (string.IsNullOrEmpty(Model.SalesProductsDetailReportViewModel[0].CustomerPhone))
+                                                    {
+                                                        <span>-</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        @Model.SalesProductsDetailReportViewModel[0].CustomerPhone
+                                                    }
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>            
+                    </div>
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="kt_ecommerce_sales_order_summary" role="tab-panel">
+                            <div class="d-flex flex-column gap-7 gap-lg-10">                                
+
+                                <div class="card card-flush py-4 flex-row-fluid overflow-hidden">
+                                    <div class="card-header">
+                                        <div class="card-title">
+                                            <h2>Sipariş Kalem Detayları</h2>
+                                        </div>
+                                    </div>
+                                    <div class="card-body pt-0">
+                                        <div class="table-responsive">
+                                            <table class="table align-middle table-row-dashed fs-6 gy-5 mb-0">
+                                                <thead>
+                                                    <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+                                                        <th class="min-w-175px">ÜRÜN ADI</th>
+                                                        <th class="min-w-100px text-end">BARKOD</th>
+                                                        <th class="min-w-70px text-end">ADET</th>
+                                                        <th class="min-w-100px text-end">BİRİM FİYATI</th>
+                                                        <th class="min-w-100px text-end">TOPLAM FİYAT</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="fw-semibold text-gray-600">                                                   
+                                                    @foreach (var item in Model.SalesProductsDetailReportViewModel)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                <div class="d-flex align-items-center">
+                                                                    <a asp-page="/Product/Edit" asp-route-id="@item.Id" class="symbol symbol-50px">
+                                                                        <span class="symbol-label" style="background-image:url(@Configuration.GetValue(typeof(string), "ImageUrl")@item.ProductImage);"></span>
+                                                                    </a>
+                                                                    <div class="ms-5">
+                                                                        <a asp-page="/Product/Edit" asp-route-id="@item.Id" class="fw-bold text-gray-600 text-hover-primary">@item.ProductName</a>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="text-end">
+                                                                @item.ProductBarcode
+                                                            </td>
+                                                            <td class="text-end">
+                                                                @item.ProductQuantity
+                                                            </td>
+                                                            <td class="text-end">
+                                                                @item.ProductUnitPrice &#8378;
+                                                            </td>
+                                                            <td class="text-end">
+                                                                @{
+                                                                    var totalPrice = item.ProductQuantity * item.ProductUnitPrice;
+                                                                }
+                                                                @totalPrice &#8378;
+                                                                @{
+                                                                    grandTotal += totalPrice;
+                                                                }
+                                                            </td>
+                                                        </tr>
+                                                    }                                                                                                     
+                                                    <tr>
+                                                        <td colspan="4" class="text-end">
+                                                            Ara Toplam
+                                                        </td>
+                                                        <td class="text-end">
+                                                            @grandTotal &#8378;
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="4" class="text-end">
+                                                            KDV (0%)
+                                                        </td>
+                                                        <td class="text-end">
+                                                            0.00 &#8378;
+                                                        </td>
+                                                    </tr>                                                 
+                                                    <tr>
+                                                        <td colspan="4" class="fs-3 text-gray-900 text-end">
+                                                            Genel Toplam    
+                                                        </td>
+                                                        <td class="text-gray-900 fs-3 fw-bolder text-end">
+                                                            @grandTotal &#8378;
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                     
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="d-none">
+    <input asp-for="ToastrError" />
+</div>
+<div class="d-none">
+    <input asp-for="ToastrSuccess" />
+</div>
+
+@section _Foot
+    {
+    <script src="~/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    <script src="~/assets/js/pages/category/category.js"></script>
+    <script src="~/assets/js/pages/category/listData.js"></script>
+}

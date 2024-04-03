@@ -90,16 +90,19 @@
                                         <td>@item.Piece</td>                                    
                                         <td class="text-end">
                                             <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" asp-page="/Category/Edit" asp-route-id="@item.CreateDate">
-                                                <i class="ki-duotone ki-pencil fs-2">
+                                                <i class="ki-duotone ki-eye fs-2">
                                                     <span class="path1"></span>
                                                     <span class="path2"></span>
+                                                    <span class="path3"></span>
                                                 </i>
                                             </a>
                                             <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" asp-page="/Category/Delete" asp-route-id="@item.CreateDate" onclick="Category.DeleteConfirm(this)">
                                                 <i class="ki-duotone ki-trash fs-2">
                                                     <span class="path1"></span>
-                                                    <span class="path2"></span><span class="path3"></span>
-                                                    <span class="path4"></span><span class="path5"></span>
+                                                    <span class="path2"></span>
+                                                    <span class="path3"></span>
+                                                    <span class="path4"></span>
+                                                    <span class="path5"></span>
                                                 </i>
                                             </a>
                                         </td>
