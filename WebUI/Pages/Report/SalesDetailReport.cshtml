@@ -1,11 +1,11 @@
-﻿@page
+﻿@page "{date:datetime?}"
 @using System.Globalization
 @model WebUI.Pages.Report.SalesDetailReportModel
 @{
     ViewData["Title"] = "Satış Detay Raporları";
 }
 @section _Head
-    {
+{
     <link href="~/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
 }
 <form method="post"></form>

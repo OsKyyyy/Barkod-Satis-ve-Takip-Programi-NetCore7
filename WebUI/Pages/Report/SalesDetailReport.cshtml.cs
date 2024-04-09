@@ -28,10 +28,15 @@ namespace WebUI.Pages.Report
 
         public List<SalesDetailReportViewModel> SalesDetailReportViewModel { get; set; }
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(DateTime? dateTime)
         {
             ToastrError = TempData["ToastrError"] as string;
             ToastrSuccess = TempData["ToastrSuccess"] as string;
+
+            if (dateTime == null)
+            {
+                dateTime = DateTime.Now;
+            }
             
             var response = await _report.SalesDetailReport("Bearer " + HttpContext.Session.GetString("userToken"), DateTime.Now);
 
