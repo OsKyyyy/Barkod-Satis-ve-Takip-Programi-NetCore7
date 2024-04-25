@@ -17,9 +17,6 @@ namespace WebUI.Pages.Report
             _report = report;
         }
 
-        [BindProperty]
-        public DateTime Datee { get; set; }
-
         [ViewData]
         public string? ToastrError { get; set; }
 
@@ -28,17 +25,17 @@ namespace WebUI.Pages.Report
 
         public List<SalesDetailReportViewModel> SalesDetailReportViewModel { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(DateTime? dateTime)
+        public async Task<IActionResult> OnGetAsync(DateTime date)
         {
             ToastrError = TempData["ToastrError"] as string;
             ToastrSuccess = TempData["ToastrSuccess"] as string;
 
-            if (dateTime == null)
+            if (date.Year == 1)
             {
-                dateTime = DateTime.Now;
+                date = DateTime.Now;
             }
-            
-            var response = await _report.SalesDetailReport("Bearer " + HttpContext.Session.GetString("userToken"), DateTime.Now);
+
+            var response = await _report.SalesDetailReport("Bearer " + HttpContext.Session.GetString("userToken"), date);
 
             if (response.Message == "Authentication Error")
             {

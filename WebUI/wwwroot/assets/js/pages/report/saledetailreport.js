@@ -121,7 +121,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "SalesDetailReport?handler=List",
+                url: "/Report/SalesDetailReport?handler=List",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 data: JSON.stringify(saleDetailModel),

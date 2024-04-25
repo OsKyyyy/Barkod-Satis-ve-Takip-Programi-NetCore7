@@ -73,6 +73,7 @@
                                     <th class="min-w-100px">TARİH</th>
                                     <th class="min-w-100px">TOPLAM TUTAR</th>
                                     <th class="min-w-100px">SATIŞ ADEDİ</th>
+                                    <th class="min-w-100px">İPTAL ADEDİ</th>
                                     <th class="min-w-100px text-end">İŞLEMLER</th>
                                 </tr>
                             </thead>
@@ -87,9 +88,10 @@
                                             @s
                                         </td>
                                         <td class="fw-bold text-gray-800">@item.Amount &#8378;</td>
-                                        <td>@item.Piece</td>                                    
-                                        <td class="text-end">
-                                            <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" asp-page="/Report/SalesDetailReport" asp-route-date="@item.CreateDate">
+                                        <td>@item.Piece</td>
+                                        <td>@item.DeletedPiece</td>
+                                        <td class="text-end">                                                                                       
+                                            <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" asp-page="/Report/SalesDetailReport" asp-route-date="@item.CreateDate.ToString("yyyy-MM-dd")">
                                                 <i class="ki-duotone ki-eye fs-2">
                                                     <span class="path1"></span>
                                                     <span class="path2"></span>

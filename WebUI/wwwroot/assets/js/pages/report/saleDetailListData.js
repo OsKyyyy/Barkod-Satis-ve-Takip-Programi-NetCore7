@@ -115,7 +115,6 @@ var KTDatatablesExample = function () {
                     targets: 5,   
                     className: 'text-end',
                     render: function (data, type, row) {
-                        debugger;
                         if (row.deleted == "True" || row.deleted == true) {
                             return "<a class='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1' href='/Report/SalesProductsDetailReport/" + row.id + "'><i class='ki-duotone ki-eye fs-2'><span class='path1'></span><span class='path2'></span><span class='path3'></span></i></a>";                        
                         }

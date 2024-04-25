@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.Intrinsics.Arm;
 using System.Security.Cryptography.X509Certificates;
 using Core.DataAccess.EntityFramework;
 using Core.Entities.Concrete;
@@ -19,25 +20,29 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (var context = new DataBaseContext())
             {
-                var data = context.Sales.GroupBy(s => s.CreateDate.Date).Select(s => new SalesReportViewModel
-                    {
-                        CreateDate = s.Key,
-                        Amount = s.Sum(s => s.Amount),
-                        Piece = s.Count()
-                    }).OrderByDescending(d => d.CreateDate.Date)
-                    .ToList();
+
+                var data = context.Sales
+                .GroupBy(s => s.CreateDate.Date)
+                .Select(s => new SalesReportViewModel
+                {
+                    CreateDate = s.Key,
+                    Amount = s.Where(x => x.Deleted == false).Sum(s => s.Amount),
+                    Piece = s.Count(x => x.Deleted == false),
+                    DeletedPiece = s.Count(x => x.Deleted == true) // Deleted = 1 olan kayıtların sayısını al
+                })
+                .OrderByDescending(d => d.CreateDate.Date)
+                .ToList();
 
                 return data;
             }
         }
-
         public List<SalesDetailReportViewModel> SalesDetailReport(DateTime date)
         {
             using (var context = new DataBaseContext())
             {
                 var data = context.Sales.GroupJoin(
-                    context.Customers, 
-                    s => s.CustomerId, 
+                    context.Customers,
+                    s => s.CustomerId,
                     c => c.Id,
                     (s, c) => new { s, c })
                     .Select(sale =>
@@ -65,33 +70,33 @@ namespace DataAccess.Concrete.EntityFramework
             using (var context = new DataBaseContext())
             {
                 var result = from sp in context.SaleProducts
-                             join sa in context.Sales on sp.SaleId equals sa.Id into salesGroup
-                             from sa in salesGroup.DefaultIfEmpty()
-                             join cu in context.Customers on sa.CustomerId equals cu.Id into customersGroup
-                             from cu in customersGroup.DefaultIfEmpty()
-                             join pr in context.Products on sp.Barcode equals pr.Barcode into productsGroup
-                             from pr in productsGroup.DefaultIfEmpty()
-                             where sa != null && sa.Id == id
-                             select new SalesProductsDetailReportViewModel
-                             {
-                                 Id = sp.Id,
-                                 SaleId = sp.SaleId,
-                                 ProductId = pr.Id,
-                                 ProductImage = pr.Image,
-                                 ProductBarcode = sp.Barcode,
-                                 ProductName = sp.ProductName,
-                                 ProductUnitPrice = sp.ProductUnitPrice,
-                                 ProductQuantity = sp.ProductQuantity,
-                                 Amount = sa.Amount,
-                                 PaymentType = sa.PaymentType,
-                                 CreateDate = sa.CreateDate,
-                                 Deleted = sa.Deleted,
-                                 CustomerId = cu.Id,
-                                 CustomerName = cu.Name,
-                                 CustomerAddress = cu.Address,
-                                 CustomerPhone = cu.Phone,
-                                 CustomerEmail = cu.Email
-                             };
+                                join sa in context.Sales on sp.SaleId equals sa.Id into salesGroup
+                                from sa in salesGroup.DefaultIfEmpty()
+                                join cu in context.Customers on sa.CustomerId equals cu.Id into customersGroup
+                                from cu in customersGroup.DefaultIfEmpty()
+                                join pr in context.Products on sp.Barcode equals pr.Barcode into productsGroup
+                                from pr in productsGroup.DefaultIfEmpty()
+                                where sa != null && sa.Id == id
+                                select new SalesProductsDetailReportViewModel
+                                {
+                                    Id = sp.Id,
+                                    SaleId = sp.SaleId,
+                                    ProductId = pr.Id,
+                                    ProductImage = pr.Image,
+                                    ProductBarcode = sp.Barcode,
+                                    ProductName = sp.ProductName,
+                                    ProductUnitPrice = sp.ProductUnitPrice,
+                                    ProductQuantity = sp.ProductQuantity,
+                                    Amount = sa.Amount,
+                                    PaymentType = sa.PaymentType,
+                                    CreateDate = sa.CreateDate,
+                                    Deleted = sa.Deleted,
+                                    CustomerId = cu.Id,
+                                    CustomerName = cu.Name,
+                                    CustomerAddress = cu.Address,
+                                    CustomerPhone = cu.Phone,
+                                    CustomerEmail = cu.Email
+                                };
 
                 return result.ToList();
             }
@@ -147,7 +152,6 @@ namespace DataAccess.Concrete.EntityFramework
 
                 context.SaveChanges();
             }
-        }
-
+        }         
     }
 }

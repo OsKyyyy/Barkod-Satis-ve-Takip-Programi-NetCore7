@@ -18,6 +18,9 @@ namespace Core.Utilities.Refit.Models.Response.Report
         public Decimal Amount { get; set; }
 
         [JsonProperty("Piece")]
-        public int Piece { get; set; }
+        public int Piece { get; set; } 
+        
+        [JsonProperty("DeletedPiece")]
+        public int DeletedPiece { get; set; }
     }
 }

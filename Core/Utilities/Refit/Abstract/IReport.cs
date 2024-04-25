@@ -22,6 +22,6 @@ namespace Core.Utilities.Refit.Abstract
 
         [Delete("/report/SalesDelete")]
         Task<Result> SalesDelete([Header("Authorization")] string token, int id);
-        Task SalesDetailReport(string v, DateTime? dateTime);
+        //Task SalesDetailReport(string v, DateTime? dateTime);
     }
 }
