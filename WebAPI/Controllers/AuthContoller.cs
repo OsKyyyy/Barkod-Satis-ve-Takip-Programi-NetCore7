@@ -19,8 +19,9 @@ namespace WebAPI.Controllers
         [Route("Login")]
         [HttpPost]
         public ActionResult Login(UserLoginDto userForLoginDto)
-        {
+        {            
             var userToLogin = _authService.Login(userForLoginDto);
+            
             if (!userToLogin.Status)
             {
                 return BadRequest(userToLogin);

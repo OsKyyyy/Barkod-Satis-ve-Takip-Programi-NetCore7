@@ -80,6 +80,12 @@ namespace Business.Constant
         public static string SaleDetailReportNotFound = "Satış Detay Raporları Bulunamadı";
         public static string SalesDeleted = "Satış Silindi, Stoklar Güncellendi";
         public static string SalesUpdateStock = "Stoklar Güncellendi";
+
+        public static string GetLastCustomerWithDebtListed = "Son Alışveriş Müşteri Listelendi";
+        public static string GetLastCustomerWithDebtPaymentListed = "Son Ödeme Yapan Müşteri Listelendi";
+        public static string GetCustomerTotalDebtListed = "Tüm Müşteri Borçları Tutarı Listelendi";
+        public static string GetCustomerDebtListed = "Müşteri Borçları Çoktan Az Olarak Listelendi";
+        public static string GetCustomerNonPayersListed = "Geri Ödemesi Yapmayanlar Listelendi";
     }
 
 }

@@ -3,8 +3,6 @@
     Init: function () {
         Report.ToastrError();
         Report.ToastrSuccess();
-        Report.LoadDatePicker();
-        Report.FilterByDate();
     },
 
     ToastrError: function () {

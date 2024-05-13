@@ -16,18 +16,10 @@ namespace Core.Utilities.Refit.Concrete
 {
     public class UserManager : IUser
     {
-        //private readonly IConfiguration _configuration;
-
-        //public UserManager(IConfiguration configuration)
-        //{
-        //    _configuration = configuration;
-        //}
-
         private IUser myAPI = RestService.For<IUser>("http://localhost:63067/api");
 
         public async Task<DataResult<LoginModel>> Login([Body] LoginRequestModel loginRequest)
         {
-            //var asd = _configuration.GetValue(typeof(string), "ApiUrl");
             DataResult<LoginModel> dataResult = new DataResult<LoginModel>();
 
             try

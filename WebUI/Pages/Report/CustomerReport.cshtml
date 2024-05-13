@@ -1,0 +1,387 @@
+﻿@page
+@using System.Globalization
+@model WebUI.Pages.Report.CustomerReportModel
+@{
+    ViewData["Title"] = "Müşteri Raporları";
+}
+
+<div class="app-main flex-column flex-row-fluid " id="kt_app_main">
+    <div class="d-flex flex-column flex-column-fluid">
+        <div id="kt_app_toolbar" class="app-toolbar  py-3 py-lg-6 mb-10">
+            <div id="kt_app_toolbar_container" class="app-container  container-xxl d-flex flex-stack ">
+                <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3 ">
+                    <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">
+                        Müşteri Raporları
+                    </h1>
+                    <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+                        <li class="breadcrumb-item text-muted">
+                            Rapor
+                        </li>
+                        <li class="breadcrumb-item">
+                            <span class="bullet bg-gray-500 w-5px h-2px"></span>
+                        </li>
+                        <li class="breadcrumb-item text-muted">
+                            Müşteri Raporları
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+       <div id="kt_app_content" class="app-content  flex-column-fluid ">                   
+            <div id="kt_app_content_container" class="app-container  container-xxl ">
+                <div class="row gy-5 g-xl-10">
+                    <div class="col-xxl-4">
+                        <div class="row gx-5 gx-xl-10">
+                            <div class="col-sm-12 mb-xl-10">
+                                <div class="card card-flush flex-row-fluid">
+                                    <div class="card-header">
+                                        <div class="card-title">
+                                            <span class="bullet bullet-dot bg-danger h-10px w-10px translate-middle position-absolute animation-blink" style="top:34px !important;"></span>&nbsp &nbsp <span class="card-label fw-bold text-gray-800">Alışveriş Yapan Son Müşteri</span>
+                                        </div>
+                                    </div>
+                                    <div class="card-body pt-0">
+                                        <div class="table-responsive">
+                                            <table class="table align-middle table-row-bordered mb-0 fs-6 gy-5 min-w-300px">
+                                                <tbody class="fw-semibold text-gray-600">
+                                                    <tr>
+                                                        <td class="text-muted">
+                                                            <div class="d-flex align-items-center">
+                                                                <i class="ki-duotone ki-profile-circle fs-2 me-2">
+                                                                    <span class="path1"></span>
+                                                                    <span class="path2"></span>
+                                                                    <span class="path3"></span>
+                                                                </i>
+                                                                Müşteri
+                                                            </div>
+                                                        </td>
+                                                        <td class="fw-bold text-end">                                                           
+                                                            <div class="d-flex align-items-center justify-content-end">
+                                                                <div class="symbol symbol-circle symbol-25px overflow-hidden me-3">
+                                                                    <a href="#">
+                                                                        <div class="symbol-label fs-3 bg-light-primary text-primary" id="lastCustomerWithDebtFirstLetter"></div>
+                                                                    </a>
+                                                                </div>
+                                                                <a href="#" class="text-gray-600 text-hover-primary fs-5 fw-bold" id="lastCustomerWithDebtFullName"></a>
+                                                            </div>                                                            
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-muted">
+                                                            <div class="d-flex align-items-center">
+                                                                <i class="ki-duotone ki-calendar fs-2 me-2">
+                                                                    <span class="path1"></span>
+                                                                    <span class="path2"></span>
+                                                                </i>
+                                                                Alışveriş Tarihi
+                                                            </div>
+                                                        </td>
+                                                        <td class="fw-bold text-end" id="lastCustomerWithDebtShoppingDate">
+                                                            
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-muted">
+                                                            <div class="d-flex align-items-center">
+                                                                <i class="ki-duotone ki-dollar fs-2 me-2">
+                                                                    <span class="path1"></span>
+                                                                    <span class="path2"></span>
+                                                                    <span class="path3"></span>
+                                                                </i>
+                                                                Alışveriş Tutarı
+                                                            </div>
+                                                        </td>
+                                                        <td class="fw-bold text-end" id="lastCustomerWithDebtShoppingAmount">
+                                                                                                                       
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="text-center pt-10">
+                                                <a class="btn btn-sm btn-light" asp-page="/Report/CustomerShoppingList">
+                                                    Son 1,000 Kaydı Görüntüle
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                               
+                            </div>
+           
+                            <div class="col-sm-12 mb-xl-10">
+                                <div class="card card-flush flex-row-fluid">
+                                    <div class="card-header">
+                                        <div class="card-title">
+                                            <span class="bullet bullet-dot bg-success h-10px w-10px translate-middle position-absolute animation-blink" style="top:34px !important;"></span>&nbsp &nbsp <span class="card-label fw-bold text-gray-800">Ödeme Yapan Son Müşteri</span>
+                                        </div>
+                                    </div>
+                                    <div class="card-body pt-0">
+                                        <div class="table-responsive">
+                                            <table class="table align-middle table-row-bordered mb-0 fs-6 gy-5 min-w-300px">
+                                                <tbody class="fw-semibold text-gray-600">
+                                                    <tr>
+                                                        <td class="text-muted">
+                                                            <div class="d-flex align-items-center">
+                                                                <i class="ki-duotone ki-profile-circle fs-2 me-2">
+                                                                    <span class="path1"></span>
+                                                                    <span class="path2"></span>
+                                                                    <span class="path3"></span>
+                                                                </i>
+                                                                Müşteri
+                                                            </div>
+                                                        </td>
+                                                        <td class="fw-bold text-end">
+                                                            <div class="d-flex align-items-center justify-content-end">
+                                                                <div class="symbol symbol-circle symbol-25px overflow-hidden me-3">
+                                                                    <a href="#">
+                                                                        <div class="symbol-label fs-3 bg-light-primary text-primary" id="lastCustomerWithDebtPaymentFirstLetter"></div>
+                                                                    </a>
+                                                                </div>
+                                                                <a href="#" class="text-gray-600 text-hover-primary fs-5 fw-bold" id="lastCustomerWithDebtPaymentFullName"></a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-muted">
+                                                            <div class="d-flex align-items-center">
+                                                                <i class="ki-duotone ki-calendar fs-2 me-2">
+                                                                    <span class="path1"></span>
+                                                                    <span class="path2"></span>
+                                                                </i>
+                                                                Geri Ödeme Tarihi
+                                                            </div>
+                                                        </td>
+                                                        <td class="fw-bold text-end" id="lastCustomerWithDebtPaymentRefundDate">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-muted">
+                                                            <div class="d-flex align-items-center">
+                                                                <i class="ki-duotone ki-dollar fs-2 me-2">
+                                                                    <span class="path1"></span>
+                                                                    <span class="path2"></span>
+                                                                    <span class="path3"></span>
+                                                                </i>
+                                                                Geri Ödeme Tutarı
+                                                            </div>
+                                                        </td>
+                                                        <td class="fw-bold text-end" id="lastCustomerWithDebtPaymentRefundAmount">
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="text-center pt-10">
+                                                <a class="btn btn-sm btn-light" asp-page="/Report/CustomerRefundList">
+                                                    Son 1,000 Kaydı Görüntüle
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                               
+                    </div>
+    
+                    <div class="col-xxl-4">     
+                        <div class="row gx-5 gx-xl-10">
+                            <div class="col-sm-12 mb-xl-10">
+                                <div class="card card-flush h-xl-100">
+                                    <div class="card-header py-7">
+                                        <div class="m-0">
+                                            <div class="d-flex align-items-center mb-2">
+                                                <span class="fs-2hx fw-bold text-danger me-2 lh-1 ls-n2" id="customerTotalDebt"></span>
+                                            </div>
+
+                                            <span class="fs-6 fw-semibold text-gray-500">Tüm Müşterilerin Toplam Borcu</span>
+                                        </div>
+                                    </div>
+                                    <div class="card-body pt-0">
+                                        <div id="kt_charts_widget_27" class="min-h-auto"></div>
+                                        <div class="text-center pt-10">
+                                            <a class="btn btn-sm btn-light" asp-page="/Report/CustomerTotalDebtList">
+                                                Tümünü Görüntüle
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                                          
+                    </div>
+                   
+                    <div class="col-xxl-4">     
+                        <div class="row gx-5 gx-xl-10">
+                            <div class="col-sm-12 mb-xl-10">
+                                <div class="card card-flush h-xl-100">
+                                    <div class="card-header pt-7 mb-3">
+                                        <h3 class="card-title align-items-start flex-column">
+                                            <span class="card-label fw-bold text-gray-800">Ödeme Yapmayan Müşteriler</span>
+                                            <span class="text-gray-500 mt-1 fw-semibold fs-6">Ödeme Yapılmayan Süre Gün Olarak Gösterilir</span>
+                                        </h3>
+                                     
+                                    </div>
+                                    
+                                    <div class="card-body pt-4">
+
+                                        <div class="d-flex flex-stack">
+                                            <div class="d-flex align-items-center me-5">
+
+                                                <div class="symbol symbol-40px me-4">
+                                                    <div class="d-flex align-items-center justify-content-end">
+                                                        <div class="symbol symbol-circle symbol-25px overflow-hidden me-3">
+                                                            <a href="#">
+                                                                <div class="symbol-label fs-3 bg-light-primary text-primary" id="customerNonPayersFirstLetter_0">-</div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>                                                
+                                                <div class="me-5">
+                                                    <a href="#" class="text-gray-800 fw-bold text-hover-primary fs-6" id="customerNonPayersFullName_0">-</a>
+                                                    <span class="text-gray-500 fw-semibold fs-7 d-block text-start ps-0" id="customerNonPayersTotalDebt_0">-</span>
+                                                </div>
+
+                                            </div>
+                                            
+                                            <div class="text-gray-500 fw-bold fs-7 text-end">
+                                                <span class="text-danger fw-bold fs-6 d-block" id="customerNonPayersDaysSinceLastPayment_0">-</span>
+                                                <span id="customerNonPayersLastPaymentDate_0">-</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="separator separator-dashed my-5"></div>
+
+                                        <div class="d-flex flex-stack">
+                                            <div class="d-flex align-items-center me-5">
+
+                                                <div class="symbol symbol-40px me-4">
+                                                    <div class="d-flex align-items-center justify-content-end">
+                                                        <div class="symbol symbol-circle symbol-25px overflow-hidden me-3">
+                                                            <a href="#">
+                                                                <div class="symbol-label fs-3 bg-light-primary text-primary" id="customerNonPayersFirstLetter_1">-</div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="me-5">
+                                                    <a href="#" class="text-gray-800 fw-bold text-hover-primary fs-6" id="customerNonPayersFullName_1">-</a>
+                                                    <span class="text-gray-500 fw-semibold fs-7 d-block text-start ps-0" id="customerNonPayersTotalDebt_1">-</span>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="text-gray-500 fw-bold fs-7 text-end">
+                                                <span class="text-danger fw-bold fs-6 d-block" id="customerNonPayersDaysSinceLastPayment_1">-</span>
+                                                <span id="customerNonPayersLastPaymentDate_1">-</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="separator separator-dashed my-5"></div>
+
+                                        <div class="d-flex flex-stack">
+                                            <div class="d-flex align-items-center me-5">
+
+                                                <div class="symbol symbol-40px me-4">
+                                                    <div class="d-flex align-items-center justify-content-end">
+                                                        <div class="symbol symbol-circle symbol-25px overflow-hidden me-3">
+                                                            <a href="#">
+                                                                <div class="symbol-label fs-3 bg-light-primary text-primary" id="customerNonPayersFirstLetter_2">-</div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="me-5">
+                                                    <a href="#" class="text-gray-800 fw-bold text-hover-primary fs-6" id="customerNonPayersFullName_2">-</a>
+                                                    <span class="text-gray-500 fw-semibold fs-7 d-block text-start ps-0" id="customerNonPayersTotalDebt_2">-</span>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="text-gray-500 fw-bold fs-7 text-end">
+                                                <span class="text-danger fw-bold fs-6 d-block" id="customerNonPayersDaysSinceLastPayment_2">-</span>
+                                                <span id="customerNonPayersLastPaymentDate_2">-</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="separator separator-dashed my-5"></div>
+
+                                        <div class="d-flex flex-stack">
+                                            <div class="d-flex align-items-center me-5">
+
+                                                <div class="symbol symbol-40px me-4">
+                                                    <div class="d-flex align-items-center justify-content-end">
+                                                        <div class="symbol symbol-circle symbol-25px overflow-hidden me-3">
+                                                            <a href="#">
+                                                                <div class="symbol-label fs-3 bg-light-primary text-primary" id="customerNonPayersFirstLetter_3">-</div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="me-5">
+                                                    <a href="#" class="text-gray-800 fw-bold text-hover-primary fs-6" id="customerNonPayersFullName_3">-</a>
+                                                    <span class="text-gray-500 fw-semibold fs-7 d-block text-start ps-0" id="customerNonPayersTotalDebt_3">-</span>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="text-gray-500 fw-bold fs-7 text-end">
+                                                <span class="text-danger fw-bold fs-6 d-block" id="customerNonPayersDaysSinceLastPayment_3">-</span>
+                                                <span id="customerNonPayersLastPaymentDate_3">-</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="separator separator-dashed my-5"></div>
+
+                                        <div class="d-flex flex-stack">
+                                            <div class="d-flex align-items-center me-5">
+
+                                                <div class="symbol symbol-40px me-4">
+                                                    <div class="d-flex align-items-center justify-content-end">
+                                                        <div class="symbol symbol-circle symbol-25px overflow-hidden me-3">
+                                                            <a href="#">
+                                                                <div class="symbol-label fs-3 bg-light-primary text-primary" id="customerNonPayersFirstLetter_4">-</div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="me-5">
+                                                    <a href="#" class="text-gray-800 fw-bold text-hover-primary fs-6" id="customerNonPayersFullName_4">-</a>
+                                                    <span class="text-gray-500 fw-semibold fs-7 d-block text-start ps-0" id="customerNonPayersTotalDebt_4">-</span>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="text-gray-500 fw-bold fs-7 text-end">
+                                                <span class="text-danger fw-bold fs-6 d-block" id="customerNonPayersDaysSinceLastPayment_4">-</span>
+                                                <span id="customerNonPayersLastPaymentDate_4">-</span>
+                                            </div>
+                                        </div>
+                                      
+                                        <div class="text-center pt-17">
+                                            <a class="btn btn-sm btn-light" asp-page="/Report/CustomerNonPayersList">
+                                                Tümünü Görüntüle
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                                          
+                    </div>
+                </div>  
+            </div>
+        </div>
+
+      </div>
+    </div>
+<div class="d-none">
+    <input asp-for="ToastrError" />
+</div>
+<div class="d-none">
+    <input asp-for="ToastrSuccess" />
+</div>
+
+<form class="form d-flex flex-column flex-lg-row" method="post">
+    <button type="submit" hidden></button>
+</form>
+
+@section _Foot
+{
+    <script src="~/assets/js/pages/report/report.js"></script>
+    <script src="~/assets/js/pages/report/customerRequest.js"></script>    
+}

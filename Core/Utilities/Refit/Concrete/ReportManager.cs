@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Core.Utilities.Refit.Abstract;
 using Core.Utilities.Refit.Models.Response;
 using Core.Utilities.Refit.Models.Response.Report;
+using CustomerMovementViewModel = Core.Utilities.Refit.Models.Response.CustomerMovement.ViewModel;
+using SaleViewModel = Core.Utilities.Refit.Models.Response.Sale.ViewModel;
 using Newtonsoft.Json;
 using Refit;
 
@@ -109,6 +111,151 @@ namespace Core.Utilities.Refit.Concrete
             try
             {
                 dataResult = await myAPI.SalesDelete(token, id);
+
+                return dataResult;
+            }
+            catch (ApiException exception)
+            {
+                dynamic response = JsonConvert.DeserializeObject(exception.Content);
+
+                if (response != null && response.Status != null)
+                {
+                    dataResult.Message = response.Message;
+                    dataResult.Status = response.Status;
+
+                    return dataResult;
+                }
+
+                dataResult.Message = "Beklenmedik hata ile karşılaşıldı";
+                dataResult.Status = false;
+
+                return dataResult;
+            }
+        }
+
+        public async Task<DataResult<List<SaleViewModel>>> GetLastCustomerWithDebt([Header("Authorization: Bearer")] string token)
+        {
+            DataResult<List<SaleViewModel>> dataResult = new DataResult<List<SaleViewModel>>();
+
+            try
+            {
+                dataResult = await myAPI.GetLastCustomerWithDebt(token);
+
+                return dataResult;
+            }
+            catch (ApiException exception)
+            {
+                dynamic response = JsonConvert.DeserializeObject(exception.Content);
+
+                if (response != null && response.Status != null)
+                {
+                    dataResult.Message = response.Message;
+                    dataResult.Status = response.Status;
+
+                    return dataResult;
+                }
+
+                dataResult.Message = "Beklenmedik hata ile karşılaşıldı";
+                dataResult.Status = false;
+
+                return dataResult;
+            }
+        }
+
+        public async Task<DataResult<List<CustomerMovementViewModel>>> GetLastCustomerWithDebtPayment([Header("Authorization: Bearer")] string token)
+        {
+            DataResult<List<CustomerMovementViewModel>> dataResult = new DataResult<List<CustomerMovementViewModel>>();
+
+            try
+            {
+                dataResult = await myAPI.GetLastCustomerWithDebtPayment(token);
+
+                return dataResult;
+            }
+            catch (ApiException exception)
+            {
+                dynamic response = JsonConvert.DeserializeObject(exception.Content);
+
+                if (response != null && response.Status != null)
+                {
+                    dataResult.Message = response.Message;
+                    dataResult.Status = response.Status;
+
+                    return dataResult;
+                }
+
+                dataResult.Message = "Beklenmedik hata ile karşılaşıldı";
+                dataResult.Status = false;
+
+                return dataResult;
+            }
+        }
+
+        public async Task<DataResult<CustomerTotalDebtViewModel>> GetCustomerTotalDebt([Header("Authorization: Bearer")] string token)
+        {
+            DataResult<CustomerTotalDebtViewModel> dataResult = new DataResult<CustomerTotalDebtViewModel>();
+
+            try
+            {
+                dataResult = await myAPI.GetCustomerTotalDebt(token);
+
+                return dataResult;
+            }
+            catch (ApiException exception)
+            {
+                dynamic response = JsonConvert.DeserializeObject(exception.Content);
+
+                if (response != null && response.Status != null)
+                {
+                    dataResult.Message = response.Message;
+                    dataResult.Status = response.Status;
+
+                    return dataResult;
+                }
+
+                dataResult.Message = "Beklenmedik hata ile karşılaşıldı";
+                dataResult.Status = false;
+
+                return dataResult;
+            }
+        }
+
+        public async Task<DataResult<List<CustomerDebtViewModel>>> GetCustomerDebt([Header("Authorization: Bearer")] string token)
+        {
+            DataResult<List<CustomerDebtViewModel>> dataResult = new DataResult<List<CustomerDebtViewModel>>();
+
+            try
+            {
+                dataResult = await myAPI.GetCustomerDebt(token);
+
+                return dataResult;
+            }
+            catch (ApiException exception)
+            {
+                dynamic response = JsonConvert.DeserializeObject(exception.Content);
+
+                if (response != null && response.Status != null)
+                {
+                    dataResult.Message = response.Message;
+                    dataResult.Status = response.Status;
+
+                    return dataResult;
+                }
+
+                dataResult.Message = "Beklenmedik hata ile karşılaşıldı";
+                dataResult.Status = false;
+
+                return dataResult;
+            }
+        }
+
+        public async Task<DataResult<List<CustomerNonPayersViewModel>>> GetCustomerNonPayers([Header("Authorization: Bearer")] string token)
+        {
+            DataResult<List<CustomerNonPayersViewModel>> dataResult = new DataResult<List<CustomerNonPayersViewModel>>();
+
+            try
+            {
+                dataResult = await myAPI.GetCustomerNonPayers(token);
 
                 return dataResult;
             }

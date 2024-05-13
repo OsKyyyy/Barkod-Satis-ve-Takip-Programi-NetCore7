@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Utilities.Refit.Models.Response.Report;
+using SaleViewModel = Core.Utilities.Refit.Models.Response.Sale.ViewModel;
+using CustomerMovementViewModel = Core.Utilities.Refit.Models.Response.CustomerMovement.ViewModel;
 
 namespace DataAccess.Abstract
 {
@@ -17,5 +19,10 @@ namespace DataAccess.Abstract
         SalesDetailReportViewModel SalesDetailReportById(int id);
         void SalesDelete(int id);
         void UpdateStock(string barcode, int quantity);
+        List<SaleViewModel> GetLastCustomerWithDebt();
+        List<CustomerMovementViewModel> GetLastCustomerWithDebtPayment();
+        CustomerTotalDebtViewModel GetCustomerTotalDebt();
+        List<CustomerDebtViewModel> GetCustomerDebt();
+        List<CustomerNonPayersViewModel> GetCustomerNonPayers();
     }
 }

@@ -5,6 +5,8 @@ using System.Security.Cryptography.X509Certificates;
 using Core.DataAccess.EntityFramework;
 using Core.Entities.Concrete;
 using Core.Utilities.Refit.Models.Response.Report;
+using SaleViewModel = Core.Utilities.Refit.Models.Response.Sale.ViewModel;
+using CustomerMovementViewModel = Core.Utilities.Refit.Models.Response.CustomerMovement.ViewModel;
 using DataAccess.Abstract;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -28,7 +30,7 @@ namespace DataAccess.Concrete.EntityFramework
                     CreateDate = s.Key,
                     Amount = s.Where(x => x.Deleted == false).Sum(s => s.Amount),
                     Piece = s.Count(x => x.Deleted == false),
-                    DeletedPiece = s.Count(x => x.Deleted == true) // Deleted = 1 olan kayıtların sayısını al
+                    DeletedPiece = s.Count(x => x.Deleted == true) 
                 })
                 .OrderByDescending(d => d.CreateDate.Date)
                 .ToList();
@@ -36,6 +38,7 @@ namespace DataAccess.Concrete.EntityFramework
                 return data;
             }
         }
+
         public List<SalesDetailReportViewModel> SalesDetailReport(DateTime date)
         {
             using (var context = new DataBaseContext())
@@ -152,6 +155,206 @@ namespace DataAccess.Concrete.EntityFramework
 
                 context.SaveChanges();
             }
-        }         
+        }
+
+        public List<SaleViewModel> GetLastCustomerWithDebt()
+        {
+            using (var context = new DataBaseContext())
+            {
+
+                var result = context.Sales
+                    .Join(context.Customers,
+                    s => s.CustomerId,
+                    c => c.Id, (s, c) => new { s, c })
+                    .Join(context.Users,
+                    su => su.s.CreateUserId,
+                    u => u.Id, (su, u) => new { su, u })
+                    .Where(x => x.su.s.Deleted == false && x.su.s.CustomerId != null)
+                    .Select(l => new SaleViewModel
+                    {
+                        Id = l.su.s.Id,
+                        CustomerId = l.su.c.Id,
+                        CustomerName = l.su.c.Name,
+                        Amount = l.su.s.Amount,
+                        PaymentType = l.su.s.PaymentType,
+                        CreateUserId = l.u.Id,
+                        CreateUserName = l.u.FirstName + " " + l.u.LastName,
+                        CreateDate = l.su.s.CreateDate,
+                        Deleted = l.su.s.Deleted,
+                        
+                    })
+                    .OrderByDescending(x => x.CreateDate)
+                    .Take(1000)
+                    .ToList();
+
+                return result;
+            }
+        }
+
+        public List<CustomerMovementViewModel> GetLastCustomerWithDebtPayment()
+        {
+            using (var context = new DataBaseContext())
+            {
+                var result = context.CustomerMovements
+                    .Join(context.Customers,
+                    s => s.CustomerId,
+                    c => c.Id, (s, c) => new { s, c })
+                    .Join(context.Users,
+                    su => su.s.CreateUserId,
+                    u => u.Id, (su, u) => new { su, u })
+                    .Where(x => x.su.s.Deleted == false && x.su.s.ProcessType == 2)
+                    .Select(l => new CustomerMovementViewModel
+                    {
+                        Id = l.su.s.Id,
+                        CustomerId = l.su.c.Id,
+                        CustomerName = l.su.c.Name,
+                        Amount = l.su.s.Amount,
+                        ProcessType = l.su.s.ProcessType,
+                        Note = l.su.s.Note,
+                        UpdateUserId = l.su.s.Id,
+                        UpdateUserName = l.u.FirstName + " " + l.u.LastName,
+                        UpdateDate = l.su.s.UpdateDate,
+                        CreateDate = l.su.s.CreateDate,
+                        Deleted = l.su.s.Deleted,
+
+                    })
+                    .OrderByDescending(x => x.CreateDate)
+                    .Take(1000)
+                    .ToList();
+
+                return result;
+            }
+        }
+
+        public CustomerTotalDebtViewModel GetCustomerTotalDebt()
+        {
+            using (var context = new DataBaseContext())
+            {
+                var totalDebt = context.CustomerMovements
+                    .Where(cm => cm.Deleted == false)
+                    .Sum(cm => cm.ProcessType != 1 ? cm.Amount : -cm.Amount);
+
+                var result = new CustomerTotalDebtViewModel
+                {
+                    TotalDebt = totalDebt
+                };
+
+                return result;
+            }
+        }
+        
+        public List<CustomerDebtViewModel> GetCustomerDebt()
+        {
+            using (var context = new DataBaseContext())
+            {
+                var data = context.CustomerMovements
+                    .Where(cm => cm.Deleted == false)
+                    .GroupBy(cm => cm.CustomerId)
+                    .Select(group => new
+                    {
+                        CustomerId = group.Key,
+                        TotalDebt = group.Sum(cm => cm.ProcessType != 1 ? -cm.Amount : cm.Amount),
+                        LastPaymentDate = group.Where(cm => cm.ProcessType == 2)
+                                               .Max(cm => cm.CreateDate),
+                        LastPaymentAmount = group.Where(cm => cm.ProcessType == 2)
+                                                 .OrderByDescending(cm => cm.CreateDate)
+                                                 .Select(cm => cm.Amount)
+                                                 .FirstOrDefault()
+                    })
+                    .OrderByDescending(cm => cm.TotalDebt)
+                    .Join(context.Customers,
+                          cm => cm.CustomerId,
+                          c => c.Id,
+                          (cm, c) => new
+                          {
+                              cm,
+                              c.Name,
+                              c.Id,
+                              c.CreateUserId
+                          })
+                    .Join(context.Users,
+                          cmc => cmc.CreateUserId,
+                          u => u.Id,
+                          (cmc, u) => new CustomerDebtViewModel
+                          {
+                              UserId = u.Id,
+                              UserName = u.FirstName + " " + u.LastName,
+                              CustomerId = cmc.Id,
+                              CustomerName = cmc.Name,
+                              TotalDebt = cmc.cm.TotalDebt,
+                              LastPaymentDate = cmc.cm.LastPaymentDate,
+                              LastPaymentAmount = cmc.cm.LastPaymentAmount
+                          })
+                    .ToList();
+
+                return data;
+            }
+        }
+
+        public List<CustomerNonPayersViewModel> GetCustomerNonPayers()
+        {
+            using (var context = new DataBaseContext())
+            {
+                var customerMovementsQuery = context.CustomerMovements
+                    .Where(cm => cm.Deleted == false)
+                    .GroupBy(cm => cm.CustomerId)
+                    .Select(grouped => new
+                    {
+                        CustomerId = grouped.Key,
+                        LastPaymentDate = grouped.Max(cm => cm.CreateDate),
+                        LastPaymentAmount = context.CustomerMovements
+                            .Where(innerCM => innerCM.ProcessType == 2 && innerCM.CustomerId == grouped.Key)
+                            .OrderByDescending(innerCM => innerCM.CreateDate)
+                            .Select(innerCM => innerCM.Amount)
+                            .FirstOrDefault(),
+                        TotalDebt = grouped.Sum(cm => cm.ProcessType != 1 ? -cm.Amount : cm.Amount)
+                    });
+
+                var customersQuery = customerMovementsQuery
+                    .AsEnumerable()
+                    .Select(cm => new
+                    {
+                        cm.CustomerId,
+                        cm.LastPaymentDate,
+                        cm.LastPaymentAmount,
+                        DaysSinceLastPayment = (DateTime.Now - cm.LastPaymentDate).Days,
+                        cm.TotalDebt
+                    })
+                    .Where(result => result.TotalDebt > 0)
+                    .OrderByDescending(result => result.DaysSinceLastPayment)
+                    .Join(context.Customers,
+                        cm => cm.CustomerId,
+                        c => c.Id,
+                        (cm, c) => new
+                        {
+                            cm.CustomerId,
+                            cm.LastPaymentDate,
+                            cm.LastPaymentAmount,
+                            cm.DaysSinceLastPayment,
+                            cm.TotalDebt,
+                            CustomerName = c.Name,
+                            c.CreateUserId
+                        });
+
+                var usersQuery = customersQuery
+                    .Join(context.Users,
+                        c => c.CreateUserId,
+                        u => u.Id,
+                        (c, u) => new CustomerNonPayersViewModel
+                        {
+                            UserId = u.Id,
+                            UserName = u.FirstName + " " + u.LastName,
+                            CustomerId = c.CustomerId,
+                            CustomerName = c.CustomerName,
+                            TotalDebt = c.TotalDebt,
+                            LastPaymentDate = c.LastPaymentDate,
+                            LastPaymentAmount = c.LastPaymentAmount,
+                            DaysSinceLastPayment = c.DaysSinceLastPayment
+                        })
+                    .ToList();
+
+                return usersQuery;
+            }
+        }
     }
 }

@@ -81,5 +81,70 @@ namespace WebAPI.Controllers
 
             return BadRequest(result);
         }
+
+        [Route("GetLastCustomerWithDebt")]
+        [HttpGet]
+        public ActionResult GetLastCustomerWithDebt()
+        {
+            var list = _reportService.GetLastCustomerWithDebt();
+            if (!list.Status)
+            {
+                return BadRequest(list);
+            }
+
+            return Ok(list);
+        }
+
+        [Route("GetLastCustomerWithDebtPayment")]
+        [HttpGet]
+        public ActionResult GetLastCustomerWithDebtPayment()
+        {
+            var list = _reportService.GetLastCustomerWithDebtPayment();
+            if (!list.Status)
+            {
+                return BadRequest(list);
+            }
+
+            return Ok(list);
+        }
+
+        [Route("GetCustomerTotalDebt")]
+        [HttpGet]
+        public ActionResult GetCustomerTotalDebt()
+        {
+            var list = _reportService.GetCustomerTotalDebt();
+            if (!list.Status)
+            {
+                return BadRequest(list);
+            }
+
+            return Ok(list);
+        }
+
+        [Route("GetCustomerDebt")]
+        [HttpGet]
+        public ActionResult GetCustomerDebt()
+        {
+            var list = _reportService.GetCustomerDebt();
+            if (!list.Status)
+            {
+                return BadRequest(list);
+            }
+
+            return Ok(list);
+        }
+
+        [Route("GetCustomerNonPayers")]
+        [HttpGet]
+        public ActionResult GetCustomerNonPayers()
+        {
+            var list = _reportService.GetCustomerNonPayers();
+            if (!list.Status)
+            {
+                return BadRequest(list);
+            }
+
+            return Ok(list);
+        }
     }
 }

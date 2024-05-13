@@ -16,7 +16,7 @@ namespace DataAccess.Concrete.EntityFramework
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=OsKyy;Database=Market;Trusted_Connection=True;TrustServerCertificate=True");
+            optionsBuilder.UseSqlServer(@"Server=OsKyy;Database=Market;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=True;");
         }
 
         public DbSet<User> Users { get; set; }

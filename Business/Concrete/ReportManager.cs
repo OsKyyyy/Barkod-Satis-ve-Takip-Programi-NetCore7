@@ -9,6 +9,8 @@ using Business.Constant;
 using Core.Aspects.Autofac.Validation;
 using Core.Entities.Concrete;
 using Core.Utilities.Refit.Models.Response.Report;
+using SaleViewModel = Core.Utilities.Refit.Models.Response.Sale.ViewModel;
+using CustomerMovementViewModel = Core.Utilities.Refit.Models.Response.CustomerMovement.ViewModel;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
@@ -70,6 +72,41 @@ namespace Business.Concrete
             _reportDal.UpdateStock(barcode, quantity);
 
             return new SuccessResult(Messages.SalesUpdateStock);
+        }
+
+        public IDataResult<List<SaleViewModel>> GetLastCustomerWithDebt()
+        {
+            var result = _reportDal.GetLastCustomerWithDebt();
+
+            return new SuccessDataResult<List<SaleViewModel>>(result, Messages.GetLastCustomerWithDebtListed);
+        }
+
+        public IDataResult<List<CustomerMovementViewModel>> GetLastCustomerWithDebtPayment()
+        {
+            var result = _reportDal.GetLastCustomerWithDebtPayment();
+
+            return new SuccessDataResult<List<CustomerMovementViewModel>>(result, Messages.GetLastCustomerWithDebtPaymentListed);
+        }
+
+        public IDataResult<CustomerTotalDebtViewModel> GetCustomerTotalDebt()
+        {
+            var result = _reportDal.GetCustomerTotalDebt();
+
+            return new SuccessDataResult<CustomerTotalDebtViewModel>(result, Messages.GetCustomerTotalDebtListed);
+        }
+
+        public IDataResult<List<CustomerDebtViewModel>> GetCustomerDebt()
+        {
+            var result = _reportDal.GetCustomerDebt();
+
+            return new SuccessDataResult<List<CustomerDebtViewModel>>(result, Messages.GetCustomerDebtListed);
+        }
+
+        public IDataResult<List<CustomerNonPayersViewModel>> GetCustomerNonPayers()
+        {
+            var result = _reportDal.GetCustomerNonPayers();
+
+            return new SuccessDataResult<List<CustomerNonPayersViewModel>>(result, Messages.GetCustomerNonPayersListed);
         }
     }
 }

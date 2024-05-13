@@ -6,6 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Core.Utilities.Refit.Models.Response;
 using Core.Utilities.Refit.Models.Response.Report;
+using Core.Utilities.Refit.Models.Response.Sale;
+using CustomerMovementViewModel = Core.Utilities.Refit.Models.Response.CustomerMovement.ViewModel;
+using SaleViewModel = Core.Utilities.Refit.Models.Response.Sale.ViewModel;
 
 namespace Core.Utilities.Refit.Abstract
 {
@@ -22,6 +25,20 @@ namespace Core.Utilities.Refit.Abstract
 
         [Delete("/report/SalesDelete")]
         Task<Result> SalesDelete([Header("Authorization")] string token, int id);
-        //Task SalesDetailReport(string v, DateTime? dateTime);
+
+        [Get("/report/GetLastCustomerWithDebt")]
+        Task<DataResult<List<SaleViewModel>>> GetLastCustomerWithDebt([Header("Authorization")] string token);
+
+        [Get("/report/GetLastCustomerWithDebtPayment")]
+        Task<DataResult<List<CustomerMovementViewModel>>> GetLastCustomerWithDebtPayment([Header("Authorization")] string token);
+
+        [Get("/report/GetCustomerTotalDebt")]
+        Task<DataResult<CustomerTotalDebtViewModel>> GetCustomerTotalDebt([Header("Authorization")] string token);
+
+        [Get("/report/GetCustomerDebt")]
+        Task<DataResult<List<CustomerDebtViewModel>>> GetCustomerDebt([Header("Authorization")] string token);
+
+        [Get("/report/GetCustomerNonPayers")]
+        Task<DataResult<List<CustomerNonPayersViewModel>>> GetCustomerNonPayers([Header("Authorization")] string token);
     }
 }
