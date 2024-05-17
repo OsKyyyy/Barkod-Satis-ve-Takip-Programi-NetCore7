@@ -27,5 +27,8 @@ namespace Business.Abstract
         IDataResult<CustomerTotalDebtViewModel> GetCustomerTotalDebt();
         IDataResult<List<CustomerDebtViewModel>> GetCustomerDebt();
         IDataResult<List<CustomerNonPayersViewModel>> GetCustomerNonPayers();
+        IDataResult<CustomerTotalDebtViewModel> GetCustomerThisMonthDebt();
+        IDataResult<CustomerTotalDebtViewModel> GetCustomerPreviousMonthDebt();
+        IDataResult<List<CustomerMonthlyDebtViewModel>> GetCustomerMonthlyDebtOfOneYear();
     }
 }

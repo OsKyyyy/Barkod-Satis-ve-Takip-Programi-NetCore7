@@ -86,6 +86,9 @@ namespace Business.Constant
         public static string GetCustomerTotalDebtListed = "Tüm Müşteri Borçları Tutarı Listelendi";
         public static string GetCustomerDebtListed = "Müşteri Borçları Çoktan Az Olarak Listelendi";
         public static string GetCustomerNonPayersListed = "Geri Ödemesi Yapmayanlar Listelendi";
+        public static string GetCustomerThisMonthDebtListed = "Bu Ayın Tüm Borçları Tutarı Listelendi";
+        public static string GetCustomerPreviousMonthDebtListed = "Bir Önceki Ayın Tüm Borçları Tutarı Listelendi";
+        public static string GetCustomerMonthlyDebtListed = "Müşteri Borçları Aylık Olarak Listelendi";
     }
 
 }

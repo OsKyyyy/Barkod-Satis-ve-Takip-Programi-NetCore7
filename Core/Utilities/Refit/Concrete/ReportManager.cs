@@ -277,5 +277,92 @@ namespace Core.Utilities.Refit.Concrete
                 return dataResult;
             }
         }
+
+        public async Task<DataResult<CustomerTotalDebtViewModel>> GetCustomerThisMonthDebt([Header("Authorization: Bearer")] string token)
+        {
+            DataResult<CustomerTotalDebtViewModel> dataResult = new DataResult<CustomerTotalDebtViewModel>();
+
+            try
+            {
+                dataResult = await myAPI.GetCustomerThisMonthDebt(token);
+
+                return dataResult;
+            }
+            catch (ApiException exception)
+            {
+                dynamic response = JsonConvert.DeserializeObject(exception.Content);
+
+                if (response != null && response.Status != null)
+                {
+                    dataResult.Message = response.Message;
+                    dataResult.Status = response.Status;
+
+                    return dataResult;
+                }
+
+                dataResult.Message = "Beklenmedik hata ile karşılaşıldı";
+                dataResult.Status = false;
+
+                return dataResult;
+            }
+        }
+
+        public async Task<DataResult<CustomerTotalDebtViewModel>> GetCustomerPreviousMonthDebt([Header("Authorization: Bearer")] string token)
+        {
+            DataResult<CustomerTotalDebtViewModel> dataResult = new DataResult<CustomerTotalDebtViewModel>();
+
+            try
+            {
+                dataResult = await myAPI.GetCustomerPreviousMonthDebt(token);
+
+                return dataResult;
+            }
+            catch (ApiException exception)
+            {
+                dynamic response = JsonConvert.DeserializeObject(exception.Content);
+
+                if (response != null && response.Status != null)
+                {
+                    dataResult.Message = response.Message;
+                    dataResult.Status = response.Status;
+
+                    return dataResult;
+                }
+
+                dataResult.Message = "Beklenmedik hata ile karşılaşıldı";
+                dataResult.Status = false;
+
+                return dataResult;
+            }
+        }
+
+        public async Task<DataResult<List<CustomerMonthlyDebtViewModel>>> GetCustomerMonthlyDebtOfOneYear([Header("Authorization: Bearer")] string token)
+        {
+            DataResult<List<CustomerMonthlyDebtViewModel>> dataResult = new DataResult<List<CustomerMonthlyDebtViewModel>>();
+
+            try
+            {
+                dataResult = await myAPI.GetCustomerMonthlyDebtOfOneYear(token);
+
+                return dataResult;
+            }
+            catch (ApiException exception)
+            {
+                dynamic response = JsonConvert.DeserializeObject(exception.Content);
+
+                if (response != null && response.Status != null)
+                {
+                    dataResult.Message = response.Message;
+                    dataResult.Status = response.Status;
+
+                    return dataResult;
+                }
+
+                dataResult.Message = "Beklenmedik hata ile karşılaşıldı";
+                dataResult.Status = false;
+
+                return dataResult;
+            }
+        }
     }
 }

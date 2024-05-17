@@ -40,5 +40,14 @@ namespace Core.Utilities.Refit.Abstract
 
         [Get("/report/GetCustomerNonPayers")]
         Task<DataResult<List<CustomerNonPayersViewModel>>> GetCustomerNonPayers([Header("Authorization")] string token);
+
+        [Get("/report/GetCustomerThisMonthDebt")]
+        Task<DataResult<CustomerTotalDebtViewModel>> GetCustomerThisMonthDebt([Header("Authorization")] string token);
+
+        [Get("/report/GetCustomerPreviousMonthDebt")]
+        Task<DataResult<CustomerTotalDebtViewModel>> GetCustomerPreviousMonthDebt([Header("Authorization")] string token);
+
+        [Get("/report/GetCustomerMonthlyDebtOfOneYear")]
+        Task<DataResult<List<CustomerMonthlyDebtViewModel>>> GetCustomerMonthlyDebtOfOneYear([Header("Authorization")] string token);        
     }
 }

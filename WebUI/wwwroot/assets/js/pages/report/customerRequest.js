@@ -6,6 +6,9 @@
         CustomerRequest.GetCustomerTotalDebt();
         CustomerRequest.GetCustomerDebt();
         CustomerRequest.GetCustomerNonPayers();
+        CustomerRequest.GetCustomerThisMonthDebt();
+        CustomerRequest.GetCustomerPreviousMonthDebt();
+        CustomerRequest.GetCustomerMonthlyDebtOfOneYear();
     },
 
     GetLastCustomerWithDebt: function () {       
@@ -149,28 +152,30 @@
                     $('input:hidden[name="__RequestVerificationToken"]').val()
             },
             success: function (response) {
-                
+
                 if (response.status) {          
 
                     if (response.data.length > 0) {
 
                         var i = 0;
                         $.each(response.data, function () {
-                            debugger;
+
                             if (i < 5) {
 
-                                var lastPaymentDate = new Date(response.data[i].lastPaymentDate);
-                                var formattedLastPaymentDate = new Intl.DateTimeFormat('tr-TR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }).format(lastPaymentDate);
-
+                                if (response.data[i].lastPaymentDate != null) {
+                                    var lastPaymentDate = new Date(response.data[i].lastPaymentDate);
+                                    var formattedLastPaymentDate = new Intl.DateTimeFormat('tr-TR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }).format(lastPaymentDate);
+                                    $("#customerNonPayersLastPaymentDate_" + i).html(formattedLastPaymentDate);                                
+                                }                               
+                                
                                 $("#customerNonPayersFirstLetter_" + i).html(response.data[i].customerName.charAt(0).toUpperCase());
                                 $("#customerNonPayersFirstLetter_" + i).parent().attr("href", "/Customer/Movements/" + response.data[i].customerId);
 
                                 $("#customerNonPayersFullName_" + i).html(response.data[i].customerName);
                                 $("#customerNonPayersFullName_" + i).attr("href", "/Customer/Movements/" + response.data[i].customerId);
 
-                                $("#customerNonPayersTotalDebt_" + i).html("Toplam Borç : " + response.data[i].totalDebt + " &#8378;");
+                                $("#customerNonPayersTotalDebt_" + i).html("Toplam Borç : " + response.data[i].totalDebt.toFixed(2) + " &#8378;");
                                 $("#customerNonPayersDaysSinceLastPayment_" + i).html(response.data[i].daysSinceLastPayment + " Gün");
-                                $("#customerNonPayersLastPaymentDate_" + i).html(formattedLastPaymentDate);                                
                             }
                             else {
                                 return false;
@@ -297,7 +302,7 @@
                         CustomerRequest.GetCustomerTotalDebtChart(newArrayDebt, newArrayName);
                     }
                     else {
-
+                        CustomerRequest.GetCustomerTotalDebtChart([0,0,0,0,0], ["-","-","-","-","-"]);
                     }
                 }
                 if (response.message == "Authentication Error") {
@@ -372,6 +377,223 @@
         };
         t();
     },
+    GetCustomerThisMonthDebt: function () {
+
+        $.ajax({
+            type: "POST",
+            url: "CustomerReport?handler=GetCustomerThisMonthDebt",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(null),
+            headers: {
+                RequestVerificationToken:
+                    $('input:hidden[name="__RequestVerificationToken"]').val()
+            },
+            success: function (response) {
+
+                if (response.status) {
+                    
+                    if (response.data != undefined && response.data != "" && response.data != null) {
+                        $("#customerThisMonthDebt").html((Math.round(response.data.totalDebt * 100) / 100).toFixed(2).replace(".", ","));
+                    }
+                }
+                if (response.message == "Authentication Error") {
+                    window.location.reload();
+                }
+                if (!response.status) {
+
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": true,
+                        "positionClass": "toastr-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    };
+
+                    toastr.error(response.message, "Hata!");
+                }
+            },
+        })
+    },
+    GetCustomerPreviousMonthDebt: function () {
+
+        $.ajax({
+            type: "POST",
+            url: "CustomerReport?handler=GetCustomerPreviousMonthDebt",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(null),
+            headers: {
+                RequestVerificationToken:
+                    $('input:hidden[name="__RequestVerificationToken"]').val()
+            },
+            success: function (response) {
+
+                if (response.status) {
+
+                    if (response.data != undefined && response.data != "" && response.data != null) {
+                        $("#customerPreviousMonthDebt").html((Math.round(response.data.totalDebt * 100) / 100).toFixed(2).replace(".", ","));
+                    }
+                }
+                if (response.message == "Authentication Error") {
+                    window.location.reload();
+                }
+                if (!response.status) {
+
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": true,
+                        "positionClass": "toastr-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    };
+
+                    toastr.error(response.message, "Hata!");
+                }
+            },
+        })
+    },
+    GetCustomerMonthlyDebtOfOneYear: function () {
+
+        $.ajax({
+            type: "POST",
+            url: "CustomerReport?handler=GetCustomerMonthlyDebtOfOneYear",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(null),
+            headers: {
+                RequestVerificationToken:
+                    $('input:hidden[name="__RequestVerificationToken"]').val()
+            },
+            success: function (response) {
+                
+                if (response.status) {
+
+                    const arrayMonths = [""];
+                    const arrayValues = [0];
+
+                    if (response.data.length > 0) {
+                        $.each(response.data, function (key, value) {
+                            
+                            var monthName = CustomerRequest.GenerateMonthName(value.month);
+                            arrayMonths.push(monthName);
+                            arrayValues.push(value.totalDebt);
+                        })
+                        CustomerRequest.GetCustomerMonthlyDebtChart(arrayMonths, arrayValues);
+                    }                       
+                    else {
+                        CustomerRequest.GetCustomerMonthlyDebtChart([0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], ["", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"]);
+                    }
+                }
+                if (response.message == "Authentication Error") {
+                    window.location.reload();
+                }
+                if (!response.status) {
+
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": true,
+                        "positionClass": "toastr-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    };
+
+                    toastr.error(response.message, "Hata!");
+                }
+            },
+        })
+    },
+    GetCustomerMonthlyDebtChart: function (arrayMonths, arrayValues) {
+        var t = function () {
+            var t = document.getElementById("kt_charts_widget_20");
+            if (t) {
+                var a = parseInt(KTUtil.css(t, "height")),
+                    l = KTUtil.getCssVariableValue("--bs-gray-500"),
+                    r = KTUtil.getCssVariableValue("--bs-border-dashed-color"),
+                    o = KTUtil.getCssVariableValue("--bs-danger"),
+                    i = KTUtil.getCssVariableValue("--bs-danger"),
+                    s = {
+                        series: [{ name: "Toplam", data: arrayValues }],
+                        chart: { fontFamily: "inherit", type: "area", height: a, toolbar: { show: !1 } },
+                        plotOptions: {},
+                        legend: { show: !1 },
+                        dataLabels: {
+                            enabled: !1,
+                            formatter: function (e, t) {
+                                e = e.toFixed(2);
+                                return e + " ₺";
+                            },
+                            style: { fontSize: "15px", fontWeight: "600", align: "left" },
+                        },
+                        fill: { type: "gradient", gradient: { shadeIntensity: 1, opacityFrom: 0.4, opacityTo: 0, stops: [0, 80, 100] } },
+                        stroke: { curve: "smooth", show: !0, width: 3, colors: [o] },
+                        xaxis: {
+                            categories: arrayMonths,
+                            axisBorder: { show: !1 },
+                            axisTicks: { show: !1 },
+                            tickAmount: 6,
+
+                            labels: { rotate: 0, rotateAlways: !0, style: { colors: l, fontSize: "12px" } },
+                            crosshairs: { position: "front", stroke: { color: o, width: 1, dashArray: 3 } },
+                            tooltip: { enabled: !0, formatter: void 0, offsetY: 0, style: { fontSize: "12px" } },
+                        },
+                        yaxis: {                            
+                            tickAmount: 6,
+                            labels: {
+                                style: { colors: l, fontSize: "12px" },
+                                formatter: function (e) {
+                                    return e + " ₺";
+                                },
+                            },
+                        },
+                        states: { normal: { filter: { type: "none", value: 0 } }, hover: { filter: { type: "none", value: 0 } }, active: { allowMultipleDataPointsSelection: !1, filter: { type: "none", value: 0 } } },
+                        tooltip: {
+                            style: { fontSize: "12px" },
+                            y: {
+                                formatter: function (e) {
+                                    return e + "₺";
+                                },
+                            },
+                        },
+                        colors: [i],
+                        grid: { borderColor: r, strokeDashArray: 4, yaxis: { lines: { show: !0 } } },
+                        markers: { strokeColor: o, strokeWidth: 3 },
+                    };
+                new ApexCharts(t, s).render();
+            }
+        };
+        t();
+    },
     CreateArrayWithZeros: function (array) {
 
         if (array.length >= 5) {
@@ -401,6 +623,15 @@
 
             return array;
         }
+    },
+    GenerateMonthName: function (monthNumber) {
+
+        const months = [
+            "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
+            "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"
+        ];
+
+        return months[monthNumber - 1];
     }
 }
 $(document).ready(function () {

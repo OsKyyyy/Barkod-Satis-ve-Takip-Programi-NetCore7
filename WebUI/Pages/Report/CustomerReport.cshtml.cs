@@ -70,6 +70,27 @@ namespace WebUI.Pages.Report
 
             return new JsonResult(response);
         }
+
+        public async Task<IActionResult> OnPostGetCustomerThisMonthDebtAsync()
+        {
+            var response = await _report.GetCustomerThisMonthDebt("Bearer " + HttpContext.Session.GetString("userToken"));
+
+            return new JsonResult(response);
+        }
+
+        public async Task<IActionResult> OnPostGetCustomerPreviousMonthDebtAsync()
+        {
+            var response = await _report.GetCustomerPreviousMonthDebt("Bearer " + HttpContext.Session.GetString("userToken"));
+
+            return new JsonResult(response);
+        }
+
+        public async Task<IActionResult> OnPostGetCustomerMonthlyDebtOfOneYearAsync()
+        {
+            var response = await _report.GetCustomerMonthlyDebtOfOneYear("Bearer " + HttpContext.Session.GetString("userToken"));
+
+            return new JsonResult(response);
+        }
     }
 }
 

@@ -107,8 +107,25 @@
                                             </div>
                                         </td>
                                         <td class="text-danger">@item.DaysSinceLastPayment Gün</td>
-                                        <td>@item.LastPaymentDate </td>
-                                        <td>@item.LastPaymentAmount &#8378</td>
+                                        <td>
+                                            @if(item.LastPaymentDate.HasValue){
+                                                <span>@item.LastPaymentDate</span>
+                                            }
+                                            else
+                                            {
+                                                <span>-</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (item.LastPaymentAmount.HasValue)
+                                            {
+                                                <span>@item.LastPaymentAmount &#8378</span>
+                                            }
+                                            else
+                                            {
+                                                <span>-</span>
+                                            }
+                                        </td>
                                         <td>@item.TotalDebt &#8378</td>
                                         <td>
                                             <a asp-page="/Customer/Movements" asp-route-id="@item.CustomerId" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">

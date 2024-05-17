@@ -24,13 +24,16 @@ namespace Core.Utilities.Refit.Models.Response.Report
         public string CustomerName { get; set; }        
 
         [JsonProperty("DaysSinceLastPayment")]
-        public int DaysSinceLastPayment { get; set; }
+        public int? DaysSinceLastPayment { get; set; }
+
+        [JsonProperty("FirstDebtDate")]
+        public DateTime FirstDebtDate { get; set; }
 
         [JsonProperty("LastPaymentDate")]
-        public DateTime LastPaymentDate { get; set; }
+        public DateTime? LastPaymentDate { get; set; }
 
         [JsonProperty("LastPaymentAmount")]
-        public Decimal LastPaymentAmount { get; set; }
+        public Decimal? LastPaymentAmount { get; set; }
 
         [JsonProperty("TotalDebt")]
         public Decimal TotalDebt { get; set; }

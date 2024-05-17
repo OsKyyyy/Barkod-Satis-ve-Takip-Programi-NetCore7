@@ -108,5 +108,26 @@ namespace Business.Concrete
 
             return new SuccessDataResult<List<CustomerNonPayersViewModel>>(result, Messages.GetCustomerNonPayersListed);
         }
+
+        public IDataResult<CustomerTotalDebtViewModel> GetCustomerThisMonthDebt()
+        {
+            var result = _reportDal.GetCustomerThisMonthDebt();
+
+            return new SuccessDataResult<CustomerTotalDebtViewModel>(result, Messages.GetCustomerThisMonthDebtListed);
+        }
+
+        public IDataResult<CustomerTotalDebtViewModel> GetCustomerPreviousMonthDebt()
+        {
+            var result = _reportDal.GetCustomerPreviousMonthDebt();
+
+            return new SuccessDataResult<CustomerTotalDebtViewModel>(result, Messages.GetCustomerPreviousMonthDebtListed);
+        }
+
+        public IDataResult<List<CustomerMonthlyDebtViewModel>> GetCustomerMonthlyDebtOfOneYear()
+        {
+            var result = _reportDal.GetCustomerMonthlyDebtOfOneYear();
+
+            return new SuccessDataResult<List<CustomerMonthlyDebtViewModel>>(result, Messages.GetCustomerMonthlyDebtListed);
+        }        
     }
 }

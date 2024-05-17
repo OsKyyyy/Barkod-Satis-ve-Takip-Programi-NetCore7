@@ -230,7 +230,7 @@
         })
 
     },
-    ComplateSale: function () {
+    ComplateSale: function (complateType) {
         
         var customerId;
         var amount;
@@ -263,7 +263,7 @@
                             $('input:hidden[name="__RequestVerificationToken"]').val()
                     },
                     success: function (response) {
-                        
+
                         if (response.message == "Authentication Error") {
 
                             window.location.reload();
@@ -280,7 +280,7 @@
                             window.location.reload();
                         }
                         if (!response.status) {
-                            
+
                             toastr.options = {
                                 "closeButton": true,
                                 "debug": false,
@@ -305,7 +305,26 @@
                 })
             }
         }
-                
+        else {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": true,
+                "positionClass": "toastr-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            };
+            toastr.error("Satış Yapılacak Ürün Yok", "Hata!");
+        }
     },
     CancelSale: function () {       
 

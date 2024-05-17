@@ -24,5 +24,8 @@ namespace DataAccess.Abstract
         CustomerTotalDebtViewModel GetCustomerTotalDebt();
         List<CustomerDebtViewModel> GetCustomerDebt();
         List<CustomerNonPayersViewModel> GetCustomerNonPayers();
+        CustomerTotalDebtViewModel GetCustomerThisMonthDebt();
+        CustomerTotalDebtViewModel GetCustomerPreviousMonthDebt();
+        List<CustomerMonthlyDebtViewModel> GetCustomerMonthlyDebtOfOneYear();
     }
 }

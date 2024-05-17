@@ -146,5 +146,44 @@ namespace WebAPI.Controllers
 
             return Ok(list);
         }
+
+        [Route("GetCustomerThisMonthDebt")]
+        [HttpGet]
+        public ActionResult GetCustomerThisMonthDebt()
+        {
+            var list = _reportService.GetCustomerThisMonthDebt();
+            if (!list.Status)
+            {
+                return BadRequest(list);
+            }
+
+            return Ok(list);
+        }
+
+        [Route("GetCustomerPreviousMonthDebt")]
+        [HttpGet]
+        public ActionResult GetCustomerPreviousMonthDebt()
+        {
+            var list = _reportService.GetCustomerPreviousMonthDebt();
+            if (!list.Status)
+            {
+                return BadRequest(list);
+            }
+
+            return Ok(list);
+        }
+
+        [Route("GetCustomerMonthlyDebtOfOneYear")]
+        [HttpGet]
+        public ActionResult GetCustomerMonthlyDebtOfOneYear()
+        {
+            var list = _reportService.GetCustomerMonthlyDebtOfOneYear();
+            if (!list.Status)
+            {
+                return BadRequest(list);
+            }
+
+            return Ok(list);
+        }
     }
 }

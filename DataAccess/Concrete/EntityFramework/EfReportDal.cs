@@ -254,11 +254,11 @@ namespace DataAccess.Concrete.EntityFramework
                     {
                         CustomerId = group.Key,
                         TotalDebt = group.Sum(cm => cm.ProcessType != 1 ? -cm.Amount : cm.Amount),
-                        LastPaymentDate = group.Where(cm => cm.ProcessType == 2)
+                        LastPaymentDate = group.Where(cm => cm.ProcessType == 2 && cm.CreateDate != null)
                                                .Max(cm => cm.CreateDate),
-                        LastPaymentAmount = group.Where(cm => cm.ProcessType == 2)
+                        LastPaymentAmount = group.Where(cm => cm.ProcessType == 2 && cm.CreateDate != null)
                                                  .OrderByDescending(cm => cm.CreateDate)
-                                                 .Select(cm => cm.Amount)
+                                                 .Select(cm => (decimal?)cm.Amount)
                                                  .FirstOrDefault()
                     })
                     .OrderByDescending(cm => cm.TotalDebt)
@@ -301,13 +301,21 @@ namespace DataAccess.Concrete.EntityFramework
                     .Select(grouped => new
                     {
                         CustomerId = grouped.Key,
-                        LastPaymentDate = grouped.Max(cm => cm.CreateDate),
+                        FirstDebtDate = context.CustomerMovements
+                            .Where(innerCM => innerCM.ProcessType == 1 && innerCM.CustomerId == grouped.Key)
+                            .OrderBy(innerCM => innerCM.CreateDate)
+                            .Select(innerCM => innerCM.CreateDate)
+                            .FirstOrDefault(),
+                        LastPaymentDate = context.CustomerMovements
+                            .Where(innerCM => innerCM.ProcessType == 2 && innerCM.CustomerId == grouped.Key)
+                            .OrderByDescending(innerCM => innerCM.CreateDate)
+                            .Select(innerCM => (DateTime?)innerCM.CreateDate)
+                            .FirstOrDefault(),
                         LastPaymentAmount = context.CustomerMovements
                             .Where(innerCM => innerCM.ProcessType == 2 && innerCM.CustomerId == grouped.Key)
                             .OrderByDescending(innerCM => innerCM.CreateDate)
-                            .Select(innerCM => innerCM.Amount)
+                            .Select(innerCM => (Decimal?)innerCM.Amount)
                             .FirstOrDefault(),
-                        TotalDebt = grouped.Sum(cm => cm.ProcessType != 1 ? -cm.Amount : cm.Amount)
                     });
 
                 var customersQuery = customerMovementsQuery
@@ -315,45 +323,114 @@ namespace DataAccess.Concrete.EntityFramework
                     .Select(cm => new
                     {
                         cm.CustomerId,
+                        cm.FirstDebtDate,
                         cm.LastPaymentDate,
                         cm.LastPaymentAmount,
-                        DaysSinceLastPayment = (DateTime.Now - cm.LastPaymentDate).Days,
-                        cm.TotalDebt
+                        DaysSinceLastPayment = cm.LastPaymentDate == null ? (DateTime.Now - cm.FirstDebtDate).Days : (DateTime.Now - cm.LastPaymentDate.Value).Days,
+                        TotalDebt = context.CustomerMovements
+                            .Where(innerCM => innerCM.CustomerId == cm.CustomerId && innerCM.Deleted == false)
+                            .Sum(innerCM => innerCM.ProcessType != 1 ? -innerCM.Amount : innerCM.Amount)
                     })
                     .Where(result => result.TotalDebt > 0)
                     .OrderByDescending(result => result.DaysSinceLastPayment)
                     .Join(context.Customers,
-                        cm => cm.CustomerId,
-                        c => c.Id,
-                        (cm, c) => new
-                        {
-                            cm.CustomerId,
-                            cm.LastPaymentDate,
-                            cm.LastPaymentAmount,
-                            cm.DaysSinceLastPayment,
-                            cm.TotalDebt,
-                            CustomerName = c.Name,
-                            c.CreateUserId
-                        });
+                            cm => cm.CustomerId,
+                            c => c.Id,
+                            (cm, c) => new
+                            {
+                                cm,
+                                c.Name,
+                                c.Id,
+                                c.CreateUserId
+                            });
 
                 var usersQuery = customersQuery
                     .Join(context.Users,
-                        c => c.CreateUserId,
-                        u => u.Id,
-                        (c, u) => new CustomerNonPayersViewModel
-                        {
-                            UserId = u.Id,
-                            UserName = u.FirstName + " " + u.LastName,
-                            CustomerId = c.CustomerId,
-                            CustomerName = c.CustomerName,
-                            TotalDebt = c.TotalDebt,
-                            LastPaymentDate = c.LastPaymentDate,
-                            LastPaymentAmount = c.LastPaymentAmount,
-                            DaysSinceLastPayment = c.DaysSinceLastPayment
-                        })
+                            cmc => cmc.CreateUserId,
+                            u => u.Id,
+                            (cmc, u) => new CustomerNonPayersViewModel
+                            {
+                                UserId = u.Id,
+                                UserName = u.FirstName + " " + u.LastName,
+                                CustomerId = cmc.Id,
+                                CustomerName = cmc.Name,
+                                TotalDebt = cmc.cm.TotalDebt,
+                                FirstDebtDate = cmc.cm.FirstDebtDate,
+                                LastPaymentDate = cmc.cm.LastPaymentDate,
+                                LastPaymentAmount = cmc.cm.LastPaymentAmount,
+                                DaysSinceLastPayment = cmc.cm.DaysSinceLastPayment
+                            })
                     .ToList();
 
                 return usersQuery;
+            }
+        }        
+
+        public CustomerTotalDebtViewModel GetCustomerThisMonthDebt()
+        {
+            using (var context = new DataBaseContext())
+            {
+                var totalDebt = context.CustomerMovements
+                    .Where(cm => cm.CreateDate.Month == DateTime.Now.Month && cm.CreateDate.Year == DateTime.Now.Year)
+                    .Sum(cm => cm.ProcessType == 1 ? cm.Amount : 0);
+
+                var result = new CustomerTotalDebtViewModel
+                {
+                    TotalDebt = totalDebt
+                };
+
+                return result;
+            }
+        }
+
+        public CustomerTotalDebtViewModel GetCustomerPreviousMonthDebt()
+        {
+            using (var context = new DataBaseContext())
+            {
+                var now = DateTime.Now;
+
+                var previousMonth = now.AddMonths(-1).Month;
+                var previousYear = now.AddMonths(-1).Year;
+
+                var totalDebt = context.CustomerMovements
+                    .Where(cm => cm.CreateDate.Month == previousMonth && cm.CreateDate.Year == previousYear)
+                    .Sum(cm => cm.ProcessType == 1 ? cm.Amount : 0);
+
+                var result = new CustomerTotalDebtViewModel
+                {
+                    TotalDebt = totalDebt
+                };
+
+                return result;
+            }
+        }
+
+        public List<CustomerMonthlyDebtViewModel> GetCustomerMonthlyDebtOfOneYear()
+        {
+            using (var context = new DataBaseContext())
+            {
+                var now = DateTime.Now;
+                var result = new List<CustomerMonthlyDebtViewModel>();
+
+                for (int i = 0; i < 12; i++)
+                {
+                    var targetDate = now.AddMonths(-i);
+                    var month = targetDate.Month;
+                    var year = targetDate.Year;
+
+                    var totalDebt = context.CustomerMovements
+                        .Where(cm => cm.CreateDate.Month == month && cm.CreateDate.Year == year)
+                        .Sum(cm => cm.ProcessType == 1 ? cm.Amount : 0);
+
+                    result.Add(new CustomerMonthlyDebtViewModel
+                    {
+                        Year = year,
+                        Month = month,
+                        TotalDebt = totalDebt
+                    });
+                }
+
+                return result.OrderBy(r => r.Year).ThenBy(r => r.Month).ToList();
             }
         }
     }

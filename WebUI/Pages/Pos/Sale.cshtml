@@ -301,14 +301,20 @@
                             <div class="card-header pt-5 mb-11">
                                 <h3 class="card-title fw-bold text-gray-800 fs-2qx">KASA</h3>
                                 <div class="d-flex flex-equal gap-1 px-0 mb-1 justify-content-end">
-                                    <button id="complateSale" onclick="Request_.ComplateSale()" class="image-input-wrapper w-50px h-50px" style="background-image: url(https://cdn-icons-png.flaticon.com/128/6785/6785304.png);background-size: contain;border: none;background-color: transparent;"></button>
-                                    <button id="cancelSale" onclick="Request_.CancelSaleConfirm()" class="image-input-wrapper w-50px h-50px" style="background-image: url(https://cdn-icons-png.flaticon.com/128/5974/5974771.png);background-size: contain;border: none;background-color: transparent;"></button>
-                                    <button class="image-input-wrapper w-50px h-50px" style="background-image: url(https://cdn-icons-png.flaticon.com/512/2657/2657138.png);background-size: contain;border: none;background-color: transparent;"></button>
+                                    <button id="complateSale" onclick="Request_.ComplateSale(1)" class="image-input-wrapper w-50px h-50px" style="background-image: url(/assets/media/other/onayla.png);background-size: contain;border: none;background-color: transparent;"></button>
+                                    <button id="cancelSale" onclick="Request_.CancelSaleConfirm()" class="image-input-wrapper w-50px h-50px" style="background-image: url(/assets/media/other/iptal.png);background-size: contain;border: none;background-color: transparent;"></button>
+                                    <button onclick="Request_.ComplateSale(2)" class="image-input-wrapper w-50px h-50px" style="background-image: url(/assets/media/other/kismi-odeme.png);background-size: contain;border: none;background-color: transparent;"></button>
                                 </div>
                             </div>
-                            <div class="card-body pt-0">
-                           
-                                <div class="d-flex flex-stack bg-info rounded-3 p-6 mb-11">
+                            <div class="card-body pt-0">                                   
+                                
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                                    <label class="form-check-label fw-bold" for="flexCheckDefault">
+                                        Fiş Yazdır
+                                    </label>
+                                </div>
+                                <div class="d-flex flex-stack bg-info rounded-3 p-6 mb-11 mt-11">
                                     <div class="fs-6 fw-bold text-white">
                                         <span class="d-block fs-2qx lh-1">Toplam</span>
                                     </div>
@@ -316,7 +322,7 @@
                                         <span class="d-block fs-3qx lh-1" data-kt-pos-element="grant-total" id="caseTotal">@caseTotal &#8378;</span>
                                         <span class="d-none fs-3qx lh-1" data-kt-pos-element="grant-total" id="caseTotal2">@caseTotal2 &#8378;</span>
                                     </div>
-                                </div>
+                                </div>                                
                                 <ul class="nav nav-pills d-flex justify-content-between nav-pills-custom gap-3 mb-6" role="tablist">
                                     <li class="nav-item mb-3 me-0" role="presentation">
                                         <a data-bs-toggle="modal" data-bs-target="#addMoneyNumpad" class="nav-link nav-link-border-solid btn btn-outline btn-flex btn-active-color-primary flex-column flex-stack pt-5 pb-3 page-bg show active" data-bs-toggle="pill" style="width:120px;" aria-selected="true" role="tab">
