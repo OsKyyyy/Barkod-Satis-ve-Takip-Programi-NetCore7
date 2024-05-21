@@ -1,6 +1,7 @@
 using Core.Utilities.Refit.Abstract;
 using Core.Utilities.Refit.Models.Request.Pos;
 using Core.Utilities.Refit.Models.Response.Report;
+using Core.Utilities.Refit.Models.Response.Sale;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -23,7 +24,7 @@ namespace WebUI.Pages.Report
         [ViewData]
         public string? ToastrSuccess { get; set; }
 
-        public List<SalesDetailReportViewModel> SalesDetailReportViewModel { get; set; }
+        public List<ViewModel> SalesDetailReportViewModel { get; set; }
 
         public async Task<IActionResult> OnGetAsync(DateTime date)
         {

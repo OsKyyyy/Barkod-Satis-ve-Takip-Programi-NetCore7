@@ -11,6 +11,7 @@ namespace Entities.Dtos
     public class CustomerMovementAddDto : IDto
     {
         public int CustomerId { get; set; }
+        public int? SaleId { get; set; }
         public string Amount { get; set; }
         public byte ProcessType { get; set; }
         public string? ProductInformation { get; set; }

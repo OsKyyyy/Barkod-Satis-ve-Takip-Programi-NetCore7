@@ -39,6 +39,7 @@ namespace Business.Concrete
             var customerMovement = new CustomerMovement
             {
                 CustomerId = customerMovementAddDto.CustomerId,
+                SaleId = customerMovementAddDto.SaleId,
                 ProcessType = customerMovementAddDto.ProcessType,
                 Amount = decimal.Parse(customerMovementAddDto.Amount, _culture),
                 ProductInformation = customerMovementAddDto.ProductInformation,

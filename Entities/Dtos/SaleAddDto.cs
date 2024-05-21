@@ -14,6 +14,8 @@ namespace Entities.Dtos
         public int? CustomerId { get; set; }
         public string Amount { get; set; }
         public byte PaymentType { get; set; }
+        public string PartialPaymentAmount { get; set; }
+        public byte ComplateType { get; set; }
         public int CreateUserId { get; set; }
     }
 }

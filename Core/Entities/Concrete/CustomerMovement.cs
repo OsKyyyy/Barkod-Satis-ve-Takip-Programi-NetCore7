@@ -10,6 +10,7 @@ namespace Core.Entities.Concrete
     {
         public int Id { get; set; }
         public int CustomerId { get; set; }
+        public int? SaleId { get; set; }
         public byte ProcessType { get; set; }
         public Decimal Amount { get; set; }
         public string? ProductInformation { get; set; }

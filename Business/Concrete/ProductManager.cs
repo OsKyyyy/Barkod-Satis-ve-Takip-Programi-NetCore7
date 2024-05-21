@@ -117,6 +117,13 @@ namespace Business.Concrete
             return new SuccessResult(Messages.ProductsListed);
         }
 
+        public IResult UpdateAddStock(string barcode, int quantity)
+        {
+            _productDal.UpdateAddStock(barcode, quantity);
+
+            return new SuccessResult(Messages.ProductsListed);
+        }
+
         public IResult Delete(int id)
         {
             _productDal.Delete(id);

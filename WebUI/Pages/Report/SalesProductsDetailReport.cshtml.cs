@@ -1,5 +1,5 @@
 using Core.Utilities.Refit.Abstract;
-using Core.Utilities.Refit.Models.Response.Report;
+using Core.Utilities.Refit.Models.Response.SaleProduct;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -20,14 +20,14 @@ namespace WebUI.Pages.Report
         [ViewData]
         public string? ToastrSuccess { get; set; }
 
-        public List<SalesProductsDetailReportViewModel> SalesProductsDetailReportViewModel { get; set; }
+        public List<ViewModel> SalesProductsDetailReportViewModel { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
             ToastrError = TempData["ToastrError"] as string;
             ToastrSuccess = TempData["ToastrSuccess"] as string;
 
-            var response = await _report.SalesProductsDetailReport("Bearer " + HttpContext.Session.GetString("userToken"), id);
+            var response = await _report.SaleProductListById("Bearer " + HttpContext.Session.GetString("userToken"), id);
 
             if (response.Message == "Authentication Error")
             {

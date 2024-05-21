@@ -1,6 +1,6 @@
 using Core.Entities.Concrete;
 using Core.Utilities.Refit.Abstract;
-using Core.Utilities.Refit.Models.Response.Sale;
+using Core.Utilities.Refit.Models.Response.CustomerMovement;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;

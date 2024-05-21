@@ -20,8 +20,8 @@ namespace Core.Utilities.Refit.Models.Response.CustomerMovement
         public string CustomerName { get; set; }
 
         [JsonProperty("ProcessType")]
-        public byte ProcessType { get; set; }
-        
+        public byte ProcessType { get; set; }        
+
         [JsonProperty("Amount")]
         public Decimal Amount { get; set; }
 
@@ -48,5 +48,14 @@ namespace Core.Utilities.Refit.Models.Response.CustomerMovement
 
         [JsonProperty("Deleted")]
         public bool? Deleted { get; set; }
+
+        [JsonProperty("SaleId")]
+        public int? SaleId { get; set; }
+
+        [JsonProperty("PaymentType")]
+        public byte? PaymentType { get; set; }
+
+        [JsonProperty("ComplateType")]
+        public byte? ComplateType { get; set; }
     }
 }

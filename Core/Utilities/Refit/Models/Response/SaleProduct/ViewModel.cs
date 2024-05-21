@@ -7,9 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace Core.Utilities.Refit.Models.Response.Report
+namespace Core.Utilities.Refit.Models.Response.SaleProduct
 {
-    public class SalesProductsDetailReportViewModel
+    public class ViewModel
     {
         [JsonProperty("Id")]
         public int Id { get; set; }
@@ -30,13 +30,13 @@ namespace Core.Utilities.Refit.Models.Response.Report
         public string ProductName { get; set; }
 
         [JsonProperty("ProductUnitPrice")]
-        public Decimal ProductUnitPrice { get; set; }
+        public decimal ProductUnitPrice { get; set; }
 
         [JsonProperty("ProductQuantity")]
-        public int ProductQuantity { get; set; }       
+        public int ProductQuantity { get; set; }
 
         [JsonProperty("Amount")]
-        public Decimal Amount { get; set; }
+        public decimal Amount { get; set; }
 
         [JsonProperty("PaymentType")]
         public byte PaymentType { get; set; }

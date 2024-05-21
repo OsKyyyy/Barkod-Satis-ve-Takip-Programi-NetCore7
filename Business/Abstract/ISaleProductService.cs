@@ -6,14 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Entities.Dtos;
-using Core.Utilities.Refit.Models.Response.Sale;
+using Core.Utilities.Refit.Models.Response.SaleProduct;
 
 namespace Business.Abstract
 {
-    public interface ISaleService
+    public interface ISaleProductService
     {
-        IResult Add(SaleAddDto sale);
-        IResult Delete(int id);
-        IDataResult<ViewModel> ListById(int id);
+        IResult Add(SaleProductAddDto saleProductAddDto);
+        IDataResult<List<ViewModel>> ListById(int id);
     }
 }

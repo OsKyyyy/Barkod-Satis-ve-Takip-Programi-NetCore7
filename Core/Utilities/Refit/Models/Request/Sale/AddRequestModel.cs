@@ -12,7 +12,9 @@ namespace Core.Utilities.Refit.Models.Request.Sale
         public byte Basket { get; set; }
         public int? CustomerId { get; set; }
         public string Amount { get; set; }
+        public string PartialPaymentAmount { get; set; }
         public byte PaymentType { get; set; }
+        public byte ComplateType { get; set; }
         public int? CreateUserId { get; set; }
     }
 }

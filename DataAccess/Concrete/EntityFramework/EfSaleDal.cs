@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Runtime.ConstrainedExecution;
 using Core.Entities;
 using Core.Utilities.Refit.Abstract;
+using Core.Utilities.Refit.Models.Response.Sale;
 
 namespace DataAccess.Concrete.EntityFramework
 {
@@ -34,7 +35,7 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
-        public void Delete(int id)
+        public void HardDelete(int id)
         {
             using (var context = new DataBaseContext())
             {
@@ -44,5 +45,45 @@ namespace DataAccess.Concrete.EntityFramework
                 context.SaveChanges();
             }
         }
+        public void Delete(int id)
+        {
+            using (var context = new DataBaseContext())
+            {
+                var result = context.Sales.FirstOrDefault(u => u.Id == id);
+
+                result.Deleted = true;
+
+                context.SaveChanges();
+            }
+        }
+
+        public ViewModel ListById(int id)
+        {
+            using (var context = new DataBaseContext())
+            {
+                var data = context.Sales.GroupJoin(
+                    context.Customers,
+                    s => s.CustomerId,
+                    c => c.Id,
+                    (s, c) => new { s, c })
+                    .Select(sale =>
+                        new ViewModel
+                        {
+                            Id = sale.s.Id,
+                            CreateDate = sale.s.CreateDate,
+                            CustomerId = sale.c.FirstOrDefault().Id,
+                            CustomerName = sale.c.FirstOrDefault().Name,
+                            Amount = sale.s.Amount,
+                            PaymentType = sale.s.PaymentType,
+                            Deleted = sale.s.Deleted
+                        }
+                    )
+                    .Where(s => s.Id == id)
+                    .FirstOrDefault();
+
+                return data;
+            }
+        }
+
     }
 }

@@ -8,8 +8,10 @@ using Core.Utilities.Refit.Models.Response;
 using Core.Utilities.Refit.Models.Response.Report;
 using CustomerMovementViewModel = Core.Utilities.Refit.Models.Response.CustomerMovement.ViewModel;
 using SaleViewModel = Core.Utilities.Refit.Models.Response.Sale.ViewModel;
+using SaleProductViewModel = Core.Utilities.Refit.Models.Response.SaleProduct.ViewModel;
 using Newtonsoft.Json;
 using Refit;
+using Core.Utilities.Refit.Models.Response.SaleProduct;
 
 namespace Core.Utilities.Refit.Concrete
 {
@@ -46,9 +48,9 @@ namespace Core.Utilities.Refit.Concrete
             }
         }
 
-        public async Task<DataResult<List<SalesDetailReportViewModel>>> SalesDetailReport([Header("Authorization")] string token,DateTime date)
+        public async Task<DataResult<List<SaleViewModel>>> SalesDetailReport([Header("Authorization")] string token,DateTime date)
         {
-            DataResult<List<SalesDetailReportViewModel>> dataResult = new DataResult<List<SalesDetailReportViewModel>>();
+            DataResult<List<SaleViewModel>> dataResult = new DataResult<List<SaleViewModel>>();
 
             try
             {
@@ -75,13 +77,13 @@ namespace Core.Utilities.Refit.Concrete
             }
         }
 
-        public async Task<DataResult<List<SalesProductsDetailReportViewModel>>> SalesProductsDetailReport([Header("Authorization")] string token, int id)
+        public async Task<DataResult<List<SaleProductViewModel>>> SaleProductListById([Header("Authorization")] string token, int id)
         {
-            DataResult<List<SalesProductsDetailReportViewModel>> dataResult = new DataResult<List<SalesProductsDetailReportViewModel>>();
+            DataResult<List<SaleProductViewModel>> dataResult = new DataResult<List<SaleProductViewModel>>();
 
             try
             {
-                dataResult = await myAPI.SalesProductsDetailReport(token, id);
+                dataResult = await myAPI.SaleProductListById(token, id);
 
                 return dataResult;
             }
@@ -133,9 +135,9 @@ namespace Core.Utilities.Refit.Concrete
             }
         }
 
-        public async Task<DataResult<List<SaleViewModel>>> GetLastCustomerWithDebt([Header("Authorization: Bearer")] string token)
+        public async Task<DataResult<List<CustomerMovementViewModel>>> GetLastCustomerWithDebt([Header("Authorization: Bearer")] string token)
         {
-            DataResult<List<SaleViewModel>> dataResult = new DataResult<List<SaleViewModel>>();
+            DataResult<List<CustomerMovementViewModel>> dataResult = new DataResult<List<CustomerMovementViewModel>>();
 
             try
             {

@@ -16,6 +16,7 @@ using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 using Entities.Dtos;
+using Core.Utilities.Refit.Models.Response.SaleProduct;
 
 namespace Business.Concrete
 {
@@ -36,49 +37,18 @@ namespace Business.Concrete
             return new SuccessDataResult<List<SalesReportViewModel>>(result, Messages.SaleReportListed);
         }
 
-        public IDataResult<List<SalesDetailReportViewModel>> SalesDetailReport(DateTime date)
+        public IDataResult<List<SaleViewModel>> SalesDetailReport(DateTime date)
         {
             var result = _reportDal.SalesDetailReport(date);
 
-            return new SuccessDataResult<List<SalesDetailReportViewModel>>(result, Messages.SaleDetailReportListed);
-        }
+            return new SuccessDataResult<List<SaleViewModel>>(result, Messages.SaleDetailReportListed);
+        }               
 
-        public IDataResult<List<SalesProductsDetailReportViewModel>> SalesProductsDetailReport(int id)
-        {
-            var result = _reportDal.SalesProductsDetailReport(id);
-
-            return new SuccessDataResult<List<SalesProductsDetailReportViewModel>>(result, Messages.SaleProductsDetailReportListed);
-        }
-
-        public IDataResult<SalesDetailReportViewModel> SalesDetailReportById(int id)
-        {
-            var result = _reportDal.SalesDetailReportById(id);
-            if (result == null)
-            {
-                return new ErrorDataResult<SalesDetailReportViewModel>(Messages.SaleDetailReportNotFound);
-            }
-
-            return new SuccessDataResult<SalesDetailReportViewModel>(result, Messages.SaleDetailReportListed);
-        }
-
-        public IResult SalesDelete(int id)
-        {
-            _reportDal.SalesDelete(id);
-            return new SuccessResult(Messages.SalesDeleted);
-        }
-
-        public IResult UpdateStock(string barcode, int quantity)
-        {
-            _reportDal.UpdateStock(barcode, quantity);
-
-            return new SuccessResult(Messages.SalesUpdateStock);
-        }
-
-        public IDataResult<List<SaleViewModel>> GetLastCustomerWithDebt()
+        public IDataResult<List<CustomerMovementViewModel>> GetLastCustomerWithDebt()
         {
             var result = _reportDal.GetLastCustomerWithDebt();
 
-            return new SuccessDataResult<List<SaleViewModel>>(result, Messages.GetLastCustomerWithDebtListed);
+            return new SuccessDataResult<List<CustomerMovementViewModel>>(result, Messages.GetLastCustomerWithDebtListed);
         }
 
         public IDataResult<List<CustomerMovementViewModel>> GetLastCustomerWithDebtPayment()

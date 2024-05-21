@@ -17,12 +17,8 @@ namespace Business.Abstract
     public interface IReportService
     {
         IDataResult<List<SalesReportViewModel>> SalesReport();
-        IDataResult<List<SalesDetailReportViewModel>> SalesDetailReport(DateTime date);
-        IDataResult<List<SalesProductsDetailReportViewModel>> SalesProductsDetailReport(int id);
-        IDataResult<SalesDetailReportViewModel> SalesDetailReportById(int id);
-        IResult SalesDelete(int id);
-        IResult UpdateStock(string barcode, int quantity);
-        IDataResult<List<SaleViewModel>> GetLastCustomerWithDebt();
+        IDataResult<List<SaleViewModel>> SalesDetailReport(DateTime date);
+        IDataResult<List<CustomerMovementViewModel>> GetLastCustomerWithDebt();
         IDataResult<List<CustomerMovementViewModel>> GetLastCustomerWithDebtPayment();
         IDataResult<CustomerTotalDebtViewModel> GetCustomerTotalDebt();
         IDataResult<List<CustomerDebtViewModel>> GetCustomerDebt();

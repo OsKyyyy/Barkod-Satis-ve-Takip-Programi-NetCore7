@@ -12,6 +12,7 @@ namespace Core.Entities.Concrete
         public int? CustomerId { get; set; }
         public Decimal Amount { get; set; }
         public byte PaymentType { get; set; }
+        public byte? ComplateType { get; set; }
         public int CreateUserId { get; set; }
         public DateTime CreateDate { get; set; }
         public bool? Deleted { get; set; }

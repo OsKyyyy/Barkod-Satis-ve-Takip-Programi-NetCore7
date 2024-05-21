@@ -10,6 +10,7 @@ using Business.Constant;
 using Business.ValidationRules.FluentValidation.Sale;
 using Core.Aspects.Autofac.Validation;
 using Core.Entities.Concrete;
+using Core.Utilities.Refit.Models.Response.Sale;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
@@ -24,16 +25,18 @@ namespace Business.Concrete
         private readonly CultureInfo _culture = new("en-US");
 
         ISaleDal _saleDal;
+        ISaleProductDal _saleProductDal;
         IPosDal _posDal;
         IProductService _productService;
         ICustomerMovementService _customerMovementService;
 
-        public SaleManager(ISaleDal saleDal, IPosDal posDal, IProductService productService, ICustomerMovementService customerMovementService)
+        public SaleManager(ISaleDal saleDal, IPosDal posDal, IProductService productService, ICustomerMovementService customerMovementService, ISaleProductDal saleProductDal)
         {
             _saleDal = saleDal;
             _posDal = posDal;
             _productService = productService;
             _customerMovementService = customerMovementService;
+            _saleProductDal = saleProductDal;
         }
 
         [ValidationAspect(typeof(AddValidator))]
@@ -82,7 +85,7 @@ namespace Business.Concrete
                             customerMovementProducts += "," + item.ProductName;
                         }
 
-                        var saleProduct = new SaleProduct
+                        var saleProduct = new SaleProductAddDto
                         {
                             SaleId = saleId,
                             Barcode = item.Barcode,
@@ -92,7 +95,7 @@ namespace Business.Concrete
                             Deleted = false
                         };
 
-                        _saleDal.AddProducts(saleProduct);
+                        _saleProductDal.Add(saleProduct);
 
                         if (item.ProductName != "Muhtelif Tutar") // ÜRÜN STOĞUNU ADET KADAR GÜNCELLEME
                         {
@@ -119,7 +122,7 @@ namespace Business.Concrete
                 }
                 else // STOKDA OLMAYAN ÜRÜN VARSA SATIŞI İPTAL ET
                 {
-                    _saleDal.Delete(saleId);
+                    _saleDal.HardDelete(saleId);
                     return new ErrorResult(Messages.ProductOutOfStock);
                 }
             }
@@ -129,6 +132,23 @@ namespace Business.Concrete
             }
 
             return new SuccessResult(Messages.SaleAdded);
+        }
+
+        public IResult Delete(int id)
+        {
+            _saleDal.Delete(id);
+            return new SuccessResult(Messages.SalesDeleted);
+        }
+
+        public IDataResult<ViewModel> ListById(int id)
+        {
+            var result = _saleDal.ListById(id);
+            if (result == null)
+            {
+                return new ErrorDataResult<ViewModel>(Messages.SaleDetailReportNotFound);
+            }
+
+            return new SuccessDataResult<ViewModel>(result, Messages.SaleDetailReportListed);
         }
     }
 }

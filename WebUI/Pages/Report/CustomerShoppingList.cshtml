@@ -77,6 +77,7 @@
                                     <th class="min-w-200px">MÜŞTERİ</th>
                                     <th class="min-w-100px">TOPLAM TUTAR</th>
                                     <th class="min-w-100px">ÖDEME TİPİ</th>
+                                    <th class="min-w-100px">SİPARİŞ TİPİ</th>
                                     <th class="min-w-100px">İŞLEMLER</th>                                   
                                 </tr>
                             </thead>
@@ -107,22 +108,48 @@
                                         </td>
                                         <td>@item.Amount &#8378</td>
                                         <td>
-                                            @if(item.PaymentType == 1){
-                                                <span>Nakit</span>
+                                            @if(item.PaymentType.HasValue){
+                                                if (item.PaymentType == 1)
+                                                {
+                                                    <span>Nakit</span>
+                                                }
+                                                else
+                                                {
+                                                    <span>Kredi Kartı</span>
+                                                }
                                             }
                                             else
                                             {
-                                                <span>Kredi Kartı</span>
+                                                <span>-</span>
                                             }
                                         </td>
                                         <td>
-                                            <a asp-page="/Report/SalesProductsDetailReport" asp-route-id="@item.Id" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
-                                                <i class="ki-duotone ki-eye fs-2">
-                                                    <span class="path1"></span>
-                                                    <span class="path2"></span>
-                                                    <span class="path3"></span>
-                                                </i>
-                                            </a>                                            
+                                            @if (item.ComplateType.HasValue)
+                                            {
+                                                if (item.ComplateType == 1)
+                                                {
+                                                    <span>Tam Ödeme</span>
+                                                }
+                                                else
+                                                {
+                                                    <span>Kısımi Ödeme</span>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <span>-</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            @if(item.SaleId.HasValue){
+                                                <a asp-page="/Report/SalesProductsDetailReport" asp-route-id="@item.SaleId" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                                    <i class="ki-duotone ki-eye fs-2">
+                                                        <span class="path1"></span>
+                                                        <span class="path2"></span>
+                                                        <span class="path3"></span>
+                                                    </i>
+                                                </a>
+                                            }                                                                             
                                         </td>                                        
                                     </tr>
                                 }

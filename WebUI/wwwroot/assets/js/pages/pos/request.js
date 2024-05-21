@@ -231,11 +231,12 @@
 
     },
     ComplateSale: function (complateType) {
-        
+        debugger;
         var customerId;
         var amount;
+        var partialPaymentAmount;
         var paymentType = parseInt($('input[name="paymentType"]:checked').val());
-        var basket = localStorage.getItem("basket");
+        var basket = localStorage.getItem("basket");         
 
         if (basket == 1) {
             customerId = parseInt(localStorage.getItem("customerId"));
@@ -246,11 +247,154 @@
             amount = $("#caseTotal2").html().split(" ")[0].replace(",", ".");
         }
 
+        if (complateType == 2) {
+
+            if (!Number.isNaN(customerId)) {
+
+                if (basket == 1) {
+
+                    if ($("#receivedMoneyNumpadSpan").html().split(" ")[0].trim() != "0") {
+
+                        if ($("#caseTotal").html().split(" ")[0].replace(",", ".") > $("#receivedMoneyNumpadSpan").html().split(" ")[0].trim().replace(",", ".")) {
+
+                            var receivedMoney = $("#receivedMoneyNumpadSpan").html().split(" ")[0].trim().replace(",", ".");
+                            partialPaymentAmount = ($("#caseTotal").html().split(" ")[0].replace(",", ".") - receivedMoney).toFixed(2);
+                        }
+                        else {
+
+                            toastr.options = {
+                                "closeButton": true,
+                                "debug": false,
+                                "newestOnTop": false,
+                                "progressBar": true,
+                                "positionClass": "toastr-top-right",
+                                "preventDuplicates": false,
+                                "onclick": null,
+                                "showDuration": "300",
+                                "hideDuration": "1000",
+                                "timeOut": "5000",
+                                "extendedTimeOut": "1000",
+                                "showEasing": "swing",
+                                "hideEasing": "linear",
+                                "showMethod": "fadeIn",
+                                "hideMethod": "fadeOut"
+                            };
+
+                            toastr.error("Kısmi Ödeme Yaparken Alınan Para Toplam Tutardan Fazla Olamaz", "Hata!");
+                            return;
+                        }                       
+                    }
+                    else {
+
+                        toastr.options = {
+                            "closeButton": true,
+                            "debug": false,
+                            "newestOnTop": false,
+                            "progressBar": true,
+                            "positionClass": "toastr-top-right",
+                            "preventDuplicates": false,
+                            "onclick": null,
+                            "showDuration": "300",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        };
+
+                        toastr.error("Lütfen Alınan Para Alanını Doldurun", "Hata!");
+                        return;
+                    }
+                }
+                else {
+
+                    if ($("#receivedMoneyNumpadSpan2").html().split(" ")[0].trim() != "0") {
+
+                        if ($("#caseTotal2").html().split(" ")[0].replace(",", ".") > $("#receivedMoneyNumpadSpan2").html().split(" ")[0].trim().replace(",", ".")) {
+
+                            var receivedMoney = $("#receivedMoneyNumpadSpan2").html().split(" ")[0].trim().replace(",", ".");
+                            partialPaymentAmount = ($("#caseTotal2").html().split(" ")[0].replace(",", ".") - receivedMoney).toFixed(2);
+                        }
+                        else {
+
+                            toastr.options = {
+                                "closeButton": true,
+                                "debug": false,
+                                "newestOnTop": false,
+                                "progressBar": true,
+                                "positionClass": "toastr-top-right",
+                                "preventDuplicates": false,
+                                "onclick": null,
+                                "showDuration": "300",
+                                "hideDuration": "1000",
+                                "timeOut": "5000",
+                                "extendedTimeOut": "1000",
+                                "showEasing": "swing",
+                                "hideEasing": "linear",
+                                "showMethod": "fadeIn",
+                                "hideMethod": "fadeOut"
+                            };
+
+                            toastr.error("Kısmi Ödeme Yaparken Alınan Para Toplam Tutardan Fazla Olamaz", "Hata!");
+                            return;
+                        }                                          
+                    }
+                    else {
+
+                        toastr.options = {
+                            "closeButton": true,
+                            "debug": false,
+                            "newestOnTop": false,
+                            "progressBar": true,
+                            "positionClass": "toastr-top-right",
+                            "preventDuplicates": false,
+                            "onclick": null,
+                            "showDuration": "300",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        };
+
+                        toastr.error("Lütfen Alınan Para Alanını Doldurun", "Hata!");
+                        return;
+                    }
+                }
+            }
+            else {
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": true,
+                    "positionClass": "toastr-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                };
+
+                toastr.error("Parçalı Ödeme Yapabilmek İçin Müşteri Seçimi Yapmalısınız", "Hata!");
+                return;
+            }
+        }
+
         if (amount > 1) {
 
             if (paymentType == 1) { // NAKİT ÖDEME YÖNETİMİ
 
-                var saleModel = { "Basket": basket, "CustomerId": customerId, "Amount": amount, "PaymentType": paymentType };
+                var saleModel = { "Basket": basket, "CustomerId": customerId, "Amount": amount, "PaymentType": paymentType, "ComplateType": parseInt(complateType), "PartialPaymentAmount": partialPaymentAmount };
 
                 $.ajax({
                     type: "POST",

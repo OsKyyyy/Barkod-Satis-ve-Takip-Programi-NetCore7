@@ -9,6 +9,8 @@ using Core.Utilities.Refit.Models.Response.Report;
 using Core.Utilities.Refit.Models.Response.Sale;
 using CustomerMovementViewModel = Core.Utilities.Refit.Models.Response.CustomerMovement.ViewModel;
 using SaleViewModel = Core.Utilities.Refit.Models.Response.Sale.ViewModel;
+using SaleProductViewModel = Core.Utilities.Refit.Models.Response.SaleProduct.ViewModel;
+using Core.Utilities.Refit.Models.Response.SaleProduct;
 
 namespace Core.Utilities.Refit.Abstract
 {
@@ -18,16 +20,16 @@ namespace Core.Utilities.Refit.Abstract
         Task<DataResult<List<SalesReportViewModel>>> SalesReport([Header("Authorization")] string token);
 
         [Get("/report/SalesDetailReport")]
-        Task<DataResult<List<SalesDetailReportViewModel>>> SalesDetailReport([Header("Authorization")] string token, DateTime date);
+        Task<DataResult<List<SaleViewModel>>> SalesDetailReport([Header("Authorization")] string token, DateTime date);
 
-        [Get("/report/SalesProductsDetailReport")]
-        Task<DataResult<List<SalesProductsDetailReportViewModel>>> SalesProductsDetailReport([Header("Authorization")] string token, int id);
+        [Get("/saleProduct/ListById")]
+        Task<DataResult<List<SaleProductViewModel>>> SaleProductListById([Header("Authorization")] string token, int id);
 
         [Delete("/report/SalesDelete")]
         Task<Result> SalesDelete([Header("Authorization")] string token, int id);
 
         [Get("/report/GetLastCustomerWithDebt")]
-        Task<DataResult<List<SaleViewModel>>> GetLastCustomerWithDebt([Header("Authorization")] string token);
+        Task<DataResult<List<CustomerMovementViewModel>>> GetLastCustomerWithDebt([Header("Authorization")] string token);
 
         [Get("/report/GetLastCustomerWithDebtPayment")]
         Task<DataResult<List<CustomerMovementViewModel>>> GetLastCustomerWithDebtPayment([Header("Authorization")] string token);

@@ -64,6 +64,18 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
+        public void UpdateAddStock(string barcode, int quantity)
+        {
+            using (var context = new DataBaseContext())
+            {
+                var result = context.Products.FirstOrDefault(x => x.Barcode == barcode);
+
+                result.Stock += quantity;
+
+                context.SaveChanges();
+            }
+        }
+
         public void Delete(int id)
         {
             using (var context = new DataBaseContext())
