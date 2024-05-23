@@ -81,6 +81,12 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CustomerMovementDeleted);
         }
 
+        public IResult DeleteBySaleId(int id)
+        {
+            _customerMovementDal.DeleteBySaleId(id);
+            return new SuccessResult(Messages.CustomerMovementDeleted);
+        }
+
         public IDataResult<ViewModel> ListById(int id)
         {
             var result = _customerMovementDal.ListById(id);

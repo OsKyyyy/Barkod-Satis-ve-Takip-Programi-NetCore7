@@ -47,6 +47,7 @@ namespace Business.Concrete
                 CustomerId = saleAddDto.CustomerId,
                 Amount = decimal.Parse(saleAddDto.Amount,_culture),
                 PaymentType = saleAddDto.PaymentType,
+                ComplateType = saleAddDto.ComplateType,
                 CreateUserId = saleAddDto.CreateUserId,
                 CreateDate = DateTime.Now,
                 Deleted = false
@@ -85,7 +86,7 @@ namespace Business.Concrete
                             customerMovementProducts += "," + item.ProductName;
                         }
 
-                        var saleProduct = new SaleProductAddDto
+                        var saleProduct = new SaleProduct
                         {
                             SaleId = saleId,
                             Barcode = item.Barcode,
@@ -108,12 +109,19 @@ namespace Business.Concrete
                         CustomerMovementAddDto customerMovementAddDto = new CustomerMovementAddDto();
 
                         customerMovementAddDto.CustomerId = (int)saleAddDto.CustomerId;
+                        customerMovementAddDto.SaleId = saleId;
                         customerMovementAddDto.Amount = saleAddDto.Amount;
                         customerMovementAddDto.ProcessType = 1;
                         customerMovementAddDto.ProductInformation = customerMovementProducts;
                         customerMovementAddDto.Note = "Bu hareket barkod satış sisteminden yapılan sipariş ile eklenmiştir.";
                         customerMovementAddDto.Status = false;
-                        customerMovementAddDto.CreateUserId = saleAddDto.CreateUserId;                        
+                        customerMovementAddDto.CreateUserId = saleAddDto.CreateUserId;
+
+                        if (saleAddDto.ComplateType == 2)
+                        {
+                            customerMovementAddDto.Amount = saleAddDto.PartialPaymentAmount;
+                            customerMovementAddDto.Note = "Bu hareket Kısmi Ödeme yapılarak barkod satış sisteminden eklenmiştir. Toplam Tutar : " + saleAddDto.Amount;
+                        }
 
                         _customerMovementService.Add(customerMovementAddDto);
                     }

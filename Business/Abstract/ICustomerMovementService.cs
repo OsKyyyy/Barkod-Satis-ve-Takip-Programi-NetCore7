@@ -16,6 +16,7 @@ namespace Business.Abstract
         IResult Update(CustomerMovementUpdateDto customerMovement);
         IDataResult<List<ViewModel>> ListByCustomerId(int id);
         IResult Delete(int id);
+        IResult DeleteBySaleId(int id);
         IDataResult<ViewModel> ListById(int id);
     }
 }

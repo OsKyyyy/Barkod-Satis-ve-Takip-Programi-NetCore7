@@ -2,20 +2,20 @@ using Core.Utilities.Refit.Abstract;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace WebUI.Pages.Report
+namespace WebUI.Pages.Sale
 {
-    public class SalesDeleteModel : PageModel
+    public class DeleteModel : PageModel
     {
-        private readonly IReport _report;
+        private readonly ISale _sale;
 
-        public SalesDeleteModel(IReport report)
+        public DeleteModel(ISale sale)
         {
-            _report = report;
+            _sale = sale;
         }
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            var response = await _report.SalesDelete("Bearer " + HttpContext.Session.GetString("userToken"), id);
+            var response = await _sale.Delete("Bearer " + HttpContext.Session.GetString("userToken"), id);
 
             if (response.Message == "Authentication Error")
             {
@@ -35,7 +35,7 @@ namespace WebUI.Pages.Report
                 TempData["ToastrError"] = response.Message;
             }
 
-            return RedirectToPage("SalesDetailReport");
+            return RedirectToPage("/Report/SalesDetailReport");
         }
     }
 }

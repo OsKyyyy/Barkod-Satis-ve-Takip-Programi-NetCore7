@@ -13,5 +13,8 @@ namespace Core.Utilities.Refit.Abstract
     {
         [Post("/sale/Add")]
         Task<Result> Add([Header("Authorization")] string token, [Body] AddRequestModel addRequestModel);
+
+        [Delete("/sale/Delete")]
+        Task<Result> Delete([Header("Authorization")] string token, int id);
     }
 }

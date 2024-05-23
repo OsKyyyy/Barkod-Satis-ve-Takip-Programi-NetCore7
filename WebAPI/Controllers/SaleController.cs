@@ -11,12 +11,14 @@ namespace WebAPI.Controllers
         private ISaleService _saleService;
         private ISaleProductService _saleProductService;
         private IProductService _productService;
+        private ICustomerMovementService _customerMovementService;
 
-        public SaleController(ISaleService saleService, ISaleProductService saleProductService, IProductService productService)
+        public SaleController(ISaleService saleService, ISaleProductService saleProductService, IProductService productService, ICustomerMovementService customerMovementService)
         {
             _saleService = saleService;
             _saleProductService = saleProductService;
             _productService = productService;
+            _customerMovementService = customerMovementService;
         }
 
         [Route("Add")]
@@ -33,14 +35,19 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [Route("SalesDelete")]
+        [Route("Delete")]
         [HttpDelete]
-        public ActionResult SalesDelete(int id)
+        public ActionResult Delete(int id)
         {
             var listById = _saleService.ListById(id);
             if (!listById.Status)
             {
                 return BadRequest(listById);
+            }
+
+            if (listById.Data.CustomerId.HasValue)
+            {
+                _customerMovementService.DeleteBySaleId(listById.Data.Id);
             }
 
             var result = _saleService.Delete(id);

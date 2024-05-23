@@ -55,7 +55,7 @@ namespace DataAccess.Concrete.EntityFramework
                             Id = sale.s.Id,
                             CreateDate = sale.s.CreateDate,
                             CustomerId = sale.c.FirstOrDefault().Id,
-                            CustomerName = sale.c.FirstOrDefault().Name,
+                            CustomerName = sale.c.FirstOrDefault().Name,                            
                             Amount = sale.s.Amount,
                             PaymentType = sale.s.PaymentType,
                             Deleted = sale.s.Deleted

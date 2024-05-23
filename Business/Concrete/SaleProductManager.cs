@@ -34,7 +34,7 @@ namespace Business.Concrete
         [ValidationAspect(typeof(AddValidator))]
         public IResult Add(SaleProductAddDto saleAddDto)
         {
-            var saleProduct = new SaleProductAddDto
+            var saleProduct = new SaleProduct
             {
                 SaleId = saleAddDto.SaleId,
                 Barcode = saleAddDto.Barcode,

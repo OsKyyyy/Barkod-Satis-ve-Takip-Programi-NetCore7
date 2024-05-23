@@ -25,9 +25,6 @@ namespace Core.Utilities.Refit.Abstract
         [Get("/saleProduct/ListById")]
         Task<DataResult<List<SaleProductViewModel>>> SaleProductListById([Header("Authorization")] string token, int id);
 
-        [Delete("/report/SalesDelete")]
-        Task<Result> SalesDelete([Header("Authorization")] string token, int id);
-
         [Get("/report/GetLastCustomerWithDebt")]
         Task<DataResult<List<CustomerMovementViewModel>>> GetLastCustomerWithDebt([Header("Authorization")] string token);
 

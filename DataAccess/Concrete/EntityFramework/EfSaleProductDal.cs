@@ -17,11 +17,11 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfSaleProductDal : EfEntityRepositoryBase<SaleProduct, DataBaseContext>, ISaleProductDal
     {
-        public void Add(SaleProductAddDto saleProductAddDto)
+        public void Add(SaleProduct saleProduct)
         {
             using (var context = new DataBaseContext())
             {
-                context.Entry(saleProductAddDto).State = EntityState.Added;
+                context.Entry(saleProduct).State = EntityState.Added;
                 context.SaveChanges();
             }
         }

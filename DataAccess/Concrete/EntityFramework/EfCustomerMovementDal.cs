@@ -79,6 +79,19 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
+        public void DeleteBySaleId(int saleId)
+        {
+            using (var context = new DataBaseContext())
+            {
+                var result = context.CustomerMovements.FirstOrDefault(u => u.SaleId == saleId);
+
+                result.Deleted = true;
+                result.Status = false;
+
+                context.SaveChanges();
+            }
+        }
+
         public ViewModel ListById(int id)
         {
             using (var context = new DataBaseContext())

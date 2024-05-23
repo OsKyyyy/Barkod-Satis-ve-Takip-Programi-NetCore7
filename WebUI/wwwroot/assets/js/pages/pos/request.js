@@ -231,7 +231,7 @@
 
     },
     ComplateSale: function (complateType) {
-        debugger;
+        
         var customerId;
         var amount;
         var partialPaymentAmount;

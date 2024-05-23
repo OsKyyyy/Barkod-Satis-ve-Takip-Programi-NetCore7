@@ -75,6 +75,7 @@ namespace DataAccess.Concrete.EntityFramework
                             CustomerName = sale.c.FirstOrDefault().Name,
                             Amount = sale.s.Amount,
                             PaymentType = sale.s.PaymentType,
+                            ComplateType = sale.s.ComplateType,
                             Deleted = sale.s.Deleted
                         }
                     )

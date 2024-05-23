@@ -14,16 +14,19 @@ namespace Core.Utilities.Refit.Models.Response.Sale
         public int Id { get; set; }
 
         [JsonProperty("CustomerId")]
-        public int CustomerId { get; set; }
+        public int? CustomerId { get; set; }
 
         [JsonProperty("CustomerName")]
-        public string CustomerName { get; set; }
+        public string? CustomerName { get; set; }
 
         [JsonProperty("Amount")]
         public Decimal Amount { get; set; }
 
         [JsonProperty("PaymentType")]
         public byte PaymentType { get; set; }
+
+        [JsonProperty("ComplateType")]
+        public byte ComplateType { get; set; }
 
         [JsonProperty("CreateUserId")]
         public int CreateUserId { get; set; }

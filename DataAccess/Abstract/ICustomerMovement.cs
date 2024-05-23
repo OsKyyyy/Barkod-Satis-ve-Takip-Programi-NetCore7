@@ -15,6 +15,7 @@ namespace DataAccess.Abstract
         void Update(CustomerMovement customerMovement);
         List<ViewModel> ListByCustomerId(int id);
         void Delete(int id);
+        void DeleteBySaleId(int saleId);
         ViewModel ListById(int id);
     }
 }

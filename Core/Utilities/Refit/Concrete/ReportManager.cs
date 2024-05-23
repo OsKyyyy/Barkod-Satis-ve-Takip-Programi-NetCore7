@@ -106,35 +106,6 @@ namespace Core.Utilities.Refit.Concrete
             }
         }
 
-        public async Task<Result> SalesDelete([Header("Authorization: Bearer")] string token, int id)
-        {
-            Result dataResult = new Result();
-
-            try
-            {
-                dataResult = await myAPI.SalesDelete(token, id);
-
-                return dataResult;
-            }
-            catch (ApiException exception)
-            {
-                dynamic response = JsonConvert.DeserializeObject(exception.Content);
-
-                if (response != null && response.Status != null)
-                {
-                    dataResult.Message = response.Message;
-                    dataResult.Status = response.Status;
-
-                    return dataResult;
-                }
-
-                dataResult.Message = "Beklenmedik hata ile karşılaşıldı";
-                dataResult.Status = false;
-
-                return dataResult;
-            }
-        }
-
         public async Task<DataResult<List<CustomerMovementViewModel>>> GetLastCustomerWithDebt([Header("Authorization: Bearer")] string token)
         {
             DataResult<List<CustomerMovementViewModel>> dataResult = new DataResult<List<CustomerMovementViewModel>>();

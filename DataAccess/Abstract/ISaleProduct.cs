@@ -12,7 +12,7 @@ namespace DataAccess.Abstract
 {
     public interface ISaleProductDal : IEntityRepository<SaleProduct>
     {
-        void Add(SaleProductAddDto saleProductAddDto);
+        void Add(SaleProduct saleProductAddDto);
         void Delete(int id);
         List<ViewModel> ListById(int id);
     }
