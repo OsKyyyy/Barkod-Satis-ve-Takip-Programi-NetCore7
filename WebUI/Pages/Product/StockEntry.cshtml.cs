@@ -7,20 +7,21 @@ using Core.Utilities.Refit.Models.Response.User;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace WebUI.Pages.Product
 {
-    public class AddModel : PageModel
+    public class StockEntryModel : PageModel
     {
         private readonly IProduct _product;
-        private readonly ICategory _category;
+        private readonly IWholeSaler _wholeSaler;
 
-        public AddModel(IProduct product, ICategory category)
+        public StockEntryModel(IProduct product, IWholeSaler wholeSaler)
         {
             _product = product;
-            _category = category;
+            _wholeSaler = wholeSaler;
         }
 
         [ViewData]
@@ -29,16 +30,16 @@ namespace WebUI.Pages.Product
         [TempData]
         public string ToastrSuccess { get; set; }
         
-        public AddRequestModel AddRequestModel { get; set; }
+        public StockEntryRequestModel StockEntryRequestModel { get; set; }
+
+        public List<SelectListItem> Options { get; set; }
 
         [BindProperty]
         public ImageRequestModel Image { get; set; }
 
-        public List<SelectListItem> Options { get; set; }
-
         public async Task<IActionResult> OnGetAsync()
         {
-            var response = await _category.ListByActive("Bearer " + HttpContext.Session.GetString("userToken"));
+            var response = await _wholeSaler.List("Bearer " + HttpContext.Session.GetString("userToken"));
 
             if (response.Message == "Authentication Error")
             {
@@ -62,19 +63,19 @@ namespace WebUI.Pages.Product
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAddAsync(AddRequestModel addRequestModel)
+        public async Task<IActionResult> OnPostStockEntryAsync(StockEntryRequestModel stockEntryRequestModel)
         {
             if (Image.File != null)
             {
                 using var ms = new MemoryStream();
                 await Image.File.CopyToAsync(ms);
                 var fileBytes = ms.ToArray();
-                addRequestModel.Image = Convert.ToBase64String(fileBytes);
+                stockEntryRequestModel.Image = Convert.ToBase64String(fileBytes);
             }
 
-            addRequestModel.CreateUserId = JsonConvert.DeserializeObject<ViewModel>(HttpContext.Session.GetString("userInfo")).Id;
+            stockEntryRequestModel.UpdateUserId = JsonConvert.DeserializeObject<ViewModel>(HttpContext.Session.GetString("userInfo")).Id;
 
-            var response = await _product.Add("Bearer " + HttpContext.Session.GetString("userToken"), addRequestModel);
+            var response = await _product.StockEntry("Bearer " + HttpContext.Session.GetString("userToken"), stockEntryRequestModel);
 
             if (response.Message == "Authentication Error")
             {
@@ -87,20 +88,20 @@ namespace WebUI.Pages.Product
             if (response.Status)
             {
                 ToastrSuccess = response.Message;
-                return RedirectToPage("Add");
+                return RedirectToPage("StockEntry");
             }
 
-            await GetCategoryList();
+            await GetWholeSalerList();
 
             ToastrError = response.Message;
             return Page();
         }
 
-        public async Task GetCategoryList()
+        public async Task GetWholeSalerList()
         {
-            var responseCategory = await _category.ListByActive("Bearer " + HttpContext.Session.GetString("userToken"));
+            var response = await _wholeSaler.List("Bearer " + HttpContext.Session.GetString("userToken"));
 
-            var list = responseCategory.Data.Select(item => new SelectListItem { Value = item.Id.ToString(), Text = item.Name }).ToList();
+            var list = response.Data.Select(item => new SelectListItem { Value = item.Id.ToString(), Text = item.Name }).ToList();
 
             Options = list;
         }

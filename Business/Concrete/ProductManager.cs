@@ -10,6 +10,7 @@ using Business.Constant;
 using Business.ValidationRules.FluentValidation.Product;
 using Core.Aspects.Autofac.Validation;
 using Core.Entities.Concrete;
+using Core.Utilities.Refit.Models.Request.Product;
 using Core.Utilities.Refit.Models.Response.Product;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
@@ -74,6 +75,14 @@ namespace Business.Concrete
             _productDal.Add(product);
 
             return new SuccessResult(Messages.ProductAdded);
+        }
+
+        [ValidationAspect(typeof(StockEntryValidator))]
+        public IResult StockEntry(StockEntryRequestModel stockEntryRequestModel)
+        {                        
+            _productDal.StockEntry(stockEntryRequestModel);
+
+            return new SuccessResult(Messages.ProductStockEntry);
         }
 
         [ValidationAspect(typeof(UpdateValidator))]
@@ -183,10 +192,10 @@ namespace Business.Concrete
             var result = _productDal.CheckExistsByBarcode(barcode);
             if (result == null)
             {
-                return new SuccessDataResult<ViewModel>(Messages.ProductNotFound);
+                return new ErrorDataResult<ViewModel>(Messages.ProductNotFound);
             }
 
-            return new ErrorDataResult<ViewModel>(result, Messages.ProductAlreadyExists);
+            return new SuccessDataResult<ViewModel>(result, Messages.ProductAlreadyExists);
         }
 
         private string? SaveFile(string? base64String, string productName)

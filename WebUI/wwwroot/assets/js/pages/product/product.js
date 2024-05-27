@@ -11,6 +11,12 @@
         $("#salePriceInput").on("keyup", function () {
             $(this).val($(this).val().replace(",", "."));
         })
+        $("#totalCostInput").on("keyup", function () {
+            $(this).val($(this).val().replace(",", "."));
+        })
+        $("#paymentAmountInput").on("keyup", function () {
+            $(this).val($(this).val().replace(",", "."));
+        })
         $("#vat").on("change", Product.VarCalculator);
         $("#purchasePriceInput").on("keyup", Product.VarCalculator);
     },

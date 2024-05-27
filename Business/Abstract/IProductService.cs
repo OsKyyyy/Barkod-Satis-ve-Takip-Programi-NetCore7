@@ -7,12 +7,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Core.Utilities.Refit.Models.Response.Product;
 using Entities.Dtos;
+using Core.Utilities.Refit.Models.Request.Product;
 
 namespace Business.Abstract
 {
     public interface IProductService
     {
         IResult Add(ProductAddDto product);
+        IResult StockEntry(StockEntryRequestModel stockEntryRequestModel);
         IResult Update(ProductUpdateDto product);
         IResult UpdateStock(string barcode, int quantity);
         IResult UpdateAddStock(string barcode, int quantity);

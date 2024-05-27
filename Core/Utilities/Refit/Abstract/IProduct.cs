@@ -15,6 +15,9 @@ namespace Core.Utilities.Refit.Abstract
         [Post("/product/Add")]
         Task<Result> Add([Header("Authorization")] string token, [Body] AddRequestModel addRequestModel);
 
+        [Post("/product/StockEntry")]
+        Task<Result> StockEntry([Header("Authorization")] string token, [Body] StockEntryRequestModel stockEntryRequestModel);
+
         [Put("/product/Update")]
         Task<Result> Update([Header("Authorization")] string token, [Body] UpdateRequestModel updateRequestModel);
 

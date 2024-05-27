@@ -30,6 +30,7 @@ namespace Business.Constant
         public static string CategoriesListed = "Kategoriler Listelendi";
 
         public static string ProductAdded = "Ürün Eklendi";
+        public static string ProductStockEntry = "Ürüne Stok Girişi Yapıldı";
         public static string ProductUpdated = "Ürün Güncellendi";
         public static string ProductsListed = "Ürünler Listelendi";
         public static string FavoriteProductsListed = "Favori Ürünler Listelendi";

@@ -6,12 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Utilities.Refit.Models.Response.Product;
+using Core.Utilities.Refit.Models.Request.Product;
 
 namespace DataAccess.Abstract
 {
     public interface IProductDal : IEntityRepository<Product>
     {
         void Add(Product product);
+        void StockEntry(StockEntryRequestModel stockEntryRequestModel);
         void Update(Product product);
         void UpdateStock(string barcode, int quantity);
         void UpdateAddStock(string barcode, int quantity);

@@ -247,5 +247,35 @@ namespace Core.Utilities.Refit.Concrete
                 return dataResult;
             }
         }
+
+        public async Task<Result> StockEntry([Header("Authorization")] string token, [Body] StockEntryRequestModel stockEntryRequestModel)
+        {
+            Result dataResult = new Result();
+
+            try
+            {
+                dataResult = await myAPI.StockEntry(token, stockEntryRequestModel);
+
+                return dataResult;
+            }
+            catch (ApiException exception)
+            {
+                dynamic response = JsonConvert.DeserializeObject(exception.Content);
+
+                if (response != null && response.Status != null)
+                {
+                    dataResult.Message = response.Message;
+                    dataResult.Status = response.Status;
+
+                    return dataResult;
+                }
+
+                dataResult.Message = "Beklenmedik hata ile karşılaşıldı";
+                dataResult.Status = false;
+
+                return dataResult;
+            }
+        }
+
     }
 }

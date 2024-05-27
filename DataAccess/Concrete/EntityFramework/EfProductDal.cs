@@ -11,6 +11,7 @@ using System.Runtime.ConstrainedExecution;
 using Core.Entities;
 using Core.Utilities.Refit.Models.Response.Product;
 using Core.Utilities.Refit.Abstract;
+using Core.Utilities.Refit.Models.Request.Product;
 
 namespace DataAccess.Concrete.EntityFramework
 {
@@ -21,6 +22,19 @@ namespace DataAccess.Concrete.EntityFramework
             using (var context = new DataBaseContext())
             {
                 context.Entry(product).State = EntityState.Added;
+                context.SaveChanges();
+            }
+        }
+
+        public void StockEntry(StockEntryRequestModel stockEntryRequestModel)
+        {
+            using (var context = new DataBaseContext())
+            {
+                var result = context.Products.FirstOrDefault(x => x.Barcode == stockEntryRequestModel.Barcode);
+
+                result.Stock += stockEntryRequestModel.Quantity;
+                result.UpdateUserId = stockEntryRequestModel.UpdateUserId;
+
                 context.SaveChanges();
             }
         }
