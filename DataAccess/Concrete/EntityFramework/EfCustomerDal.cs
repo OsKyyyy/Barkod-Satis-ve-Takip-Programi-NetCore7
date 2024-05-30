@@ -39,6 +39,11 @@ namespace DataAccess.Concrete.EntityFramework
                 result.UpdateDate = customer.UpdateDate;
                 result.UpdateUserId = customer.UpdateUserId;
 
+                if (result.Status == true)
+                {
+                    result.Deleted = false;
+                }
+
                 context.SaveChanges();
             }
         }

@@ -40,6 +40,11 @@ namespace DataAccess.Concrete.EntityFramework
                 result.UpdateDate = wholeSaler.UpdateDate;
                 result.UpdateUserId = wholeSaler.UpdateUserId;
 
+                if (result.Status == true)
+                {
+                    result.Deleted = false;
+                }
+
                 context.SaveChanges();
             }
         }

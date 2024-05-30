@@ -11,7 +11,7 @@
             <div id="kt_app_toolbar_container" class="app-container  container-xxl d-flex flex-stack ">
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3 ">
                     <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">
-                        Müşteri Raporları
+                        Toptancı Raporları
                     </h1>
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                         <li class="breadcrumb-item text-muted">
@@ -21,7 +21,7 @@
                             <span class="bullet bg-gray-500 w-5px h-2px"></span>
                         </li>
                         <li class="breadcrumb-item text-muted">
-                            Müşteri Raporları
+                            Toptancı Raporları
                         </li>
                     </ul>
                 </div>
@@ -36,7 +36,7 @@
                                 <div class="card card-flush flex-row-fluid">
                                     <div class="card-header">
                                         <div class="card-title">
-                                            <span class="bullet bullet-dot bg-danger h-10px w-10px translate-middle position-absolute animation-blink" style="top:34px !important;"></span>&nbsp &nbsp <span class="card-label fw-bold text-gray-800">Alışveriş Yapan Son Müşteri</span>
+                                            <span class="bullet bullet-dot bg-danger h-10px w-10px translate-middle position-absolute animation-blink" style="top:34px !important;"></span>&nbsp &nbsp <span class="card-label fw-bold text-gray-800">Alışveriş Yapılan Son Toptancı</span>
                                         </div>
                                     </div>
                                     <div class="card-body pt-0">
@@ -58,10 +58,10 @@
                                                             <div class="d-flex align-items-center justify-content-end">
                                                                 <div class="symbol symbol-circle symbol-25px overflow-hidden me-3">
                                                                     <a href="#">
-                                                                        <div class="symbol-label fs-3 bg-light-primary text-primary" id="lastCustomerWithDebtFirstLetter"></div>
+                                                                        <div class="symbol-label fs-3 bg-light-primary text-primary" id="lastWholeSalerWithDebtFirstLetter"></div>
                                                                     </a>
                                                                 </div>
-                                                                <a href="#" class="text-gray-600 text-hover-primary fs-5 fw-bold" id="lastCustomerWithDebtFullName"></a>
+                                                                <a href="#" class="text-gray-600 text-hover-primary fs-5 fw-bold" id="lastWholeSalerWithDebtFullName"></a>
                                                             </div>                                                            
                                                         </td>
                                                     </tr>
@@ -75,7 +75,7 @@
                                                                 Alışveriş Tarihi
                                                             </div>
                                                         </td>
-                                                        <td class="fw-bold text-end" id="lastCustomerWithDebtShoppingDate">
+                                                        <td class="fw-bold text-end" id="lastWholeSalerWithDebtShoppingDate">
                                                             
                                                         </td>
                                                     </tr>
@@ -90,14 +90,14 @@
                                                                 Alışveriş Tutarı
                                                             </div>
                                                         </td>
-                                                        <td class="fw-bold text-end" id="lastCustomerWithDebtShoppingAmount">
+                                                        <td class="fw-bold text-end" id="lastWholeSalerWithDebtShoppingAmount">
                                                                                                                        
                                                         </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                             <div class="text-center pt-10">
-                                                <a class="btn btn-sm btn-light" asp-page="/Report/CustomerShoppingList">
+                                                <a class="btn btn-sm btn-light" asp-page="/Report/WholeSalerShoppingList">
                                                     Son 1,000 Kaydı Görüntüle
                                                 </a>
                                             </div>
@@ -110,7 +110,7 @@
                                 <div class="card card-flush flex-row-fluid">
                                     <div class="card-header">
                                         <div class="card-title">
-                                            <span class="bullet bullet-dot bg-success h-10px w-10px translate-middle position-absolute animation-blink" style="top:34px !important;"></span>&nbsp &nbsp <span class="card-label fw-bold text-gray-800">Ödeme Yapan Son Müşteri</span>
+                                            <span class="bullet bullet-dot bg-success h-10px w-10px translate-middle position-absolute animation-blink" style="top:34px !important;"></span>&nbsp &nbsp <span class="card-label fw-bold text-gray-800">Ödeme Yapılan Son Toptancı</span>
                                         </div>
                                     </div>
                                     <div class="card-body pt-0">
@@ -132,10 +132,10 @@
                                                             <div class="d-flex align-items-center justify-content-end">
                                                                 <div class="symbol symbol-circle symbol-25px overflow-hidden me-3">
                                                                     <a href="#">
-                                                                        <div class="symbol-label fs-3 bg-light-primary text-primary" id="lastCustomerWithDebtPaymentFirstLetter"></div>
+                                                                        <div class="symbol-label fs-3 bg-light-primary text-primary" id="lastWholeSalerWithDebtPaymentFirstLetter"></div>
                                                                     </a>
                                                                 </div>
-                                                                <a href="#" class="text-gray-600 text-hover-primary fs-5 fw-bold" id="lastCustomerWithDebtPaymentFullName"></a>
+                                                                <a href="#" class="text-gray-600 text-hover-primary fs-5 fw-bold" id="lastWholeSalerWithDebtPaymentFullName"></a>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -149,7 +149,7 @@
                                                                 Geri Ödeme Tarihi
                                                             </div>
                                                         </td>
-                                                        <td class="fw-bold text-end" id="lastCustomerWithDebtPaymentRefundDate">
+                                                        <td class="fw-bold text-end" id="lastWholeSalerWithDebtPaymentRefundDate">
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -163,13 +163,13 @@
                                                                 Geri Ödeme Tutarı
                                                             </div>
                                                         </td>
-                                                        <td class="fw-bold text-end" id="lastCustomerWithDebtPaymentRefundAmount">
+                                                        <td class="fw-bold text-end" id="lastWholeSalerWithDebtPaymentRefundAmount">
                                                         </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                             <div class="text-center pt-10">
-                                                <a class="btn btn-sm btn-light" asp-page="/Report/CustomerRefundList">
+                                                <a class="btn btn-sm btn-light" asp-page="/Report/WholeSalerRefundList">
                                                     Son 1,000 Kaydı Görüntüle
                                                 </a>
                                             </div>
@@ -187,16 +187,16 @@
                                     <div class="card-header py-7">
                                         <div class="m-0">
                                             <div class="d-flex align-items-center mb-2">
-                                                <span class="fs-2hx fw-bold text-danger me-2 lh-1 ls-n2" id="customerTotalDebt"></span>
+                                                <span class="fs-2hx fw-bold text-danger me-2 lh-1 ls-n2" id="wholeSalerTotalDebt"></span>
                                             </div>
 
-                                            <span class="fs-6 fw-semibold text-gray-500">Tüm Müşterilerin Toplam Borcu</span>
+                                            <span class="fs-6 fw-semibold text-gray-500">Tüm Toptancılara Yapılan Toplam Borç</span>
                                         </div>
                                     </div>
                                     <div class="card-body pt-0">
                                         <div id="kt_charts_widget_27" class="min-h-auto"></div>
                                         <div class="text-center pt-10">
-                                            <a class="btn btn-sm btn-light" asp-page="/Report/CustomerTotalDebtList">
+                                            <a class="btn btn-sm btn-light" asp-page="/Report/WholeSalerTotalDebtList">
                                                 Tümünü Görüntüle
                                             </a>
                                         </div>
@@ -212,7 +212,7 @@
                                 <div class="card card-flush h-xl-100">
                                     <div class="card-header pt-7 mb-3">
                                         <h3 class="card-title align-items-start flex-column">
-                                            <span class="card-label fw-bold text-gray-800">Ödeme Yapmayan Müşteriler</span>
+                                            <span class="card-label fw-bold text-gray-800">Ödeme Yapılmayan Toptancılar</span>
                                             <span class="text-gray-500 mt-1 fw-semibold fs-6">Ödeme Yapılmayan Süre Gün Olarak Gösterilir</span>
                                         </h3>
                                      
@@ -227,21 +227,21 @@
                                                     <div class="d-flex align-items-center justify-content-end">
                                                         <div class="symbol symbol-circle symbol-25px overflow-hidden me-3">
                                                             <a href="#">
-                                                                <div class="symbol-label fs-3 bg-light-primary text-primary" id="customerNonPayersFirstLetter_0">-</div>
+                                                                <div class="symbol-label fs-3 bg-light-primary text-primary" id="wholeSalerNonPayersFirstLetter_0">-</div>
                                                             </a>
                                                         </div>
                                                     </div>
                                                 </div>                                                
                                                 <div class="me-5">
-                                                    <a href="#" class="text-gray-800 fw-bold text-hover-primary fs-6" id="customerNonPayersFullName_0">-</a>
-                                                    <span class="text-gray-500 fw-semibold fs-7 d-block text-start ps-0" id="customerNonPayersTotalDebt_0">-</span>
+                                                    <a href="#" class="text-gray-800 fw-bold text-hover-primary fs-6" id="wholeSalerNonPayersFullName_0">-</a>
+                                                    <span class="text-gray-500 fw-semibold fs-7 d-block text-start ps-0" id="wholeSalerNonPayersTotalDebt_0">-</span>
                                                 </div>
 
                                             </div>
                                             
                                             <div class="text-gray-500 fw-bold fs-7 text-end">
-                                                <span class="text-danger fw-bold fs-6 d-block" id="customerNonPayersDaysSinceLastPayment_0">-</span>
-                                                <span id="customerNonPayersLastPaymentDate_0">-</span>
+                                                <span class="text-danger fw-bold fs-6 d-block" id="wholeSalerNonPayersDaysSinceLastPayment_0">-</span>
+                                                <span id="wholeSalerNonPayersLastPaymentDate_0">-</span>
                                             </div>
                                         </div>
                                         
@@ -254,21 +254,21 @@
                                                     <div class="d-flex align-items-center justify-content-end">
                                                         <div class="symbol symbol-circle symbol-25px overflow-hidden me-3">
                                                             <a href="#">
-                                                                <div class="symbol-label fs-3 bg-light-primary text-primary" id="customerNonPayersFirstLetter_1">-</div>
+                                                                <div class="symbol-label fs-3 bg-light-primary text-primary" id="wholeSalerNonPayersFirstLetter_1">-</div>
                                                             </a>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="me-5">
-                                                    <a href="#" class="text-gray-800 fw-bold text-hover-primary fs-6" id="customerNonPayersFullName_1">-</a>
-                                                    <span class="text-gray-500 fw-semibold fs-7 d-block text-start ps-0" id="customerNonPayersTotalDebt_1">-</span>
+                                                    <a href="#" class="text-gray-800 fw-bold text-hover-primary fs-6" id="wholeSalerNonPayersFullName_1">-</a>
+                                                    <span class="text-gray-500 fw-semibold fs-7 d-block text-start ps-0" id="wholeSalerNonPayersTotalDebt_1">-</span>
                                                 </div>
 
                                             </div>
 
                                             <div class="text-gray-500 fw-bold fs-7 text-end">
-                                                <span class="text-danger fw-bold fs-6 d-block" id="customerNonPayersDaysSinceLastPayment_1">-</span>
-                                                <span id="customerNonPayersLastPaymentDate_1">-</span>
+                                                <span class="text-danger fw-bold fs-6 d-block" id="wholeSalerNonPayersDaysSinceLastPayment_1">-</span>
+                                                <span id="wholeSalerNonPayersLastPaymentDate_1">-</span>
                                             </div>
                                         </div>
 
@@ -281,21 +281,21 @@
                                                     <div class="d-flex align-items-center justify-content-end">
                                                         <div class="symbol symbol-circle symbol-25px overflow-hidden me-3">
                                                             <a href="#">
-                                                                <div class="symbol-label fs-3 bg-light-primary text-primary" id="customerNonPayersFirstLetter_2">-</div>
+                                                                <div class="symbol-label fs-3 bg-light-primary text-primary" id="wholeSalerNonPayersFirstLetter_2">-</div>
                                                             </a>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="me-5">
-                                                    <a href="#" class="text-gray-800 fw-bold text-hover-primary fs-6" id="customerNonPayersFullName_2">-</a>
-                                                    <span class="text-gray-500 fw-semibold fs-7 d-block text-start ps-0" id="customerNonPayersTotalDebt_2">-</span>
+                                                    <a href="#" class="text-gray-800 fw-bold text-hover-primary fs-6" id="wholeSalerNonPayersFullName_2">-</a>
+                                                    <span class="text-gray-500 fw-semibold fs-7 d-block text-start ps-0" id="wholeSalerNonPayersTotalDebt_2">-</span>
                                                 </div>
 
                                             </div>
 
                                             <div class="text-gray-500 fw-bold fs-7 text-end">
-                                                <span class="text-danger fw-bold fs-6 d-block" id="customerNonPayersDaysSinceLastPayment_2">-</span>
-                                                <span id="customerNonPayersLastPaymentDate_2">-</span>
+                                                <span class="text-danger fw-bold fs-6 d-block" id="wholeSalerNonPayersDaysSinceLastPayment_2">-</span>
+                                                <span id="wholeSalerNonPayersLastPaymentDate_2">-</span>
                                             </div>
                                         </div>
 
@@ -308,21 +308,21 @@
                                                     <div class="d-flex align-items-center justify-content-end">
                                                         <div class="symbol symbol-circle symbol-25px overflow-hidden me-3">
                                                             <a href="#">
-                                                                <div class="symbol-label fs-3 bg-light-primary text-primary" id="customerNonPayersFirstLetter_3">-</div>
+                                                                <div class="symbol-label fs-3 bg-light-primary text-primary" id="wholeSalerNonPayersFirstLetter_3">-</div>
                                                             </a>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="me-5">
-                                                    <a href="#" class="text-gray-800 fw-bold text-hover-primary fs-6" id="customerNonPayersFullName_3">-</a>
-                                                    <span class="text-gray-500 fw-semibold fs-7 d-block text-start ps-0" id="customerNonPayersTotalDebt_3">-</span>
+                                                    <a href="#" class="text-gray-800 fw-bold text-hover-primary fs-6" id="wholeSalerNonPayersFullName_3">-</a>
+                                                    <span class="text-gray-500 fw-semibold fs-7 d-block text-start ps-0" id="wholeSalerNonPayersTotalDebt_3">-</span>
                                                 </div>
 
                                             </div>
 
                                             <div class="text-gray-500 fw-bold fs-7 text-end">
-                                                <span class="text-danger fw-bold fs-6 d-block" id="customerNonPayersDaysSinceLastPayment_3">-</span>
-                                                <span id="customerNonPayersLastPaymentDate_3">-</span>
+                                                <span class="text-danger fw-bold fs-6 d-block" id="wholeSalerNonPayersDaysSinceLastPayment_3">-</span>
+                                                <span id="wholeSalerNonPayersLastPaymentDate_3">-</span>
                                             </div>
                                         </div>
 
@@ -335,26 +335,26 @@
                                                     <div class="d-flex align-items-center justify-content-end">
                                                         <div class="symbol symbol-circle symbol-25px overflow-hidden me-3">
                                                             <a href="#">
-                                                                <div class="symbol-label fs-3 bg-light-primary text-primary" id="customerNonPayersFirstLetter_4">-</div>
+                                                                <div class="symbol-label fs-3 bg-light-primary text-primary" id="wholeSalerNonPayersFirstLetter_4">-</div>
                                                             </a>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="me-5">
-                                                    <a href="#" class="text-gray-800 fw-bold text-hover-primary fs-6" id="customerNonPayersFullName_4">-</a>
-                                                    <span class="text-gray-500 fw-semibold fs-7 d-block text-start ps-0" id="customerNonPayersTotalDebt_4">-</span>
+                                                    <a href="#" class="text-gray-800 fw-bold text-hover-primary fs-6" id="wholeSalerNonPayersFullName_4">-</a>
+                                                    <span class="text-gray-500 fw-semibold fs-7 d-block text-start ps-0" id="wholeSalerNonPayersTotalDebt_4">-</span>
                                                 </div>
 
                                             </div>
 
                                             <div class="text-gray-500 fw-bold fs-7 text-end">
-                                                <span class="text-danger fw-bold fs-6 d-block" id="customerNonPayersDaysSinceLastPayment_4">-</span>
-                                                <span id="customerNonPayersLastPaymentDate_4">-</span>
+                                                <span class="text-danger fw-bold fs-6 d-block" id="wholeSalerNonPayersDaysSinceLastPayment_4">-</span>
+                                                <span id="wholeSalerNonPayersLastPaymentDate_4">-</span>
                                             </div>
                                         </div>
                                       
                                         <div class="text-center pt-17">
-                                            <a class="btn btn-sm btn-light" asp-page="/Report/CustomerNonPayersList">
+                                            <a class="btn btn-sm btn-light" asp-page="/Report/WholeSalerNonPayersList">
                                                 Tümünü Görüntüle
                                             </a>
                                         </div>
@@ -377,14 +377,14 @@
                                             <div class="me-md-2">
                                                 <div class="d-flex mb-2">
                                                     <span class="fs-4 fw-semibold text-gray-500 me-1">&#8378;</span>
-                                                    <span class="fs-2hx fw-bold text-danger me-2 lh-1 ls-n2" id="customerThisMonthDebt">0,00</span>
+                                                    <span class="fs-2hx fw-bold text-danger me-2 lh-1 ls-n2" id="wholeSalerThisMonthDebt">0,00</span>
                                                 </div>                                                
                                                 <span class="fs-6 fw-semibold text-gray-500">Bu Ay Yapılan Toplam Borç</span>
                                             </div>                                            
                                             <div class="border-start-dashed border-start border-gray-300 px-5 ps-md-10 pe-md-7 me-md-5">
                                                 <div class="d-flex mb-2">
                                                     <span class="fs-4 fw-semibold text-gray-500 me-1">&#8378;</span>
-                                                    <span class="fs-2hx fw-bold text-danger me-2 lh-1 ls-n2" id="customerPreviousMonthDebt">0,00</span>
+                                                    <span class="fs-2hx fw-bold text-danger me-2 lh-1 ls-n2" id="wholeSalerPreviousMonthDebt">0,00</span>
                                                 </div>                                               
                                                 <span class="fs-6 fw-semibold text-gray-500">Bir Önceki Ay Yapılan Toplam Borç </span>
                                             </div>                                           
@@ -416,5 +416,5 @@
 @section _Foot
 {
     <script src="~/assets/js/pages/report/report.js"></script>
-    <script src="~/assets/js/pages/report/customerRequest.js"></script>    
+    <script src="~/assets/js/pages/report/wholeSalerRequest.js"></script>    
 }

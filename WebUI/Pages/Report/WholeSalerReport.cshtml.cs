@@ -36,9 +36,58 @@ namespace WebUI.Pages.Report
             return Page();
         }
 
-        public async Task<IActionResult> OnPostGetLastCustomerWithDebtAsync()
+        public async Task<IActionResult> OnPostGetLastWholeSalerWithDebtAsync()
         {
-            var response = await _report.GetLastCustomerWithDebt("Bearer " + HttpContext.Session.GetString("userToken"));
+            var response = await _report.GetLastWholeSalerWithDebt("Bearer " + HttpContext.Session.GetString("userToken"));
+
+            return new JsonResult(response);
+        }
+
+        public async Task<IActionResult> OnPostGetLastWholeSalerWithDebtPaymentAsync()
+        {
+            var response = await _report.GetLastWholeSalerWithDebtPayment("Bearer " + HttpContext.Session.GetString("userToken"));
+            
+            return new JsonResult(response);
+        }
+
+        public async Task<IActionResult> OnPostGetWholeSalerTotalDebtAsync()
+        {
+            var response = await _report.GetWholeSalerTotalDebt("Bearer " + HttpContext.Session.GetString("userToken"));
+
+            return new JsonResult(response);
+        }
+
+        public async Task<IActionResult> OnPostGetWholeSalerDebtAsync()
+        {
+            var response = await _report.GetWholeSalerDebt("Bearer " + HttpContext.Session.GetString("userToken"));
+
+            return new JsonResult(response);
+        }
+
+        public async Task<IActionResult> OnPostGetWholeSalerNonPayersAsync()
+        {
+            var response = await _report.GetWholeSalerNonPayers("Bearer " + HttpContext.Session.GetString("userToken"));
+
+            return new JsonResult(response);
+        }
+
+        public async Task<IActionResult> OnPostGetWholeSalerThisMonthDebtAsync()
+        {
+            var response = await _report.GetWholeSalerThisMonthDebt("Bearer " + HttpContext.Session.GetString("userToken"));
+
+            return new JsonResult(response);
+        }
+
+        public async Task<IActionResult> OnPostGetWholeSalerPreviousMonthDebtAsync()
+        {
+            var response = await _report.GetWholeSalerPreviousMonthDebt("Bearer " + HttpContext.Session.GetString("userToken"));
+
+            return new JsonResult(response);
+        }
+
+        public async Task<IActionResult> OnPostGetWholeSalerMonthlyDebtOfOneYearAsync()
+        {
+            var response = await _report.GetWholeSalerMonthlyDebtOfOneYear("Bearer " + HttpContext.Session.GetString("userToken"));
 
             return new JsonResult(response);
         }

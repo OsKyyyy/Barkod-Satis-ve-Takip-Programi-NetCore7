@@ -15,7 +15,10 @@ namespace Core.Utilities.Refit.Models.Response.WholeSalerMovement
 
         [JsonProperty("WholeSalerId")]
         public int WholeSalerId { get; set; }
-        
+
+        [JsonProperty("WholeSalerName")]
+        public string WholeSalerName { get; set; }
+
         [JsonProperty("ProcessType")]
         public byte ProcessType { get; set; }
         
@@ -34,8 +37,17 @@ namespace Core.Utilities.Refit.Models.Response.WholeSalerMovement
         [JsonProperty("Status")]
         public bool Status { get; set; }
 
+        [JsonProperty("Deleted")]
+        public bool Deleted { get; set; }
+
+        [JsonProperty("CreateDate")]
+        public DateTime CreateDate { get; set; }
+
         [JsonProperty("UpdateDate")]
         public DateTime UpdateDate { get; set; }
+
+        [JsonProperty("UpdateUserId")]
+        public int UpdateUserId { get; set; }
 
         [JsonProperty("UpdateUserName")]
         public string UpdateUserName { get; set; }

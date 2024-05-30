@@ -11,6 +11,7 @@ using Core.Entities.Concrete;
 using Core.Utilities.Refit.Models.Response.Report;
 using SaleViewModel = Core.Utilities.Refit.Models.Response.Sale.ViewModel;
 using CustomerMovementViewModel = Core.Utilities.Refit.Models.Response.CustomerMovement.ViewModel;
+using WholeSalerMovementViewModel = Core.Utilities.Refit.Models.Response.WholeSalerMovement.ViewModel;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
@@ -98,6 +99,63 @@ namespace Business.Concrete
             var result = _reportDal.GetCustomerMonthlyDebtOfOneYear();
 
             return new SuccessDataResult<List<CustomerMonthlyDebtViewModel>>(result, Messages.GetCustomerMonthlyDebtListed);
-        }        
+        }
+
+
+        public IDataResult<List<WholeSalerMovementViewModel>> GetLastWholeSalerWithDebt()
+        {
+            var result = _reportDal.GetLastWholeSalerWithDebt();
+
+            return new SuccessDataResult<List<WholeSalerMovementViewModel>>(result, Messages.GetLastWholeSalerWithDebtListed);
+        }
+
+        public IDataResult<List<WholeSalerMovementViewModel>> GetLastWholeSalerWithDebtPayment()
+        {
+            var result = _reportDal.GetLastWholeSalerWithDebtPayment();
+
+            return new SuccessDataResult<List<WholeSalerMovementViewModel>>(result, Messages.GetLastWholeSalerWithDebtPaymentListed);
+        }
+
+        public IDataResult<WholeSalerTotalDebtViewModel> GetWholeSalerTotalDebt()
+        {
+            var result = _reportDal.GetWholeSalerTotalDebt();
+
+            return new SuccessDataResult<WholeSalerTotalDebtViewModel>(result, Messages.GetWholeSalerTotalDebtListed);
+        }
+
+        public IDataResult<List<WholeSalerDebtViewModel>> GetWholeSalerDebt()
+        {
+            var result = _reportDal.GetWholeSalerDebt();
+
+            return new SuccessDataResult<List<WholeSalerDebtViewModel>>(result, Messages.GetWholeSalerDebtListed);
+        }
+
+        public IDataResult<List<WholeSalerNonPayersViewModel>> GetWholeSalerNonPayers()
+        {
+            var result = _reportDal.GetWholeSalerNonPayers();
+
+            return new SuccessDataResult<List<WholeSalerNonPayersViewModel>>(result, Messages.GetWholeSalerNonPayersListed);
+        }
+
+        public IDataResult<WholeSalerTotalDebtViewModel> GetWholeSalerThisMonthDebt()
+        {
+            var result = _reportDal.GetWholeSalerThisMonthDebt();
+
+            return new SuccessDataResult<WholeSalerTotalDebtViewModel>(result, Messages.GetWholeSalerThisMonthDebtListed);
+        }
+
+        public IDataResult<WholeSalerTotalDebtViewModel> GetWholeSalerPreviousMonthDebt()
+        {
+            var result = _reportDal.GetWholeSalerPreviousMonthDebt();
+
+            return new SuccessDataResult<WholeSalerTotalDebtViewModel>(result, Messages.GetWholeSalerPreviousMonthDebtListed);
+        }
+
+        public IDataResult<List<WholeSalerMonthlyDebtViewModel>> GetWholeSalerMonthlyDebtOfOneYear()
+        {
+            var result = _reportDal.GetWholeSalerMonthlyDebtOfOneYear();
+
+            return new SuccessDataResult<List<WholeSalerMonthlyDebtViewModel>>(result, Messages.GetWholeSalerMonthlyDebtListed);
+        }
     }
 }

@@ -82,7 +82,7 @@ namespace Business.Constant
         public static string SalesDeleted = "Satış Silindi, Stoklar Güncellendi";
         public static string SalesUpdateStock = "Stoklar Güncellendi";
 
-        public static string GetLastCustomerWithDebtListed = "Son Alışveriş Müşteri Listelendi";
+        public static string GetLastCustomerWithDebtListed = "Son Alışveriş Yapan Müşteri Listelendi";
         public static string GetLastCustomerWithDebtPaymentListed = "Son Ödeme Yapan Müşteri Listelendi";
         public static string GetCustomerTotalDebtListed = "Tüm Müşteri Borçları Tutarı Listelendi";
         public static string GetCustomerDebtListed = "Müşteri Borçları Çoktan Az Olarak Listelendi";
@@ -90,6 +90,15 @@ namespace Business.Constant
         public static string GetCustomerThisMonthDebtListed = "Bu Ayın Tüm Borçları Tutarı Listelendi";
         public static string GetCustomerPreviousMonthDebtListed = "Bir Önceki Ayın Tüm Borçları Tutarı Listelendi";
         public static string GetCustomerMonthlyDebtListed = "Müşteri Borçları Aylık Olarak Listelendi";
+
+        public static string GetLastWholeSalerWithDebtListed = "Son Alışveriş Yapılan Toptancı Listelendi";
+        public static string GetLastWholeSalerWithDebtPaymentListed = "Son Ödeme Yapılan Toptancı Listelendi";
+        public static string GetWholeSalerTotalDebtListed = "Tüm Toptancı Borçları Tutarı Listelendi";
+        public static string GetWholeSalerDebtListed = "Toptancı Borçları Çoktan Az Olarak Listelendi";
+        public static string GetWholeSalerNonPayersListed = "Geri Ödemesi Yapılmayan Toptancılar Listelendi";
+        public static string GetWholeSalerThisMonthDebtListed = "Bu Ayın Tüm Borçları Tutarı Listelendi";
+        public static string GetWholeSalerPreviousMonthDebtListed = "Bir Önceki Ayın Tüm Borçları Tutarı Listelendi";
+        public static string GetWholeSalerMonthlyDebtListed = "Toptancı Borçları Aylık Olarak Listelendi";
     }
 
 }

@@ -11,6 +11,7 @@ using Refit;
 using Core.Utilities.Refit.Models.Response;
 using SaleViewModel = Core.Utilities.Refit.Models.Response.Sale.ViewModel;
 using CustomerMovementViewModel = Core.Utilities.Refit.Models.Response.CustomerMovement.ViewModel;
+using WholeSalerMovementViewModel = Core.Utilities.Refit.Models.Response.WholeSalerMovement.ViewModel;
 
 namespace Business.Abstract
 {
@@ -26,5 +27,14 @@ namespace Business.Abstract
         IDataResult<CustomerTotalDebtViewModel> GetCustomerThisMonthDebt();
         IDataResult<CustomerTotalDebtViewModel> GetCustomerPreviousMonthDebt();
         IDataResult<List<CustomerMonthlyDebtViewModel>> GetCustomerMonthlyDebtOfOneYear();
+
+        IDataResult<List<WholeSalerMovementViewModel>> GetLastWholeSalerWithDebt();
+        IDataResult<List<WholeSalerMovementViewModel>> GetLastWholeSalerWithDebtPayment();
+        IDataResult<WholeSalerTotalDebtViewModel> GetWholeSalerTotalDebt();
+        IDataResult<List<WholeSalerDebtViewModel>> GetWholeSalerDebt();
+        IDataResult<List<WholeSalerNonPayersViewModel>> GetWholeSalerNonPayers();
+        IDataResult<WholeSalerTotalDebtViewModel> GetWholeSalerThisMonthDebt();
+        IDataResult<WholeSalerTotalDebtViewModel> GetWholeSalerPreviousMonthDebt();
+        IDataResult<List<WholeSalerMonthlyDebtViewModel>> GetWholeSalerMonthlyDebtOfOneYear();
     }
 }

@@ -144,5 +144,110 @@ namespace WebAPI.Controllers
 
             return Ok(list);
         }
+
+
+        [Route("GetLastWholeSalerWithDebt")]
+        [HttpGet]
+        public ActionResult GetLastWholeSalerWithDebt()
+        {
+            var list = _reportService.GetLastWholeSalerWithDebt();
+            if (!list.Status)
+            {
+                return BadRequest(list);
+            }
+
+            return Ok(list);
+        }
+
+        [Route("GetLastWholeSalerWithDebtPayment")]
+        [HttpGet]
+        public ActionResult GetLastWholeSalerWithDebtPayment()
+        {
+            var list = _reportService.GetLastWholeSalerWithDebtPayment();
+            if (!list.Status)
+            {
+                return BadRequest(list);
+            }
+
+            return Ok(list);
+        }
+
+        [Route("GetWholeSalerTotalDebt")]
+        [HttpGet]
+        public ActionResult GetWholeSalerTotalDebt()
+        {
+            var list = _reportService.GetWholeSalerTotalDebt();
+            if (!list.Status)
+            {
+                return BadRequest(list);
+            }
+
+            return Ok(list);
+        }
+
+        [Route("GetWholeSalerDebt")]
+        [HttpGet]
+        public ActionResult GetWholeSalerDebt()
+        {
+            var list = _reportService.GetWholeSalerDebt();
+            if (!list.Status)
+            {
+                return BadRequest(list);
+            }
+
+            return Ok(list);
+        }
+
+        [Route("GetWholeSalerNonPayers")]
+        [HttpGet]
+        public ActionResult GetWholeSalerNonPayers()
+        {
+            var list = _reportService.GetWholeSalerNonPayers();
+            if (!list.Status)
+            {
+                return BadRequest(list);
+            }
+
+            return Ok(list);
+        }
+
+        [Route("GetWholeSalerThisMonthDebt")]
+        [HttpGet]
+        public ActionResult GetWholeSalerThisMonthDebt()
+        {
+            var list = _reportService.GetWholeSalerThisMonthDebt();
+            if (!list.Status)
+            {
+                return BadRequest(list);
+            }
+
+            return Ok(list);
+        }
+
+        [Route("GetWholeSalerPreviousMonthDebt")]
+        [HttpGet]
+        public ActionResult GetWholeSalerPreviousMonthDebt()
+        {
+            var list = _reportService.GetWholeSalerPreviousMonthDebt();
+            if (!list.Status)
+            {
+                return BadRequest(list);
+            }
+
+            return Ok(list);
+        }
+
+        [Route("GetWholeSalerMonthlyDebtOfOneYear")]
+        [HttpGet]
+        public ActionResult GetWholeSalerMonthlyDebtOfOneYear()
+        {
+            var list = _reportService.GetWholeSalerMonthlyDebtOfOneYear();
+            if (!list.Status)
+            {
+                return BadRequest(list);
+            }
+
+            return Ok(list);
+        }
     }
 }
