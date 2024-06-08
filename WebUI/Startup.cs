@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Autofac.Core;
 using Core.DependencyResolvers;
 using Core.Extensions;
 using Core.Utilities.IoC;
 using Core.Utilities.Security.Encryption;
 using Core.Utilities.Security.JWT;
+using Core.Utilities.WebScraping;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -38,8 +40,9 @@ namespace WebUI
             {
                 options.IdleTimeout = TimeSpan.FromHours(1);
             });
-
             services.AddRazorPages();
+
+            services.AddHttpClient();
 
             services.AddRazorPages().AddRazorRuntimeCompilation();
 

@@ -1,0 +1,224 @@
+﻿@page
+@model PriceComparisonModel
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "Fiyat Karşılaştır";
+}
+@section _Head
+{
+    <link href="~/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+}
+<div class="app-main flex-column flex-row-fluid " id="kt_app_main">
+    <div class="d-flex flex-column flex-column-fluid">
+        <div id="kt_app_toolbar" class="app-toolbar  py-3 py-lg-6 mb-10">
+            <div id="kt_app_toolbar_container" class="app-container  container-xxl d-flex flex-stack ">
+                <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3 ">
+                    <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">
+                        Fiyat Karşılaştır
+                    </h1>
+                    <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+                        <li class="breadcrumb-item text-muted">
+                            Ürün
+                        </li>
+                        <li class="breadcrumb-item">
+                            <span class="bullet bg-gray-500 w-5px h-2px"></span>
+                        </li>
+                        <li class="breadcrumb-item text-muted">
+                            Ürün İşlemleri
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+		<div id="kt_app_content" class="app-content  flex-column-fluid ">
+			<div id="kt_app_content_container" class="app-container  container-xxl " >
+                <div class="d-flex flex-column flex-xl-row">
+                    <div class="d-flex flex-row-fluid me-xl-9 mb-10 mb-xl-0">
+                        <div class="card card-flush card-p-0  border-0 p-10">
+                            <ul class="nav nav-pills d-flex justify-content-between nav-pills-custom gap-3 mb-6" role="tablist" id="marketItems">
+
+                                <li class="nav-item mb-3 me-0" role="presentation">
+                                    <a class="nav-link nav-link-border-solid btn btn-outline btn-flex btn-active-color-primary flex-column flex-stack pt-9 pb-7 page-bg show active" data-bs-toggle="pill" style="width: 204px;height: 180px" aria-selected="true" role="tab">
+                                        <div class="nav-icon mb-3">
+                                            <img src="~/assets/media/logos/marketkarsilastircom.png" class="w-50px" alt="">
+                                        </div>
+                                        <div class="">
+                                            <span class="text-gray-800 fw-bold fs-3 d-block">marketkarsilastir.com</span>
+                                            <span class="fw-semibold fs-7 text-success">
+                                                &#10004; Seçildi
+                                            </span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="nav-item mb-3 me-0" role="presentation">
+                                    <a class="nav-link nav-link-border-solid btn btn-outline btn-flex btn-active-color-primary flex-column flex-stack pt-9 pb-7 page-bg show" data-bs-toggle="pill" style="width: 204px;height: 180px" aria-selected="true" role="tab">
+                                        <div class="nav-icon mb-3">
+                                            <img src="~/assets/media/logos/gülec.png" class="w-70px" alt="">
+                                        </div>
+                                        <div class="">
+                                            <span class="text-gray-800 fw-bold fs-3 d-block">guleckapinda.com</span>
+                                            <span class="fw-semibold fs-7 text-success">
+                                                &nbsp
+                                            </span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="nav-item mb-3 me-0" role="presentation">
+                                    <a class="nav-link nav-link-border-solid btn btn-outline btn-flex btn-active-color-primary flex-column flex-stack pt-9 pb-7 page-bg show" data-bs-toggle="pill" style="width: 204px;height: 180px" aria-selected="true" role="tab">
+                                        <div class="nav-icon mb-3">
+                                            <img src="~/assets/media/logos/develigross.png" class="w-150px" alt="">
+                                        </div>
+                                        <div class="">
+                                            <span class="text-gray-800 fw-bold fs-3 d-block">develigross.com</span>
+                                            <span class="fw-semibold fs-7 text-success">
+                                                &nbsp
+                                            </span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="nav-item mb-3 me-0" role="presentation">
+                                    <a class="nav-link nav-link-border-solid btn btn-outline btn-flex btn-active-color-primary flex-column flex-stack pt-9 pb-7 page-bg show" data-bs-toggle="pill" style="width: 204px;height: 180px" aria-selected="true" role="tab">
+                                        <div class="nav-icon mb-3">
+                                            <img src="~/assets/media/logos/mismaravm.png" class="w-150px" alt="">
+                                        </div>
+                                        <div class="">
+                                            <span class="text-gray-800 fw-bold fs-4 d-block">mismarsanalmarket.com</span>
+                                            <span class="fw-semibold fs-7 text-success">
+                                                &nbsp
+                                            </span>
+                                        </div>
+                                    </a>
+                                </li>                        
+                                <li class="nav-item mb-3 me-0" role="presentation">
+                                    <a class="nav-link nav-link-border-solid btn btn-outline btn-flex btn-active-color-primary flex-column flex-stack pt-9 pb-7 page-bg show" data-bs-toggle="pill" style="width: 204px;height: 180px" aria-selected="true" role="tab">
+                                        <div class="nav-icon mb-3">
+                                            <img src="~/assets/media/logos/marketpaketi.com.tr.png" class="w-175px" alt="">
+                                        </div>
+                                        <div class="">
+                                            <span class="text-gray-800 fw-bold fs-4 d-block">marketpaketi.com.tr</span>
+                                            <span class="fw-semibold fs-7 text-success">
+                                                &nbsp
+                                            </span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="nav-item mb-3 me-0" role="presentation">
+                                    <a class="nav-link nav-link-border-solid btn btn-outline btn-flex btn-active-color-primary flex-column flex-stack pt-9 pb-7 page-bg show" data-bs-toggle="pill" style="width: 204px;height: 180px" aria-selected="true" role="tab">
+                                        <div class="nav-icon mb-3">
+                                            <img src="~/assets/media/logos/obakmarket.png" class="w-150px" alt="">
+                                        </div>
+                                        <div class="">
+                                            <span class="text-gray-800 fw-bold fs-4 d-block">obakmarket.com.tr</span>
+                                            <span class="fw-semibold fs-7 text-success">
+                                                &nbsp
+                                            </span>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+			            </div>
+                    </div>
+                    <div class="flex-row-auto w-xl-450px">
+
+                        <div class="card card-flush bg-body " id="kt_pos_form">
+                            <div class="card-header pt-5">
+                                <h3 class="card-title fw-bold text-gray-800 fs-2qx">Fiyat Karşılaştır</h3>                               
+                            </div>
+                         
+                            <div class="card-body pt-0">
+                                <div class="fv-row mb-7 fv-plugins-icon-container mt-10">   
+                                    <label class="fs-6 fw-semibold form-label mt-3">
+                                        <span class="required">Barkod Numarası</span>                                        
+                                    </label>                                    
+                                    <input type="text" class="form-control form-control-solid" id="barcodeNumber" name="barcodeNumber">
+                                    <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
+                                </div>
+                                <div class="alert alert-dismissible bg-light-primary d-flex flex-column flex-sm-row p-5 mb-10">
+                                    <i class="ki-duotone ki-notification-bing fs-2hx text-primary me-4 mb-5 mb-sm-0">
+                                        <span class="path1"></span>
+                                        <span class="path2"></span>
+                                        <span class="path3"></span>
+                                    </i>                                    
+                                    <div class="d-flex flex-column pe-0 pe-sm-10">
+                                        <h4>Bilgi Kutucuğu</h4>                                        
+                                        <span>Sol alandan seçeceğiniz site üzerinden veri getirilmektedir. Ayrıca <b>"marketkarsilastir.com"</b> üzerinden yapılan sorgulamalarda ülke genelinde bilinen tüm marketler listelenir.</span>
+                                    </div>                                    
+                                    <button type="button" class="position-absolute position-sm-relative m-2 m-sm-0 top-0 end-0 btn btn-icon ms-sm-auto" data-bs-dismiss="alert">
+                                        <i class="ki-duotone ki-cross fs-1 text-primary"><span class="path1"></span><span class="path2"></span></i>
+                                    </button>
+                                </div>
+                                <div class="m-0 mt-10">                                   
+                                    <button class="btn btn-primary fs-1 w-100 py-4" id="fetchDataBtn">Verileri Getir</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                   
+                </div>
+                <div class="row g-5 g-xl-10 mb-5 mb-xl-10 mt-10" id="listMarketTable" style="display:none">
+                    <div class="col-xl-4">
+                        <div class="flex-column flex-lg-row-auto w-100 w-xl-350px">
+
+                            <div class="card mb-5 mb-xl-8">
+                                <div class="card-body pt-15">
+                                    <div class="d-flex flex-center flex-column mb-5">
+                                        <div class="symbol symbol-200px">
+                                            <span class="symbol-label" id="productLogo" style="background-image:url('http://localhost:9091/WebAPI/Uploads/Products/unknow.png');"></span>
+                                        </div>
+
+                                        <div class="fs-1 text-gray-800 fw-bold mb-10" id="productName"></div>
+
+                                        <img class="mb-10" style="max-width: 100%;height: auto;display:none" id="barcodeLogo" src="http://localhost:9091/WebAPI/Uploads/Products/unknow.png">
+                                                                       
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-8">
+                        <div class="card card-flush">
+                            <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+                                <div class="card-title">
+                                    <div class="d-flex align-items-center position-relative my-1">
+                                        <i class="ki-duotone ki-magnifier fs-1 position-absolute ms-4"><span class="path1"></span><span class="path2"></span></i>
+                                        <input type="text" data-kt-filter="search" class="form-control form-control w-250px ps-14" placeholder="Ara..." />
+                                    </div>
+                                    <div id="kt_datatable_example_1_export" class="d-none"></div>
+                                </div>
+                                <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
+                                    <div id="kt_datatable_example_buttons" class="d-none"></div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <table class="table align-middle rounded table-row-dashed fs-6 g-5" id="kt_datatable_example">
+                                    <thead>
+                                        <tr class="text-start fw-bold fs-7 text-uppercase">
+                                            <th class="min-w-100px">MARKET LOGO</th>
+                                            <th class="min-w-100px">ÜRÜN ADI</th>
+                                            <th class="min-w-100px">SON FİYAT DEĞİŞİM TARİHİ</th>
+                                            <th class="min-w-100px">FİYATI</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="fw-semibold text-gray-600">
+                                    
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+		</div>
+    </div>
+</div>
+
+<form class="form d-flex flex-column flex-lg-row" method="post">
+    <button type="submit" hidden></button>
+</form>
+
+@section _Foot{
+    <script src="~/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    <script src="~/assets/js/pages/webscraping/request.js"></script>
+    <script src="~/assets/js/pages/webscraping/listData.js"></script>
+}

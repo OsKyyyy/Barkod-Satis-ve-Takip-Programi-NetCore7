@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 using Core.CrossCuttingConcerns.Caching;
 using Core.CrossCuttingConcerns.Caching.Microsoft;
 using Core.Utilities.IoC;
+using Core.Utilities.WebScraping.Abstract;
+using Core.Utilities.WebScraping.Concrete;
 using Core.Utilities.Refit.Abstract;
 using Core.Utilities.Refit.Concrete;
+using Core.Utilities.WebScraping;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -30,6 +33,9 @@ namespace Core.DependencyResolvers
             serviceCollection.AddSingleton<IWholeSalerMovement, WholeSalerMovementManager>();
             serviceCollection.AddSingleton<ISale, SaleManager>();
             serviceCollection.AddSingleton<IReport, ReportManager>();
+            serviceCollection.AddSingleton<IPriceComparisonService, PriceComparisonManager>();
+            serviceCollection.AddSingleton<IPriceTrackingService, PriceTrackingManager>();
+            serviceCollection.AddSingleton<IPriceProduceMarketService, PriceProduceMarketManager>();
             //serviceCollection.AddSingleton<ISaleProduct, SaleProductManager>();
         }
     }

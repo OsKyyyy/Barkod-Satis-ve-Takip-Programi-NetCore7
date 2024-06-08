@@ -1,0 +1,67 @@
+﻿@page "{market?}"
+@model PriceTrackingMarketModel
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "Fiyat İzleme";
+}
+<div class="app-main flex-column flex-row-fluid " id="kt_app_main">
+    <div class="d-flex flex-column flex-column-fluid">
+        <div id="kt_app_toolbar" class="app-toolbar  py-3 py-lg-6 mb-10">
+            <div id="kt_app_toolbar_container" class="app-container  container-xxl d-flex flex-stack ">
+                <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3 ">
+                    <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">
+                        Fiyat İzleme
+                    </h1>
+                    <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+                        <li class="breadcrumb-item text-muted">
+                            Ürün
+                        </li>
+                        <li class="breadcrumb-item">
+                            <span class="bullet bg-gray-500 w-5px h-2px"></span>
+                        </li>
+                        <li class="breadcrumb-item text-muted">
+                            Ürün İşlemleri
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+		<div id="kt_app_content" class="app-content  flex-column-fluid ">
+			<div id="kt_app_content_container" class="app-container  container-xxl " >
+                <div class="d-flex flex-column flex-xl-row">
+                    <div class="d-flex flex-row-fluid me-xl-9 mb-10 mb-xl-0">
+                        <div class="card card-flush card-p-0  border-0 p-10">
+                            <div class="alert alert-dismissible bg-light-primary d-flex flex-column flex-sm-row p-5 mb-10">
+                                <i class="ki-duotone ki-notification-bing fs-2hx text-primary me-4 mb-5 mb-sm-0">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                    <span class="path3"></span>
+                                </i>
+                                <div class="d-flex flex-column pe-0 pe-sm-10">
+                                    <h4>Bilgi Kutucuğu</h4>
+                                    <span id="marketInfo"></span>
+                                </div>
+                                <button type="button" class="position-absolute position-sm-relative m-2 m-sm-0 top-0 end-0 btn btn-icon ms-sm-auto" data-bs-dismiss="alert">
+                                    <i class="ki-duotone ki-cross fs-1 text-primary"><span class="path1"></span><span class="path2"></span></i>
+                                </button>
+                            </div>
+                            <ul class="nav nav-pills d-flex justify-content-between nav-pills-custom gap-3 mb-6" role="tablist" id="productItems">
+
+                            </ul>
+			            </div>
+                    </div>
+                </div>              
+                
+            </div>
+		</div>
+    </div>
+</div>
+
+<form class="form d-flex flex-column flex-lg-row" method="post">
+    <button type="submit" hidden></button>
+</form>
+
+@section _Foot{
+    <script src="~/assets/js/pages/webscraping/requestTrackingMarket.js"></script>
+}
