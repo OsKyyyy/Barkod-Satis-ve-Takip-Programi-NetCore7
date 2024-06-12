@@ -3,14 +3,19 @@ using Core.Utilities.WebScraping;
 using Core.Utilities.WebScraping.Abstract;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Core.Utilities.Refit.Abstract;
+using Azure;
+using Core.Utilities.Refit.Models.Request.Product;
 
 public class PriceComparisonModel : PageModel
 {
     private readonly IPriceComparisonService _priceComparison;
+    private readonly IProduct _product;
 
-    public PriceComparisonModel(IPriceComparisonService priceComparison)
+    public PriceComparisonModel(IPriceComparisonService priceComparison,IProduct product)
     {
         _priceComparison = priceComparison;
+        _product = product;
     }
 
     public async Task<IActionResult> OnPostMarketOneAsync([FromBody] PriceComparisonRequestModel priceComparisonRequestModel)
@@ -53,5 +58,30 @@ public class PriceComparisonModel : PageModel
         var response = await _priceComparison.MarketSixPriceComparison(priceComparisonRequestModel.Barcode);
 
         return new JsonResult(response);
+    }
+
+    public async Task<IActionResult> OnPostSavePhotoAsync([FromBody] SavePhotoRequestModel savePhotoRequestModel)
+    {
+        bool checkByBarcode = await _product.ListToSavePhoto("Bearer " + HttpContext.Session.GetString("userToken"), savePhotoRequestModel.Barcode);
+
+        if (checkByBarcode)
+        {
+            var response = await _priceComparison.SavePhoto(savePhotoRequestModel.ImgUrl, savePhotoRequestModel.Barcode);
+
+            if (response.Status)
+            {
+                UpdateImageRequestModel updateImageRequestModel = new UpdateImageRequestModel
+                {
+                    Barcode = savePhotoRequestModel.Barcode,
+                    Image = response.Data.Image
+                };
+
+                await _product.UpdateImage("Bearer " + HttpContext.Session.GetString("userToken"), updateImageRequestModel);
+            }
+
+            return new JsonResult(response);
+        }
+        
+        return new JsonResult(checkByBarcode);
     }
 }

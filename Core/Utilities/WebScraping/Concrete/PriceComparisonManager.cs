@@ -12,6 +12,7 @@ using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using Core.Utilities.WebScraping.Abstract;
 using HtmlAgilityPack;
+using Core.Utilities.Refit.Models.Request.Product;
 
 namespace Core.Utilities.WebScraping.Concrete
 {
@@ -295,6 +296,58 @@ namespace Core.Utilities.WebScraping.Concrete
             }
 
             return priceComparisonList;
+        }
+
+        public async Task<IDataResult<UpdateImageRequestModel>> SavePhoto(string imgUrl, string barcode)
+        {
+            var directoryPath = "C:\\Users\\oguzh\\source\\repos\\OsKyyyy\\MarketOtomasyon\\WebAPI\\Uploads\\Products";
+
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    var response = await client.GetAsync(imgUrl);
+                    response.EnsureSuccessStatusCode();
+
+                    var contentType = response.Content.Headers.ContentType.MediaType;
+                    string fileExtension = GetFileExtension(contentType);
+                    if (fileExtension == null)
+                    {
+                        return new ErrorDataResult<UpdateImageRequestModel>("Bilinmeyen Resim Formatı");
+                    }
+
+                    var imageBytes = await response.Content.ReadAsByteArrayAsync();
+
+                    var fileName = $"{barcode}_{DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString()}{fileExtension}";
+                    var filePath = Path.Combine(directoryPath, fileName);
+
+                    await File.WriteAllBytesAsync(filePath, imageBytes);
+
+                    UpdateImageRequestModel updateImageRequestModel = new UpdateImageRequestModel
+                    {
+                        Image = $"Uploads/Products/{fileName}"
+                    };
+
+                    return new SuccessDataResult<UpdateImageRequestModel>(updateImageRequestModel, "Resim Başarılı Bir Şekilde Kaydedildi");
+                }
+                catch (Exception ex)
+                {
+                    return new ErrorDataResult<UpdateImageRequestModel>(ex.Message);
+                }
+            }
+        }
+
+        public string GetFileExtension(string contentType)
+        {
+            return contentType switch
+            {
+                "image/jpeg" => ".jpg",
+                "image/png" => ".png",
+                "image/gif" => ".gif",
+                "image/bmp" => ".bmp",
+                "image/tiff" => ".tiff",
+                _ => null
+            };
         }
     }
 }

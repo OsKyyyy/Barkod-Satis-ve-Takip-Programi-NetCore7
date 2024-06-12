@@ -38,5 +38,11 @@ namespace Core.Utilities.Refit.Abstract
 
         [Get("/product/ListByName")]
         Task<DataResult<List<ViewModel>>> ListByName([Header("Authorization")] string token, string name);
+
+        [Get("/product/ListToSavePhoto")]
+        Task<bool> ListToSavePhoto([Header("Authorization")] string token, string barcode);
+
+        [Put("/product/UpdateImage")]
+        Task<Result> UpdateImage([Header("Authorization")] string token, [Body] UpdateImageRequestModel updateImageRequestModel);
     }
 }

@@ -45,7 +45,7 @@ namespace Business.Concrete
 
             if (!string.IsNullOrEmpty(productAddDto.Image))
             {
-                imageUrl = SaveFile(productAddDto.Image, productAddDto.Name);
+                imageUrl = SaveFile(productAddDto.Image, productAddDto.Barcode);
 
                 if (imageUrl == null)
                 {
@@ -90,7 +90,7 @@ namespace Business.Concrete
         {
             if (productUpdateDto.ImageChanged)
             {
-                productUpdateDto.Image = SaveFile(productUpdateDto.Image, productUpdateDto.Name);
+                productUpdateDto.Image = SaveFile(productUpdateDto.Image, productUpdateDto.Barcode);
 
                 if (productUpdateDto.Image == null)
                 {
@@ -198,7 +198,33 @@ namespace Business.Concrete
             return new SuccessDataResult<ViewModel>(result, Messages.ProductAlreadyExists);
         }
 
-        private string? SaveFile(string? base64String, string productName)
+        public IResult CheckExistsByBarcodeAndId(int id, string barcode)
+        {
+            var result = _productDal.CheckExistsByBarcodeAndId(id, barcode);
+
+            if (result)
+            {
+                return new ErrorResult(Messages.ProductAlreadyExists);
+            }
+
+            return new SuccessResult();
+        }
+
+        public bool ListToSavePhoto(string barcode)
+        {
+            var result = _productDal.ListToSavePhoto(barcode);
+
+            return result;
+        }
+
+        public IResult UpdateImage(UpdateImageRequestModel updateImageRequestModel)
+        {                      
+            _productDal.UpdateImage(updateImageRequestModel);
+
+            return new SuccessResult(Messages.ProductUpdated);
+        }
+
+        private string? SaveFile(string? base64String, string barcode)
         {
             var result = CheckFileProperty(base64String);
 
@@ -207,7 +233,7 @@ namespace Business.Concrete
                 return null;
             }
 
-            var fullPath = "Uploads/Products/" + productName.GenerateSlug() + "-" + DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString() + Type;
+            var fullPath = "Uploads/Products/" + barcode + "_" + DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString() + Type;
             File.WriteAllBytes(fullPath, Convert.FromBase64String(base64String));
 
             return fullPath;
@@ -240,6 +266,6 @@ namespace Business.Concrete
                 default:
                     return false;
             }
-        }
+        }        
     }
 }

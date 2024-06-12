@@ -299,5 +299,41 @@ namespace DataAccess.Concrete.EntityFramework
                 return result;
             }
         }
+
+        public bool CheckExistsByBarcodeAndId(int id, string barcode)
+        {
+            using (var context = new DataBaseContext())
+            {
+                var result = context.Products
+                    .Where(x => x.Barcode == barcode && x.Id != id)
+                    .Any();
+
+                return result;
+            }
+        }
+
+        public bool ListToSavePhoto(string barcode)
+        {
+            using (var context = new DataBaseContext())
+            {
+                bool result = context.Products
+                    .Where(l => l.Barcode == barcode)
+                    .Any();
+
+                return result;
+            }
+        }
+
+        public void UpdateImage(UpdateImageRequestModel updateImageRequestModel)
+        {
+            using (var context = new DataBaseContext())
+            {
+                var result = context.Products.FirstOrDefault(c => c.Barcode == updateImageRequestModel.Barcode);
+                            
+                result.Image = updateImageRequestModel.Image;               
+
+                context.SaveChanges();
+            }
+        }
     }
 }

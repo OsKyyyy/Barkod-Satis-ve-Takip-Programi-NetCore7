@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Utilities.Refit.Models.Request.Product;
 
 namespace Core.Utilities.WebScraping.Abstract
 {
@@ -16,5 +17,6 @@ namespace Core.Utilities.WebScraping.Abstract
         Task<IDataResult<List<PriceComparisonViewModel>>> MarketFourPriceComparison(string barcode);
         Task<IDataResult<List<PriceComparisonViewModel>>> MarketFivePriceComparison(string barcode);
         Task<IDataResult<List<PriceComparisonViewModel>>> MarketSixPriceComparison(string barcode);
+        Task<IDataResult<UpdateImageRequestModel>> SavePhoto(string imgUrl, string barcode);
     }
 }

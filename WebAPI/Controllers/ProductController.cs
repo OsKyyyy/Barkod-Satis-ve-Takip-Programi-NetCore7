@@ -28,7 +28,7 @@ namespace WebAPI.Controllers
         public ActionResult Add(ProductAddDto productAddDto)
         {
             var checkExistsByBarcode= _productService.CheckExistsByBarcode(productAddDto.Barcode);
-            if (!checkExistsByBarcode.Status)
+            if (checkExistsByBarcode.Status)
             {
                 return BadRequest(checkExistsByBarcode);
             }
@@ -119,10 +119,10 @@ namespace WebAPI.Controllers
         [HttpPut]
         public ActionResult Update(ProductUpdateDto productUpdateDto)
         {
-            var listById = _productService.ListById(productUpdateDto.Id);
-            if (!listById.Status)
+            var checkExistByBarcodeAndId = _productService.CheckExistsByBarcodeAndId(productUpdateDto.Id, productUpdateDto.Barcode);
+            if (!checkExistByBarcodeAndId.Status)
             {
-                return BadRequest(listById);
+                return BadRequest(checkExistByBarcodeAndId);
             }
 
             var result = _productService.Update(productUpdateDto);
@@ -218,6 +218,28 @@ namespace WebAPI.Controllers
             }
 
             return Ok(list);
+        }
+
+        [Route("ListToSavePhoto")]
+        [HttpGet]
+        public ActionResult ListToSavePhoto(string barcode)
+        {
+            var list = _productService.ListToSavePhoto(barcode);
+            return Ok(list);
+        }
+
+        [Route("UpdateImage")]
+        [HttpPut]
+        public ActionResult UpdateImage(UpdateImageRequestModel updateImageRequestModel)
+        {
+            var result = _productService.UpdateImage(updateImageRequestModel);
+
+            if (result.Status)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
         }
     }
 }

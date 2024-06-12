@@ -277,5 +277,41 @@ namespace Core.Utilities.Refit.Concrete
             }
         }
 
+        public async Task<bool> ListToSavePhoto([Header("Authorization: Bearer")] string token, string barcode)
+        {            
+            bool dataResult = await myAPI.ListToSavePhoto(token, barcode);
+
+            return dataResult;
+        }
+
+        public async Task<Result> UpdateImage([Header("Authorization: Bearer")] string token, [Body] UpdateImageRequestModel updateImageRequestModel)
+        {
+            Result dataResult = new Result();
+
+            try
+            {
+                dataResult = await myAPI.UpdateImage(token, updateImageRequestModel);
+
+                return dataResult;
+            }
+            catch (ApiException exception)
+            {
+                dynamic response = JsonConvert.DeserializeObject(exception.Content);
+
+                if (response != null && response.Status != null)
+                {
+                    dataResult.Message = response.Message;
+                    dataResult.Status = response.Status;
+
+                    return dataResult;
+                }
+
+                dataResult.Message = "Beklenmedik hata ile karşılaşıldı";
+                dataResult.Status = false;
+
+                return dataResult;
+            }
+        }
+
     }
 }

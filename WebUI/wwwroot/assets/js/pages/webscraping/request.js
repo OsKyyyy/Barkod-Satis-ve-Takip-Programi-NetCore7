@@ -4,6 +4,9 @@
         $("#fetchDataBtn").on("click", function () {
             Request.PriceComparison();
         })
+        $("#savePhoto").on("click", function () {
+            Request.SavePhoto();
+        })
     },
     PriceComparison: function () {
         
@@ -48,6 +51,7 @@
 
                         $("#productName").html(response.data[0].productName);
                         $("#productLogo").css('background-image', 'url("' + response.data[0].productLogo + '")');
+                        $("#savePhoto").attr("data-src", response.data[0].productLogo);
 
                         $("#barcodeLogo").hide();
 
@@ -72,6 +76,45 @@
             }
         })
     },
+    SavePhoto: function () {
+
+        var imgUrl = $("#savePhoto").attr("data-src");
+        var barcode = $("#barcodeNumber").val();
+
+        var savePhotoRequestModel = { "ImgUrl": imgUrl, "Barcode": barcode };
+
+        $.ajax({
+            type: "POST",
+            url: "PriceComparison?handler=SavePhoto",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(savePhotoRequestModel),
+            headers: {
+                RequestVerificationToken:
+                    $('input:hidden[name="__RequestVerificationToken"]').val()
+            },
+            success: function (response) {
+
+                console.log(response);
+
+                if (response.status != undefined) {
+
+                    if (response.status) {
+                        Request.ToastrSuccess(response.message);
+                        return;
+                    }
+
+                    Request.ToastrError(response.message);
+                    return;
+                }
+
+                if (!response) {
+                    Request.ToastrError("Bu Barkod Numaralı Ürün Sistemde Bulunamadı");
+                }               
+            },
+        })
+    },
+
     GetMarketByKeyValue: function (key) {
 
         if (key == 0) {

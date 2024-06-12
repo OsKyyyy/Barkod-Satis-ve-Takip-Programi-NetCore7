@@ -25,5 +25,9 @@ namespace Business.Abstract
         IDataResult<List<ViewModel>> ListByName(string name);
         IDataResult<ViewModel> ListToPos(string barcode);
         IDataResult<ViewModel> CheckExistsByBarcode(string barcode);
+        IResult CheckExistsByBarcodeAndId(int id, string barcode);
+        bool ListToSavePhoto(string barcode);
+        IResult UpdateImage(UpdateImageRequestModel updateImageRequestModel);
+
     }
 }
