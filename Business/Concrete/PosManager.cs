@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,8 @@ namespace Business.Concrete
     [SecuredOperation("Admin")]
     public class PosManager : IPosService
     {
+        private readonly CultureInfo _culture = new("en-US");
+
         IPosDal _posDal;
 
         public PosManager(IPosDal posDal)
@@ -35,6 +38,7 @@ namespace Business.Concrete
                 Barcode = posAddDto.Barcode,
                 ProductName = posAddDto.ProductName,
                 ProductUnitPrice = posAddDto.ProductUnitPrice,
+                ProductUnitPurchasePrice = posAddDto.ProductUnitPurchasePrice,
                 ProductQuantity = posAddDto.ProductQuantity,
                 CreateUserId = posAddDto.CreateUserId
             };
@@ -51,6 +55,7 @@ namespace Business.Concrete
                 Barcode = "0",
                 ProductName = "Muhtelif Tutar",
                 ProductUnitPrice = posAddDto.ProductUnitPrice,
+                ProductUnitPurchasePrice = decimal.Parse("0,00", _culture),
                 ProductQuantity = 1,
                 CreateUserId = posAddDto.CreateUserId
             };

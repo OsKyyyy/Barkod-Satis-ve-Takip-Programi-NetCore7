@@ -92,6 +92,7 @@ namespace Business.Concrete
                             Barcode = item.Barcode,
                             ProductName = item.ProductName,
                             ProductUnitPrice = item.ProductUnitPrice,
+                            ProductUnitPurchasePrice = item.ProductUnitPurchasePrice,
                             ProductQuantity = item.ProductQuantity,
                             Deleted = false
                         };

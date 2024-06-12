@@ -15,6 +15,7 @@ namespace Entities.Dtos
         public int Quantity { get; set; }
         public string ProductName { get; set; }
         public Decimal ProductUnitPrice { get; set; }
+        public Decimal ProductUnitPurchasePrice { get; set; }
         public int ProductQuantity { get; set; }
         public int CreateUserId { get; set; }
     }

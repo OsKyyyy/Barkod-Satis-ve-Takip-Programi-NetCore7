@@ -13,6 +13,7 @@ namespace Core.Entities.Concrete
         public string Barcode { get; set; }
         public string ProductName { get; set; }
         public Decimal ProductUnitPrice { get; set; }
+        public Decimal ProductUnitPurchasePrice { get; set; }
         public int ProductQuantity { get; set; }
         public bool Deleted { get; set; }
     }

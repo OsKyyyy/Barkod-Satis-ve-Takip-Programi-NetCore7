@@ -66,6 +66,7 @@ namespace DataAccess.Concrete.EntityFramework
                     Barcode = s.Barcode,
                     ProductName = s.ProductName,
                     ProductQuantity = s.ProductQuantity,
+                    ProductUnitPurchasePrice = s.ProductUnitPurchasePrice,
                     ProductUnitPrice = s.ProductUnitPrice
                 }).ToList();
 
@@ -84,6 +85,7 @@ namespace DataAccess.Concrete.EntityFramework
                     Barcode = s.Barcode,
                     ProductName = s.ProductName,
                     ProductQuantity = s.ProductQuantity,
+                    ProductUnitPurchasePrice = s.ProductUnitPurchasePrice,
                     ProductUnitPrice = s.ProductUnitPrice
                 }).FirstOrDefault(c => c.Id == id);
 
@@ -102,6 +104,7 @@ namespace DataAccess.Concrete.EntityFramework
                     Barcode = s.Barcode,
                     ProductName = s.ProductName,
                     ProductQuantity = s.ProductQuantity,
+                    ProductUnitPurchasePrice = s.ProductUnitPurchasePrice,
                     ProductUnitPrice = s.ProductUnitPrice
                 }).ToList();
 

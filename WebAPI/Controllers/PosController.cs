@@ -36,6 +36,7 @@ namespace WebAPI.Controllers
                 Barcode = posAddDto.Barcode,
                 ProductName = ListToPos.Data.Name,
                 ProductUnitPrice = ListToPos.Data.SalePrice,
+                ProductUnitPurchasePrice = ListToPos.Data.PurchasePrice,
                 ProductQuantity = posAddDto.Quantity,
                 CreateUserId = posAddDto.CreateUserId
             };

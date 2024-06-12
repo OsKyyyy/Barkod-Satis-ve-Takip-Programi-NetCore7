@@ -25,6 +25,9 @@ namespace Core.Utilities.Refit.Models.Response.Pos
         [JsonProperty("ProductUnitPrice")]
         public Decimal ProductUnitPrice { get; set; }
 
+        [JsonProperty("ProductUnitPurchasePrice")]
+        public Decimal ProductUnitPurchasePrice { get; set; }
+
         [JsonProperty("ProductQuantity")]
         public int ProductQuantity { get; set; }
     }

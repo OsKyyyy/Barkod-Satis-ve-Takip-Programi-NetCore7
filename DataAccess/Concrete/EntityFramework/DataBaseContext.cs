@@ -31,5 +31,6 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<WholeSalerMovement> WholeSalerMovements { get; set; }
         public DbSet<Sale> Sales { get; set; }
         public DbSet<SaleProduct> SaleProducts { get; set; }
+        public DbSet<IncomeAndExpensesType> IncomeAndExpensesTypes { get; set; }
     }
 }

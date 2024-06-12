@@ -99,6 +99,9 @@ namespace Business.Constant
         public static string GetWholeSalerThisMonthDebtListed = "Bu Ayın Tüm Borçları Tutarı Listelendi";
         public static string GetWholeSalerPreviousMonthDebtListed = "Bir Önceki Ayın Tüm Borçları Tutarı Listelendi";
         public static string GetWholeSalerMonthlyDebtListed = "Toptancı Borçları Aylık Olarak Listelendi";
+
+        public static string IncomeAndExpensesTypeAdded = "Gelir-Gider Türü Eklendi";
+
     }
 
 }
