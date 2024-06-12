@@ -101,7 +101,11 @@ namespace Business.Constant
         public static string GetWholeSalerMonthlyDebtListed = "Toptancı Borçları Aylık Olarak Listelendi";
 
         public static string IncomeAndExpensesTypeAdded = "Gelir-Gider Türü Eklendi";
-
+        public static string IncomeAndExpensesTypeListed = "Gelir-Gider Türleri Listelendi";
+        public static string IncomeAndExpensesTypeUpdated = "Gelir-Gider Türleri Güncellendi";
+        public static string IncomeAndExpensesTypeNotFound = "Gelir-Gider Türü Bulunamadı";
+        public static string IncomeAndExpensesTypeInfoListed = "Gelir-Gider Tür Bilgileri Listelendi";
+        public static string IncomeAndExpensesTypeDeleted = "Gelir-Gider Türü Silindi";
     }
 
 }

@@ -65,7 +65,7 @@
         
         Swal.fire({
             title: 'Emin misin?',
-            text: 'Kategoriyi silmek üzeresiniz. Bu işlem yapıldıktan sonra geri alınamaz',
+            text: 'Gelir-Gider Türünü silmek üzeresiniz. Bu işlem yapıldıktan sonra geri alınamaz',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: "Onaylıyorum, Sil",

@@ -31,7 +31,7 @@ var KTDatatablesExample = function () {
 
     // Hook export buttons
     var exportButtons = () => {
-        const documentTitle = 'Kategori Listesi';
+        const documentTitle = 'Gelir-Gider Tür Listesi';
         var buttons = new $.fn.dataTable.Buttons(table, {
             buttons: [
                 {

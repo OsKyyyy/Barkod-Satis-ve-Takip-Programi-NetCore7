@@ -9,6 +9,7 @@ using Business.Constant;
 using Business.ValidationRules.FluentValidation.IncomeAndExpenses;
 using Core.Aspects.Autofac.Validation;
 using Core.Entities.Concrete;
+using Core.Utilities.Refit.Models.Response.IncomeAndExpenses;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
@@ -43,6 +44,46 @@ namespace Business.Concrete
             _incomeAndExpensesDal.AddType(incomeAndExpensesType);
 
             return new SuccessResult(Messages.IncomeAndExpensesTypeAdded);
-        }                    
+        }
+
+        [ValidationAspect(typeof(UpdateValidator))]
+        public IResult UpdateType(IncomeAndExpensesTypeUpdateDto incomeAndExpensesTypeUpdateDto)
+        {
+            var incomeAndExpensesType = new IncomeAndExpensesType
+            {
+                Id = incomeAndExpensesTypeUpdateDto.Id,
+                Name = incomeAndExpensesTypeUpdateDto.Name,
+                Status = incomeAndExpensesTypeUpdateDto.Status,
+                UpdateUserId = incomeAndExpensesTypeUpdateDto.UpdateUserId,
+                UpdateDate = DateTime.Now,
+            };
+            _incomeAndExpensesDal.UpdateType(incomeAndExpensesType);
+
+            return new SuccessResult(Messages.IncomeAndExpensesTypeUpdated);
+        }
+
+        public IResult DeleteType(int id)
+        {
+            _incomeAndExpensesDal.DeleteType(id);
+            return new SuccessResult(Messages.IncomeAndExpensesTypeDeleted);
+        }
+
+        public IDataResult<List<ViewModel>> ListType()
+        {
+            var result = _incomeAndExpensesDal.ListType();
+
+            return new SuccessDataResult<List<ViewModel>>(result, Messages.IncomeAndExpensesTypeListed);
+        }
+
+        public IDataResult<ViewModel> ListTypeById(int id)
+        {
+            var result = _incomeAndExpensesDal.ListTypeById(id);
+            if (result == null)
+            {
+                return new ErrorDataResult<ViewModel>(Messages.IncomeAndExpensesTypeNotFound);
+            }
+
+            return new SuccessDataResult<ViewModel>(result, Messages.IncomeAndExpensesTypeInfoListed);
+        }
     }
 }
