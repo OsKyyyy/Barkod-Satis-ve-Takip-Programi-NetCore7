@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Abstract
 {
-    public interface IIncomeAndExpensesDal : IEntityRepository<IncomeAndExpensesType>
+    public interface IIncomeAndExpensesDal : IEntityRepository<IncomeAndExpenses>
     {
-        void AddType(IncomeAndExpensesType incomeAndExpensesType);
-        void UpdateType(IncomeAndExpensesType incomeAndExpensesType);
-        void DeleteType(int id);
-        List<ViewModel> ListType();
-        ViewModel ListTypeById(int id);
+        void Add(IncomeAndExpenses incomeAndExpenses);
+        void Update(IncomeAndExpenses incomeAndExpenses);
+        List<ViewModel> List();
+        void Delete(int id);
+        ViewModel ListById(int id);
     }
 }

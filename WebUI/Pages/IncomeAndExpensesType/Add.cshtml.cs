@@ -1,19 +1,19 @@
 using Core.Utilities.Refit.Abstract;
-using Core.Utilities.Refit.Models.Request.IncomeAndExpenses;
+using Core.Utilities.Refit.Models.Request.IncomeAndExpensesType;
 using Core.Utilities.Refit.Models.Response.User;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 
-namespace WebUI.Pages.IncomeAndExpenses
+namespace WebUI.Pages.IncomeAndExpensesType
 {
-    public class AddTypeModel : PageModel
+    public class AddModel : PageModel
     {
-        private readonly IIncomeAndExpenses _incomeAndExpenses;
+        private readonly IIncomeAndExpensesType _incomeAndExpensesType;
 
-        public AddTypeModel(IIncomeAndExpenses incomeAndExpenses)
+        public AddModel(IIncomeAndExpensesType incomeAndExpensesType)
         {
-            _incomeAndExpenses = incomeAndExpenses;
+            _incomeAndExpensesType = incomeAndExpensesType;
         }
 
         [ViewData]
@@ -22,18 +22,18 @@ namespace WebUI.Pages.IncomeAndExpenses
         [TempData]
         public string ToastrSuccess { get; set; }
 
-        public AddTypeRequestModel AddTypeRequestModel { get; set; }
+        public AddRequestModel AddRequestModel { get; set; }
 
         public IActionResult OnGet()
         {
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAddAsync(AddTypeRequestModel addTypeRequestModel)
+        public async Task<IActionResult> OnPostAddAsync(AddRequestModel addRequestModel)
         {
-            addTypeRequestModel.CreateUserId = JsonConvert.DeserializeObject<ViewModel>(HttpContext.Session.GetString("userInfo")).Id;
+            addRequestModel.CreateUserId = JsonConvert.DeserializeObject<ViewModel>(HttpContext.Session.GetString("userInfo")).Id;
 
-            var response = await _incomeAndExpenses.AddType("Bearer " + HttpContext.Session.GetString("userToken"), addTypeRequestModel);
+            var response = await _incomeAndExpensesType.Add("Bearer " + HttpContext.Session.GetString("userToken"), addRequestModel);
 
             if (response.Message == "Authentication Error")
             {
@@ -46,7 +46,7 @@ namespace WebUI.Pages.IncomeAndExpenses
             if (response.Status)
             {
                 ToastrSuccess = response.Message;
-                return new RedirectToPageResult("AddType");
+                return new RedirectToPageResult("Add");
             }
 
             ToastrError = response.Message;

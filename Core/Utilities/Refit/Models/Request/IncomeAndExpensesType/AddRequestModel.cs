@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Utilities.Refit.Models.Request.IncomeAndExpenses
+namespace Core.Utilities.Refit.Models.Request.IncomeAndExpensesType
 {
-    public class AddTypeRequestModel
+    public class AddRequestModel
     {
         [Required(ErrorMessage = "Bu alan zorunludur.")]
         [DataType(DataType.Text)]

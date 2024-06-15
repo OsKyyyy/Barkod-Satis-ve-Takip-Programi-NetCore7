@@ -7,13 +7,19 @@ using System.Threading.Tasks;
 
 namespace Core.Utilities.Refit.Models.Request.IncomeAndExpenses
 {
-    public class UpdateTypeRequestModel
+    public class UpdateRequestModel
     {
         public int Id { get; set; }
 
+        public int IncomeExpensesTypeId { get; set; }
+
+        public bool Type { get; set; }
+
+        public string? Description { get; set; }
+
         [Required(ErrorMessage = "Bu alan zorunludur.")]
-        [DataType(DataType.Text)]
-        public string Name { get; set; }
+        [RegularExpression(@"^\d{0,8}(\.\d{1,2})?$", ErrorMessage = "Tutar 0.00 - 9999999999.99 aralığında olmalıdır. ")]
+        public string Amount { get; set; }
 
         public bool Status { get; set; }
 

@@ -36,6 +36,7 @@ namespace Core.DependencyResolvers
             serviceCollection.AddSingleton<IPriceComparisonService, PriceComparisonManager>();
             serviceCollection.AddSingleton<IPriceTrackingService, PriceTrackingManager>();
             serviceCollection.AddSingleton<IPriceProduceMarketService, PriceProduceMarketManager>();
+            serviceCollection.AddSingleton<IIncomeAndExpensesType, IncomeAndExpensesTypeManager>();
             serviceCollection.AddSingleton<IIncomeAndExpenses, IncomeAndExpensesManager>();
             //serviceCollection.AddSingleton<ISaleProduct, SaleProductManager>();
         }

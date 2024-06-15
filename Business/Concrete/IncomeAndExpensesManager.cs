@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,69 +22,77 @@ namespace Business.Concrete
     [SecuredOperation("Admin")]
     public class IncomeAndExpensesManager : IIncomeAndExpensesService
     {
+        private readonly CultureInfo _culture = new("en-US");
+
         IIncomeAndExpensesDal _incomeAndExpensesDal;
 
         public IncomeAndExpensesManager(IIncomeAndExpensesDal incomeAndExpensesDal)
         {
             _incomeAndExpensesDal = incomeAndExpensesDal;
-        }
+        }        
 
         [ValidationAspect(typeof(AddValidator))]
-        public IResult AddType(IncomeAndExpensesTypeAddDto incomeAndExpensesTypeAddDto)
+        public IResult Add(IncomeAndExpensesAddDto incomeAndExpensesAddDto)
         {
-            var incomeAndExpensesType = new IncomeAndExpensesType
+            var incomeAndExpenses = new IncomeAndExpenses
             {
-                Name = incomeAndExpensesTypeAddDto.Name,
-                Status = incomeAndExpensesTypeAddDto.Status,
+                IncomeExpensesTypeId = incomeAndExpensesAddDto.IncomeExpensesTypeId,
+                Type = incomeAndExpensesAddDto.Type,
+                Description = incomeAndExpensesAddDto.Description,
+                Amount = decimal.Parse(incomeAndExpensesAddDto.Amount, _culture),
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
-                CreateUserId = incomeAndExpensesTypeAddDto.CreateUserId,
-                UpdateUserId = incomeAndExpensesTypeAddDto.CreateUserId,
-                Deleted = false
+                CreateUserId = incomeAndExpensesAddDto.CreateUserId,
+                UpdateUserId = incomeAndExpensesAddDto.CreateUserId,
+                Deleted = false,
+                Status = incomeAndExpensesAddDto.Status
             };
-            _incomeAndExpensesDal.AddType(incomeAndExpensesType);
+            _incomeAndExpensesDal.Add(incomeAndExpenses);
 
-            return new SuccessResult(Messages.IncomeAndExpensesTypeAdded);
+            return new SuccessResult(Messages.IncomeAndExpensesAdded);
         }
 
         [ValidationAspect(typeof(UpdateValidator))]
-        public IResult UpdateType(IncomeAndExpensesTypeUpdateDto incomeAndExpensesTypeUpdateDto)
+        public IResult Update(IncomeAndExpensesUpdateDto incomeAndExpensesUpdateDto)
         {
-            var incomeAndExpensesType = new IncomeAndExpensesType
+            var incomeAndExpenses = new IncomeAndExpenses
             {
-                Id = incomeAndExpensesTypeUpdateDto.Id,
-                Name = incomeAndExpensesTypeUpdateDto.Name,
-                Status = incomeAndExpensesTypeUpdateDto.Status,
-                UpdateUserId = incomeAndExpensesTypeUpdateDto.UpdateUserId,
+                Id = incomeAndExpensesUpdateDto.Id,
+                IncomeExpensesTypeId = incomeAndExpensesUpdateDto.IncomeExpensesTypeId,
+                Type = incomeAndExpensesUpdateDto.Type,
+                Description = incomeAndExpensesUpdateDto.Description,
+                Amount = decimal.Parse(incomeAndExpensesUpdateDto.Amount, _culture),                
                 UpdateDate = DateTime.Now,
+                UpdateUserId = incomeAndExpensesUpdateDto.UpdateUserId,
+                Status = incomeAndExpensesUpdateDto.Status
             };
-            _incomeAndExpensesDal.UpdateType(incomeAndExpensesType);
+            _incomeAndExpensesDal.Update(incomeAndExpenses);
 
-            return new SuccessResult(Messages.IncomeAndExpensesTypeUpdated);
+            return new SuccessResult(Messages.ProductUpdated);
         }
 
-        public IResult DeleteType(int id)
+        public IDataResult<List<ViewModel>> List()
         {
-            _incomeAndExpensesDal.DeleteType(id);
-            return new SuccessResult(Messages.IncomeAndExpensesTypeDeleted);
+            var result = _incomeAndExpensesDal.List();
+
+            return new SuccessDataResult<List<ViewModel>>(result, Messages.IncomeAndExpensesListed);
         }
 
-        public IDataResult<List<ViewModel>> ListType()
+        public IResult Delete(int id)
         {
-            var result = _incomeAndExpensesDal.ListType();
-
-            return new SuccessDataResult<List<ViewModel>>(result, Messages.IncomeAndExpensesTypeListed);
+            _incomeAndExpensesDal.Delete(id);
+            return new SuccessResult(Messages.IncomeAndExpensesDeleted);
         }
 
-        public IDataResult<ViewModel> ListTypeById(int id)
+        public IDataResult<ViewModel> ListById(int id)
         {
-            var result = _incomeAndExpensesDal.ListTypeById(id);
+            var result = _incomeAndExpensesDal.ListById(id);
             if (result == null)
             {
-                return new ErrorDataResult<ViewModel>(Messages.IncomeAndExpensesTypeNotFound);
+                return new ErrorDataResult<ViewModel>(Messages.IncomeAndExpensesNotFound);
             }
 
-            return new SuccessDataResult<ViewModel>(result, Messages.IncomeAndExpensesTypeInfoListed);
+            return new SuccessDataResult<ViewModel>(result, Messages.IncomeAndExpensesInfoListed);
         }
     }
 }

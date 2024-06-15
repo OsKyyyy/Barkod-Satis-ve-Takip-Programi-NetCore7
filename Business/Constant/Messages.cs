@@ -106,6 +106,12 @@ namespace Business.Constant
         public static string IncomeAndExpensesTypeNotFound = "Gelir-Gider Türü Bulunamadı";
         public static string IncomeAndExpensesTypeInfoListed = "Gelir-Gider Tür Bilgileri Listelendi";
         public static string IncomeAndExpensesTypeDeleted = "Gelir-Gider Türü Silindi";
+
+        public static string IncomeAndExpensesAdded = "Gelir-Gider Eklendi";
+        public static string IncomeAndExpensesListed = "Gelir-Giderler Listelendi";
+        public static string IncomeAndExpensesDeleted = "Gelir-Gider Silindi";
+        public static string IncomeAndExpensesNotFound = "Gelir-Gider Bulunamadı";
+        public static string IncomeAndExpensesInfoListed = "Gelir-Gider Bilgileri Listelendi";
     }
 
 }

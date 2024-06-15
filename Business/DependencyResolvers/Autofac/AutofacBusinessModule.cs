@@ -53,6 +53,9 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<SaleProductManager>().As<ISaleProductService>();
             builder.RegisterType<EfSaleProductDal>().As<ISaleProductDal>();
 
+            builder.RegisterType<IncomeAndExpensesTypeManager>().As<IIncomeAndExpensesTypeService>();
+            builder.RegisterType<EfIncomeAndExpensesTypeDal>().As<IIncomeAndExpensesTypeDal>();
+
             builder.RegisterType<IncomeAndExpensesManager>().As<IIncomeAndExpensesService>();
             builder.RegisterType<EfIncomeAndExpensesDal>().As<IIncomeAndExpensesDal>();
 

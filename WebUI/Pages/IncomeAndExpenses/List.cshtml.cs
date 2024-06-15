@@ -5,11 +5,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace WebUI.Pages.IncomeAndExpenses
 {
-    public class ListTypeModel : PageModel
+    public class ListModel : PageModel
     {
         private readonly IIncomeAndExpenses _incomeAndExpenses;
 
-        public ListTypeModel(IIncomeAndExpenses incomeAndExpenses)
+        public ListModel(IIncomeAndExpenses incomeAndExpenses)
         {
             _incomeAndExpenses = incomeAndExpenses;
         }
@@ -27,7 +27,7 @@ namespace WebUI.Pages.IncomeAndExpenses
             ToastrError = TempData["ToastrError"] as string;
             ToastrSuccess = TempData["ToastrSuccess"] as string;
 
-            var response = await _incomeAndExpenses.ListType("Bearer " + HttpContext.Session.GetString("userToken"));
+            var response = await _incomeAndExpenses.List("Bearer " + HttpContext.Session.GetString("userToken"));
 
             if (response.Message == "Authentication Error")
             {

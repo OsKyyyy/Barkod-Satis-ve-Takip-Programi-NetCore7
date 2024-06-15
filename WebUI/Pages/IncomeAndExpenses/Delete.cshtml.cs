@@ -4,18 +4,18 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace WebUI.Pages.IncomeAndExpenses
 {
-    public class DeleteTypeModel : PageModel
+    public class DeleteModel : PageModel
     {
         private readonly IIncomeAndExpenses _incomeAndExpenses;
 
-        public DeleteTypeModel(IIncomeAndExpenses incomeAndExpenses)
+        public DeleteModel(IIncomeAndExpenses incomeAndExpenses)
         {
             _incomeAndExpenses = incomeAndExpenses;
         }
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            var response = await _incomeAndExpenses.DeleteType("Bearer " + HttpContext.Session.GetString("userToken"), id);
+            var response = await _incomeAndExpenses.Delete("Bearer " + HttpContext.Session.GetString("userToken"), id);
 
             if (response.Message == "Authentication Error")
             {
@@ -35,7 +35,7 @@ namespace WebUI.Pages.IncomeAndExpenses
                 TempData["ToastrError"] = response.Message;
             }
 
-            return RedirectToPage("ListType");
+            return RedirectToPage("List");
         }
     }
 }

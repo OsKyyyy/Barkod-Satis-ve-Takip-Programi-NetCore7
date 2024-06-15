@@ -1,19 +1,19 @@
 using Core.Utilities.Refit.Abstract;
-using Core.Utilities.Refit.Models.Request.IncomeAndExpenses;
+using Core.Utilities.Refit.Models.Request.IncomeAndExpensesType;
 using Core.Utilities.Refit.Models.Response.User;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 
-namespace WebUI.Pages.IncomeAndExpenses
+namespace WebUI.Pages.IncomeAndExpensesType
 {
-    public class EditTypeModel : PageModel
+    public class EditModel : PageModel
     {
-        private readonly IIncomeAndExpenses _incomeAndExpenses;
+        private readonly IIncomeAndExpensesType _incomeAndExpensesType;
 
-        public EditTypeModel(IIncomeAndExpenses incomeAndExpenses)
+        public EditModel(IIncomeAndExpensesType incomeAndExpensesType)
         {
-            _incomeAndExpenses = incomeAndExpenses;
+            _incomeAndExpensesType = incomeAndExpensesType;
         }
 
         [ViewData]
@@ -23,11 +23,11 @@ namespace WebUI.Pages.IncomeAndExpenses
         public string ToastrSuccess { get; set; }
 
         [BindProperty]
-        public UpdateTypeRequestModel UpdateTypeRequestModel { get; set; }
+        public UpdateRequestModel UpdateRequestModel { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            var response = await _incomeAndExpenses.ListTypeById("Bearer " + HttpContext.Session.GetString("userToken"), id);
+            var response = await _incomeAndExpensesType.ListById("Bearer " + HttpContext.Session.GetString("userToken"), id);
 
             if (response.Message == "Authentication Error")
             {
@@ -39,27 +39,27 @@ namespace WebUI.Pages.IncomeAndExpenses
 
             if (response.Status)
             {
-                UpdateTypeRequestModel setModel = new UpdateTypeRequestModel();
+                UpdateRequestModel setModel = new UpdateRequestModel();
 
                 setModel.Id = response.Data.Id;
                 setModel.Name = response.Data.Name;
                 setModel.Status = response.Data.Status;
 
-                UpdateTypeRequestModel = setModel;
+                UpdateRequestModel = setModel;
 
                 return Page();
             }
 
             TempData["ToastrError"] = response.Message;
 
-            return RedirectToPage("ListType");
+            return RedirectToPage("List");
         }
 
-        public async Task<IActionResult> OnPostEditAsync(UpdateTypeRequestModel updateTypeRequestModel)
+        public async Task<IActionResult> OnPostEditAsync(UpdateRequestModel updateRequestModel)
         {
-            updateTypeRequestModel.UpdateUserId = JsonConvert.DeserializeObject<ViewModel>(HttpContext.Session.GetString("userInfo")).Id;
+            updateRequestModel.UpdateUserId = JsonConvert.DeserializeObject<ViewModel>(HttpContext.Session.GetString("userInfo")).Id;
 
-            var response = await _incomeAndExpenses.UpdateType("Bearer " + HttpContext.Session.GetString("userToken"), updateTypeRequestModel);
+            var response = await _incomeAndExpensesType.Update("Bearer " + HttpContext.Session.GetString("userToken"), updateRequestModel);
 
             if (response.Message == "Authentication Error")
             {
@@ -72,7 +72,7 @@ namespace WebUI.Pages.IncomeAndExpenses
             if (response.Status)
             {
                 ToastrSuccess = response.Message;
-                return RedirectToPage("EditType", updateTypeRequestModel.Id);
+                return RedirectToPage("Edit", updateRequestModel.Id);
             }
 
             ToastrError = response.Message;

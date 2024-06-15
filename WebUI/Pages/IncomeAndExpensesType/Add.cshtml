@@ -1,5 +1,5 @@
 ﻿@page
-@model WebUI.Pages.IncomeAndExpenses.AddTypeModel
+@model WebUI.Pages.IncomeAndExpensesType.AddModel
 @{
     ViewData["Title"] = "Gelir-Gider Türü Ekle";
 }
@@ -40,7 +40,7 @@
                                 </div>
                             </div>
                             <div class="card-body pt-0">
-                                <select asp-for="AddTypeRequestModel.Status" class="form-select mb-2" data-control="select2" data-hide-search="true" id="statusSelect">
+                                <select asp-for="AddRequestModel.Status" class="form-select mb-2" data-control="select2" data-hide-search="true" id="statusSelect">
                                     <option value="true" selected="">Aktif</option>
                                     <option value="false">Pasif</option>
                                 </select>
@@ -60,9 +60,9 @@
                                     <label class="col-lg-4 col-form-label required fw-semibold fs-6">Tür Adı</label>
 
                                     <div class="col-lg-8 fv-row">
-                                        <input asp-for="AddTypeRequestModel.Name" class="form-control form-control-lg form-control mb-3 mb-lg-0" autocomplete="off">
+                                        <input asp-for="AddRequestModel.Name" class="form-control form-control-lg form-control mb-3 mb-lg-0" autocomplete="off">
                                         <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
-                                            <span asp-validation-for="AddTypeRequestModel.Name"></span>
+                                            <span asp-validation-for="AddRequestModel.Name"></span>
                                         </div>
                                     </div>
                                 </div>

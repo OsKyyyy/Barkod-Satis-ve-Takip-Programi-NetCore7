@@ -12,10 +12,10 @@ namespace Business.Abstract
 {
     public interface IIncomeAndExpensesService
     {
-        IResult AddType(IncomeAndExpensesTypeAddDto incomeAndExpensesTypeAddDto);
-        IResult UpdateType(IncomeAndExpensesTypeUpdateDto incomeAndExpensesTypeUpdateDto);
-        IResult DeleteType(int id);
-        IDataResult<List<ViewModel>> ListType();
-        IDataResult<ViewModel> ListTypeById(int id);
+        IResult Add(IncomeAndExpensesAddDto incomeAndExpensesAddDto);
+        IResult Update(IncomeAndExpensesUpdateDto incomeAndExpensesUpdateDto);
+        IDataResult<List<ViewModel>> List();
+        IResult Delete(int id);
+        IDataResult<ViewModel> ListById(int id);
     }
 }

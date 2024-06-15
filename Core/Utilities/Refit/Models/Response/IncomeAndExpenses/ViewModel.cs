@@ -13,8 +13,20 @@ namespace Core.Utilities.Refit.Models.Response.IncomeAndExpenses
         [JsonProperty("Id")]
         public int Id { get; set; }
 
-        [JsonProperty("Name")]
-        public string Name { get; set; }
+        [JsonProperty("IncomeExpensesTypeId")]
+        public int IncomeExpensesTypeId { get; set; }
+
+        [JsonProperty("IncomeExpensesTypeName")]
+        public string IncomeExpensesTypeName { get; set; }
+
+        [JsonProperty("Type")]
+        public bool Type { get; set; }
+
+        [JsonProperty("Description")]
+        public string Description { get; set; }
+
+        [JsonProperty("Amount")]
+        public Decimal Amount { get; set; }
 
         [JsonProperty("Status")]
         public bool Status { get; set; }
@@ -24,5 +36,8 @@ namespace Core.Utilities.Refit.Models.Response.IncomeAndExpenses
 
         [JsonProperty("UpdateUserName")]
         public string UpdateUserName { get; set; }
+
+        [JsonProperty("Deleted")]
+        public bool Deleted { get; set; }
     }
 }

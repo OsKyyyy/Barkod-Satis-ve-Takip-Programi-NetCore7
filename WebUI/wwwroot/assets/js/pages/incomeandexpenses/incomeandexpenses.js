@@ -4,6 +4,9 @@
         IncomeAndExpenses.ToastrError();
         IncomeAndExpenses.ToastrSuccess();
         IncomeAndExpenses.ChangeStatus();
+        $("#amount").on("keyup", function () {
+            $(this).val($(this).val().replace(",", "."));
+        })
     },
 
     ToastrError: function () {
@@ -59,6 +62,29 @@
         }
     },
     DeleteConfirm: function (e) {
+
+        event.preventDefault();
+        var url = $(e).attr("href");
+
+        Swal.fire({
+            title: 'Emin misin?',
+            text: 'Gelir-Gideri silmek üzeresiniz. Bu işlem yapıldıktan sonra geri alınamaz',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: "Onaylıyorum, Sil",
+            cancelButtonText: 'Vazgeç',
+            customClass: {
+                confirmButton: 'btn btn-primary',
+                cancelButton: 'btn btn-danger'
+            }
+        }).then((willDelete) => {
+
+            if (willDelete.isConfirmed) {
+                window.location.href = url;
+            }
+        });
+    },
+    DeleteTypeConfirm: function (e) {
 
         event.preventDefault(); 
         var url = $(e).attr("href"); 
