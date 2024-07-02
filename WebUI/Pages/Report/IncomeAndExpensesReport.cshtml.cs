@@ -36,12 +36,33 @@ namespace WebUI.Pages.Report
             return Page();
         }
 
-        public async Task<IActionResult> OnPostGetLastCustomerWithDebtAsync()
+        public async Task<IActionResult> OnPostMonthlyExternalIncomeAsync()
         {
-            var response = await _report.GetLastCustomerWithDebt("Bearer " + HttpContext.Session.GetString("userToken"));
+            var response = await _report.MonthlyExternalIncome("Bearer " + HttpContext.Session.GetString("userToken"));
 
             return new JsonResult(response);
         }
+
+        public async Task<IActionResult> OnPostMonthlyExternalExpensesAsync()
+        {
+            var response = await _report.MonthlyExternalExpenses("Bearer " + HttpContext.Session.GetString("userToken"));
+
+            return new JsonResult(response);
+        }
+
+        public async Task<IActionResult> OnPostMonthlySalesIncomeAsync()
+        {
+            var response = await _report.MonthlySalesIncome("Bearer " + HttpContext.Session.GetString("userToken"));
+
+            return new JsonResult(response);
+        }
+
+        public async Task<IActionResult> OnPostMonthlyWholeSalerExpensesAsync()
+        {
+            var response = await _report.MonthlyWholeSalerExpenses("Bearer " + HttpContext.Session.GetString("userToken"));
+
+            return new JsonResult(response);
+        }        
     }
 }
 

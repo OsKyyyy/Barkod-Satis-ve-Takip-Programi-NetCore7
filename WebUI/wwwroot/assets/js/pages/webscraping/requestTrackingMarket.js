@@ -20,6 +20,11 @@
                     $('input:hidden[name="__RequestVerificationToken"]').val()
             },
             success: function (response) {
+                
+                if (response.data.length == 0) {
+                    $("#marketInfo").html("Bu market ile ilgili fiyat artışı veya indirimi olan ürün bulunamadı");
+                    return;
+                }
 
                 $("#marketInfo").html(response.data[0].marketInfo);
 

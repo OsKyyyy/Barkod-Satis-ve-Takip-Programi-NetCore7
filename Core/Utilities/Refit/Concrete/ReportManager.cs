@@ -571,5 +571,123 @@ namespace Core.Utilities.Refit.Concrete
                 return dataResult;
             }
         }
+
+
+        public async Task<DataResult<IncomeExpensesTotalViewModel>> MonthlyExternalIncome([Header("Authorization: Bearer")] string token)
+        {
+            DataResult<IncomeExpensesTotalViewModel> dataResult = new DataResult<IncomeExpensesTotalViewModel>();
+
+            try
+            {
+                dataResult = await myAPI.MonthlyExternalIncome(token);
+
+                return dataResult;
+            }
+            catch (ApiException exception)
+            {
+                dynamic response = JsonConvert.DeserializeObject(exception.Content);
+
+                if (response != null && response.Status != null)
+                {
+                    dataResult.Message = response.Message;
+                    dataResult.Status = response.Status;
+
+                    return dataResult;
+                }
+
+                dataResult.Message = "Beklenmedik hata ile karşılaşıldı";
+                dataResult.Status = false;
+
+                return dataResult;
+            }
+        }
+        
+        public async Task<DataResult<IncomeExpensesTotalViewModel>> MonthlyExternalExpenses([Header("Authorization: Bearer")] string token)
+        {
+            DataResult<IncomeExpensesTotalViewModel> dataResult = new DataResult<IncomeExpensesTotalViewModel>();
+
+            try
+            {
+                dataResult = await myAPI.MonthlyExternalExpenses(token);
+
+                return dataResult;
+            }
+            catch (ApiException exception)
+            {
+                dynamic response = JsonConvert.DeserializeObject(exception.Content);
+
+                if (response != null && response.Status != null)
+                {
+                    dataResult.Message = response.Message;
+                    dataResult.Status = response.Status;
+
+                    return dataResult;
+                }
+
+                dataResult.Message = "Beklenmedik hata ile karşılaşıldı";
+                dataResult.Status = false;
+
+                return dataResult;
+            }
+        }
+
+        public async Task<DataResult<IncomeExpensesTotalViewModel>> MonthlySalesIncome([Header("Authorization: Bearer")] string token)
+        {
+            DataResult<IncomeExpensesTotalViewModel> dataResult = new DataResult<IncomeExpensesTotalViewModel>();
+
+            try
+            {
+                dataResult = await myAPI.MonthlySalesIncome(token);
+
+                return dataResult;
+            }
+            catch (ApiException exception)
+            {
+                dynamic response = JsonConvert.DeserializeObject(exception.Content);
+
+                if (response != null && response.Status != null)
+                {
+                    dataResult.Message = response.Message;
+                    dataResult.Status = response.Status;
+
+                    return dataResult;
+                }
+
+                dataResult.Message = "Beklenmedik hata ile karşılaşıldı";
+                dataResult.Status = false;
+
+                return dataResult;
+            }
+        }
+        
+        public async Task<DataResult<IncomeExpensesTotalViewModel>> MonthlyWholeSalerExpenses([Header("Authorization: Bearer")] string token)
+        {
+            DataResult<IncomeExpensesTotalViewModel> dataResult = new DataResult<IncomeExpensesTotalViewModel>();
+
+            try
+            {
+                dataResult = await myAPI.MonthlyWholeSalerExpenses(token);
+
+                return dataResult;
+            }
+            catch (ApiException exception)
+            {
+                dynamic response = JsonConvert.DeserializeObject(exception.Content);
+
+                if (response != null && response.Status != null)
+                {
+                    dataResult.Message = response.Message;
+                    dataResult.Status = response.Status;
+
+                    return dataResult;
+                }
+
+                dataResult.Message = "Beklenmedik hata ile karşılaşıldı";
+                dataResult.Status = false;
+
+                return dataResult;
+            }
+        }
+
     }
 }

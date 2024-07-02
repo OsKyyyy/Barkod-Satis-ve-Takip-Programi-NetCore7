@@ -74,5 +74,18 @@ namespace Core.Utilities.Refit.Abstract
 
         [Get("/report/GetWholeSalerMonthlyDebtOfOneYear")]
         Task<DataResult<List<WholeSalerMonthlyDebtViewModel>>> GetWholeSalerMonthlyDebtOfOneYear([Header("Authorization")] string token);
+
+
+        [Get("/report/MonthlyExternalIncome")]
+        Task<DataResult<IncomeExpensesTotalViewModel>> MonthlyExternalIncome([Header("Authorization")] string token);
+        
+        [Get("/report/MonthlyExternalExpenses")]
+        Task<DataResult<IncomeExpensesTotalViewModel>> MonthlyExternalExpenses([Header("Authorization")] string token);
+
+        [Get("/report/MonthlySalesIncome")]
+        Task<DataResult<IncomeExpensesTotalViewModel>> MonthlySalesIncome([Header("Authorization")] string token);
+
+        [Get("/report/MonthlyWholeSalerExpenses")]
+        Task<DataResult<IncomeExpensesTotalViewModel>> MonthlyWholeSalerExpenses([Header("Authorization")] string token);        
     }
 }

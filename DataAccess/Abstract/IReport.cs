@@ -34,5 +34,10 @@ namespace DataAccess.Abstract
         WholeSalerTotalDebtViewModel GetWholeSalerThisMonthDebt();
         WholeSalerTotalDebtViewModel GetWholeSalerPreviousMonthDebt();
         List<WholeSalerMonthlyDebtViewModel> GetWholeSalerMonthlyDebtOfOneYear();
+
+        IncomeExpensesTotalViewModel MonthlyExternalIncome();
+        IncomeExpensesTotalViewModel MonthlyExternalExpenses();
+        IncomeExpensesTotalViewModel MonthlySalesIncome();
+        IncomeExpensesTotalViewModel MonthlyWholeSalerExpenses();
     }
 }

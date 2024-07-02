@@ -36,5 +36,11 @@ namespace Business.Abstract
         IDataResult<WholeSalerTotalDebtViewModel> GetWholeSalerThisMonthDebt();
         IDataResult<WholeSalerTotalDebtViewModel> GetWholeSalerPreviousMonthDebt();
         IDataResult<List<WholeSalerMonthlyDebtViewModel>> GetWholeSalerMonthlyDebtOfOneYear();
+
+        IDataResult<IncomeExpensesTotalViewModel> MonthlyExternalIncome();
+        IDataResult<IncomeExpensesTotalViewModel> MonthlyExternalExpenses();
+        IDataResult<IncomeExpensesTotalViewModel> MonthlySalesIncome();
+        IDataResult<IncomeExpensesTotalViewModel> MonthlyWholeSalerExpenses();
+
     }
 }

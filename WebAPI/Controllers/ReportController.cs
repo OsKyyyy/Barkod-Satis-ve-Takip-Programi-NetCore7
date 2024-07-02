@@ -249,5 +249,58 @@ namespace WebAPI.Controllers
 
             return Ok(list);
         }
+
+
+        [Route("MonthlyExternalIncome")]
+        [HttpGet]
+        public ActionResult MonthlyExternalIncome()
+        {
+            var list = _reportService.MonthlyExternalIncome();
+            if (!list.Status)
+            {
+                return BadRequest(list);
+            }
+
+            return Ok(list);
+        }
+
+        [Route("MonthlyExternalExpenses")]
+        [HttpGet]
+        public ActionResult MonthlyExternalExpenses()
+        {
+            var list = _reportService.MonthlyExternalExpenses();
+            if (!list.Status)
+            {
+                return BadRequest(list);
+            }
+
+            return Ok(list);
+        }
+
+        [Route("MonthlySalesIncome")]
+        [HttpGet]
+        public ActionResult MonthlySalesIncome()
+        {
+            var list = _reportService.MonthlySalesIncome();
+            if (!list.Status)
+            {
+                return BadRequest(list);
+            }
+
+            return Ok(list);
+        }
+
+        [Route("MonthlyWholeSalerExpenses")]
+        [HttpGet]
+        public ActionResult MonthlyWholeSalerExpenses()
+        {
+            var list = _reportService.MonthlyWholeSalerExpenses();
+            if (!list.Status)
+            {
+                return BadRequest(list);
+            }
+
+            return Ok(list);
+        }
     }
 }

@@ -157,5 +157,34 @@ namespace Business.Concrete
 
             return new SuccessDataResult<List<WholeSalerMonthlyDebtViewModel>>(result, Messages.GetWholeSalerMonthlyDebtListed);
         }
+
+
+        public IDataResult<IncomeExpensesTotalViewModel> MonthlyExternalIncome()
+        {
+            var result = _reportDal.MonthlyExternalIncome();
+
+            return new SuccessDataResult<IncomeExpensesTotalViewModel>(result, Messages.MonthlyExternalIncomeListed);
+        }
+
+        public IDataResult<IncomeExpensesTotalViewModel> MonthlyExternalExpenses()
+        {
+            var result = _reportDal.MonthlyExternalExpenses();
+
+            return new SuccessDataResult<IncomeExpensesTotalViewModel>(result, Messages.MonthlyExternalExpensesListed);
+        }
+
+        public IDataResult<IncomeExpensesTotalViewModel> MonthlySalesIncome()
+        {
+            var result = _reportDal.MonthlySalesIncome();
+
+            return new SuccessDataResult<IncomeExpensesTotalViewModel>(result, Messages.MonthlySalesIncomeListed);
+        }
+        
+        public IDataResult<IncomeExpensesTotalViewModel> MonthlyWholeSalerExpenses()
+        {
+            var result = _reportDal.MonthlyWholeSalerExpenses();
+
+            return new SuccessDataResult<IncomeExpensesTotalViewModel>(result, Messages.MonthlyWholeSalerExpensesListed);
+        }
     }
 }

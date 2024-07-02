@@ -112,6 +112,11 @@ namespace Business.Constant
         public static string IncomeAndExpensesDeleted = "Gelir-Gider Silindi";
         public static string IncomeAndExpensesNotFound = "Gelir-Gider Bulunamadı";
         public static string IncomeAndExpensesInfoListed = "Gelir-Gider Bilgileri Listelendi";
+
+        public static string MonthlyExternalIncomeListed = "Aylık Harici Gelir Listelendi";
+        public static string MonthlyExternalExpensesListed = "Aylık Harici Gider Listelendi";
+        public static string MonthlySalesIncomeListed = "Aylık Satış Geliri Listelendi";
+        public static string MonthlyWholeSalerExpensesListed = "Aylık Toptancı Gideri Listelendi";
     }
 
 }

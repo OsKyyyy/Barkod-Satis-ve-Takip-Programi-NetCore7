@@ -71,27 +71,31 @@ namespace Core.Utilities.WebScraping.Concrete
             var rows = productsNodes.SelectNodes(".//ul/li");
             var marketInfo = productsNodes.SelectSingleNode(".//div[@class='main-title p-3']").InnerText.Trim();
 
-            foreach (var marketNode in rows)
-            {                
-                var productLogoNode = marketNode.SelectSingleNode(".//img");
-                var productLogo = productLogoNode?.GetAttributeValue("src", string.Empty);
-                var productNameNode = marketNode.SelectSingleNode(".//div[@class='pi-name mt-1']/a");
-                var productName = productNameNode?.InnerText.Trim();
-                var productPriceNode = marketNode.SelectNodes(".//div[@class='pi-name mt-1']/div");
-                var productNewPrice = productPriceNode[0].InnerText.Trim();
-                var productOldPrice = productPriceNode[1].InnerText.Trim();
-
-                var product = new MarketViewModel
+            if (rows != null)
+            {
+                foreach (var marketNode in rows)
                 {
-                    ProductName = productName,
-                    ProductLogo = productLogo,
-                    NewPrice = productNewPrice,
-                    OldPrice = productOldPrice,
-                    MarketInfo = marketInfo
-                };
+                    var productLogoNode = marketNode.SelectSingleNode(".//img");
+                    var productLogo = productLogoNode?.GetAttributeValue("src", string.Empty);
+                    var productNameNode = marketNode.SelectSingleNode(".//div[@class='pi-name mt-1']/a");
+                    var productName = productNameNode?.InnerText.Trim();
+                    var productPriceNode = marketNode.SelectNodes(".//div[@class='pi-name mt-1']/div");
+                    var productNewPrice = productPriceNode[0].InnerText.Trim();
+                    var productOldPrice = productPriceNode[1].InnerText.Trim();
 
-                products.Add(product);
+                    var product = new MarketViewModel
+                    {
+                        ProductName = productName,
+                        ProductLogo = productLogo,
+                        NewPrice = productNewPrice,
+                        OldPrice = productOldPrice,
+                        MarketInfo = marketInfo
+                    };
+
+                    products.Add(product);
+                }
             }
+           
 
             return new SuccessDataResult<List<MarketViewModel>>(products);
         }

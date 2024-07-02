@@ -812,5 +812,124 @@ namespace DataAccess.Concrete.EntityFramework
                 return result.OrderBy(r => r.Year).ThenBy(r => r.Month).ToList();
             }
         }
+
+
+        public IncomeExpensesTotalViewModel MonthlyExternalIncome()
+        {
+            using (var context = new DataBaseContext())
+            {
+                var total = context.IncomeAndExpenses                   
+                    .Where(x => x.Deleted == false 
+                            && x.Type == true
+                            && x.CreateDate.Month == DateTime.Now.Month
+                            && x.CreateDate.Year == DateTime.Now.Year
+                        )
+                    .Sum(x => x.Amount);
+
+                var totalPrevious = context.IncomeAndExpenses
+                   .Where(x => x.Deleted == false
+                           && x.Type == true
+                           && x.CreateDate.Month == DateTime.Now.AddMonths(-1).Month
+                           && x.CreateDate.Year == DateTime.Now.AddMonths(-1).Year
+                       )
+                   .Sum(x => x.Amount);
+
+                var result = new IncomeExpensesTotalViewModel
+                {
+                    Total = total,
+                    TotalPrevious = totalPrevious
+                };
+
+                return result;
+            }
+        }
+
+        public IncomeExpensesTotalViewModel MonthlyExternalExpenses()
+        {
+            using (var context = new DataBaseContext())
+            {
+                var total = context.IncomeAndExpenses
+                    .Where(x => x.Deleted == false
+                            && x.Type == false
+                            && x.CreateDate.Month == DateTime.Now.Month
+                            && x.CreateDate.Year == DateTime.Now.Year
+                        )
+                    .Sum(x => x.Amount);
+
+                var totalPrevious = context.IncomeAndExpenses
+                   .Where(x => x.Deleted == false
+                           && x.Type == false
+                           && x.CreateDate.Month == DateTime.Now.AddMonths(-1).Month
+                           && x.CreateDate.Year == DateTime.Now.AddMonths(-1).Year
+                       )
+                   .Sum(x => x.Amount);
+
+                var result = new IncomeExpensesTotalViewModel
+                {
+                    Total = total,
+                    TotalPrevious = totalPrevious
+                };
+                
+                return result;
+            }
+        }
+
+        public IncomeExpensesTotalViewModel MonthlySalesIncome()
+        {
+            using (var context = new DataBaseContext())
+            {
+                var total = context.Sales
+                    .Where(x => x.Deleted == false
+                            && x.CreateDate.Month == DateTime.Now.Month
+                            && x.CreateDate.Year == DateTime.Now.Year
+                        )
+                    .Sum(x => x.Amount);
+
+                var totalPrevious = context.Sales
+                   .Where(x => x.Deleted == false
+                           && x.CreateDate.Month == DateTime.Now.AddMonths(-1).Month
+                           && x.CreateDate.Year == DateTime.Now.AddMonths(-1).Year
+                       )
+                   .Sum(x => x.Amount);
+
+                var result = new IncomeExpensesTotalViewModel
+                {
+                    Total = total,
+                    TotalPrevious = totalPrevious
+                };
+
+                return result;
+            }
+        }
+        
+        public IncomeExpensesTotalViewModel MonthlyWholeSalerExpenses()
+        {
+            using (var context = new DataBaseContext())
+            {
+                var total = context.WholeSalerMovements
+                    .Where(x => x.Deleted == false
+                            && x.ProcessType == 2
+                            && x.CreateDate.Month == DateTime.Now.Month
+                            && x.CreateDate.Year == DateTime.Now.Year
+                        )
+                    .Sum(x => x.Amount);
+
+                var totalPrevious = context.WholeSalerMovements
+                   .Where(x => x.Deleted == false
+                           && x.ProcessType == 2
+                           && x.CreateDate.Month == DateTime.Now.AddMonths(-1).Month
+                           && x.CreateDate.Year == DateTime.Now.AddMonths(-1).Year
+                       )
+                   .Sum(x => x.Amount);
+
+                var result = new IncomeExpensesTotalViewModel
+                {
+                    Total = total,
+                    TotalPrevious = totalPrevious
+                };
+
+                return result;
+            }
+        }
     }
 }
