@@ -8,11 +8,11 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WebUI.Pages.Report
 {
-    public class IncomeAndExpensesReportModel : PageModel
+    public class IncomeAndExpensesListModel : PageModel
     {
         private readonly IReport _report;
 
-        public IncomeAndExpensesReportModel(IReport report)
+        public IncomeAndExpensesListModel(IReport report)
         {
             _report = report;
         }
@@ -34,34 +34,6 @@ namespace WebUI.Pages.Report
             }
 
             return Page();
-        }
-
-        public async Task<IActionResult> OnPostMonthlyExternalIncomeAsync()
-        {
-            var response = await _report.MonthlyExternalIncome("Bearer " + HttpContext.Session.GetString("userToken"));
-
-            return new JsonResult(response);
-        }
-
-        public async Task<IActionResult> OnPostMonthlyExternalExpensesAsync()
-        {
-            var response = await _report.MonthlyExternalExpenses("Bearer " + HttpContext.Session.GetString("userToken"));
-
-            return new JsonResult(response);
-        }
-
-        public async Task<IActionResult> OnPostMonthlySalesIncomeAsync()
-        {
-            var response = await _report.MonthlySalesIncome("Bearer " + HttpContext.Session.GetString("userToken"));
-
-            return new JsonResult(response);
-        }
-
-        public async Task<IActionResult> OnPostMonthlyWholeSalerExpensesAsync()
-        {
-            var response = await _report.MonthlyWholeSalerExpenses("Bearer " + HttpContext.Session.GetString("userToken"));
-
-            return new JsonResult(response);
         }
 
         public async Task<IActionResult> OnPostYearlyExternalIncomeAsync()

@@ -302,5 +302,57 @@ namespace WebAPI.Controllers
 
             return Ok(list);
         }
+
+        [Route("YearlyExternalIncome")]
+        [HttpGet]
+        public ActionResult YearlyExternalIncome()
+        {
+            var list = _reportService.YearlyExternalIncome();
+            if (!list.Status)
+            {
+                return BadRequest(list);
+            }
+
+            return Ok(list);
+        }
+
+        [Route("YearlyExternalExpenses")]
+        [HttpGet]
+        public ActionResult YearlyExternalExpenses()
+        {
+            var list = _reportService.YearlyExternalExpenses();
+            if (!list.Status)
+            {
+                return BadRequest(list);
+            }
+
+            return Ok(list);
+        }
+
+        [Route("YearlySalesIncome")]
+        [HttpGet]
+        public ActionResult YearlySalesIncome()
+        {
+            var list = _reportService.YearlySalesIncome();
+            if (!list.Status)
+            {
+                return BadRequest(list);
+            }
+
+            return Ok(list);
+        } 
+        
+        [Route("YearlyWholeSalerExpenses")]
+        [HttpGet]
+        public ActionResult YearlyWholeSalerExpenses()
+        {
+            var list = _reportService.YearlyWholeSalerExpenses();
+            if (!list.Status)
+            {
+                return BadRequest(list);
+            }
+
+            return Ok(list);
+        }
     }
 }

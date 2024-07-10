@@ -5,8 +5,9 @@
     ViewData["Title"] = "Gelir-Gider Raporları";
 }
 @section _Head
-    {
-    <link href="~/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+{
+    <link href="~/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />    
+    <link href="~/assets/plugins/custom/vis-timeline/vis-timeline.bundle.css" rel="stylesheet" type="text/css" />
 }
 <div class="app-main flex-column flex-row-fluid " id="kt_app_main">
     <div class="d-flex flex-column flex-column-fluid">
@@ -32,136 +33,115 @@
         </div>
         <div id="kt_app_content" class="app-content  flex-column-fluid ">
             <div id="kt_app_content_container" class="app-container  container-xxl ">
+
                 <div class="row gy-5 g-xl-10">
 
-                    <div class="col-sm-6 col-xl-4 mb-xl-10">
-                        <div class="card h-lg-100">
-                            <div class="card-body d-flex justify-content-between align-items-start flex-column" id="monthlyEstimatedEarningCardBody">
-                                <div class="m-0">
-                                    <i class="ki-duotone ki-compass fs-2hx text-gray-600">
-                                        <span class="path1"></span>
-                                        <span class="path2"></span>
-                                    </i>
-                                </div>
-                                <div class="d-flex flex-column my-7">
-                                    <span class="fw-semibold fs-3x lh-1 ls-n2" id="monthlyEstimatedEarningInput">0.00 &#8378;</span>
-                                    <div class="m-0">
-                                        <span class="fw-semibold fs-4 text-gray-500">
-                                            Aylık Tahmini Kazanç
-                                        </span>
+                    <div class="col-md-4 col-xl-4 mb-xxl-10">
+                        
+                        <div class="card overflow-hidden h-md-50 mb-5 mb-xl-10">
+                            <div class="card-body d-flex justify-content-between flex-column px-0 pb-0">
+                                <div class="mb-4 px-9">
+                                    <div class="d-flex align-items-center mb-2" id="monthlyEstimatedEarningCardBody">
+                                        <span class="fs-4 fw-semibold text-gray-500 align-self-start me-1>">₺</span>
+                                        <span class="fs-2hx fw-bold me-2 lh-1" id="monthlyEstimatedEarningInput">0.00</span>                                       
                                     </div>
-                                </div>                      
+                                    <span class="fs-6 fw-semibold text-gray-500">Aylık Tahmini Kazanç</span>
+                                </div>
+                                <div id="MonthlyEstimatedEarningChart" class="min-h-auto" style="height: 125px"></div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="col-sm-6 col-xl-4 mb-xl-10">
-                        <div class="card h-lg-100">
-                            <div class="card-body d-flex justify-content-between align-items-start flex-column" id="monthlyEstimatedIncomeCardBody">
-                                <div class="m-0">
-                                    <i class="ki-duotone ki-compass fs-2hx text-gray-600">
-                                        <span class="path1"></span>
-                                        <span class="path2"></span>
-                                    </i>
-                                </div>
-                                <div class="d-flex flex-column my-7">
-                                    <span class="fw-semibold fs-3x text-success lh-1 ls-n2" id="monthlyEstimatedIncomeInput">0.00 &#8378;</span>
-                                    <div class="m-0">
-                                        <span class="fw-semibold fs-4 text-gray-500">
-                                            Aylık Tahmini Gelir
-                                        </span>
+                        
+                        <div class="card overflow-hidden h-md-50 mb-5 mb-xl-10">
+                            <div class="card-body d-flex justify-content-between flex-column px-0 pb-0">
+                                <div class="mb-4 px-9">
+                                    <div class="d-flex align-items-center mb-2" id="monthlySalesIncomeCardBody">
+                                        <span class="fs-4 fw-semibold text-gray-500 align-self-start me-1>">₺</span>
+                                        <span class="fs-2hx fw-bold text-success me-2 lh-1" id="monthlySalesIncomeInput">0.00</span>
                                     </div>
-                                </div>                               
+                                    <span class="fs-6 fw-semibold text-gray-500">Aylık Satış Geliri</span>
+                                </div>
+                                <div id="MonthlySalesIncomeChart" class="min-h-auto" style="height: 125px"></div>
                             </div>
                         </div>
+
                     </div>
 
-                    <div class="col-sm-6 col-xl-4 mb-xl-10">
-                        <div class="card h-lg-100">
-                            <div class="card-body d-flex justify-content-between align-items-start flex-column" id="monthlyEstimatedExpensesCardBody">
-                                <div class="m-0">
-                                    <i class="ki-duotone ki-compass fs-2hx text-gray-600">
-                                        <span class="path1"></span>
-                                        <span class="path2"></span>
-                                    </i>
-                                </div>
-                                <div class="d-flex flex-column my-7">
-                                    <span class="fw-semibold fs-3x text-danger lh-1 ls-n2"id="monthlyEstimatedExpensesInput">0.00 &#8378;</span>
-                                    <div class="m-0">
-                                        <span class="fw-semibold fs-4 text-gray-500">
-                                            Aylık Tahmini Gider
-                                        </span>
+                    <div class="col-md-4 col-xl-4 mb-xxl-10">
+
+                        <div class="card overflow-hidden h-md-50 mb-5 mb-xl-10">
+                            <div class="card-body d-flex justify-content-between flex-column px-0 pb-0">
+                                <div class="mb-4 px-9">
+                                    <div class="d-flex align-items-center mb-2" id="monthlyEstimatedIncomeCardBody">
+                                        <span class="fs-4 fw-semibold text-gray-500 align-self-start me-1>">₺</span>
+                                        <span class="fs-2hx fw-bold text-success me-2 lh-1" id="monthlyEstimatedIncomeInput">0.00</span>
                                     </div>
-                                </div>                          
+                                    <span class="fs-6 fw-semibold text-gray-500">Aylık Tahmini Gelir</span>
+                                </div>
+                                <div id="MonthlyEstimatedIncomeChart" class="min-h-auto" style="height: 125px"></div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="col-sm-6 col-xl-4 mb-xl-10">
-                        <div class="card h-lg-100">
-                            <div class="card-body d-flex justify-content-between align-items-start flex-column" id="monthlySalesIncomeCardBody">
-                                <div class="m-0">
-                                    <i class="ki-duotone ki-compass fs-2hx text-gray-600">
-                                        <span class="path1"></span>
-                                        <span class="path2"></span>
-                                    </i>
-                                </div>
-                                <div class="d-flex flex-column my-7">
-                                    <span class="fw-semibold fs-3x text-success lh-1 ls-n2" id="monthlySalesIncomeInput">0.00 &#8378;</span>
-                                    <div class="m-0">
-                                        <span class="fw-semibold fs-4 text-gray-500">
-                                            Aylık Satış Geliri
-                                        </span>
+                        <div class="card overflow-hidden h-md-50 mb-5 mb-xl-10">
+                            <div class="card-body d-flex justify-content-between flex-column px-0 pb-0">
+                                <div class="mb-4 px-9">
+                                    <div class="d-flex align-items-center mb-2" id="monthlyExternalIncomeCardBody">
+                                        <span class="fs-4 fw-semibold text-gray-500 align-self-start me-1>">₺</span>
+                                        <span class="fs-2hx fw-bold text-success me-2 lh-1" id="monthlyExternalIncomeInput">0.00</span>
                                     </div>
-                                </div>                           
+                                    <span class="fs-6 fw-semibold text-gray-500">Aylık Harici Gelir</span>
+                                </div>
+                                <div id="MonthlyExternalIncomeChart" class="min-h-auto" style="height: 125px"></div>
                             </div>
                         </div>
+
                     </div>
 
-                    <div class="col-sm-6 col-xl-4 mb-xl-10">
-                        <div class="card h-lg-100">
-                            <div class="card-body d-flex justify-content-between align-items-start flex-column" id="monthlyExternalIncomeCardBody">
-                                <div class="m-0">
-                                    <i class="ki-duotone ki-compass fs-2hx text-gray-600">
-                                        <span class="path1"></span>
-                                        <span class="path2"></span>
-                                    </i>
-                                </div>
-                                <div class="d-flex flex-column my-7">
-                                    <span class="fw-semibold fs-3x text-success lh-1 ls-n2" id="monthlyExternalIncomeInput">0.00 &#8378;</span>
-                                    <div class="m-0">
-                                        <span class="fw-semibold fs-4 text-gray-500">
-                                            Aylık Harici Gelir
-                                        </span>
+                    <div class="col-md-4 col-xl-4 mb-xxl-10">
+
+                        <div class="card overflow-hidden h-md-50 mb-5 mb-xl-10">
+                            <div class="card-body d-flex justify-content-between flex-column px-0 pb-0">
+                                <div class="mb-4 px-9">
+                                    <div class="d-flex align-items-center mb-2" id="monthlyEstimatedExpensesCardBody">
+                                        <span class="fs-4 fw-semibold text-gray-500 align-self-start me-1>">₺</span>
+                                        <span class="fs-2hx fw-bold text-danger me-2 lh-1" id="monthlyEstimatedExpensesInput">0.00</span>
                                     </div>
-                                </div>                                
+                                    <span class="fs-6 fw-semibold text-gray-500">Aylık Tahmini Gider</span>
+                                </div>
+                                <div id="MonthlyEstimatedExpensesChart" class="min-h-auto" style="height: 125px"></div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="col-sm-6 col-xl-4 mb-xl-10">
-                        <div class="card h-lg-100">
-                            <div class="card-body d-flex justify-content-between align-items-start flex-column" id="monthlyExternalExpensesCardBody">
-                                <div class="m-0">
-                                    <i class="ki-duotone ki-compass fs-2hx text-gray-600">
-                                        <span class="path1"></span>
-                                        <span class="path2"></span>
-                                    </i>
-                                </div>
-                                <div class="d-flex flex-column my-7">
-                                    <span class="fw-semibold fs-3x text-danger lh-1 ls-n2" id="monthlyExternalExpensesInput">0.00 &#8378;</span>
-                                    <div class="m-0">
-                                        <span class="fw-semibold fs-4 text-gray-500">
-                                            Aylık Harici Gider
-                                        </span>
+                        <div class="card overflow-hidden h-md-50 mb-5 mb-xl-10">
+                            <div class="card-body d-flex justify-content-between flex-column px-0 pb-0">
+                                <div class="mb-4 px-9">
+                                    <div class="d-flex align-items-center mb-2" id="monthlyExternalExpensesCardBody">
+                                        <span class="fs-4 fw-semibold text-gray-500 align-self-start me-1>">₺</span>
+                                        <span class="fs-2hx fw-bold text-danger me-2 lh-1" id="monthlyExternalExpensesInput">0.00</span>
                                     </div>
-                                </div>                               
+                                    <span class="fs-6 fw-semibold text-gray-500">Aylık Harici Gider</span>
+                                </div>
+                                <div id="MonthlyExternalExpensesChart" class="min-h-auto" style="height: 125px"></div>
                             </div>
                         </div>
-                    </div>
 
+                    </div>
+                    
                 </div>
-            </div>
+                <div class="row gy-5 g-xl-10 mt-20">
+                    <div class="card card-flush h-md-100">
+                        <div class="card-header pt-7">
+                            <h3 class="card-title align-items-start flex-column">
+                                <span class="card-label fw-bold text-gray-900">Gelir - Gider Grafiği</span>
+
+                                <span class="text-gray-500 pt-2 fw-semibold fs-6">Aylık Gelir - Gider - Kazanç Grafik Gösterimi</span>
+                            </h3>
+                        </div>
+                        <div class="card-body pt-5">
+                            <div id="kt_charts_widget_13_chart" class="w-100 h-325px"></div>
+                        </div>
+                    </div>
+                </div>
+             </div>
         </div>
     </div>
 </div>
@@ -177,8 +157,11 @@
 </form>
 
 @section _Foot
-    {
+{
     <script src="~/assets/plugins/custom/datatables/datatables.bundle.js"></script>
     <script src="~/assets/js/pages/report/report.js"></script>
     <script src="~/assets/js/pages/report/incomeAndExpensesRequest.js"></script>
+    <script src="~/lib/index.js"></script>
+    <script src="~/lib/themes/Animated.js"></script>
+    <script src="~/lib/xy.js"></script>
 }

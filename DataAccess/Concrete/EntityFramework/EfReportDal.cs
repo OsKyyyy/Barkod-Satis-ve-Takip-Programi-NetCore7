@@ -931,5 +931,121 @@ namespace DataAccess.Concrete.EntityFramework
                 return result;
             }
         }
+
+        public List<IncomeExpensesMonthlyTotalViewModel> YearlyExternalIncome()
+        {
+            using (var context = new DataBaseContext())
+            {
+                var now = DateTime.Now;
+                var result = new List<IncomeExpensesMonthlyTotalViewModel>();
+
+                for (int i = 0; i < 12; i++)
+                {
+                    var targetDate = now.AddMonths(-i);
+                    var month = targetDate.Month;
+                    var year = targetDate.Year;
+
+                    var total = context.IncomeAndExpenses                         
+                        .Where(x => x.CreateDate.Month == month && x.CreateDate.Year == year && x.Deleted == false && x.Type == true)
+                        .Sum(x => x.Amount);
+
+                    result.Add(new IncomeExpensesMonthlyTotalViewModel
+                    {
+                        Year = year,
+                        Month = month,
+                        Total = total
+                    });
+                }
+
+                return result.OrderBy(r => r.Year).ThenBy(r => r.Month).ToList();
+            }
+        }
+
+        public List<IncomeExpensesMonthlyTotalViewModel> YearlyExternalExpenses()
+        {
+            using (var context = new DataBaseContext())
+            {
+                var now = DateTime.Now;
+                var result = new List<IncomeExpensesMonthlyTotalViewModel>();
+
+                for (int i = 0; i < 12; i++)
+                {
+                    var targetDate = now.AddMonths(-i);
+                    var month = targetDate.Month;
+                    var year = targetDate.Year;
+
+                    var total = context.IncomeAndExpenses
+                        .Where(x => x.CreateDate.Month == month && x.CreateDate.Year == year && x.Deleted == false && x.Type == false)
+                        .Sum(x => x.Amount);
+
+                    result.Add(new IncomeExpensesMonthlyTotalViewModel
+                    {
+                        Year = year,
+                        Month = month,
+                        Total = total
+                    });
+                }
+
+                return result.OrderBy(r => r.Year).ThenBy(r => r.Month).ToList();
+            }
+        }
+
+        public List<IncomeExpensesMonthlyTotalViewModel> YearlySalesIncome()
+        {
+            using (var context = new DataBaseContext())
+            {
+                var now = DateTime.Now;
+                var result = new List<IncomeExpensesMonthlyTotalViewModel>();
+
+                for (int i = 0; i < 12; i++)
+                {
+                    var targetDate = now.AddMonths(-i);
+                    var month = targetDate.Month;
+                    var year = targetDate.Year;
+
+                    var total = context.Sales
+                        .Where(x => x.CreateDate.Month == month && x.CreateDate.Year == year && x.Deleted == false)
+                        .Sum(x => x.Amount);
+
+                    result.Add(new IncomeExpensesMonthlyTotalViewModel
+                    {
+                        Year = year,
+                        Month = month,
+                        Total = total
+                    });
+                }
+
+                return result.OrderBy(r => r.Year).ThenBy(r => r.Month).ToList();
+            }
+        }
+        
+        public List<IncomeExpensesMonthlyTotalViewModel> YearlyWholeSalerExpenses()
+        {
+            using (var context = new DataBaseContext())
+            {
+                var now = DateTime.Now;
+                var result = new List<IncomeExpensesMonthlyTotalViewModel>();
+
+                for (int i = 0; i < 12; i++)
+                {
+                    var targetDate = now.AddMonths(-i);
+                    var month = targetDate.Month;
+                    var year = targetDate.Year;
+
+                    var total = context.WholeSalerMovements
+                        .Where(x => x.CreateDate.Month == month && x.CreateDate.Year == year && x.Deleted == false && x.ProcessType == 2)
+                        .Sum(x => x.Amount);
+
+                    result.Add(new IncomeExpensesMonthlyTotalViewModel
+                    {
+                        Year = year,
+                        Month = month,
+                        Total = total
+                    });
+                }
+
+                return result.OrderBy(r => r.Year).ThenBy(r => r.Month).ToList();
+            }
+        }
     }
 }

@@ -41,6 +41,9 @@ namespace Business.Abstract
         IDataResult<IncomeExpensesTotalViewModel> MonthlyExternalExpenses();
         IDataResult<IncomeExpensesTotalViewModel> MonthlySalesIncome();
         IDataResult<IncomeExpensesTotalViewModel> MonthlyWholeSalerExpenses();
-
+        IDataResult<List<IncomeExpensesMonthlyTotalViewModel>> YearlyExternalIncome();
+        IDataResult<List<IncomeExpensesMonthlyTotalViewModel>> YearlyExternalExpenses();
+        IDataResult<List<IncomeExpensesMonthlyTotalViewModel>> YearlySalesIncome();
+        IDataResult<List<IncomeExpensesMonthlyTotalViewModel>> YearlyWholeSalerExpenses();
     }
 }

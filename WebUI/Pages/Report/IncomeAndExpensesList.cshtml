@@ -1,0 +1,431 @@
+﻿@page
+@using System.Globalization
+@model WebUI.Pages.Report.IncomeAndExpensesListModel
+@{
+    ViewData["Title"] = "Gelir-Gider Listesi";
+}
+@section _Head
+{
+    <link href="~/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />    
+    <link href="~/assets/plugins/custom/vis-timeline/vis-timeline.bundle.css" rel="stylesheet" type="text/css" />
+}
+<div class="app-main flex-column flex-row-fluid " id="kt_app_main">
+    <div class="d-flex flex-column flex-column-fluid">
+        <div id="kt_app_toolbar" class="app-toolbar  py-3 py-lg-6 mb-10">
+            <div id="kt_app_toolbar_container" class="app-container  container-xxl d-flex flex-stack ">
+                <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3 ">
+                    <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">
+                        Gelir-Gider Listesi
+                    </h1>
+                    <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+                        <li class="breadcrumb-item text-muted">
+                            Rapor
+                        </li>
+                        <li class="breadcrumb-item">
+                            <span class="bullet bg-gray-500 w-5px h-2px"></span>
+                        </li>
+                        <li class="breadcrumb-item text-muted">
+                            Gelir-Gider Listesi
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="kt_app_content" class="app-content  flex-column-fluid ">
+            <div id="kt_app_content_container" class="app-container  container-xxl ">
+
+                <div class="d-flex flex-column">
+                    <div class="card card-flush overflow-hidden h-md-100">
+                        <div class="card-header py-5">
+                            <h3 class="card-title align-items-start flex-column">
+                                <span class="card-label fw-bold text-gray-900">Gelir - Gider Grafiği</span>
+                                <span class="text-gray-500 mt-1 fw-semibold fs-6">Aylık Gelir - Gider Grafik Gösterimi</span>
+                            </h3>                            
+                        </div>
+                        <div class="card-body pt-4">
+                            <div id="kt_charts_widget_23" class="h-400px w-100"></div>
+                        </div>
+                    </div>                    
+                </div>
+                <div class="d-flex flex-column flex-xl-row mt-10">                  
+                    <div class="flex-lg-row-fluid">
+                        <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-semibold mb-8">
+                            <li class="nav-item">
+                                <a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab" href="#kt_estimated_earning">Tahmini Kazanç</a>
+                            </li>
+                            
+                            <li class="nav-item">
+                                <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab" href="#kt_estimated_income">Tahmini Gelir</a>
+                            </li>
+                            
+                            <li class="nav-item">
+                                <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab" href="#kt_estimated_expenses">Tahmini Gider</a>
+                            </li>
+                            
+                            <li class="nav-item">
+                                <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab" href="#kt_sales_income">Satış Geliri</a>
+                            </li> 
+                            
+                            <li class="nav-item">
+                                <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab" href="#kt_external_income">Harici Gelir</a>
+                            </li> 
+                            
+                            <li class="nav-item">
+                                <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab" href="#kt_external_expenses">Harici Gider</a>
+                            </li>
+                        </ul>
+                       
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="kt_estimated_earning" role="tabpanel">
+                                <div class="card card-flush">
+                                    <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+                                        <div class="card-title">
+                                            <div class="d-flex align-items-center position-relative my-1">
+                                                <i class="ki-duotone ki-magnifier fs-1 position-absolute ms-4">
+                                                    <span class="path1"></span>
+                                                    <span class="path2"></span>
+                                                </i>
+                                                <input type="text" data-kt-filter="searchEstimatedEarning" class="form-control form-control w-250px ps-14" placeholder="Ara..." />
+                                            </div>
+                                            <div id="kt_datatable_estimated_earning_1_export" class="d-none"></div>
+                                        </div>
+                                        <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
+                                            <button type="button" class="btn btn-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                                                <i class="ki-duotone ki-exit-down fs-2"><span class="path1"></span><span class="path2"></span></i>
+                                                Dışa Aktar
+                                            </button>
+                                            <div id="kt_datatable_estimated_earning_export_menu" class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-200px py-4" data-kt-menu="true">
+                                                <div class="menu-item px-3">
+                                                    <a href="#" class="menu-link px-3" data-kt-export-estimated-earning="excel">
+                                                        Excel Çıktısı
+                                                    </a>
+                                                </div>
+                                                <div class="menu-item px-3">
+                                                    <a href="#" class="menu-link px-3" data-kt-export-estimated-earning="csv">
+                                                        CSV Çıktısı
+                                                    </a>
+                                                </div>
+                                                <div class="menu-item px-3">
+                                                    <a href="#" class="menu-link px-3" data-kt-export-estimated-earning="pdf">
+                                                        PDF Çıktısı
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div id="kt_datatable_estimated_earning_buttons" class="d-none"></div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <table class="table align-middle rounded table-row-dashed fs-6 g-5 fw-semibold text-gray-600" id="kt_datatable_estimated_earning">
+                                            <thead style="color: black !important;">
+                                                <tr class="text-start fw-bold fs-7 text-uppercase">
+                                                    <th class="min-w-100px">TARİH</th>
+                                                    <th class="min-w-200px">TAHMİNİ KAZANÇ</th>                                                    
+                                                </tr>
+                                            </thead>
+
+                                            <tbody class="fw-semibold text-gray-600"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>                 
+                            
+                            <div class="tab-pane fade" id="kt_estimated_income" role="tabpanel">
+                                <div class="card card-flush">
+                                    <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+                                        <div class="card-title">
+                                            <div class="d-flex align-items-center position-relative my-1">
+                                                <i class="ki-duotone ki-magnifier fs-1 position-absolute ms-4">
+                                                    <span class="path1"></span>
+                                                    <span class="path2"></span>
+                                                </i>
+                                                <input type="text" data-kt-filter="searchEstimatedIncome" class="form-control form-control w-250px ps-14" placeholder="Ara..." />
+                                            </div>
+                                            <div id="kt_datatable_estimated_income_1_export" class="d-none"></div>
+                                        </div>
+                                        <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
+                                            <button type="button" class="btn btn-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                                                <i class="ki-duotone ki-exit-down fs-2"><span class="path1"></span><span class="path2"></span></i>
+                                                Dışa Aktar
+                                            </button>
+                                            <div id="kt_datatable_estimated_income_export_menu" class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-200px py-4" data-kt-menu="true">
+                                                <div class="menu-item px-3">
+                                                    <a href="#" class="menu-link px-3" data-kt-export-estimated-income="excel">
+                                                        Excel Çıktısı
+                                                    </a>
+                                                </div>
+                                                <div class="menu-item px-3">
+                                                    <a href="#" class="menu-link px-3" data-kt-export-estimated-income="csv">
+                                                        CSV Çıktısı
+                                                    </a>
+                                                </div>
+                                                <div class="menu-item px-3">
+                                                    <a href="#" class="menu-link px-3" data-kt-export-estimated-income="pdf">
+                                                        PDF Çıktısı
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div id="kt_datatable_estimated_income_buttons" class="d-none"></div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <table class="table align-middle rounded table-row-dashed fs-6 g-5 fw-semibold text-gray-600" id="kt_datatable_estimated_income">
+                                            <thead style="color: black !important;">
+                                                <tr class="text-start fw-bold fs-7 text-uppercase">
+                                                    <th class="min-w-100px">TARİH</th>
+                                                    <th class="min-w-200px">TAHMİNİ GELİR</th>                                                    
+                                                </tr>
+                                            </thead>
+
+                                            <tbody class="fw-semibold text-gray-600"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="kt_estimated_expenses" role="tabpanel">
+                                <div class="card card-flush">
+                                    <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+                                        <div class="card-title">
+                                            <div class="d-flex align-items-center position-relative my-1">
+                                                <i class="ki-duotone ki-magnifier fs-1 position-absolute ms-4">
+                                                    <span class="path1"></span>
+                                                    <span class="path2"></span>
+                                                </i>
+                                                <input type="text" data-kt-filter="searchEstimatedExpenses" class="form-control form-control w-250px ps-14" placeholder="Ara..." />
+                                            </div>
+                                            <div id="kt_datatable_estimated_expenses_1_export" class="d-none"></div>
+                                        </div>
+                                        <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
+                                            <button type="button" class="btn btn-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                                                <i class="ki-duotone ki-exit-down fs-2"><span class="path1"></span><span class="path2"></span></i>
+                                                Dışa Aktar
+                                            </button>
+                                            <div id="kt_datatable_estimated_expenses_export_menu" class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-200px py-4" data-kt-menu="true">
+                                                <div class="menu-item px-3">
+                                                    <a href="#" class="menu-link px-3" data-kt-export-estimated-expenses="excel">
+                                                        Excel Çıktısı
+                                                    </a>
+                                                </div>
+                                                <div class="menu-item px-3">
+                                                    <a href="#" class="menu-link px-3" data-kt-export-estimated-expenses="csv">
+                                                        CSV Çıktısı
+                                                    </a>
+                                                </div>
+                                                <div class="menu-item px-3">
+                                                    <a href="#" class="menu-link px-3" data-kt-export-estimated-expenses="pdf">
+                                                        PDF Çıktısı
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div id="kt_datatable_estimated_expenses_buttons" class="d-none"></div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <table class="table align-middle rounded table-row-dashed fs-6 g-5 fw-semibold text-gray-600" id="kt_datatable_estimated_expenses">
+                                            <thead style="color: black !important;">
+                                                <tr class="text-start fw-bold fs-7 text-uppercase">
+                                                    <th class="min-w-100px">TARİH</th>
+                                                    <th class="min-w-200px">TAHMİNİ GİDER</th>                                                
+                                                </tr>
+                                            </thead>
+
+                                            <tbody class="fw-semibold text-gray-600"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="kt_sales_income" role="tabpanel">
+                                <div class="card card-flush">
+                                    <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+                                        <div class="card-title">
+                                            <div class="d-flex align-items-center position-relative my-1">
+                                                <i class="ki-duotone ki-magnifier fs-1 position-absolute ms-4">
+                                                    <span class="path1"></span>
+                                                    <span class="path2"></span>
+                                                </i>
+                                                <input type="text" data-kt-filter="searchSalesIncome" class="form-control form-control w-250px ps-14" placeholder="Ara..." />
+                                            </div>
+                                            <div id="kt_datatable_sales_income_1_export" class="d-none"></div>
+                                        </div>
+                                        <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
+                                            <button type="button" class="btn btn-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                                                <i class="ki-duotone ki-exit-down fs-2"><span class="path1"></span><span class="path2"></span></i>
+                                                Dışa Aktar
+                                            </button>
+                                            <div id="kt_datatable_sales_income_export_menu" class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-200px py-4" data-kt-menu="true">
+                                                <div class="menu-item px-3">
+                                                    <a href="#" class="menu-link px-3" data-kt-export-sales-income="excel">
+                                                        Excel Çıktısı
+                                                    </a>
+                                                </div>
+                                                <div class="menu-item px-3">
+                                                    <a href="#" class="menu-link px-3" data-kt-export-sales-income="csv">
+                                                        CSV Çıktısı
+                                                    </a>
+                                                </div>
+                                                <div class="menu-item px-3">
+                                                    <a href="#" class="menu-link px-3" data-kt-export-sales-income="pdf">
+                                                        PDF Çıktısı
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div id="kt_datatable_sales_income_buttons" class="d-none"></div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <table class="table align-middle rounded table-row-dashed fs-6 g-5 fw-semibold text-gray-600" id="kt_datatable_sales_income">
+                                            <thead style="color: black !important;">
+                                                <tr class="text-start fw-bold fs-7 text-uppercase">
+                                                    <th class="min-w-100px">TARİH</th>
+                                                    <th class="min-w-200px">SATIŞ GELİRİ</th>                                                   
+                                                </tr>
+                                            </thead>
+
+                                            <tbody class="fw-semibold text-gray-600"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="kt_external_income" role="tabpanel">
+                                <div class="card card-flush">
+                                    <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+                                        <div class="card-title">
+                                            <div class="d-flex align-items-center position-relative my-1">
+                                                <i class="ki-duotone ki-magnifier fs-1 position-absolute ms-4">
+                                                    <span class="path1"></span>
+                                                    <span class="path2"></span>
+                                                </i>
+                                                <input type="text" data-kt-filter="searchExternalIncome" class="form-control form-control w-250px ps-14" placeholder="Ara..." />
+                                            </div>
+                                            <div id="kt_datatable_external_income_1_export" class="d-none"></div>
+                                        </div>
+                                        <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
+                                            <button type="button" class="btn btn-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                                                <i class="ki-duotone ki-exit-down fs-2"><span class="path1"></span><span class="path2"></span></i>
+                                                Dışa Aktar
+                                            </button>
+                                            <div id="kt_datatable_external_income_export_menu" class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-200px py-4" data-kt-menu="true">
+                                                <div class="menu-item px-3">
+                                                    <a href="#" class="menu-link px-3" data-kt-export-income="excel">
+                                                        Excel Çıktısı
+                                                    </a>
+                                                </div>
+                                                <div class="menu-item px-3">
+                                                    <a href="#" class="menu-link px-3" data-kt-export-income="csv">
+                                                        CSV Çıktısı
+                                                    </a>
+                                                </div>
+                                                <div class="menu-item px-3">
+                                                    <a href="#" class="menu-link px-3" data-kt-export-income="pdf">
+                                                        PDF Çıktısı
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div id="kt_datatable_external_income_buttons" class="d-none"></div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <table class="table align-middle rounded table-row-dashed fs-6 g-5 fw-semibold text-gray-600" id="kt_datatable_external_income">
+                                            <thead style="color: black !important;">
+                                                <tr class="text-start fw-bold fs-7 text-uppercase">
+                                                    <th class="min-w-100px">TARİH</th>
+                                                    <th class="min-w-200px">HARİCİ GELİR</th>                                                    
+                                                </tr>
+                                            </thead>
+
+                                            <tbody class="fw-semibold text-gray-600"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="kt_external_expenses" role="tabpanel">
+                                <div class="card card-flush">
+                                    <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+                                        <div class="card-title">
+                                            <div class="d-flex align-items-center position-relative my-1">
+                                                <i class="ki-duotone ki-magnifier fs-1 position-absolute ms-4">
+                                                    <span class="path1"></span>
+                                                    <span class="path2"></span>
+                                                </i>
+                                                <input type="text" data-kt-filter="searchExternalExpenses" class="form-control form-control w-250px ps-14" placeholder="Ara..." />
+                                            </div>
+                                            <div id="kt_datatable_external_expenses_1_export" class="d-none"></div>
+                                        </div>
+                                        <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
+                                            <button type="button" class="btn btn-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                                                <i class="ki-duotone ki-exit-down fs-2"><span class="path1"></span><span class="path2"></span></i>
+                                                Dışa Aktar
+                                            </button>
+                                            <div id="kt_datatable_external_expenses_export_menu" class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-200px py-4" data-kt-menu="true">
+                                                <div class="menu-item px-3">
+                                                    <a href="#" class="menu-link px-3" data-kt-export-expenses="excel">
+                                                        Excel Çıktısı
+                                                    </a>
+                                                </div>
+                                                <div class="menu-item px-3">
+                                                    <a href="#" class="menu-link px-3" data-kt-export-expenses="csv">
+                                                        CSV Çıktısı
+                                                    </a>
+                                                </div>
+                                                <div class="menu-item px-3">
+                                                    <a href="#" class="menu-link px-3" data-kt-export-expenses="pdf">
+                                                        PDF Çıktısı
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div id="kt_datatable_external_expenses_buttons" class="d-none"></div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <table class="table align-middle rounded table-row-dashed fs-6 g-5 fw-semibold text-gray-600" id="kt_datatable_external_expenses">
+                                            <thead style="color: black !important;">
+                                                <tr class="text-start fw-bold fs-7 text-uppercase">
+                                                    <th class="min-w-100px">TARİH</th>                                                    
+                                                    <th class="min-w-200px">HARİCİ GİDER</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody class="fw-semibold text-gray-600"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+             </div>
+        </div>
+    </div>
+</div>
+<div class="d-none">
+    <input asp-for="ToastrError" />
+</div>
+<div class="d-none">
+    <input asp-for="ToastrSuccess" />
+</div>
+
+<form class="form d-flex flex-column flex-lg-row" method="post">
+    <button type="submit" hidden></button>
+</form>
+
+@section _Foot
+{
+    <script src="~/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    <script src="~/assets/js/pages/report/ieExternalIncomeListData.js"></script>
+    <script src="~/assets/js/pages/report/ieExternalExpensesListData.js"></script>
+    <script src="~/assets/js/pages/report/ieSalesIncomeListData.js"></script>
+    <script src="~/assets/js/pages/report/ieEstimatedExpensesListData.js"></script>
+    <script src="~/assets/js/pages/report/ieEstimatedIncomeListData.js"></script>
+    <script src="~/assets/js/pages/report/ieEstimatedEarningListData.js"></script>
+    <script src="~/assets/js/pages/report/report.js"></script>
+    <script src="~/assets/js/pages/report/incomeAndExpensesList.js"></script>
+
+    <script src="~/assets/index.js"></script>
+    <script src="~/assets/xy.js"></script>
+    <script src="~/assets/themes/Animated.js"></script>
+    
+}

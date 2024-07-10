@@ -39,5 +39,9 @@ namespace DataAccess.Abstract
         IncomeExpensesTotalViewModel MonthlyExternalExpenses();
         IncomeExpensesTotalViewModel MonthlySalesIncome();
         IncomeExpensesTotalViewModel MonthlyWholeSalerExpenses();
+        List<IncomeExpensesMonthlyTotalViewModel> YearlyExternalIncome();
+        List<IncomeExpensesMonthlyTotalViewModel> YearlyExternalExpenses();
+        List<IncomeExpensesMonthlyTotalViewModel> YearlySalesIncome();
+        List<IncomeExpensesMonthlyTotalViewModel> YearlyWholeSalerExpenses();
     }
 }

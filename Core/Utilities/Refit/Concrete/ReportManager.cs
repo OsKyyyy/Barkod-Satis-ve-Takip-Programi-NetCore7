@@ -689,5 +689,121 @@ namespace Core.Utilities.Refit.Concrete
             }
         }
 
+        public async Task<DataResult<List<IncomeExpensesMonthlyTotalViewModel>>> YearlyExternalIncome([Header("Authorization: Bearer")] string token)
+        {
+            DataResult<List<IncomeExpensesMonthlyTotalViewModel>> dataResult = new DataResult<List<IncomeExpensesMonthlyTotalViewModel>>();
+
+            try
+            {
+                dataResult = await myAPI.YearlyExternalIncome(token);
+
+                return dataResult;
+            }
+            catch (ApiException exception)
+            {
+                dynamic response = JsonConvert.DeserializeObject(exception.Content);
+
+                if (response != null && response.Status != null)
+                {
+                    dataResult.Message = response.Message;
+                    dataResult.Status = response.Status;
+
+                    return dataResult;
+                }
+
+                dataResult.Message = "Beklenmedik hata ile karşılaşıldı";
+                dataResult.Status = false;
+
+                return dataResult;
+            }
+        }
+
+        public async Task<DataResult<List<IncomeExpensesMonthlyTotalViewModel>>> YearlyExternalExpenses([Header("Authorization: Bearer")] string token)
+        {
+            DataResult<List<IncomeExpensesMonthlyTotalViewModel>> dataResult = new DataResult<List<IncomeExpensesMonthlyTotalViewModel>>();
+
+            try
+            {
+                dataResult = await myAPI.YearlyExternalExpenses(token);
+
+                return dataResult;
+            }
+            catch (ApiException exception)
+            {
+                dynamic response = JsonConvert.DeserializeObject(exception.Content);
+
+                if (response != null && response.Status != null)
+                {
+                    dataResult.Message = response.Message;
+                    dataResult.Status = response.Status;
+
+                    return dataResult;
+                }
+
+                dataResult.Message = "Beklenmedik hata ile karşılaşıldı";
+                dataResult.Status = false;
+
+                return dataResult;
+            }
+        }
+
+        public async Task<DataResult<List<IncomeExpensesMonthlyTotalViewModel>>> YearlySalesIncome([Header("Authorization: Bearer")] string token)
+        {
+            DataResult<List<IncomeExpensesMonthlyTotalViewModel>> dataResult = new DataResult<List<IncomeExpensesMonthlyTotalViewModel>>();
+
+            try
+            {
+                dataResult = await myAPI.YearlySalesIncome(token);
+
+                return dataResult;
+            }
+            catch (ApiException exception)
+            {
+                dynamic response = JsonConvert.DeserializeObject(exception.Content);
+
+                if (response != null && response.Status != null)
+                {
+                    dataResult.Message = response.Message;
+                    dataResult.Status = response.Status;
+
+                    return dataResult;
+                }
+
+                dataResult.Message = "Beklenmedik hata ile karşılaşıldı";
+                dataResult.Status = false;
+
+                return dataResult;
+            }
+        }
+        
+        public async Task<DataResult<List<IncomeExpensesMonthlyTotalViewModel>>> YearlyWholeSalerExpenses([Header("Authorization: Bearer")] string token)
+        {
+            DataResult<List<IncomeExpensesMonthlyTotalViewModel>> dataResult = new DataResult<List<IncomeExpensesMonthlyTotalViewModel>>();
+
+            try
+            {
+                dataResult = await myAPI.YearlyWholeSalerExpenses(token);
+
+                return dataResult;
+            }
+            catch (ApiException exception)
+            {
+                dynamic response = JsonConvert.DeserializeObject(exception.Content);
+
+                if (response != null && response.Status != null)
+                {
+                    dataResult.Message = response.Message;
+                    dataResult.Status = response.Status;
+
+                    return dataResult;
+                }
+
+                dataResult.Message = "Beklenmedik hata ile karşılaşıldı";
+                dataResult.Status = false;
+
+                return dataResult;
+            }
+        }
+
     }
 }

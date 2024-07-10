@@ -117,6 +117,10 @@ namespace Business.Constant
         public static string MonthlyExternalExpensesListed = "Aylık Harici Gider Listelendi";
         public static string MonthlySalesIncomeListed = "Aylık Satış Geliri Listelendi";
         public static string MonthlyWholeSalerExpensesListed = "Aylık Toptancı Gideri Listelendi";
+        public static string YearlyExternalIncomeListed = "Harici Gelirler Aylık Olarak Listelendi";
+        public static string YearlyExternalExpensesListed = "Harici Giderler Aylık Olarak Listelendi";
+        public static string YearlySalesIncomeListed = "Satış Gelirleri Aylık Olarak Listelendi";
+        public static string YearlyWholeSalerExpensesListed = "Toptancı Giderleri Aylık Olarak Listelendi";
     }
 
 }
