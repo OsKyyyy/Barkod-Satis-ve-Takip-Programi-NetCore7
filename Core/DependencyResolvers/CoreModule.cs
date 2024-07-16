@@ -13,6 +13,7 @@ using Core.Utilities.Refit.Concrete;
 using Core.Utilities.WebScraping;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Autofac.Core;
 
 namespace Core.DependencyResolvers
 {
@@ -39,6 +40,7 @@ namespace Core.DependencyResolvers
             serviceCollection.AddSingleton<IIncomeAndExpensesType, IncomeAndExpensesTypeManager>();
             serviceCollection.AddSingleton<IIncomeAndExpenses, IncomeAndExpensesManager>();
             //serviceCollection.AddSingleton<ISaleProduct, SaleProductManager>();
+            serviceCollection.AddSingleton<IRoleDal, EfRoleDal>();
         }
     }
 }
