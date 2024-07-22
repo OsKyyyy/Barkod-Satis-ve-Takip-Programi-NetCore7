@@ -220,5 +220,122 @@ namespace Core.Utilities.Refit.Concrete
                 return dataResult;
             }
         }
+
+        public async Task<Result> AddRole([Header("Authorization")] string token, [Body] AddRoleRequestModel addRoleRequestModel)
+        {
+            Result dataResult = new Result();
+
+            try
+            {
+                dataResult = await myAPI.AddRole(token, addRoleRequestModel);
+
+                return dataResult;
+            }
+            catch (ApiException exception)
+            {
+                dynamic response = JsonConvert.DeserializeObject(exception.Content);
+
+                if (response != null && response.Status != null)
+                {
+                    dataResult.Message = response.Message;
+                    dataResult.Status = response.Status;
+
+                    return dataResult;
+                }
+
+                dataResult.Message = "Beklenmedik hata ile karşılaşıldı";
+                dataResult.Status = false;
+
+                return dataResult;
+            }
+        }
+
+        public async Task<Result> UpdateRole([Header("Authorization")] string token, [Body] UpdateRoleRequestModel updateRoleRequestModel)
+        {
+            Result dataResult = new Result();
+
+            try
+            {
+                dataResult = await myAPI.UpdateRole(token, updateRoleRequestModel);
+
+                return dataResult;
+            }
+            catch (ApiException exception)
+            {
+                dynamic response = JsonConvert.DeserializeObject(exception.Content);
+
+                if (response != null && response.Status != null)
+                {
+                    dataResult.Message = response.Message;
+                    dataResult.Status = response.Status;
+
+                    return dataResult;
+                }
+
+                dataResult.Message = "Beklenmedik hata ile karşılaşıldı";
+                dataResult.Status = false;
+
+                return dataResult;
+            }
+        }
+
+        public async Task<DataResult<List<RoleListViewModel>>> RoleList([Header("Authorization: Bearer")] string token)
+        {
+            DataResult<List<RoleListViewModel>> dataResult = new DataResult<List<RoleListViewModel>>();
+
+            try
+            {
+                dataResult = await myAPI.RoleList(token);
+
+                return dataResult;
+            }
+            catch (ApiException exception)
+            {
+                dynamic response = JsonConvert.DeserializeObject(exception.Content);
+
+                if (response != null && response.Status != null)
+                {
+                    dataResult.Message = response.Message;
+                    dataResult.Status = response.Status;
+
+                    return dataResult;
+                }
+
+                dataResult.Message = "Beklenmedik hata ile karşılaşıldı";
+                dataResult.Status = false;
+
+                return dataResult;
+            }
+        }
+
+        public async Task<DataResult<RoleListViewModel>> GetRoleByName([Header("Authorization: Bearer")] string token, string name)
+        {
+            DataResult<RoleListViewModel> dataResult = new DataResult<RoleListViewModel>();
+
+            try
+            {
+                dataResult = await myAPI.GetRoleByName(token, name);
+
+                return dataResult;
+            }
+            catch (ApiException exception)
+            {
+                dynamic response = JsonConvert.DeserializeObject(exception.Content);
+
+                if (response != null && response.Status != null)
+                {
+                    dataResult.Message = response.Message;
+                    dataResult.Status = response.Status;
+
+                    return dataResult;
+                }
+
+                dataResult.Message = "Beklenmedik hata ile karşılaşıldı";
+                dataResult.Status = false;
+
+                return dataResult;
+            }
+        }
+
     }
 }

@@ -14,6 +14,8 @@ using Business.ValidationRules.FluentValidation.User;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Security.Hashing;
 using Entities.Dtos;
+using DataAccess.Concrete.EntityFramework;
+using Core.Utilities.Refit.Models.Response.User;
 
 namespace Business.Concrete
 {
@@ -112,5 +114,82 @@ namespace Business.Concrete
             }
             return new SuccessResult(Messages.UserInfoListed);
         }
+
+        public IDataResult<OperationClaim> CheckExistsByName(string name)
+        {
+            var result = _userDal.CheckExistsByName(name);
+            if (result == null)
+            {
+                return new SuccessDataResult<OperationClaim>(Messages.RoleNotFound);
+            }
+
+            return new ErrorDataResult<OperationClaim>(result, Messages.RoleAlreadyExists);
+        }
+
+        public IDataResult<OperationClaim> CheckExistsByNameAndId(int id, string name)
+        {
+            var result = _userDal.CheckExistsByNameAndId(id,name);
+            if (result == null)
+            {
+                return new SuccessDataResult<OperationClaim>(Messages.RoleNotFound);
+            }
+
+            return new ErrorDataResult<OperationClaim>(result, Messages.RoleAlreadyExists);
+        }
+
+        public IDataResult<OperationClaim> AddOperationClaim(string name)
+        {
+            var operationClaim = new OperationClaim
+            {
+                Name = name         
+            };
+            var result = _userDal.AddOperationClaim(operationClaim);
+
+            return new SuccessDataResult<OperationClaim>(result,Messages.OperationClaimAdded);
+        }
+
+        public IDataResult<OperationClaim> UpdateOperationClaim(int id, string name)
+        {
+            var operationClaim = new OperationClaim
+            {
+                Id = id,
+                Name = name
+            };
+            var result = _userDal.UpdateOperationClaim(operationClaim);
+
+            return new SuccessDataResult<OperationClaim>(result, Messages.OperationClaimAdded);
+        }
+
+        public IResult AddPageClaim(List<string> selectedItems, int id)
+        {
+            var pageClaim = new PageClaimAddDto
+            {
+                Id = id,
+                SelectedItems = selectedItems
+            };
+            _userDal.AddPageClaim(pageClaim);
+
+            return new SuccessResult(Messages.PageClaimAdded);
+        }
+        
+        public IResult DeletePageClaim(int id)
+        {
+            _userDal.DeletePageClaim(id);
+            return new SuccessResult(Messages.PageClaimsDeleted);
+        }
+
+        public IDataResult<List<RoleListViewModel>> RoleList()
+        {
+            var result = _userDal.RoleList();
+
+            return new SuccessDataResult<List<RoleListViewModel>>(result, Messages.RoleListed);
+        }
+
+        public IDataResult<RoleListViewModel> GetRoleByName(string name)
+        {
+            var result = _userDal.GetRoleByName(name);
+
+            return new SuccessDataResult<RoleListViewModel>(result, Messages.RoleListed);
+        }       
     }
 }

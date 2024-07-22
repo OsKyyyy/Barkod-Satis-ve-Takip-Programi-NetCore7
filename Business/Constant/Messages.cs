@@ -121,6 +121,14 @@ namespace Business.Constant
         public static string YearlyExternalExpensesListed = "Harici Giderler Aylık Olarak Listelendi";
         public static string YearlySalesIncomeListed = "Satış Gelirleri Aylık Olarak Listelendi";
         public static string YearlyWholeSalerExpensesListed = "Toptancı Giderleri Aylık Olarak Listelendi";
+
+        public static string OperationClaimAdded = "Rol Adı Eklendi";
+        public static string PageClaimAdded = "Rol Yetkileri Eklendi";
+        public static string RoleListed = "Roller Listelendi";
+        public static string RoleNotFound = "Rol Bulunamadı";
+        public static string RoleAlreadyExists = "Rol Zaten Mevcut";
+        public static string PageClaimsDeleted = "Rol Yetkileri Silindi";
+
     }
 
 }

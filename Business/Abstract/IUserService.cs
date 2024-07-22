@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Entities.Dtos;
+using Core.Utilities.Refit.Models.Response.User;
 
 namespace Business.Abstract
 {
@@ -20,6 +21,14 @@ namespace Business.Abstract
         IResult UserExistsByUpdate(string email, int Id);
         IDataResult<User> ListByMail(string email);
         IDataResult<User> ListById(int id);
+        IDataResult<OperationClaim> CheckExistsByName(string name);
+        IDataResult<OperationClaim> CheckExistsByNameAndId(int id, string name);
+        IDataResult<OperationClaim> AddOperationClaim(string name);
+        IDataResult<OperationClaim> UpdateOperationClaim(int id, string name);
+        IResult AddPageClaim(List<string> selectedItems, int id);
+        IResult DeletePageClaim(int id);        
+        IDataResult<List<RoleListViewModel>> RoleList();
+        IDataResult<RoleListViewModel> GetRoleByName(string name);
 
-	}
+    }
 }

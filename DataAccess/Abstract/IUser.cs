@@ -1,5 +1,7 @@
 ﻿using Core.DataAccess;
 using Core.Entities.Concrete;
+using Core.Utilities.Refit.Models.Response.User;
+using Entities.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +18,13 @@ namespace DataAccess.Abstract
         User ListByMail(string email);
         User ListById(int id);
         List<OperationClaim> GetClaims(User user);
+        OperationClaim CheckExistsByName(string name);
+        OperationClaim CheckExistsByNameAndId(int id, string name);
+        OperationClaim AddOperationClaim(OperationClaim operationClaim);
+        OperationClaim UpdateOperationClaim(OperationClaim operationClaim);
+        void AddPageClaim(PageClaimAddDto pageClaimAddDto);
+        void DeletePageClaim(int id);
+        List<RoleListViewModel> RoleList();
+        RoleListViewModel GetRoleByName(string name);
     }
 }

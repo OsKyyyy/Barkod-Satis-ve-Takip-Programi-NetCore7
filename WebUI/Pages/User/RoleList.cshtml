@@ -1,0 +1,241 @@
+﻿@page
+@model WebUI.Pages.User.RoleList
+@{
+    ViewData["Title"] = "Rol Listesi";
+}
+@section _Head{
+    <link href="~/assets/css/dual-list/dual-listbox.css" rel="stylesheet" type="text/css" />
+    <style>
+        .bootstrap-duallistbox-container .moveall i,
+        .bootstrap-duallistbox-container .removeall i,
+        .bootstrap-duallistbox-container .move i,
+        .bootstrap-duallistbox-container .remove i {
+            display: none;
+        }
+
+        .bootstrap-duallistbox-container .moveall::before {
+            content: "\f101"; /* Font Awesome icon for arrow-right */
+            font-family: FontAwesome;
+        }
+
+        .bootstrap-duallistbox-container .removeall::before {
+            content: "\f100"; /* Font Awesome icon for arrow-left */
+            font-family: FontAwesome;
+        }
+
+        .bootstrap-duallistbox-container .move::before {
+            content: "\f105"; /* Font Awesome icon for arrow-right */
+            font-family: FontAwesome;
+        }
+
+        .bootstrap-duallistbox-container .remove::before {
+            content: "\f104"; /* Font Awesome icon for arrow-left */
+            font-family: FontAwesome;
+        }
+    </style>
+}
+
+<div class="app-main flex-column flex-row-fluid " id="kt_app_main">
+    <div class="d-flex flex-column flex-column-fluid">
+        <div id="kt_app_toolbar" class="app-toolbar  py-3 py-lg-6 mb-10">
+            <div id="kt_app_toolbar_container" class="app-container  container-xxl d-flex flex-stack ">
+                <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3 ">
+                    <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">
+                        Rol Listesi
+                    </h1>
+                    <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+                        <li class="breadcrumb-item text-muted">
+                            Sayfalar
+                        </li>
+                        <li class="breadcrumb-item">
+                            <span class="bullet bg-gray-500 w-5px h-2px"></span>
+                        </li>
+                        <li class="breadcrumb-item text-muted">
+                            Kullanıcı İşlemleri
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="kt_app_content" class="app-content  flex-column-fluid ">
+            <div id="kt_app_content_container" class="app-container  container-xxl ">
+                <div id="kt_app_content_container" class="app-container  container-xxl ">
+
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-5 g-xl-9">
+                        <div class="ol-md-4">
+                            <div class="card h-md-100">
+                                <div class="card-body d-flex flex-center">
+                                    <button type="button" class="btn btn-clear d-flex flex-column flex-center" data-bs-toggle="modal" data-bs-target="#kt_modal_add_role">
+                                        <img src="~/assets/media/logos/add-new-role.png" alt="" class="mw-100 mh-150px mb-7">
+                                        <div class="fw-bold fs-3 text-gray-600 text-hover-primary">Yeni Rol ekle</div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        @foreach (var item in Model.RoleListViewModels)
+                        {
+                            <div class="col-md-4">
+                                <div class="card card-flush h-md-100">
+                                    <div class="card-header">
+                                        <div class="card-title">
+                                            <h2>@item.RoleName</h2>
+                                        </div>
+                                    </div>
+                                    <div class="card-body pt-1">
+                                        <div class="fw-bold text-gray-600 mb-5">Bu rolü kullanan kullanıcı sayısı: @item.UserCount</div>
+                                        <div class="d-flex flex-column text-gray-600">
+                                            
+                                            @{
+                                                int i = 0;
+                                            }
+                                            @foreach (var itemPageNames in item.PageNames)
+                                            {
+                                                if(i >= 5)
+                                                {
+                                                    break;                                                   
+                                                }
+                                                <div class="d-flex align-items-center py-2">
+                                                    <span class="bullet bg-primary me-3"></span>@itemPageNames
+                                                </div>                                              
+                                                i++;
+                                            }                                                                                       
+                                            @{
+                                                int morePageNames = item.PageNames.Count() - i;
+
+                                                if (morePageNames != 0)
+                                                {
+                                                    <div class='d-flex align-items-center py-2'>
+                                                        <span class='bullet bg-primary me-3'></span>
+                                                        <em>@morePageNames tane daha...</em>
+                                                    </div>
+                                                }
+                                            }
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="card-footer flex-wrap pt-0">
+                                        <a href="view.html" class="btn btn-light btn-active-primary my-1 me-2">View Role</a>
+                                        <button type="button" class="btn btn-light btn-active-light-primary my-1" onclick="Request.GetRoleByName('@item.RoleName')" data-bs-toggle="modal" data-bs-target="#kt_modal_update_role">Edit Role</button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                                                         
+                    </div>
+            
+                    <div class="modal fade" id="kt_modal_add_role" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered mw-850px">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h2 class="fw-bold">Yeni Rol Ekle</h2>
+                                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-roles-modal-action="close">
+                                        <i class="ki-duotone ki-cross fs-1">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                        </i>
+                                    </div>
+                                </div>
+                                <div class="modal-body scroll-y mx-lg-5 my-7">
+                                    <form id="kt_modal_add_role_form" class="form" method="post" asp-page-handler="Add">
+                                        <div class="d-flex flex-column me-n7 pe-7">
+                                            <div class="fv-row mb-10">
+                                                <label class="fs-5 fw-bold form-label mb-2">
+                                                    <span class="required">Role İsmi</span>
+                                                </label>
+                                                <input asp-for="AddRoleRequestModel.Name" id="addRoleName" class="form-control form-control-lg form-control mb-3 mb-lg-0" autocomplete="off">
+                                                <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                                                    <span asp-validation-for="AddRoleRequestModel.Name"></span>
+                                                </div>
+                                            </div>
+                                            <div class="fv-row">
+                                                <label class="fs-5 fw-bold form-label mb-2">Role Yetkileri</label>
+                                                <div class="table-responsive">
+                                                    <select id="kt_dual_listbox_1" class="dual-listbox" asp-for="AddRoleRequestModel.SelectedItems" multiple>                                                      
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-center pt-15">
+                                            <button type="reset" class="btn btn-light me-3" data-kt-roles-modal-action="cancel">
+                                                İptal
+                                            </button>
+
+                                            <button type="submit" class="btn btn-primary">
+                                                <span class="indicator-label">
+                                                    Kaydet
+                                                </span>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="modal fade" id="kt_modal_update_role" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered mw-850px">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h2 class="fw-bold">Rol Düzenle</h2>
+                                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-roles-modal-action="close">
+                                        <i class="ki-duotone ki-cross fs-1">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                        </i>
+                                    </div>
+                                </div>
+                                <div class="modal-body scroll-y mx-lg-5 my-7">
+                                     <form id="kt_modal_update_role_form" class="form" method="post" asp-page-handler="Update">
+                                        <input hidden id="updateOperationClaimId" asp-for="UpdateRoleRequestModel.Id" />
+                                        <div class="d-flex flex-column me-n7 pe-7">
+                                            <div class="fv-row mb-10">
+                                                <label class="fs-5 fw-bold form-label mb-2">
+                                                    <span class="required">Role İsmi</span>
+                                                </label>
+                                                <input asp-for="UpdateRoleRequestModel.Name" id="updateRoleName" class="form-control form-control-lg form-control mb-3 mb-lg-0" autocomplete="off">
+                                                <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                                                    <span asp-validation-for="UpdateRoleRequestModel.Name"></span>
+                                                </div>
+                                            </div>
+                                            <div class="fv-row">
+                                                <label class="fs-5 fw-bold form-label mb-2">Role Yetkileri</label>
+                                                <div class="table-responsive">
+                                                    <select id="kt_dual_listbox_2" class="dual-listbox" asp-for="UpdateRoleRequestModel.SelectedItems" multiple>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-center pt-15">
+                                            <button type="reset" class="btn btn-light me-3" data-kt-roles-modal-action="cancel">
+                                                İptal
+                                            </button>
+
+                                            <button type="submit" class="btn btn-primary">
+                                                <span class="indicator-label">
+                                                    Kaydet
+                                                </span>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="d-none">
+    <input asp-for="ToastrError" />
+</div>
+<div class="d-none">
+    <input asp-for="ToastrSuccess" />
+</div>
+
+@section _Foot{
+    <script src="~/assets/js/pages/role/role.js"></script>
+    <script src="~/assets/js/pages/role/request.js"></script>
+    <script src="~/assets/js/custom/apps/dual-list/dual-listbox.min.js"></script>
+}

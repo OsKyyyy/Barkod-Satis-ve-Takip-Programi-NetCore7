@@ -12,8 +12,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using DataAccess.Abstract;
-using Business.Abstract;
+using DataAccess.Concrete.EntityFramework;
 
 namespace Business.BusinessAspects.Autofac
 {
@@ -21,19 +20,13 @@ namespace Business.BusinessAspects.Autofac
     {
         //private string[] _roles;
         private IHttpContextAccessor _httpContextAccessor;
-        private readonly IRoleDal _roleDal;
         private readonly string _pageName;
 
         public SecuredOperation(/*string roles, */string pageName)
         {
             //_roles = roles.Split(',');
             _pageName = pageName;
-            _httpContextAccessor = ServiceTool.ServiceProvider.GetService<IHttpContextAccessor>();
-            _roleDal = ServiceTool.ServiceProvider.GetService<IRoleDal>();
-            if (_httpContextAccessor == null || _roleDal == null)
-            {
-                throw new Exception("Dependencies are not resolved properly.");
-            }
+            _httpContextAccessor = ServiceTool.ServiceProvider.GetService<IHttpContextAccessor>();  
         }
 
         protected override void OnBefore(IInvocation invocation)
@@ -49,10 +42,24 @@ namespace Business.BusinessAspects.Autofac
 
             //throw new SecurityException(Messages.AuthorizationDenied);
 
-            var userId = _httpContextAccessor.HttpContext.User.GetUserId();
-            if (!_roleDal.HasAccessToPage(userId, _pageName))
+            var roleClaims = _httpContextAccessor.HttpContext.User.ClaimRoles();
+
+            using (var context = new DataBaseContext())
             {
-                throw new SecurityException(Messages.AuthorizationDenied);
+                var operationClaimIds = context.PageClaims
+                    .Where(pc => pc.PageName == _pageName)
+                    .Select(pc => pc.OperationClaimId)
+                    .ToList();
+
+                var userOperationClaims = context.UserOperationClaims
+                    .Where(uoc => uoc.UserId == _httpContextAccessor.HttpContext.User.GetUserId())
+                    .Select(uoc => uoc.OperationClaimId)
+                    .ToList();
+
+                if (!operationClaimIds.Intersect(userOperationClaims).Any())
+                {
+                    throw new SecurityException(Messages.AuthorizationDenied);
+                }
             }
         }
     }

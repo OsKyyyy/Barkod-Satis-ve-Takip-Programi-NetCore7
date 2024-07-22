@@ -40,7 +40,6 @@ namespace Core.DependencyResolvers
             serviceCollection.AddSingleton<IIncomeAndExpensesType, IncomeAndExpensesTypeManager>();
             serviceCollection.AddSingleton<IIncomeAndExpenses, IncomeAndExpensesManager>();
             //serviceCollection.AddSingleton<ISaleProduct, SaleProductManager>();
-            serviceCollection.AddSingleton<IRoleDal, EfRoleDal>();
         }
     }
 }
