@@ -25,6 +25,7 @@ namespace DataAccess.Abstract
         void AddPageClaim(PageClaimAddDto pageClaimAddDto);
         void DeletePageClaim(int id);
         List<RoleListViewModel> RoleList();
+        RoleListViewModel GetRoleById(int id);
         RoleListViewModel GetRoleByName(string name);
     }
 }

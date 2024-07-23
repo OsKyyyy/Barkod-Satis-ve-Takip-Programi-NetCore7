@@ -308,6 +308,35 @@ namespace Core.Utilities.Refit.Concrete
             }
         }
 
+        public async Task<DataResult<RoleListViewModel>> GetRoleById([Header("Authorization: Bearer")] string token, int id)
+        {
+            DataResult<RoleListViewModel> dataResult = new DataResult<RoleListViewModel>();
+
+            try
+            {
+                dataResult = await myAPI.GetRoleById(token, id);
+
+                return dataResult;
+            }
+            catch (ApiException exception)
+            {
+                dynamic response = JsonConvert.DeserializeObject(exception.Content);
+
+                if (response != null && response.Status != null)
+                {
+                    dataResult.Message = response.Message;
+                    dataResult.Status = response.Status;
+
+                    return dataResult;
+                }
+
+                dataResult.Message = "Beklenmedik hata ile karşılaşıldı";
+                dataResult.Status = false;
+
+                return dataResult;
+            }
+        }
+
         public async Task<DataResult<RoleListViewModel>> GetRoleByName([Header("Authorization: Bearer")] string token, string name)
         {
             DataResult<RoleListViewModel> dataResult = new DataResult<RoleListViewModel>();

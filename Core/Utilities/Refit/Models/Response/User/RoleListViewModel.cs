@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Core.Utilities.Refit.Models.Response.User;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -22,5 +23,7 @@ namespace Core.Utilities.Refit.Models.Response.User
         [JsonProperty("UserCount")]
         public int UserCount { get; set; }
 
+        [JsonProperty("Users")]
+        public List<ViewModel> Users { get; set; }
     }
 }

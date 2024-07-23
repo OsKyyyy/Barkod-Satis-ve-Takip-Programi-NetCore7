@@ -42,6 +42,9 @@ namespace Core.Utilities.Refit.Abstract
         [Get("/user/RoleList")]
         Task<DataResult<List<RoleListViewModel>>> RoleList([Header("Authorization")] string token);
 
+        [Get("/user/GetRoleById")]
+        Task<DataResult<RoleListViewModel>> GetRoleById([Header("Authorization")] string token, int id);
+
         [Get("/user/GetRoleByName")]
         Task<DataResult<RoleListViewModel>> GetRoleByName([Header("Authorization")] string token, string name);
     }

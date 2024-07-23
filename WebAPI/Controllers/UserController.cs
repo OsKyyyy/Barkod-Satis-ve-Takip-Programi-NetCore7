@@ -167,6 +167,18 @@ namespace WebAPI.Controllers
             return Ok(list);
         }
 
+        [Route("GetRoleById")]
+        [HttpGet]
+        public ActionResult GetRoleById(int id)
+        {
+            var list = _userService.GetRoleById(id);
+            if (!list.Status)
+            {
+                return BadRequest(list);
+            }
+
+            return Ok(list);
+        }
 
         [Route("GetRoleByName")]
         [HttpGet]

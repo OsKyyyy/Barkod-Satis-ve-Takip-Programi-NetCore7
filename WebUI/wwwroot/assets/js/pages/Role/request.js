@@ -1,6 +1,5 @@
 ﻿var Request = {
-    Init: function () {   
-
+    Init: function () {
         Request.CreateDualListBox();
     },
     GetRoleByName: function (name) {
@@ -18,7 +17,7 @@
                     $('input:hidden[name="__RequestVerificationToken"]').val()
             },
             success: function (response) {
-                console.log(response);
+                
                 $("#updateOperationClaimId").val(response.data.operationClaimId);
                 $("#updateRoleName").val(response.data.roleName);
 
@@ -118,7 +117,7 @@
         ];
 
         return options;
-    }
+    },    
 }
 $(document).ready(function () {
     Request.Init();

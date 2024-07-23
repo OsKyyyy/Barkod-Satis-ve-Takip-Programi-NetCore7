@@ -28,7 +28,7 @@ namespace Business.Abstract
         IResult AddPageClaim(List<string> selectedItems, int id);
         IResult DeletePageClaim(int id);        
         IDataResult<List<RoleListViewModel>> RoleList();
+        IDataResult<RoleListViewModel> GetRoleById(int id);
         IDataResult<RoleListViewModel> GetRoleByName(string name);
-
     }
 }

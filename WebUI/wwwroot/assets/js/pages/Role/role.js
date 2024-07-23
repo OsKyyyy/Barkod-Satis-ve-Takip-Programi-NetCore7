@@ -5,7 +5,8 @@
         Role.ToastrError();
         Role.ToastrSuccess();
         Role.PasswordHideShow();
-        Role.ChangeStatus();     
+        Role.ChangeStatus();   
+        Role.GetSelectText();
     },
     AlertError: function () {
 
@@ -118,6 +119,71 @@
                 $("#statusCircle").addClass("bg-success");
             }
         });
+    },
+    GetSelect: function () {
+        const options = [
+            { text: "Kullanıcı İşlemleri -> Kullanıcı Ekle", value: "user_add" },
+            { text: "Kullanıcı İşlemleri -> Kullanıcı Listesi", value: "user_list" },
+            { text: "Müşteri İşlemleri -> Müşteri Ekle", value: "customer_add" },
+            { text: "Müşteri İşlemleri -> Müşteri Listesi", value: "customer_list" },
+            { text: "Toptancı İşlemleri -> Toptancı Ekle", value: "wholesaler_add" },
+            { text: "Toptancı İşlemleri -> Toptancı Listesi", value: "wholesaler_list" },
+            { text: "Kategori İşlemleri -> Kategori Ekle", value: "category_add" },
+            { text: "Kategori İşlemleri -> Kategori Listesi", value: "category_list" },
+            { text: "Ürün İşlemleri -> Ürün Ekle", value: "product_add" },
+            { text: "Ürün İşlemleri -> Ürün Listesi", value: "product_list" },
+            { text: "Ürün İşlemleri -> Stok Girişi", value: "product_stockentry" },
+            { text: "Perakende Satış", value: "pos_sale" },
+            { text: "Gelir-Gider İşlemleri -> Gelir-Gider Ekle", value: "incomeandexpenses_add" },
+            { text: "Gelir-Gider İşlemleri -> Gelir-Gider Listesi", value: "incomeandexpenses_list" },
+            { text: "Gelir-Gider İşlemleri -> Tür İşlemleri -> Tür Ekle", value: "incomeandexpensestype_add" },
+            { text: "Gelir-Gider İşlemleri -> Tür İşlemleri -> Tür Listesi", value: "incomeandexpensestype_list" },
+            { text: "Fiyat Karşılaştır", value: "webscraping_pricecomparison" },
+            { text: "Fiyat İzleme", value: "webscraping_pricetracking" },
+            { text: "Hal Fiyatları", value: "webscraping_priceproducemarket" },
+            { text: "Gelir Gider Raporları -> Gelir Gider Raporları", value: "report_incomeandexpensesreport" },
+            { text: "Gelir Gider Raporları -> Gelir Gider Listesi", value: "report_incomeandexpenseslist" },
+            { text: "Satış Raporları -> Satış Listesi", value: "report_salesreport" },
+            { text: "Satış Raporları -> Satış Detay Listesi", value: "report_salesdetailreport" },
+            { text: "Müşteri Raporları -> Müşteri Raporları", value: "report_customerreport" },
+            { text: "Müşteir Raporları -> Alışveriş Listesi", value: "report_customershoppinglist" },
+            { text: "Müşteri Raporları -> Geri Ödeme Listesi", value: "report_customerrefundlist" },
+            { text: "Müşteri Raporları -> Toplam Borç Listesi", value: "report_customertotaldebtlist" },
+            { text: "Müşteri Raporları -> Ödeme Yapılmayan Gün Listesi", value: "report_customernonpayerslist" },
+            { text: "Toptancı Raporları -> Toptancı Raporları", value: "report_wholesalerreport" },
+            { text: "Toptancı Raporları -> Alışveriş Listesi", value: "report_wholesalershoppinglist" },
+            { text: "Toptancı Raporları -> Geri Ödeme Listesi", value: "report_wholesalerrefundlist" },
+            { text: "Toptancı Raporları -> Toplam Borç Listesi", value: "report_wholesalertotaldebtlist" },
+            { text: "Toptancı Raporları -> Ödeme Yapılmayan Gün Listesi", value: "report_wholesalernonpayerslist" },
+        ];
+
+        return options;
+    },
+    GetSelectText: function () {
+
+        const options = Role.GetSelect();
+        const values = $("#pageNamesListInput").val().split(',');
+
+        const matchedTexts = [];
+
+        values.forEach(value => {
+            const match = options.find(option => option.value === value.trim());
+
+            if (match) {
+                matchedTexts.push(match.text);
+            }
+        });
+        
+        $.each(matchedTexts, function (key, value) {
+            
+            $("#pageNamesList").append(
+                '<div class="d-flex align-items-center py-2">' +
+                '<span class="bullet bg-primary me-3"></span>' +
+                '' + value + '' +
+                '</div>'
+            );
+        })
+
     }
 }
 $(document).ready(function () {

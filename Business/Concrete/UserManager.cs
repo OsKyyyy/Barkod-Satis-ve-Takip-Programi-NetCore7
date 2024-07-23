@@ -185,6 +185,13 @@ namespace Business.Concrete
             return new SuccessDataResult<List<RoleListViewModel>>(result, Messages.RoleListed);
         }
 
+        public IDataResult<RoleListViewModel> GetRoleById(int id)
+        {
+            var result = _userDal.GetRoleById(id);
+
+            return new SuccessDataResult<RoleListViewModel>(result, Messages.RoleListed);
+        }
+
         public IDataResult<RoleListViewModel> GetRoleByName(string name)
         {
             var result = _userDal.GetRoleByName(name);

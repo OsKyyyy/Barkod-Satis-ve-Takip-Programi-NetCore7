@@ -235,6 +235,53 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
+        public RoleListViewModel GetRoleById(int id)
+        {
+            using (var context = new DataBaseContext())
+            {
+                var rolePageClaims = context.OperationClaims
+                     .Where(oc => oc.Id == id)
+                     .GroupJoin(context.PageClaims,
+                         oc => oc.Id,
+                         pc => pc.OperationClaimId,
+                         (oc, pcs) => new { OperationClaim = oc, PageClaims = pcs })
+                     .SelectMany(
+                         oc_pc => oc_pc.PageClaims.DefaultIfEmpty(),
+                         (oc_pc, pc) => new { oc_pc.OperationClaim, PageClaim = pc })
+                     .GroupJoin(context.UserOperationClaims,
+                         ocpc => ocpc.OperationClaim.Id,
+                         uoc => uoc.OperationClaimId,
+                         (ocpc, uocs) => new { ocpc.OperationClaim, ocpc.PageClaim, UserIds = uocs.Select(uoc => uoc.UserId).Distinct().ToList() })
+                     .ToList();
+
+                var result = rolePageClaims
+                    .GroupBy(rpc => new { rpc.OperationClaim.Id, rpc.OperationClaim.Name })
+                    .Select(g => new RoleListViewModel
+                    {
+                        OperationClaimId = g.Key.Id,
+                        RoleName = g.Key.Name,
+                        PageNames = g.Where(x => x.PageClaim != null).Select(x => x.PageClaim.PageName).ToList(),
+                        UserCount = g.SelectMany(x => x.UserIds).Distinct().Count(),
+                        Users = g.SelectMany(x => x.UserIds).Distinct()
+                                  .Join(context.Users,
+                                        userId => userId,
+                                        user => user.Id,
+                                        (userId, user) => new ViewModel
+                                        {
+                                            Id = user.Id,
+                                            FirstName = user.FirstName,
+                                            LastName = user.LastName,
+                                            Email = user.Email,
+                                            Phone = user.Phone,
+                                            Status = user.Status
+                                        }).ToList()
+                    })
+                    .FirstOrDefault();
+
+                return result;
+            }
+        }
+
         public RoleListViewModel GetRoleByName(string name)
         {
             using (var context = new DataBaseContext())
