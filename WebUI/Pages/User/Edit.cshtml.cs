@@ -1,3 +1,4 @@
+using Core.Entities.Concrete;
 using Core.Utilities.Refit.Abstract;
 using Core.Utilities.Refit.Models.Request;
 using Core.Utilities.Refit.Models.Request.User;
@@ -24,10 +25,15 @@ namespace WebUI.Pages.User
 
         [BindProperty]
         public UpdateRequestModel UpdateRequestModel { get; set; }
-        
+
+        public List<RoleListViewModel> RoleListViewModel { get; set; }
+
+        public string? RoleName { get; set; }
+
         public async Task<IActionResult> OnGetAsync(int id)
         {
             var response = await _user.ListById("Bearer " + HttpContext.Session.GetString("userToken"), id);
+            var responseRole = await _user.RoleList("Bearer " + HttpContext.Session.GetString("userToken"));
 
             if (response.Message == "Authentication Error")
             {
@@ -49,6 +55,9 @@ namespace WebUI.Pages.User
                 setModel.Status = response.Data.Status;
 
                 UpdateRequestModel = setModel;
+
+                RoleListViewModel = responseRole.Data;
+                RoleName = response.Data.RoleName;
 
                 return Page();
             }
@@ -77,6 +86,27 @@ namespace WebUI.Pages.User
 
             ToastrError = response.Message;
             return Page();
+        }
+
+        public async Task<IActionResult> OnPostUpdateUserRoleAsync([FromBody] UpdateUserRoleRequestModel updateUserRoleRequestModel)
+        {
+            var response = await _user.UpdateUserRole("Bearer " + HttpContext.Session.GetString("userToken"), updateUserRoleRequestModel);
+
+            return new JsonResult(response);
+        }
+
+        public async Task<IActionResult> OnPostUpdateUserPasswordAsync([FromBody] UpdateUserPasswordRequestModel updateUserPasswordRequestModel)
+        {
+            var response = await _user.UpdateUserPassword("Bearer " + HttpContext.Session.GetString("userToken"), updateUserPasswordRequestModel);
+
+            return new JsonResult(response);
+        }
+
+        public async Task<IActionResult> OnPostUpdateUserEmailAsync([FromBody] UpdateUserEmailRequestModel updateUserEmailRequestModel)
+        {
+            var response = await _user.UpdateUserEmail("Bearer " + HttpContext.Session.GetString("userToken"), updateUserEmailRequestModel);
+
+            return new JsonResult(response);
         }
     }
 }

@@ -94,15 +94,15 @@ namespace Business.Concrete
         }
 
         [SecuredOperation("Admin")]
-        public IDataResult<User> ListById(int id)
+        public IDataResult<ViewModel> ListById(int id)
         {
             var result = _userDal.ListById(id);
             if (result == null)
             {
-                return new ErrorDataResult<User>(Messages.UserNotFound);
+                return new ErrorDataResult<ViewModel>(Messages.UserNotFound);
             }
 
-            return new SuccessDataResult<User>(result, Messages.UserInfoListed);
+            return new SuccessDataResult<ViewModel>(result, Messages.UserInfoListed);
         }
 
         [SecuredOperation("Admin")]
@@ -197,6 +197,49 @@ namespace Business.Concrete
             var result = _userDal.GetRoleByName(name);
 
             return new SuccessDataResult<RoleListViewModel>(result, Messages.RoleListed);
-        }       
+        }
+
+        public IResult UpdateUserRole(UserRoleUpdateDto userRoleUpdateDto)
+        {
+            _userDal.UpdateUserRole(userRoleUpdateDto);
+
+            return new SuccessResult(Messages.UserRoleUpdated);
+        }
+
+        public IResult CheckCurrentPassword(string password, int id)
+        {
+            var user = _userDal.Get(u => u.Id == id);
+
+            if (!HashingHelper.VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
+            {
+                return new ErrorDataResult<User>(Messages.PasswordError);
+            }
+
+            return new SuccessResult(Messages.PasswordSuccess);
+        }
+
+        public IResult UpdateUserPassword(int id, string password)
+        {
+            byte[] passwordHash, passwordSalt;
+            HashingHelper.CreatePasswordHash(password, out passwordHash, out passwordSalt);
+
+            var user = new User
+            {
+                Id = id,
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt,
+            };
+            _userDal.UpdateUserPassword(user);
+
+            return new SuccessResult(Messages.UserPasswordUpdated);
+        }
+
+        public IResult UpdateUserEmail(UserEmailUpdateDto userEmailUpdateDto)
+        {
+            _userDal.UpdateUserEmail(userEmailUpdateDto);
+
+            return new SuccessResult(Messages.UserEmailUpdated);
+        }
+
     }
 }

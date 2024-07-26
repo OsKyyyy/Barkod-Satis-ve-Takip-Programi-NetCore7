@@ -2,6 +2,7 @@
 using Core.Utilities.Refit.Models.Request.User;
 using Entities.Dtos;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace WebAPI.Controllers
 {
@@ -191,6 +192,55 @@ namespace WebAPI.Controllers
             }
 
             return Ok(list);
+        }
+
+        [Route("UpdateUserRole")]
+        [HttpPut]
+        public ActionResult UpdateUserRole(UserRoleUpdateDto userRoleUpdateDto)
+        {
+            var result = _userService.UpdateUserRole(userRoleUpdateDto);
+
+            if (!result.Status)
+            {
+                return BadRequest(result);
+            }
+
+            return Ok(result);
+        }
+
+        [Route("UpdateUserPassword")]
+        [HttpPut]
+        public ActionResult UpdateUserPassword(UserPasswordUpdateDto userPasswordUpdateDto)
+        {
+            var checkCurrentPassword = _userService.CheckCurrentPassword(userPasswordUpdateDto.CurrentPassword, userPasswordUpdateDto.Id);
+
+            if (!checkCurrentPassword.Status)
+            {
+                return BadRequest(checkCurrentPassword);
+            }
+
+            var result = _userService.UpdateUserPassword(userPasswordUpdateDto.Id, userPasswordUpdateDto.NewPassword);
+
+            if (!result.Status)
+            {
+                return BadRequest(result);
+            }
+
+            return Ok(result);
+        }
+
+        [Route("UpdateUserEmail")]
+        [HttpPut]
+        public ActionResult UpdateUserEmail(UserEmailUpdateDto userEmailUpdateDto)
+        {
+            var result = _userService.UpdateUserEmail(userEmailUpdateDto);
+
+            if (!result.Status)
+            {
+                return BadRequest(result);
+            }
+
+            return Ok(result);
         }
     }
 }

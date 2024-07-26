@@ -20,7 +20,7 @@ namespace Business.Abstract
         IDataResult<List<User>> List();
         IResult UserExistsByUpdate(string email, int Id);
         IDataResult<User> ListByMail(string email);
-        IDataResult<User> ListById(int id);
+        IDataResult<ViewModel> ListById(int id);
         IDataResult<OperationClaim> CheckExistsByName(string name);
         IDataResult<OperationClaim> CheckExistsByNameAndId(int id, string name);
         IDataResult<OperationClaim> AddOperationClaim(string name);
@@ -30,5 +30,10 @@ namespace Business.Abstract
         IDataResult<List<RoleListViewModel>> RoleList();
         IDataResult<RoleListViewModel> GetRoleById(int id);
         IDataResult<RoleListViewModel> GetRoleByName(string name);
+        IResult UpdateUserRole(UserRoleUpdateDto userRoleUpdateDto);
+        IResult CheckCurrentPassword(string password, int id);
+        IResult UpdateUserPassword(int id, string password);
+        IResult UpdateUserEmail(UserEmailUpdateDto userEmailUpdateDto);
+
     }
 }

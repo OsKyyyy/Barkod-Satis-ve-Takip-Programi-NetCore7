@@ -16,7 +16,7 @@ namespace DataAccess.Abstract
         User Delete(int id);
         List<User> List();
         User ListByMail(string email);
-        User ListById(int id);
+        ViewModel ListById(int id);
         List<OperationClaim> GetClaims(User user);
         OperationClaim CheckExistsByName(string name);
         OperationClaim CheckExistsByNameAndId(int id, string name);
@@ -27,5 +27,9 @@ namespace DataAccess.Abstract
         List<RoleListViewModel> RoleList();
         RoleListViewModel GetRoleById(int id);
         RoleListViewModel GetRoleByName(string name);
+        void UpdateUserRole(UserRoleUpdateDto userRoleUpdateDto);
+        void UpdateUserPassword(User user);
+        void UpdateUserEmail(UserEmailUpdateDto userEmailUpdateDto);
+
     }
 }

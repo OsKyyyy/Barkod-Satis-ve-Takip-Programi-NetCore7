@@ -17,10 +17,14 @@ namespace Business.Constant
         public static string UserDeleted = "Kullanıcı Silindi";
         public static string UserNotFound = "Kullanıcı Bulunamadı";
         public static string PasswordError = "Şifre Hatalı";
+        public static string PasswordSuccess = "Şifre Başarılı";
         public static string SuccessfulLogin = "Giriş Başarılı";
         public static string UsersListed = "Kullanıcılar Listelendi";
         public static string UserInfoListed = "Kullanıcı Bilgileri Listelendi";
         public static string UserAlreadyExists = "Kullanıcı Zaten Mevcut";
+        public static string UserRoleUpdated = "Kullanıcı Rolü Güncellendi";
+        public static string UserPasswordUpdated = "Kullanıcı Şifresi Güncellendi";
+        public static string UserEmailUpdated = "Kullanıcı E-Posta Adresi Güncellendi";
 
         public static string CategoryAdded = "Kategori Eklendi";
         public static string CategoryNotFound = "Kategori Bulunamadı";

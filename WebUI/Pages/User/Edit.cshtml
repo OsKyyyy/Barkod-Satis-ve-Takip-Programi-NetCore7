@@ -27,88 +27,363 @@
         </div>
         <div id="kt_app_content" class="app-content  flex-column-fluid ">
             <div id="kt_app_content_container" class="app-container  container-xxl ">
-                <form class="form d-flex flex-column flex-lg-row" method="post" asp-page-handler="Edit">
-                    <input hidden asp-for="UpdateRequestModel.Id"/>
-                    <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">
-                        <div class="card card-flush py-4">
-                            <div class="card-header">
-                                <div class="card-title">
-                                    <h2>Durum</h2>
-                                </div>
-                                <div class="card-toolbar">
-                                    <div class="rounded-circle bg-success w-15px h-15px" id="statusCircle"></div>
+                <div id="kt_app_content_container" class="app-container  container-xxl ">
+                    <div class="d-flex flex-column flex-lg-row">
+                        <div class="flex-column flex-lg-row-auto w-lg-250px w-xl-350px mb-10">        
+                            <div class="card mb-5 mb-xl-8">
+                                <div class="card-body">        
+                                    <div class="d-flex flex-center flex-column py-5">
+                                        <div class="symbol symbol-100px symbol-circle mb-7">
+                                            <img src="~/assets/media/svg/avatars/blank.svg" alt="image">
+                                        </div>
+
+                                        <a class="fs-3 text-gray-800 fw-bold mb-3">
+                                            @Model.UpdateRequestModel.FirstName @Model.UpdateRequestModel.LastName
+                                        </a>
+
+                                        <div class="mb-9">
+                                            <div class="badge badge-lg badge-light-primary d-inline">@Model.RoleName</div>
+                                        </div>                                                                            
+                                    </div>        
                                 </div>
                             </div>
-                            <div class="card-body pt-0">
-                                <select asp-for="UpdateRequestModel.Status" class="form-select mb-2" data-control="select2" data-hide-search="true" id="statusSelect">
-                                    <option value="true">Aktif</option>
-                                    <option value="false">Pasif</option>
-                                </select>
-                                <div class="text-muted fs-7">Kullanıcının pasif olarak seçilmesi, kullanıcının kullanılamayacağı anlamına gelir. Daha sonra kullanıcı, liste üzerinden aktifleştirilebilir.</div>
+                        </div>
+
+                        <div class="flex-lg-row-fluid ms-lg-15">
+                            <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-semibold mb-8">
+                                <li class="nav-item">
+                                    <a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab" href="#kt_user_view_overview_tab">Genel Bakış</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab" href="#kt_user_view_overview_security">Güvenlik</a>
+                                </li>
+                            </ul>
+
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="kt_user_view_overview_tab" role="tabpanel">
+                                    <form class="form d-flex flex-column flex-lg-row" method="post" asp-page-handler="Edit">
+                                        <input hidden asp-for="UpdateRequestModel.Id" />                                                    
+                                        <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
+                                            <div class="card card-flush py-4">
+                                                <div class="card-header">
+                                                    <div class="card-title">
+                                                        <h2>Kullanıcı Bilgileri</h2>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body pt-0">
+                                                    <div class="row mb-6">
+                                                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Ad</label>
+
+                                                        <div class="col-lg-8 fv-row">
+                                                            <input asp-for="UpdateRequestModel.FirstName" class="form-control form-control-lg form-control mb-3 mb-lg-0" autocomplete="off">
+                                                            <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                                                                <span asp-validation-for="UpdateRequestModel.FirstName"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-6">
+                                                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Soyad</label>
+
+                                                        <div class="col-lg-8 fv-row">
+                                                            <input asp-for="UpdateRequestModel.LastName" class="form-control form-control-lg form-control" autocomplete="off">
+                                                            <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                                                                <span asp-validation-for="UpdateRequestModel.LastName"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mb-6">
+                                                        <label class="col-lg-4 col-form-label fw-semibold fs-6">Telefon</label>
+
+                                                        <div class="col-lg-8 fv-row">
+                                                            <input asp-for="UpdateRequestModel.Phone" class="form-control form-control-lg form-control" placeholder="5XXXXXXXXX" autocomplete="off">
+                                                            <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                                                                <span asp-validation-for="UpdateRequestModel.Phone"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mb-6">
+                                                        <label class="col-lg-4 col-form-label fw-semibold fs-6 required">Durum</label>
+
+                                                        <div class="col-lg-8 fv-row">
+                                                            <select asp-for="UpdateRequestModel.Status" class="form-select mb-2" data-control="select2" data-hide-search="true" id="statusSelect">
+                                                                <option value="true">Aktif</option>
+                                                                <option value="false">Pasif</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-end">
+                                                <button type="submit" class="btn btn-primary">
+                                                    <span class="indicator-label">
+                                                        Kaydet
+                                                    </span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="tab-pane fade" id="kt_user_view_overview_security" role="tabpanel">
+                                    <div class="card pt-4 mb-6 mb-xl-9">
+                                        <div class="card-header border-0">
+                                            <div class="card-title">
+                                                <h2>Güvenlik Bilgileri</h2>
+                                            </div>
+                                        </div>
+
+                                        <div class="card-body pt-0 pb-5">
+                                            <div class="table-responsive">
+                                                <table class="table align-middle table-row-dashed gy-5" id="kt_table_users_login_session">
+                                                    <tbody class="fs-6 fw-semibold text-gray-600">
+                                                        <tr>
+                                                            <td>E-Posta</td>
+                                                            <td>@Model.UpdateRequestModel.Email</td>
+                                                            <td class="text-end">
+                                                                <button type="button" class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto" data-bs-toggle="modal" data-bs-target="#kt_modal_update_email">
+                                                                    <i class="ki-duotone ki-pencil fs-3">
+                                                                        <span class="path1"></span>
+                                                                        <span class="path2"></span>
+                                                                    </i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Şifre</td>
+                                                            <td>******</td>
+                                                            <td class="text-end">
+                                                                <button type="button" class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto" data-bs-toggle="modal" data-bs-target="#kt_modal_update_password">
+                                                                    <i class="ki-duotone ki-pencil fs-3">
+                                                                        <span class="path1"></span>
+                                                                        <span class="path2"></span>
+                                                                    </i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Rol</td>
+                                                            <td>@Model.RoleName</td>
+                                                            <td class="text-end">
+                                                                <button type="button" class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto" data-bs-toggle="modal" data-bs-target="#kt_modal_update_role">
+                                                                    <i class="ki-duotone ki-pencil fs-3">
+                                                                        <span class="path1"></span>
+                                                                        <span class="path2"></span>
+                                                                    </i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>            
                             </div>
                         </div>
                     </div>
-                    <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
-                        <div class="card card-flush py-4">
-                            <div class="card-header">
-                                <div class="card-title">
-                                    <h2>Kullanıcı Bilgileri</h2>
+                
+                    <div class="modal fade" id="kt_modal_update_email" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered mw-650px">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h2 class="fw-bold">E-Posta Düzenle</h2>
+                                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
+                                        <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
+                                    </div>
+                                </div>
+
+                                <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                                    <form action="javascript:;" onsubmit="Request.UpdateEmail()">
+                                        <div class="fv-row mb-7">
+                                            <label class="fs-6 fw-semibold form-label mb-2">
+                                                <span class="required">E-Posta Adresi</span>
+                                            </label>
+                                            <input class="form-control form-control-solid" id="updateEmail" value="@Model.UpdateRequestModel.Email">
+                                        </div>
+                                        <div class="text-center pt-15">
+                                            <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">
+                                                İptal
+                                            </button>
+
+                                            <button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit">
+                                                <span class="indicator-label">
+                                                    Kaydet
+                                                </span>
+                                            </button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
-                            <div class="card-body pt-0">
-                                <div class="row mb-6">
-                                    <label class="col-lg-4 col-form-label required fw-semibold fs-6">Ad</label>
-
-                                    <div class="col-lg-8 fv-row">
-                                        <input asp-for="UpdateRequestModel.FirstName" class="form-control form-control-lg form-control mb-3 mb-lg-0" autocomplete="off">
-                                        <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
-                                            <span asp-validation-for="UpdateRequestModel.FirstName"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mb-6">
-                                    <label class="col-lg-4 col-form-label required fw-semibold fs-6">Soyad</label>
-
-                                    <div class="col-lg-8 fv-row">
-                                        <input asp-for="UpdateRequestModel.LastName" class="form-control form-control-lg form-control" autocomplete="off">
-                                        <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
-                                            <span asp-validation-for="UpdateRequestModel.LastName"></span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row mb-6">
-                                    <label class="col-lg-4 col-form-label fw-semibold fs-6">Telefon</label>
-
-                                    <div class="col-lg-8 fv-row">
-                                        <input asp-for="UpdateRequestModel.Phone" class="form-control form-control-lg form-control" placeholder="5XXXXXXXXX" autocomplete="off">
-                                        <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
-                                            <span asp-validation-for="UpdateRequestModel.Phone"></span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row mb-6">
-                                    <label class="col-lg-4 col-form-label fw-semibold fs-6 required">Eposta</label>
-
-                                    <div class="col-lg-8 fv-row">
-                                        <input asp-for="UpdateRequestModel.Email" class="form-control form-control-lg form-control" autocomplete="off">
-                                        <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
-                                            <span asp-validation-for="UpdateRequestModel.Email"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-end">
-                            <button type="submit" class="btn btn-primary">
-                                <span class="indicator-label">
-                                    Kaydet
-                                </span>
-                            </button>
                         </div>
                     </div>
-                </form>
+                    <div class="modal fade" id="kt_modal_update_password" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered mw-650px">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h2 class="fw-bold">Şifre Düzenle</h2>
+
+                                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
+                                        <i class="ki-duotone ki-cross fs-1">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                        </i>
+                                    </div>
+                                </div>
+
+                                <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                                    <form action="javascript:;" onsubmit="Request.UpdatePassword()">
+
+                                        <div class="mb-10 fv-row" data-kt-password-meter="true">
+                                            <label class="required form-label fw-semibold fs-6 mb-2">Yeni Şifre</label>
+                                            <div class="position-relative mb-3">
+                                                <input class="form-control form-control-lg form-control-solid" type="password" id="updatePasswordCurrentPassword" autocomplete="off">
+                                                <span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2" data-kt-password-meter-control="visibility">
+                                                    <i class="ki-duotone ki-eye-slash fs-1">
+                                                        <span class="path1"></span>
+                                                        <span class="path2"></span>
+                                                        <span class="path3"></span>
+                                                        <span class="path4"></span>
+                                                    </i>
+                                                    <i class="ki-duotone ki-eye d-none fs-1">
+                                                        <span class="path1"></span>
+                                                        <span class="path2"></span>
+                                                        <span class="path3"></span>
+                                                    </i>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-10 fv-row" data-kt-password-meter="true">
+                                            <label class="required form-label fw-semibold fs-6 mb-2">Yeni Şifre</label>
+                                            <div class="position-relative mb-3">
+                                                <input class="form-control form-control-lg form-control-solid" type="password" id="updatePasswordNewPassword" autocomplete="off">
+                                                <span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2" data-kt-password-meter-control="visibility">
+                                                    <i class="ki-duotone ki-eye-slash fs-1">
+                                                        <span class="path1"></span>
+                                                        <span class="path2"></span>
+                                                        <span class="path3"></span>
+                                                        <span class="path4"></span>
+                                                    </i>
+                                                    <i class="ki-duotone ki-eye d-none fs-1">
+                                                        <span class="path1"></span>
+                                                        <span class="path2"></span>
+                                                        <span class="path3"></span>
+                                                    </i>
+                                                </span>
+                                            </div>                                                                                 
+                                        </div>
+
+                                        <div class="fv-row mb-10" data-kt-password-meter="true">
+                                            <label class="required form-label fw-semibold fs-6 mb-2">Yeni Şifre Onayla</label>
+                                            <div class="position-relative mb-3">
+                                                <input class="form-control form-control-lg form-control-solid" type="password" id="updatePasswordConfirmPassword" autocomplete="off">
+                                                <span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2" data-kt-password-meter-control="visibility">
+                                                    <i class="ki-duotone ki-eye-slash fs-1">
+                                                        <span class="path1"></span>
+                                                        <span class="path2"></span>
+                                                        <span class="path3"></span>
+                                                        <span class="path4"></span>
+                                                    </i>
+                                                    <i class="ki-duotone ki-eye d-none fs-1">
+                                                        <span class="path1"></span>
+                                                        <span class="path2"></span>
+                                                        <span class="path3"></span>
+                                                    </i>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="text-center pt-15">
+                                            <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">
+                                                İptal
+                                            </button>
+
+                                            <button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit">
+                                                <span class="indicator-label">
+                                                    Kaydet
+                                                </span>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="kt_modal_update_role" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered mw-650px">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h2 class="fw-bold">Kullanıcı Rolü Düzenle</h2>
+                                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
+                                        <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
+                                    </div>
+                                </div>
+
+                                <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                                    <form action="javascript:;" onsubmit="Request.UpdateUserRole()">
+                                        <input hidden id="updateRoleUserId" value="@Model.UpdateRequestModel.Id" />
+                                        <div class="notice d-flex bg-light-primary rounded border-primary border border-dashed mb-9 p-6">
+                                            <i class="ki-duotone ki-information fs-2tx text-primary me-4">
+                                                <span class="path1"></span>
+                                                <span class="path2"></span>
+                                                <span class="path3"></span>
+                                            </i>    
+                                            <div class="d-flex flex-stack flex-grow-1 ">
+                                                <div class=" fw-semibold">                
+                                                    <div class="fs-6 text-gray-700 ">Kullanıcının rolü değiştirilmesi veya düşürülmesi halinde, söz konusu kullanıcının önceki role atanan tüm ayrıcalıkları kaybedeceğini lütfen unutmayın.</div>
+                                                </div>        
+                                            </div>
+                                        </div>
+
+                                        <div class="fv-row mb-7">
+                                            <label class="fs-6 fw-semibold form-label mb-5">
+                                                <span class="required">Kullanıcı Rolü Seçin</span>
+                                            </label>
+                                            @{
+                                                int i = 1;
+                                            }
+                                            @foreach (var item in Model.RoleListViewModel)
+                                            {                                                
+                                                var isChecked = item.RoleName == Model.RoleName ? "checked" : "";
+                                                
+                                                <div class="d-flex">
+                                                    <div class="form-check form-check-custom form-check-solid">
+                                                        <input class="form-check-input me-3" name="user_role" type="radio" value="@item.OperationClaimId" id="updateUserRoleOperationId" @(item.RoleName == Model.RoleName ? "checked='checked'" : "") />
+
+                                                        <label class="form-check-label" for="kt_modal_update_role_option_0">
+                                                            <div class="fw-bold text-gray-800">@item.RoleName</div>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                if (Model.RoleListViewModel.Count() != i)
+                                                {
+                                                    <div class="separator separator-dashed my-5"></div>
+                                                }
+                                                i++;
+                                            }
+                                               
+                                        </div>
+
+                                        <div class="text-center pt-15">
+                                            <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">
+                                                İptal
+                                            </button>
+
+                                            <button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit">
+                                                <span class="indicator-label">
+                                                    Kaydet
+                                                </span>                                               
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                       
+                </div>
             </div>
         </div>
     </div>
@@ -121,4 +396,5 @@
 </div>
 @section _Foot{
     <script src="~/assets/js/pages/user/user.js"></script>
+    <script src="~/assets/js/pages/user/request.js"></script>
 }

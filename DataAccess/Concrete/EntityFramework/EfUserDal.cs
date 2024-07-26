@@ -32,8 +32,7 @@ namespace DataAccess.Concrete.EntityFramework
         public User Update(User user)
         {
             using (var context = new DataBaseContext())
-            {
-      
+            {      
                 var result = context.Users.FirstOrDefault(u => u.Id == user.Id);
 
                 result.FirstName = user.FirstName;
@@ -99,21 +98,31 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
-        public User ListById(int id)
+        public ViewModel ListById(int id)
         {
             using (var context = new DataBaseContext())
             {
-                var result = context.Users.Where(x => x.Deleted == false).Select(s => new User
-                {
-                    Id = s.Id,
-                    FirstName = s.FirstName,
-                    LastName = s.LastName,
-                    Phone = s.Phone,
-                    Email = s.Email,
-                    Status = s.Status,
-                }).FirstOrDefault(u => u.Id == id);
+                var userDetailsWithRoles = context.UserOperationClaims
+                    .Where(uoc => uoc.UserId == id)
+                    .Join(context.OperationClaims,
+                          uoc => uoc.OperationClaimId,
+                          oc => oc.Id,
+                          (uoc, oc) => new { uoc.UserId, oc.Name })
+                    .Join(context.Users,
+                          uoc_oc => uoc_oc.UserId,
+                          user => user.Id,
+                          (uoc_oc, user) => new ViewModel
+                          {
+                              Id = user.Id,
+                              FirstName = user.FirstName,
+                              LastName = user.LastName,
+                              Email = user.Email,
+                              Phone = user.Phone,
+                              RoleName = uoc_oc.Name
+                          })
+                    .FirstOrDefault();
 
-                return result;
+                return userDetailsWithRoles;
             }
         }
 
@@ -315,5 +324,42 @@ namespace DataAccess.Concrete.EntityFramework
                 return result;
             }
         }      
+
+        public void UpdateUserRole(UserRoleUpdateDto userRoleUpdateDto)
+        {
+            using (var context = new DataBaseContext())
+            {
+                var result = context.UserOperationClaims.FirstOrDefault(u => u.UserId == userRoleUpdateDto.Id);
+
+                result.OperationClaimId = userRoleUpdateDto.OperationClaimId;               
+
+                context.SaveChanges();
+            }
+        }
+
+        public void UpdateUserPassword(User user)
+        {
+            using (var context = new DataBaseContext())
+            {
+                var result = context.Users.FirstOrDefault(u => u.Id == user.Id);
+
+                result.PasswordSalt = user.PasswordSalt;
+                result.PasswordHash = user.PasswordHash;
+
+                context.SaveChanges();
+            }
+        }
+
+        public void UpdateUserEmail(UserEmailUpdateDto userEmailUpdateDto)
+        {
+            using (var context = new DataBaseContext())
+            {
+                var result = context.Users.FirstOrDefault(u => u.Id == userEmailUpdateDto.Id);
+
+                result.Email = userEmailUpdateDto.Email;
+
+                context.SaveChanges();
+            }
+        }
     }
 }

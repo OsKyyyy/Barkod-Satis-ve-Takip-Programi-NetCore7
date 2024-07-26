@@ -366,5 +366,92 @@ namespace Core.Utilities.Refit.Concrete
             }
         }
 
+        public async Task<Result> UpdateUserRole([Header("Authorization")] string token, [Body] UpdateUserRoleRequestModel updateUserRoleRequestModel)
+        {
+            Result dataResult = new Result();
+
+            try
+            {
+                dataResult = await myAPI.UpdateUserRole(token, updateUserRoleRequestModel);
+
+                return dataResult;
+            }
+            catch (ApiException exception)
+            {
+                dynamic response = JsonConvert.DeserializeObject(exception.Content);
+
+                if (response != null && response.Status != null)
+                {
+                    dataResult.Message = response.Message;
+                    dataResult.Status = response.Status;
+
+                    return dataResult;
+                }
+
+                dataResult.Message = "Beklenmedik hata ile karşılaşıldı";
+                dataResult.Status = false;
+
+                return dataResult;
+            }
+        }
+
+        public async Task<Result> UpdateUserPassword([Header("Authorization")] string token, [Body] UpdateUserPasswordRequestModel updateUserPasswordRequestModel)
+        {
+            Result dataResult = new Result();
+
+            try
+            {
+                dataResult = await myAPI.UpdateUserPassword(token, updateUserPasswordRequestModel);
+
+                return dataResult;
+            }
+            catch (ApiException exception)
+            {
+                dynamic response = JsonConvert.DeserializeObject(exception.Content);
+
+                if (response != null && response.Status != null)
+                {
+                    dataResult.Message = response.Message;
+                    dataResult.Status = response.Status;
+
+                    return dataResult;
+                }
+
+                dataResult.Message = "Beklenmedik hata ile karşılaşıldı";
+                dataResult.Status = false;
+
+                return dataResult;
+            }
+        }
+
+        public async Task<Result> UpdateUserEmail([Header("Authorization")] string token, [Body] UpdateUserEmailRequestModel updateUserEmailRequestModel)
+        {
+            Result dataResult = new Result();
+
+            try
+            {
+                dataResult = await myAPI.UpdateUserEmail(token, updateUserEmailRequestModel);
+
+                return dataResult;
+            }
+            catch (ApiException exception)
+            {
+                dynamic response = JsonConvert.DeserializeObject(exception.Content);
+
+                if (response != null && response.Status != null)
+                {
+                    dataResult.Message = response.Message;
+                    dataResult.Status = response.Status;
+
+                    return dataResult;
+                }
+
+                dataResult.Message = "Beklenmedik hata ile karşılaşıldı";
+                dataResult.Status = false;
+
+                return dataResult;
+            }
+        }
+
     }
 }

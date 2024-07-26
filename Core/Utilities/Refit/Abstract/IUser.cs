@@ -47,5 +47,14 @@ namespace Core.Utilities.Refit.Abstract
 
         [Get("/user/GetRoleByName")]
         Task<DataResult<RoleListViewModel>> GetRoleByName([Header("Authorization")] string token, string name);
+
+        [Put("/user/UpdateUserRole")]
+        Task<Result> UpdateUserRole([Header("Authorization")] string token, [Body] UpdateUserRoleRequestModel updateUserRoleRequestModel);
+
+        [Put("/user/UpdateUserPassword")]
+        Task<Result> UpdateUserPassword([Header("Authorization")] string token, [Body] UpdateUserPasswordRequestModel updateUserPasswordRequestModel);
+
+        [Put("/user/UpdateUserEmail")]
+        Task<Result> UpdateUserEmail([Header("Authorization")] string token, [Body] UpdateUserEmailRequestModel updateUserEmailRequestModel);
     }
 }

@@ -6,6 +6,15 @@
         User.ToastrSuccess();
         User.PasswordHideShow();
         User.ChangeStatus();
+
+        var url = new URL(window.location.href);
+        var r = url.searchParams.get("r");
+
+        if (r != null) {
+            var msg = User.DecodeParam(r);
+            $('#ToastrSuccess').val(msg)
+            User.ToastrSuccess();
+        }
     },
     AlertError: function () {
 
@@ -118,6 +127,12 @@
                 $("#statusCircle").addClass("bg-success");
             }
         });
+    },
+    EncodeParam: function (param) {
+        return btoa(encodeURIComponent(param));
+    },
+    DecodeParam: function (encodedParam) {
+        return decodeURIComponent(atob(encodedParam));
     }
 }
 $(document).ready(function () {

@@ -93,9 +93,7 @@
                 RequestVerificationToken:
                     $('input:hidden[name="__RequestVerificationToken"]').val()
             },
-            success: function (response) {
-
-                console.log(response);
+            success: function (response) {                
 
                 if (response.status != undefined) {
 
@@ -114,7 +112,6 @@
             },
         })
     },
-
     GetMarketByKeyValue: function (key) {
 
         if (key == 0) {

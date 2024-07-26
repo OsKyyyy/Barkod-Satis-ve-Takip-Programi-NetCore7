@@ -25,6 +25,9 @@ namespace Core.Utilities.Refit.Models.Response.User
         [JsonProperty("Phone")]
         public string? Phone { get; set; }
 
+        [JsonProperty("RoleName")]
+        public string? RoleName { get; set; }
+
         [JsonProperty("Status")]
         public bool Status { get; set; }
     }

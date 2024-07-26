@@ -173,7 +173,7 @@
         })
     },
     AddAjax: function (method, counter) {
-
+        
         basket = localStorage.getItem("basket");
         
         if (method == 1) {
