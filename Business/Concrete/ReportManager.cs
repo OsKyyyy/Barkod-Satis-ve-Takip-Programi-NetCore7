@@ -20,8 +20,7 @@ using Entities.Dtos;
 using Core.Utilities.Refit.Models.Response.SaleProduct;
 
 namespace Business.Concrete
-{
-    [SecuredOperation("Admin")]
+{    
     public class ReportManager : IReportService
     {
         IReportDal _reportDal;
@@ -31,6 +30,7 @@ namespace Business.Concrete
             _reportDal = reportDal;
         }
 
+        [SecuredOperation("report_salesreport")]
         public IDataResult<List<SalesReportViewModel>> SalesReport()
         {
             var result = _reportDal.SalesReport();
@@ -38,13 +38,16 @@ namespace Business.Concrete
             return new SuccessDataResult<List<SalesReportViewModel>>(result, Messages.SaleReportListed);
         }
 
+        [SecuredOperation("report_salesdetailreport")]
         public IDataResult<List<SaleViewModel>> SalesDetailReport(DateTime date)
         {
             var result = _reportDal.SalesDetailReport(date);
 
             return new SuccessDataResult<List<SaleViewModel>>(result, Messages.SaleDetailReportListed);
-        }               
+        }
 
+        #region Müşteri Raporları
+        [SecuredOperation("report_customershoppinglist")]
         public IDataResult<List<CustomerMovementViewModel>> GetLastCustomerWithDebt()
         {
             var result = _reportDal.GetLastCustomerWithDebt();
@@ -52,6 +55,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CustomerMovementViewModel>>(result, Messages.GetLastCustomerWithDebtListed);
         }
 
+        [SecuredOperation("report_customerrefundlist")]
         public IDataResult<List<CustomerMovementViewModel>> GetLastCustomerWithDebtPayment()
         {
             var result = _reportDal.GetLastCustomerWithDebtPayment();
@@ -59,6 +63,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CustomerMovementViewModel>>(result, Messages.GetLastCustomerWithDebtPaymentListed);
         }
 
+        [SecuredOperation("report_customertotaldebtlist")]
         public IDataResult<CustomerTotalDebtViewModel> GetCustomerTotalDebt()
         {
             var result = _reportDal.GetCustomerTotalDebt();
@@ -66,13 +71,15 @@ namespace Business.Concrete
             return new SuccessDataResult<CustomerTotalDebtViewModel>(result, Messages.GetCustomerTotalDebtListed);
         }
 
+        [SecuredOperation("report_customertotaldebtlist")]
         public IDataResult<List<CustomerDebtViewModel>> GetCustomerDebt()
         {
             var result = _reportDal.GetCustomerDebt();
 
             return new SuccessDataResult<List<CustomerDebtViewModel>>(result, Messages.GetCustomerDebtListed);
         }
-
+        
+        [SecuredOperation("report_customernonpayerslist")] 
         public IDataResult<List<CustomerNonPayersViewModel>> GetCustomerNonPayers()
         {
             var result = _reportDal.GetCustomerNonPayers();
@@ -100,8 +107,10 @@ namespace Business.Concrete
 
             return new SuccessDataResult<List<CustomerMonthlyDebtViewModel>>(result, Messages.GetCustomerMonthlyDebtListed);
         }
+        #endregion
 
-
+        #region Toptancı Raporları
+        [SecuredOperation("report_wholesalershoppinglist")]
         public IDataResult<List<WholeSalerMovementViewModel>> GetLastWholeSalerWithDebt()
         {
             var result = _reportDal.GetLastWholeSalerWithDebt();
@@ -109,6 +118,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<WholeSalerMovementViewModel>>(result, Messages.GetLastWholeSalerWithDebtListed);
         }
 
+        [SecuredOperation("report_wholesalerrefundlist")]
         public IDataResult<List<WholeSalerMovementViewModel>> GetLastWholeSalerWithDebtPayment()
         {
             var result = _reportDal.GetLastWholeSalerWithDebtPayment();
@@ -116,6 +126,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<WholeSalerMovementViewModel>>(result, Messages.GetLastWholeSalerWithDebtPaymentListed);
         }
 
+        [SecuredOperation("report_wholesalertotaldebtlist")]
         public IDataResult<WholeSalerTotalDebtViewModel> GetWholeSalerTotalDebt()
         {
             var result = _reportDal.GetWholeSalerTotalDebt();
@@ -123,6 +134,7 @@ namespace Business.Concrete
             return new SuccessDataResult<WholeSalerTotalDebtViewModel>(result, Messages.GetWholeSalerTotalDebtListed);
         }
 
+        [SecuredOperation("report_wholesalertotaldebtlist")]
         public IDataResult<List<WholeSalerDebtViewModel>> GetWholeSalerDebt()
         {
             var result = _reportDal.GetWholeSalerDebt();
@@ -130,6 +142,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<WholeSalerDebtViewModel>>(result, Messages.GetWholeSalerDebtListed);
         }
 
+        [SecuredOperation("report_wholesalernonpayerslist")]
         public IDataResult<List<WholeSalerNonPayersViewModel>> GetWholeSalerNonPayers()
         {
             var result = _reportDal.GetWholeSalerNonPayers();
@@ -157,8 +170,9 @@ namespace Business.Concrete
 
             return new SuccessDataResult<List<WholeSalerMonthlyDebtViewModel>>(result, Messages.GetWholeSalerMonthlyDebtListed);
         }
+        #endregion
 
-
+        #region Gelir-Gider Raporları
         public IDataResult<IncomeExpensesTotalViewModel> MonthlyExternalIncome()
         {
             var result = _reportDal.MonthlyExternalIncome();
@@ -214,5 +228,6 @@ namespace Business.Concrete
 
             return new SuccessDataResult<List<IncomeExpensesMonthlyTotalViewModel>>(result, Messages.YearlyWholeSalerExpensesListed);
         }
+        #endregion
     }
 }

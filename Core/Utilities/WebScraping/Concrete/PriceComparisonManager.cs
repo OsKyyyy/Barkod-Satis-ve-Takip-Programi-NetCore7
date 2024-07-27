@@ -23,7 +23,7 @@ namespace Core.Utilities.WebScraping.Concrete
         {
             _httpClient = httpClient;
         }
-
+        
         public async Task<IDataResult<List<PriceComparisonViewModel>>> MarketOnePriceComparison(string barcode)
         {
             string? imgUrl = null;

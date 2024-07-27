@@ -124,6 +124,7 @@
         const options = [
             { text: "Kullanıcı İşlemleri -> Kullanıcı Ekle", value: "user_add" },
             { text: "Kullanıcı İşlemleri -> Kullanıcı Listesi", value: "user_list" },
+            { text: "Kullanıcı İşlemleri -> Rol İşlemleri", value: "user_rolelist" },
             { text: "Müşteri İşlemleri -> Müşteri Ekle", value: "customer_add" },
             { text: "Müşteri İşlemleri -> Müşteri Listesi", value: "customer_list" },
             { text: "Toptancı İşlemleri -> Toptancı Ekle", value: "wholesaler_add" },

@@ -20,8 +20,7 @@ using Entities.Dtos;
 using Microsoft.Extensions.Configuration;
 
 namespace Business.Concrete
-{
-    [SecuredOperation("Admin")]
+{    
     public class ProductManager : IProductService
     {
         private readonly CultureInfo _culture = new("en-US");
@@ -38,6 +37,7 @@ namespace Business.Concrete
             Configuration = configuration;
         }
 
+        [SecuredOperation("product_add")]
         [ValidationAspect(typeof(AddValidator))]
         public IResult Add(ProductAddDto productAddDto)
         {
@@ -77,6 +77,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.ProductAdded);
         }
 
+        [SecuredOperation("product_stockentry")]
         [ValidationAspect(typeof(StockEntryValidator))]
         public IResult StockEntry(StockEntryRequestModel stockEntryRequestModel)
         {                        
@@ -85,6 +86,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.ProductStockEntry);
         }
 
+        [SecuredOperation("product_add")]
         [ValidationAspect(typeof(UpdateValidator))]
         public IResult Update(ProductUpdateDto productUpdateDto)
         {
@@ -119,6 +121,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.ProductUpdated);
         }
 
+        [SecuredOperation("product_add")]
         public IResult UpdateStock(string barcode, int quantity)
         {
             _productDal.UpdateStock(barcode, quantity);
@@ -126,6 +129,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.ProductsListed);
         }
 
+        [SecuredOperation("product_add")]
         public IResult UpdateAddStock(string barcode, int quantity)
         {
             _productDal.UpdateAddStock(barcode, quantity);
@@ -133,12 +137,14 @@ namespace Business.Concrete
             return new SuccessResult(Messages.ProductsListed);
         }
 
+        [SecuredOperation("product_list")]
         public IResult Delete(int id)
         {
             _productDal.Delete(id);
             return new SuccessResult(Messages.ProductDeleted);
         }
 
+        [SecuredOperation("product_list")]
         public IDataResult<List<ViewModel>> List()
         {
             var result = _productDal.List();
@@ -146,6 +152,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<ViewModel>>(result, Messages.ProductsListed);
         }
 
+        [SecuredOperation("product_list")]
         public IDataResult<ViewModel> ListById(int id)
         {
             var result = _productDal.ListById(id);
@@ -157,6 +164,7 @@ namespace Business.Concrete
             return new SuccessDataResult<ViewModel>(result, Messages.ProductInfoListed);
         }
 
+        [SecuredOperation("product_list")]
         public IDataResult<List<ViewModel>> ListByName(string name)
         {
             var result = _productDal.ListByName(name);
@@ -164,6 +172,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<ViewModel>>(result, Messages.ProductsListed);
         }
 
+        [SecuredOperation("product_list")]
         public IDataResult<ViewModel> ListToPos(string barcode)
         {
             var result = _productDal.ListToPos(barcode);
@@ -180,6 +189,7 @@ namespace Business.Concrete
             return new SuccessDataResult<ViewModel>(result, Messages.ProductInfoListed);
         }
 
+        [SecuredOperation("product_list")]
         public IDataResult<List<ViewModel>> ListByFavorite()
         {
             var result = _productDal.ListByFavorite();
@@ -187,6 +197,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<ViewModel>>(result, Messages.FavoriteProductsListed);
         }
 
+        [SecuredOperation("product_list")]
         public IDataResult<ViewModel> CheckExistsByBarcode(string barcode)
         {
             var result = _productDal.CheckExistsByBarcode(barcode);
@@ -198,6 +209,7 @@ namespace Business.Concrete
             return new SuccessDataResult<ViewModel>(result, Messages.ProductAlreadyExists);
         }
 
+        [SecuredOperation("product_list")]
         public IResult CheckExistsByBarcodeAndId(int id, string barcode)
         {
             var result = _productDal.CheckExistsByBarcodeAndId(id, barcode);
@@ -210,6 +222,7 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
+        [SecuredOperation("product_list")]
         public bool ListToSavePhoto(string barcode)
         {
             var result = _productDal.ListToSavePhoto(barcode);
@@ -217,6 +230,7 @@ namespace Business.Concrete
             return result;
         }
 
+        [SecuredOperation("product_add")]
         public IResult UpdateImage(UpdateImageRequestModel updateImageRequestModel)
         {                      
             _productDal.UpdateImage(updateImageRequestModel);

@@ -18,8 +18,7 @@ using DataAccess.Concrete.EntityFramework;
 using Entities.Dtos;
 
 namespace Business.Concrete
-{
-    [SecuredOperation("Admin")]
+{    
     public class IncomeAndExpensesManager : IIncomeAndExpensesService
     {
         private readonly CultureInfo _culture = new("en-US");
@@ -29,8 +28,9 @@ namespace Business.Concrete
         public IncomeAndExpensesManager(IIncomeAndExpensesDal incomeAndExpensesDal)
         {
             _incomeAndExpensesDal = incomeAndExpensesDal;
-        }        
+        }
 
+        [SecuredOperation("incomeandexpenses_add")]
         [ValidationAspect(typeof(AddValidator))]
         public IResult Add(IncomeAndExpensesAddDto incomeAndExpensesAddDto)
         {
@@ -52,6 +52,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.IncomeAndExpensesAdded);
         }
 
+        [SecuredOperation("incomeandexpenses_add")]
         [ValidationAspect(typeof(UpdateValidator))]
         public IResult Update(IncomeAndExpensesUpdateDto incomeAndExpensesUpdateDto)
         {
@@ -71,6 +72,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.ProductUpdated);
         }
 
+        [SecuredOperation("incomeandexpenses_list")]
         public IDataResult<List<ViewModel>> List()
         {
             var result = _incomeAndExpensesDal.List();
@@ -78,12 +80,14 @@ namespace Business.Concrete
             return new SuccessDataResult<List<ViewModel>>(result, Messages.IncomeAndExpensesListed);
         }
 
+        [SecuredOperation("incomeandexpenses_list")]
         public IResult Delete(int id)
         {
             _incomeAndExpensesDal.Delete(id);
             return new SuccessResult(Messages.IncomeAndExpensesDeleted);
         }
 
+        [SecuredOperation("incomeandexpenses_list")]
         public IDataResult<ViewModel> ListById(int id)
         {
             var result = _incomeAndExpensesDal.ListById(id);

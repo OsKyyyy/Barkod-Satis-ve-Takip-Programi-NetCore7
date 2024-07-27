@@ -19,7 +19,7 @@ using Entities.Dtos;
 
 namespace Business.Concrete
 {
-    [SecuredOperation("Admin")]
+    [SecuredOperation("pos_sale")]
     public class SaleProductManager : ISaleProductService
     {
         private readonly CultureInfo _culture = new("en-US");

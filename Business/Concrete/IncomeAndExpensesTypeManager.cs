@@ -18,8 +18,7 @@ using DataAccess.Concrete.EntityFramework;
 using Entities.Dtos;
 
 namespace Business.Concrete
-{
-    [SecuredOperation("Admin")]
+{    
     public class IncomeAndExpensesTypeManager : IIncomeAndExpensesTypeService
     {
         private readonly CultureInfo _culture = new("en-US");
@@ -29,8 +28,9 @@ namespace Business.Concrete
         public IncomeAndExpensesTypeManager(IIncomeAndExpensesTypeDal incomeAndExpensesDal)
         {
             _incomeAndExpensesTypeDal = incomeAndExpensesDal;
-        }        
+        }
 
+        [SecuredOperation("incomeandexpensestype_add")]
         [ValidationAspect(typeof(AddValidator))]
         public IResult Add(IncomeAndExpensesTypeAddDto incomeAndExpensesTypeAddDto)
         {
@@ -49,6 +49,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.IncomeAndExpensesTypeAdded);
         }
 
+        [SecuredOperation("incomeandexpensestype_add")]
         [ValidationAspect(typeof(UpdateValidator))]
         public IResult Update(IncomeAndExpensesTypeUpdateDto incomeAndExpensesTypeUpdateDto)
         {
@@ -65,12 +66,14 @@ namespace Business.Concrete
             return new SuccessResult(Messages.IncomeAndExpensesTypeUpdated);
         }
 
+        [SecuredOperation("incomeandexpensestype_list")]
         public IResult Delete(int id)
         {
             _incomeAndExpensesTypeDal.Delete(id);
             return new SuccessResult(Messages.IncomeAndExpensesTypeDeleted);
         }
 
+        [SecuredOperation("incomeandexpensestype_list")]
         public IDataResult<List<ViewModel>> List()
         {
             var result = _incomeAndExpensesTypeDal.List();
@@ -78,6 +81,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<ViewModel>>(result, Messages.IncomeAndExpensesTypeListed);
         }
 
+        [SecuredOperation("incomeandexpensestype_list")]
         public IDataResult<ViewModel> ListById(int id)
         {
             var result = _incomeAndExpensesTypeDal.ListById(id);
@@ -89,6 +93,7 @@ namespace Business.Concrete
             return new SuccessDataResult<ViewModel>(result, Messages.IncomeAndExpensesTypeInfoListed);
         }
 
+        [SecuredOperation("incomeandexpensestype_list")]
         public IDataResult<List<ViewModel>> ListByActive()
         {
             var result = _incomeAndExpensesTypeDal.ListByActive();

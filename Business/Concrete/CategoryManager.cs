@@ -17,8 +17,7 @@ using DataAccess.Concrete.EntityFramework;
 using Entities.Dtos;
 
 namespace Business.Concrete
-{
-    [SecuredOperation("Admin")]
+{    
     public class CategoryManager : ICategoryService
     {
         ICategoryDal _categoryDal;
@@ -28,6 +27,7 @@ namespace Business.Concrete
             _categoryDal = categoryDal;
         }
 
+        [SecuredOperation("category_add")]
         [ValidationAspect(typeof(AddValidator))]
         public IResult Add(CategoryAddDto categoryAddDto)
         {
@@ -46,6 +46,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CategoryAdded);
         }
 
+        [SecuredOperation("category_add")]
         [ValidationAspect(typeof(UpdateValidator))]
         public IResult Update(CategoryUpdateDto categoryUpdateDto)
         {
@@ -62,12 +63,14 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CategoryUpdated);
         }
 
+        [SecuredOperation("category_list")]
         public IResult Delete(int id)
         {
             _categoryDal.Delete(id);
             return new SuccessResult(Messages.CategoryDeleted);
         }
 
+        [SecuredOperation("category_list")]
         public IDataResult<List<ViewModel>> List()
         {
             var result = _categoryDal.List();
@@ -75,6 +78,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<ViewModel>>(result, Messages.CategoriesListed);
         }
 
+        [SecuredOperation("category_list")]
         public IDataResult<List<ViewModel>> ListByActive()
         {
             var result = _categoryDal.ListByActive();
@@ -82,6 +86,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<ViewModel>>(result, Messages.CategoriesListed);
         }
 
+        [SecuredOperation("category_list")]
         public IDataResult<ViewModel> ListById(int id)
         {
             var result = _categoryDal.ListById(id);

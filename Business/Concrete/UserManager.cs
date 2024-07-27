@@ -33,13 +33,13 @@ namespace Business.Concrete
             return _userDal.GetClaims(user);
         }
 
-        [SecuredOperation("Admin")]
+        [SecuredOperation("user_add")]
         public void Add(User user)
         {
             _userDal.Add(user);
         }
 
-        [SecuredOperation("Admin")]
+        [SecuredOperation("user_list")]
         public IResult Delete(int id)
         {
             _userDal.Delete(id);
@@ -55,7 +55,7 @@ namespace Business.Concrete
             return _userDal.Get(u => u.Email == email);
         }
 
-        [SecuredOperation("Admin")]
+        [SecuredOperation("user_add")]
         [ValidationAspect(typeof(UpdateValidator))]
         public IDataResult<User> Update(UserUpdateDto userUpdateDto)
         {
@@ -73,7 +73,7 @@ namespace Business.Concrete
             return new SuccessDataResult<User>(user, Messages.UserUpdated);
         }
 
-        [SecuredOperation("Admin")]
+        [SecuredOperation("user_list")]
         public IDataResult<List<User>> List()
         {
 	        var result = _userDal.List();
@@ -81,7 +81,7 @@ namespace Business.Concrete
 	        return new SuccessDataResult<List<User>>(result, Messages.UsersListed);
         }
 
-        [SecuredOperation("Admin")]
+        [SecuredOperation("user_list")]
         public IDataResult<User> ListByMail(string email)
         {
 	        var result = _userDal.ListByMail(email);
@@ -93,7 +93,7 @@ namespace Business.Concrete
 	        return new SuccessDataResult<User>(result, Messages.UserInfoListed);
         }
 
-        [SecuredOperation("Admin")]
+        [SecuredOperation("user_list")]
         public IDataResult<ViewModel> ListById(int id)
         {
             var result = _userDal.ListById(id);
@@ -105,7 +105,7 @@ namespace Business.Concrete
             return new SuccessDataResult<ViewModel>(result, Messages.UserInfoListed);
         }
 
-        [SecuredOperation("Admin")]
+        [SecuredOperation("user_list")]
         public IResult UserExistsByUpdate(string email, int Id)
         {
             if (_userDal.Get(u => u.Email == email && u.Id != Id) != null)
@@ -115,6 +115,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.UserInfoListed);
         }
 
+        [SecuredOperation("user_rolelist")]
         public IDataResult<OperationClaim> CheckExistsByName(string name)
         {
             var result = _userDal.CheckExistsByName(name);
@@ -126,6 +127,7 @@ namespace Business.Concrete
             return new ErrorDataResult<OperationClaim>(result, Messages.RoleAlreadyExists);
         }
 
+        [SecuredOperation("user_rolelist")]
         public IDataResult<OperationClaim> CheckExistsByNameAndId(int id, string name)
         {
             var result = _userDal.CheckExistsByNameAndId(id,name);
@@ -137,6 +139,7 @@ namespace Business.Concrete
             return new ErrorDataResult<OperationClaim>(result, Messages.RoleAlreadyExists);
         }
 
+        [SecuredOperation("user_rolelist")]
         public IDataResult<OperationClaim> AddOperationClaim(string name)
         {
             var operationClaim = new OperationClaim
@@ -148,6 +151,7 @@ namespace Business.Concrete
             return new SuccessDataResult<OperationClaim>(result,Messages.OperationClaimAdded);
         }
 
+        [SecuredOperation("user_rolelist")]
         public IDataResult<OperationClaim> UpdateOperationClaim(int id, string name)
         {
             var operationClaim = new OperationClaim
@@ -160,6 +164,7 @@ namespace Business.Concrete
             return new SuccessDataResult<OperationClaim>(result, Messages.OperationClaimAdded);
         }
 
+        [SecuredOperation("user_rolelist")]
         public IResult AddPageClaim(List<string> selectedItems, int id)
         {
             var pageClaim = new PageClaimAddDto
@@ -171,13 +176,15 @@ namespace Business.Concrete
 
             return new SuccessResult(Messages.PageClaimAdded);
         }
-        
+
+        [SecuredOperation("user_rolelist")]
         public IResult DeletePageClaim(int id)
         {
             _userDal.DeletePageClaim(id);
             return new SuccessResult(Messages.PageClaimsDeleted);
         }
 
+        [SecuredOperation("user_rolelist")]
         public IDataResult<List<RoleListViewModel>> RoleList()
         {
             var result = _userDal.RoleList();
@@ -185,6 +192,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<RoleListViewModel>>(result, Messages.RoleListed);
         }
 
+        [SecuredOperation("user_rolelist")]
         public IDataResult<RoleListViewModel> GetRoleById(int id)
         {
             var result = _userDal.GetRoleById(id);
@@ -192,6 +200,7 @@ namespace Business.Concrete
             return new SuccessDataResult<RoleListViewModel>(result, Messages.RoleListed);
         }
 
+        [SecuredOperation("user_rolelist")]
         public IDataResult<RoleListViewModel> GetRoleByName(string name)
         {
             var result = _userDal.GetRoleByName(name);
@@ -199,6 +208,7 @@ namespace Business.Concrete
             return new SuccessDataResult<RoleListViewModel>(result, Messages.RoleListed);
         }
 
+        [SecuredOperation("user_add")]
         public IResult UpdateUserRole(UserRoleUpdateDto userRoleUpdateDto)
         {
             _userDal.UpdateUserRole(userRoleUpdateDto);
@@ -206,6 +216,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.UserRoleUpdated);
         }
 
+        [SecuredOperation("user_add")]
         public IResult CheckCurrentPassword(string password, int id)
         {
             var user = _userDal.Get(u => u.Id == id);
@@ -218,6 +229,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.PasswordSuccess);
         }
 
+        [SecuredOperation("user_add")]
         public IResult UpdateUserPassword(int id, string password)
         {
             byte[] passwordHash, passwordSalt;
@@ -234,6 +246,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.UserPasswordUpdated);
         }
 
+        [SecuredOperation("user_add")]
         public IResult UpdateUserEmail(UserEmailUpdateDto userEmailUpdateDto)
         {
             _userDal.UpdateUserEmail(userEmailUpdateDto);

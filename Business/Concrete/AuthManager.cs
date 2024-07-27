@@ -29,7 +29,7 @@ namespace Business.Concrete
             _tokenHelper = tokenHelper;
         }
 
-        [SecuredOperation("Admin")]
+        [SecuredOperation("user_add")]
 		[ValidationAspect(typeof(RegisterValidator))]
         public IDataResult<User> Register(UserRegisterDto userForRegisterDto, string password)
         {

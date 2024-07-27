@@ -17,8 +17,7 @@ using DataAccess.Concrete.EntityFramework;
 using Entities.Dtos;
 
 namespace Business.Concrete
-{
-    [SecuredOperation("Admin")]
+{    
     public class WholeSalerManager : IWholeSalerService
     {
         IWholeSalerDal _wholeSalerDal;
@@ -28,6 +27,7 @@ namespace Business.Concrete
             _wholeSalerDal = wholeSalerDal;
         }
 
+        [SecuredOperation("wholesaler_add")]
         [ValidationAspect(typeof(AddValidator))]
         public IResult Add(WholeSalerAddDto wholeSalerAddDto)
         {
@@ -50,6 +50,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.WholeSalerAdded);
         }
 
+        [SecuredOperation("wholesaler_add")]
         [ValidationAspect(typeof(UpdateValidator))]
         public IResult Update(WholeSalerUpdateDto wholeSalerUpdateDto)
         {
@@ -70,6 +71,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CategoryUpdated);
         }
 
+        [SecuredOperation("wholesaler_list")]
         public IDataResult<List<ViewModel>> List()
         {
             var result = _wholeSalerDal.List();
@@ -77,12 +79,14 @@ namespace Business.Concrete
             return new SuccessDataResult<List<ViewModel>>(result, Messages.WholeSalerListed);
         }
 
+        [SecuredOperation("wholesaler_list")]
         public IResult Delete(int id)
         {
             _wholeSalerDal.Delete(id);
             return new SuccessResult(Messages.WholeSalerDeleted);
         }
 
+        [SecuredOperation("wholesaler_list")]
         public IDataResult<ViewModel> ListById(int id)
         {
             var result = _wholeSalerDal.ListById(id);

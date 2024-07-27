@@ -17,8 +17,7 @@ using DataAccess.Concrete.EntityFramework;
 using Entities.Dtos;
 
 namespace Business.Concrete
-{
-    [SecuredOperation("Admin")]
+{    
     public class CustomerManager : ICustomerService
     {
         ICustomerDal _customerDal;
@@ -28,6 +27,7 @@ namespace Business.Concrete
             _customerDal = customerDal;
         }
 
+        [SecuredOperation("customer_add")]
         [ValidationAspect(typeof(AddValidator))]
         public IResult Add(CustomerAddDto customerAddDto)
         {
@@ -49,6 +49,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CustomerAdded);
         }
 
+        [SecuredOperation("customer_add")]
         [ValidationAspect(typeof(UpdateValidator))]
         public IResult Update(CustomerUpdateDto customerUpdateDto)
         {
@@ -68,6 +69,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CustomerUpdated);
         }
 
+        [SecuredOperation("customer_list")]
         public IDataResult<List<ViewModel>> List()
         {
             var result = _customerDal.List();
@@ -75,6 +77,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<ViewModel>>(result, Messages.CustomersListed);
         }
 
+        [SecuredOperation("customer_list")]
         public IDataResult<List<ViewModel>> ListActive()
         {
             var result = _customerDal.ListActive();
@@ -82,12 +85,14 @@ namespace Business.Concrete
             return new SuccessDataResult<List<ViewModel>>(result, Messages.CustomersListed);
         }
 
+        [SecuredOperation("customer_list")]
         public IResult Delete(int id)
         {
             _customerDal.Delete(id);
             return new SuccessResult(Messages.CustomerDeleted);
         }
 
+        [SecuredOperation("customer_list")]
         public IDataResult<ViewModel> ListById(int id)
         {
             var result = _customerDal.ListById(id);

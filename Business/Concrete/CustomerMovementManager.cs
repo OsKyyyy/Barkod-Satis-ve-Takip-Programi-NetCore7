@@ -19,7 +19,7 @@ using Entities.Dtos;
 
 namespace Business.Concrete
 {
-    [SecuredOperation("Admin")]
+    [SecuredOperation("customer_list")]
     public class CustomerMovementManager : ICustomerMovementService
     {
         private readonly CultureInfo _culture = new("en-US");
