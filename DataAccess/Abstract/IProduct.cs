@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Core.Utilities.Refit.Models.Response.Product;
 using Core.Utilities.Refit.Models.Request.Product;
+using Core.Utilities.Refit.Models.Response.HomePage;
 
 namespace DataAccess.Abstract
 {
@@ -27,5 +28,7 @@ namespace DataAccess.Abstract
         bool ListToSavePhoto(string barcode);
         bool CheckExistsByBarcodeAndId(int id, string barcode);
         void UpdateImage(UpdateImageRequestModel updateImageRequestModel);
+        StockQuantityViewModel GetStockQuantity();
+        StockValueViewModel GetStockValue();
     }
 }

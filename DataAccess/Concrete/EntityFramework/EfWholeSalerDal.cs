@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Runtime.ConstrainedExecution;
 using Core.Entities;
 using Core.Utilities.Refit.Models.Response.WholeSaler;
+using Core.Utilities.Refit.Models.Response.HomePage;
 
 namespace DataAccess.Concrete.EntityFramework
 {
@@ -108,5 +109,21 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
+        public TotalCurrentAccountViewModel GetTotalWholeSaler()
+        {
+            using (var context = new DataBaseContext())
+            {
+                var totalAccount = context.WholeSalers
+                    .Where(x => x.Deleted == false)
+                    .Count();
+
+                var result = new TotalCurrentAccountViewModel
+                {
+                    TotalAccount = totalAccount
+                };
+
+                return result;
+            }
+        }
     }
 }

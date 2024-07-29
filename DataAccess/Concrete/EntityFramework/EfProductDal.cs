@@ -12,6 +12,8 @@ using Core.Entities;
 using Core.Utilities.Refit.Models.Response.Product;
 using Core.Utilities.Refit.Abstract;
 using Core.Utilities.Refit.Models.Request.Product;
+using Core.Utilities.Refit.Models.Response.HomePage;
+using Core.Utilities.Refit.Models.Response.Report;
 
 namespace DataAccess.Concrete.EntityFramework
 {
@@ -333,6 +335,36 @@ namespace DataAccess.Concrete.EntityFramework
                 result.Image = updateImageRequestModel.Image;               
 
                 context.SaveChanges();
+            }
+        }
+
+        public StockQuantityViewModel GetStockQuantity()
+        {
+            using (var context = new DataBaseContext())
+            {
+                var totalStock = context.Products.Sum(x => x.Stock);
+
+                var result = new StockQuantityViewModel
+                {
+                    StockQuantity = totalStock
+                };
+
+                return result;
+            }
+        }
+
+        public StockValueViewModel GetStockValue()
+        {
+            using (var context = new DataBaseContext())
+            {
+                var totalValue = context.Products.Sum(x => x.Stock * x.SalePrice);
+
+                var result = new StockValueViewModel
+                {
+                    StockValue = totalValue
+                };
+
+                return result;
             }
         }
     }

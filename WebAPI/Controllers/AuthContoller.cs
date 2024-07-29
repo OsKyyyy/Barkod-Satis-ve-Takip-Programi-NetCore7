@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Core.Entities.Concrete;
 using Entities.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,10 +11,12 @@ namespace WebAPI.Controllers
     public class AuthController : Controller
     {
         private IAuthService _authService;
+        private IUserService _userService;
 
-        public AuthController(IAuthService authService)
+        public AuthController(IAuthService authService, IUserService userService)
         {
             _authService = authService;
+            _userService = userService;
         }
 
         [Route("Login")]
@@ -48,12 +51,25 @@ namespace WebAPI.Controllers
 
             var result = _authService.Register(userForRegisterDto, userForRegisterDto.Password);
 
-            if (result.Status)
+            if (!result.Status)
+            {
+                return BadRequest(result);
+            }
+
+            var userRoleUpdateDto = new UserRoleUpdateDto
+            {
+                Id = result.Data.Id,
+                OperationClaimId = userForRegisterDto.Role
+            };
+
+            var resultRole = _userService.AddUserOperationClaim(userRoleUpdateDto);
+
+            if (resultRole.Status)
             {
                 return Ok(result);
             }
 
-            return BadRequest(result);
+            return Ok(result);
         }
     }
 }

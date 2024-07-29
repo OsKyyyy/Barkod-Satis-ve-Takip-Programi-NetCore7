@@ -29,28 +29,28 @@ namespace WebUI.Pages.User
 
         public List<SelectListItem> Options { get; set; }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-            //var response = await _category.ListByActive("Bearer " + HttpContext.Session.GetString("userToken"));
+            var response = await _user.RoleList("Bearer " + HttpContext.Session.GetString("userToken"));
 
-            //if (response.Message == "Authentication Error")
-            //{
-            //    HttpContext.Session.Remove("userToken");
-            //    HttpContext.Session.Remove("userInfo");
+            if (response.Message == "Authentication Error")
+            {
+                HttpContext.Session.Remove("userToken");
+                HttpContext.Session.Remove("userInfo");
 
-            //    return RedirectToPage("../User/Login");
-            //}
+                return RedirectToPage("../User/Login");
+            }
 
-            //if (response.Status)
-            //{
-            //    var list = response.Data.Select(item => new SelectListItem { Value = item.Id.ToString(), Text = item.Name }).ToList();
+            if (response.Status)
+            {
+                var list = response.Data.Select(item => new SelectListItem { Value = item.OperationClaimId.ToString(), Text = item.RoleName }).ToList();
 
-            //    Options = list;
-            //}
-            //else
-            //{
-            //    ToastrError = response.Message;
-            //}
+                Options = list;
+            }
+            else
+            {
+                ToastrError = response.Message;
+            }
 
             return Page();
         }
@@ -81,11 +81,11 @@ namespace WebUI.Pages.User
 
         public async Task GetOperationList()
         {
-            //var responseCategory = await _category.ListByActive("Bearer " + HttpContext.Session.GetString("userToken"));
+            var response = await _user.RoleList("Bearer " + HttpContext.Session.GetString("userToken"));
 
-            //var list = responseCategory.Data.Select(item => new SelectListItem { Value = item.Id.ToString(), Text = item.Name }).ToList();
+            var list = response.Data.Select(item => new SelectListItem { Value = item.OperationClaimId.ToString(), Text = item.RoleName }).ToList();
 
-            //Options = list;
+            Options = list;
         }
     }
 }

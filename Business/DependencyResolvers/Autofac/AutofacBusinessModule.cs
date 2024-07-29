@@ -59,6 +59,8 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<IncomeAndExpensesManager>().As<IIncomeAndExpensesService>();
             builder.RegisterType<EfIncomeAndExpensesDal>().As<IIncomeAndExpensesDal>();
 
+            builder.RegisterType<HomePageManager>().As<IHomePageService>();
+
             builder.RegisterType<AuthManager>().As<IAuthService>();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
 

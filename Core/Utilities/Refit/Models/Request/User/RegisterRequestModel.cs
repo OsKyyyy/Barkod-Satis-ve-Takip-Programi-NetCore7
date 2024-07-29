@@ -31,6 +31,8 @@ namespace Core.Utilities.Refit.Models.Request.User
         [MinLength(8, ErrorMessage = "Bu alan en az 8 karakter olmalıdır")]
         public string Password { get; set; }
 
+        public int Role { get; set; }
+
         public bool Status { get; set; }
     }
 }

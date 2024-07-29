@@ -14,7 +14,7 @@ namespace Business.Abstract
     {
         User GetByMail(string email, bool status = false);
         List<OperationClaim> GetClaims(User user);
-        void Add(User user);
+        int Add(User user);
         IResult Delete(int id);
         IDataResult<User> Update(UserUpdateDto user);
         IDataResult<List<User>> List();
@@ -30,6 +30,7 @@ namespace Business.Abstract
         IDataResult<List<RoleListViewModel>> RoleList();
         IDataResult<RoleListViewModel> GetRoleById(int id);
         IDataResult<RoleListViewModel> GetRoleByName(string name);
+        IResult AddUserOperationClaim(UserRoleUpdateDto userRoleUpdateDto);
         IResult UpdateUserRole(UserRoleUpdateDto userRoleUpdateDto);
         IResult CheckCurrentPassword(string password, int id);
         IResult UpdateUserPassword(int id, string password);

@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Core.Utilities.Refit.Abstract;
 using Entities.Dtos;
 using Core.Utilities.Refit.Models.Response.User;
+using Core.Utilities.Refit.Models.Response.HomePage;
 
 namespace DataAccess.Concrete.EntityFramework
 {
@@ -26,6 +27,16 @@ namespace DataAccess.Concrete.EntityFramework
                     where userOperationClaim.UserId == user.Id
                     select new OperationClaim { Id = operationClaim.Id, Name = operationClaim.Name };
                 return result.ToList();
+            }
+        }
+
+        public int Add(User user)
+        {
+            using (var context = new DataBaseContext())
+            {
+                context.Entry(user).State = EntityState.Added;
+                context.SaveChanges();
+                return user.Id;
             }
         }
 
@@ -118,11 +129,29 @@ namespace DataAccess.Concrete.EntityFramework
                               LastName = user.LastName,
                               Email = user.Email,
                               Phone = user.Phone,
+                              Status = user.Status,
                               RoleName = uoc_oc.Name
                           })
                     .FirstOrDefault();
 
                 return userDetailsWithRoles;
+            }
+        }
+
+        public TotalCurrentAccountViewModel GetTotalUser()
+        {
+            using (var context = new DataBaseContext())
+            {
+                var totalAccount = context.Users
+                    .Where(x => x.Deleted == false)
+                    .Count();                    
+
+                var result = new TotalCurrentAccountViewModel
+                {
+                    TotalAccount = totalAccount
+                };
+
+                return result;
             }
         }
 
@@ -323,7 +352,16 @@ namespace DataAccess.Concrete.EntityFramework
 
                 return result;
             }
-        }      
+        }
+
+        public void AddUserOperationClaim(UserOperationClaim userOperationClaim)
+        {
+            using (var context = new DataBaseContext())
+            {
+                context.Entry(userOperationClaim).State = EntityState.Added;
+                context.SaveChanges();
+            }
+        }
 
         public void UpdateUserRole(UserRoleUpdateDto userRoleUpdateDto)
         {

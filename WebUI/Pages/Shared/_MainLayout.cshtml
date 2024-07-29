@@ -14,35 +14,23 @@
 	<div class="app-sidebar-menu overflow-hidden flex-column-fluid">
 		<div id="kt_app_sidebar_menu_wrapper" class="app-sidebar-wrapper">
 			<div id="kt_app_sidebar_menu_scroll" class="scroll-y my-5 mx-3" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_app_sidebar_logo, #kt_app_sidebar_footer" data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px" data-kt-scroll-save-state="true">
-				<div class="menu menu-column menu-rounded menu-sub-indention fw-semibold fs-6" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
-                    <div data-kt-menu-trigger="click" class="menu-item here show menu-accordion">
-                        <span class="menu-link">
+				<div class="menu menu-column menu-rounded menu-sub-indention fw-semibold fs-6" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">                   
+                    <div class="menu-item">
+                        <a class="menu-link" asp-page="/">
                             <span class="menu-icon">
                                 <i class="ki-duotone ki-element-11 fs-2">
                                     <span class="path1"></span><span class="path2"></span>
                                     <span class="path3"></span><span class="path4"></span>
                                 </i>
-                            </span>
-                            <span class="menu-title">Dashboards</span>
-                            <span class="menu-arrow"></span>
-                        </span>
-                        <div class="menu-sub menu-sub-accordion">
-                            <div class="menu-item">
-                                <a class="menu-link" href="../index.html">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                                    <span class="menu-title">Default</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>                                       
+                            </span><span class="menu-title">Ana Sayfa</span>
+                        </a>
+                    </div>
                     <div class="menu-item pt-5">
                         <div class="menu-content">
                             <span class="menu-heading fw-bold text-uppercase fs-7">KULLANICI - CARİ HESAPLAR</span>
                         </div>
                     </div>
-                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion" page-base="user">
                         <span class="menu-link">
                             <span class="menu-icon">
                                 <i class="ki-duotone ki-profile-user fs-2">
@@ -55,7 +43,7 @@
                             <span class="menu-title">Kullanıcı İşlemleri</span>
                             <span class="menu-arrow"></span>
                         </span>
-                        <div class="menu-sub menu-sub-accordion">
+                        <div class="menu-sub menu-sub-accordion" page-name="user_add">
                             <div class="menu-item">
                                 <a class="menu-link" asp-page="/User/Add">
                                     <span class="menu-bullet">
@@ -65,7 +53,7 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="menu-sub menu-sub-accordion">
+                        <div class="menu-sub menu-sub-accordion" page-name="user_list">
                             <div class="menu-item">
                                 <a class="menu-link" asp-page="/User/List">
                                     <span class="menu-bullet">
@@ -75,7 +63,7 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="menu-sub menu-sub-accordion">
+                        <div class="menu-sub menu-sub-accordion" page-name="user_rolelist">
                             <div class="menu-item">
                                 <a class="menu-link" asp-page="/User/RoleList">
                                     <span class="menu-bullet">
@@ -86,7 +74,7 @@
                             </div>
                         </div>
                     </div>
-                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion" page-base="customer">
                         <span class="menu-link">
                             <span class="menu-icon">
                                 <i class="ki-duotone ki-people fs-2">
@@ -100,7 +88,7 @@
                             <span class="menu-title">Müşteri İşlemleri</span>
                             <span class="menu-arrow"></span>
                         </span>
-                        <div class="menu-sub menu-sub-accordion">
+                        <div class="menu-sub menu-sub-accordion" page-name="customer_add">
                             <div class="menu-item">
                                 <a class="menu-link" asp-page="/Customer/Add">
                                     <span class="menu-bullet">
@@ -110,7 +98,7 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="menu-sub menu-sub-accordion">
+                        <div class="menu-sub menu-sub-accordion" page-name="customer_list">
                             <div class="menu-item">
                                 <a class="menu-link" asp-page="/Customer/List">
                                     <span class="menu-bullet">
@@ -121,47 +109,47 @@
                             </div>
                         </div>
                     </div>
-                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                            <span class="menu-link">
-                                <span class="menu-icon">
-                                    <i class="ki-duotone ki-truck fs-2">
-                                        <span class="path1"></span>
-                                        <span class="path2"></span>
-                                        <span class="path3"></span>
-                                        <span class="path4"></span>
-                                        <span class="path5"></span>
-                                    </i>
-                                </span>
-                                <span class="menu-title">Toptancı İşlemleri</span>
-                                <span class="menu-arrow"></span>
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion" page-base="wholesaler">
+                        <span class="menu-link">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-truck fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                    <span class="path3"></span>
+                                    <span class="path4"></span>
+                                    <span class="path5"></span>
+                                </i>
                             </span>
-                            <div class="menu-sub menu-sub-accordion">
-                                <div class="menu-item">
-                                    <a class="menu-link" asp-page="/WholeSaler/Add">
-                                        <span class="menu-bullet">
-                                            <span class="bullet bullet-dot"></span>
-                                        </span>
-                                        <span class="menu-title">Toptancı Ekle</span>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="menu-sub menu-sub-accordion">
-                                <div class="menu-item">
-                                    <a class="menu-link" asp-page="/WholeSaler/List">
-                                        <span class="menu-bullet">
-                                            <span class="bullet bullet-dot"></span>
-                                        </span>
-                                        <span class="menu-title">Toptancı Listesi</span>
-                                    </a>
-                                </div>
+                            <span class="menu-title">Toptancı İşlemleri</span>
+                            <span class="menu-arrow"></span>
+                        </span>
+                        <div class="menu-sub menu-sub-accordion" page-name="wholesaler_add">
+                            <div class="menu-item">
+                                <a class="menu-link" asp-page="/WholeSaler/Add">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Toptancı Ekle</span>
+                                </a>
                             </div>
                         </div>
+                        <div class="menu-sub menu-sub-accordion" page-name="wholesaler_list">
+                            <div class="menu-item">
+                                <a class="menu-link" asp-page="/WholeSaler/List">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Toptancı Listesi</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                     <div class="menu-item pt-5">
                         <div class="menu-content">
                             <span class="menu-heading fw-bold text-uppercase fs-7">ÜRÜN</span>
                         </div>
                     </div>
-                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion" page-base="category">
                         <span class="menu-link">
                             <span class="menu-icon">
                                 <i class="ki-duotone ki-category fs-2">
@@ -174,7 +162,7 @@
                             <span class="menu-title">Kategori İşlemleri</span>
                             <span class="menu-arrow"></span>
                         </span>
-                        <div class="menu-sub menu-sub-accordion">
+                        <div class="menu-sub menu-sub-accordion" page-name="category_add">
                             <div class="menu-item">
                                 <a class="menu-link" asp-page="/Category/Add">
                                     <span class="menu-bullet">
@@ -184,7 +172,7 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="menu-sub menu-sub-accordion">
+                        <div class="menu-sub menu-sub-accordion" page-name="category_list">
                             <div class="menu-item">
                                 <a class="menu-link" asp-page="/Category/List">
                                     <span class="menu-bullet">
@@ -195,7 +183,7 @@
                             </div>
                         </div>
                     </div>
-                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion" page-base="product">
                         <span class="menu-link">
                             <span class="menu-icon">
                                 <i class="ki-duotone ki-dropbox fs-2">
@@ -209,7 +197,7 @@
                             <span class="menu-title">Ürün İşlemleri</span>
                             <span class="menu-arrow"></span>
                         </span>
-                        <div class="menu-sub menu-sub-accordion">
+                        <div class="menu-sub menu-sub-accordion" page-name="product_add">
                             <div class="menu-item">
                                 <a class="menu-link" asp-page="/Product/Add">
                                     <span class="menu-bullet">
@@ -219,7 +207,7 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="menu-sub menu-sub-accordion">
+                        <div class="menu-sub menu-sub-accordion" page-name="product_list">
                             <div class="menu-item">
                                 <a class="menu-link" asp-page="/Product/List">
                                     <span class="menu-bullet">
@@ -229,7 +217,7 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="menu-sub menu-sub-accordion">
+                        <div class="menu-sub menu-sub-accordion" page-name="product_stockentry">
                             <div class="menu-item">
                                 <a class="menu-link" asp-page="/Product/StockEntry">
                                     <span class="menu-bullet">
@@ -240,7 +228,7 @@
                             </div>
                         </div>                                    
                     </div>                   
-                    <div class="menu-item">
+                    <div class="menu-item" page-name="pos_sale">
                         <a class="menu-link" asp-page="/Pos/Sale">
                             <span class="menu-icon">
                                 <i class="ki-duotone ki-barcode fs-2">
@@ -261,7 +249,7 @@
                             <span class="menu-heading fw-bold text-uppercase fs-7">FİYAT - GELİR GİDER</span>
                         </div>
                     </div>
-                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion" page-base="incomeandexpenses">
                         <span class="menu-link">
                             <span class="menu-icon">
                                 <i class="ki-duotone ki-finance-calculator fs-2">
@@ -277,7 +265,7 @@
                             <span class="menu-title">Gelir-Gider İşlemleri</span>
                             <span class="menu-arrow"></span>
                         </span>    
-                        <div class="menu-sub menu-sub-accordion">
+                        <div class="menu-sub menu-sub-accordion" page-name="incomeandexpenses_add">
                             <div class="menu-item">
                                 <a class="menu-link" asp-page="/IncomeAndExpenses/Add">
                                     <span class="menu-bullet">
@@ -287,7 +275,7 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="menu-sub menu-sub-accordion">
+                        <div class="menu-sub menu-sub-accordion" page-name="incomeandexpenses_list">
                             <div class="menu-item">
                                 <a class="menu-link" asp-page="/IncomeAndExpenses/List">
                                     <span class="menu-bullet">
@@ -306,8 +294,8 @@
                                     <span class="menu-title">Tür İşlemleri</span>
                                     <span class="menu-arrow"></span>
                                 </span>
-                                <div class="menu-sub menu-sub-accordion menu-active-bg " kt-hidden-height="209" style="">
-                                    <div class="menu-item">
+                                <div class="menu-sub menu-sub-accordion menu-active-bg " kt-hidden-height="209" style="" page-base="incomeandexpensestype">
+                                    <div class="menu-item" page-name="incomeandexpensestype_add">
                                         <a class="menu-link" asp-page="/IncomeAndExpensesType/Add">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
@@ -315,7 +303,7 @@
                                             <span class="menu-title">Tür Ekle</span>
                                         </a>
                                     </div>
-                                    <div class="menu-item">
+                                    <div class="menu-item" page-name="incomeandexpensestype_list">
                                         <a class="menu-link" asp-page="/IncomeAndExpensesType/List">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
@@ -328,7 +316,7 @@
                             </div>
                         </div>                                               
                     </div>
-                    <div class="menu-item">
+                    <div class="menu-item" page-name="webscraping_pricecomparison">
                         <a class="menu-link" asp-page="/WebScraping/PriceComparison">
                             <span class="menu-icon">
                                 <i class="ki-duotone ki-arrow-right-left fs-2">
@@ -339,7 +327,7 @@
                             <span class="menu-title">Fiyat Karşılaştır</span>
                         </a>
                     </div>
-                    <div class="menu-item">
+                    <div class="menu-item" page-name="webscraping_pricetracking">
                         <a class="menu-link" asp-page="/WebScraping/PriceTracking">
                             <span class="menu-icon">
                                 <i class="ki-duotone ki-discount fs-2">
@@ -350,7 +338,7 @@
                             <span class="menu-title">Fiyat İzleme</span>
                         </a>
                     </div>
-                    <div class="menu-item">
+                    <div class="menu-item" page-name="webscraping_priceproducemarket">
                         <a class="menu-link" asp-page="/WebScraping/PriceProduceMarket">
                             <span class="menu-icon">
                                 <i class="ki-duotone ki-delivery-2 fs-2">
@@ -373,7 +361,7 @@
                             <span class="menu-heading fw-bold text-uppercase fs-7">RAPOR</span>
                         </div>
                     </div>
-                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion" page-base="report_incomeandexpenses">
                         <span class="menu-link">
                             <span class="menu-icon">
                                 <i class="ki-duotone ki-graph-up fs-2">
@@ -388,7 +376,7 @@
                             <span class="menu-title">Gelir Gider Raporları</span>
                             <span class="menu-arrow"></span>
                         </span>
-                        <div class="menu-sub menu-sub-accordion">
+                        <div class="menu-sub menu-sub-accordion" page-name="report_incomeandexpensesreport">
                             <div class="menu-item">
                                 <a class="menu-link" asp-page="/Report/IncomeAndExpensesReport">
                                     <span class="menu-bullet">
@@ -398,7 +386,7 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="menu-sub menu-sub-accordion">
+                        <div class="menu-sub menu-sub-accordion" page-name="report_incomeandexpenseslist">
                             <div class="menu-item">
                                 <a class="menu-link" asp-page="/Report/IncomeAndExpensesList">
                                     <span class="menu-bullet">
@@ -409,7 +397,7 @@
                             </div>
                         </div>
                     </div>
-                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion" page-base="report_sales">
                         <span class="menu-link">
                             <span class="menu-icon">
                                 <i class="ki-duotone ki-graph-4 fs-2">
@@ -420,7 +408,7 @@
                             <span class="menu-title">Satış Raporları</span>
                             <span class="menu-arrow"></span>
                         </span>
-                        <div class="menu-sub menu-sub-accordion">
+                        <div class="menu-sub menu-sub-accordion" page-name="report_salesreport">
                             <div class="menu-item">
                                 <a class="menu-link" asp-page="/Report/SalesReport">
                                     <span class="menu-bullet">
@@ -430,7 +418,7 @@
                                 </a>
                             </div>
                         </div>    
-                        <div class="menu-sub menu-sub-accordion">
+                        <div class="menu-sub menu-sub-accordion" page-name="report_salesdetailreport">
                             <div class="menu-item">
                                 <a class="menu-link" asp-page="/Report/SalesDetailReport">
                                     <span class="menu-bullet">
@@ -441,7 +429,7 @@
                             </div>
                         </div>
                     </div>
-                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion" page-base="report_customer">
                         <span class="menu-link">
                             <span class="menu-icon">
                                 <i class="ki-duotone ki-chart-simple-3 fs-2">
@@ -455,8 +443,8 @@
                             <span class="menu-title">Müşteri Raporları</span>
                             <span class="menu-arrow"></span>
                         </span>
-                        <div class="menu-sub menu-sub-accordion">
-                            <div class="menu-item">
+                        <div class="menu-sub menu-sub-accordion" page-name="report_customerreport">
+                            <div class="menu-item" >
                                 <a class="menu-link" asp-page="/Report/CustomerReport">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
@@ -465,8 +453,8 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="menu-sub menu-sub-accordion">
-                            <div class="menu-item">
+                        <div class="menu-sub menu-sub-accordion" page-name="report_customershoppinglist">
+                            <div class="menu-item" >
                                 <a class="menu-link" asp-page="/Report/CustomerShoppingList">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
@@ -474,7 +462,9 @@
                                     <span class="menu-title">Alışveriş Listesi</span>
                                 </a>
                             </div>
-                            <div class="menu-item">
+                        </div>
+                        <div class="menu-sub menu-sub-accordion" page-name="report_customerrefundlist">
+                            <div class="menu-item" >
                                 <a class="menu-link" asp-page="/Report/CustomerRefundList">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
@@ -482,7 +472,9 @@
                                     <span class="menu-title">Geri Ödeme Listesi</span>
                                 </a>
                             </div>
-                            <div class="menu-item">
+                        </div>
+                        <div class="menu-sub menu-sub-accordion" page-name="report_customertotaldebtlist">
+                            <div class="menu-item" >
                                 <a class="menu-link" asp-page="/Report/CustomerTotalDebtList">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
@@ -490,7 +482,9 @@
                                     <span class="menu-title">Toplam Borç Listesi</span>
                                 </a>
                             </div>
-                            <div class="menu-item">
+                        </div>
+                        <div class="menu-sub menu-sub-accordion" page-name="report_customernonpayerslist">
+                            <div class="menu-item" >
                                 <a class="menu-link" asp-page="/Report/CustomerNonPayersList">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
@@ -499,68 +493,72 @@
                                 </a>
                             </div>
                         </div>
-                    </div>
-                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                    <span class="menu-link">
-                        <span class="menu-icon">
-                                <i class="ki-duotone ki-chart-pie-3 fs-2">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
-                                <span class="path3"></span>                                
-                            </i>
+                    </div>                        
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion" page-base="report_wholesaler">
+                        <span class="menu-link">
+                            <span class="menu-icon">
+                                    <i class="ki-duotone ki-chart-pie-3 fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                    <span class="path3"></span>                                
+                                </i>
+                            </span>
+                            <span class="menu-title">Toptancı Raporları</span>
+                            <span class="menu-arrow"></span>
                         </span>
-                        <span class="menu-title">Toptancı Raporları</span>
-                        <span class="menu-arrow"></span>
-                    </span>
-                    <div class="menu-sub menu-sub-accordion">
-                        <div class="menu-item">
-                            <a class="menu-link" asp-page="/Report/WholeSalerReport">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Toptancı Raporları</span>
-                            </a>
+                        <div class="menu-sub menu-sub-accordion" page-name="report_wholesalerreport">
+                            <div class="menu-item" >
+                                <a class="menu-link" asp-page="/Report/WholeSalerReport">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Toptancı Raporları</span>
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="menu-sub menu-sub-accordion">
-                        <div class="menu-item">
-                            <a class="menu-link" asp-page="/Report/WholeSalerShoppingList">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Alışveriş Listesi</span>
-                            </a>
+                        <div class="menu-sub menu-sub-accordion" page-name="report_wholesalershoppinglist">
+                            <div class="menu-item" >
+                                <a class="menu-link" asp-page="/Report/WholeSalerShoppingList">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Alışveriş Listesi</span>
+                                </a>
+                            </div>
                         </div>
-                        <div class="menu-item">
-                            <a class="menu-link" asp-page="/Report/WholeSalerRefundList">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Geri Ödeme Listesi</span>
-                            </a>
+                        <div class="menu-sub menu-sub-accordion" page-name="report_wholesalerrefundlist">
+                            <div class="menu-item" >
+                                <a class="menu-link" asp-page="/Report/WholeSalerRefundList">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Geri Ödeme Listesi</span>
+                                </a>
+                            </div>
                         </div>
-                        <div class="menu-item">
-                            <a class="menu-link" asp-page="/Report/WholeSalerTotalDebtList">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Toplam Borç Listesi</span>
-                            </a>
+                        <div class="menu-sub menu-sub-accordion" page-name="report_wholesalertotaldebtlist">
+                            <div class="menu-item" >
+                                <a class="menu-link" asp-page="/Report/WholeSalerTotalDebtList">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Toplam Borç Listesi</span>
+                                </a>
+                            </div>
                         </div>
-                        <div class="menu-item">
-                            <a class="menu-link" asp-page="/Report/WholeSalerNonPayersList">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Ödeme Yapılmayan Gün Listesi</span>
-                            </a>
+                        <div class="menu-sub menu-sub-accordion" page-name="report_wholesalernonpayerslist">
+                            <div class="menu-item" >
+                                <a class="menu-link" asp-page="/Report/WholeSalerNonPayersList">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Ödeme Yapılmayan Gün Listesi</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-				</div>
-
 			</div>
 		</div>
 	</div>
-
 </div>

@@ -47,7 +47,8 @@ namespace Business.Concrete
                 Status = userForRegisterDto.Status,
                 Deleted = false
             };
-            _userService.Add(user);
+            var userId = _userService.Add(user);
+            user.Id = userId;
 
             return new SuccessDataResult<User>(user, Messages.UserRegistered);
         }

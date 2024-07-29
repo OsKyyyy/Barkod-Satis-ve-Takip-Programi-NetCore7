@@ -126,6 +126,7 @@ namespace Business.Constant
         public static string YearlySalesIncomeListed = "Satış Gelirleri Aylık Olarak Listelendi";
         public static string YearlyWholeSalerExpensesListed = "Toptancı Giderleri Aylık Olarak Listelendi";
 
+        public static string UserOperationClaimAdded = "Rol Eklendi";
         public static string OperationClaimAdded = "Rol Adı Eklendi";
         public static string PageClaimAdded = "Rol Yetkileri Eklendi";
         public static string RoleListed = "Roller Listelendi";
@@ -133,6 +134,12 @@ namespace Business.Constant
         public static string RoleAlreadyExists = "Rol Zaten Mevcut";
         public static string PageClaimsDeleted = "Rol Yetkileri Silindi";
 
+        public static string StockQuantityListed = "Stok Adedi Listelendi";
+        public static string StockValueListed = "Stok Değeri Listelendi";
+        public static string SalesTodayListed = "Günlük Satış Tutarı Listelendi";
+        public static string TotalUserListed = "Toplam Kullanıcı Listelendi";
+        public static string TotalCustomerListed = "Toplam Müşteri Listelendi";
+        public static string TotalWholeSalerListed = "Toplam Toptancı Listelendi";
     }
 
 }

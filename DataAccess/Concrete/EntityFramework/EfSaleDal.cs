@@ -11,6 +11,7 @@ using System.Runtime.ConstrainedExecution;
 using Core.Entities;
 using Core.Utilities.Refit.Abstract;
 using Core.Utilities.Refit.Models.Response.Sale;
+using Core.Utilities.Refit.Models.Response.HomePage;
 
 namespace DataAccess.Concrete.EntityFramework
 {
@@ -45,6 +46,7 @@ namespace DataAccess.Concrete.EntityFramework
                 context.SaveChanges();
             }
         }
+
         public void Delete(int id)
         {
             using (var context = new DataBaseContext())
@@ -86,5 +88,21 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
+        public SalesTodayViewModel GetSalesToday()
+        {
+            using (var context = new DataBaseContext())
+            {
+                var salesToday = context.Sales
+                    .Where(sale => sale.CreateDate.Date == DateTime.Today)
+                    .Sum(sale => sale.Amount);
+
+                var result = new SalesTodayViewModel
+                {
+                    SalesToday = salesToday
+                };
+
+                return result;
+            }
+        }
     }
 }

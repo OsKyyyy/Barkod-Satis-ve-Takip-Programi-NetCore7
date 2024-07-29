@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Utilities.Refit.Models.Response.Customer;
+using Core.Utilities.Refit.Models.Response.HomePage;
 
 namespace DataAccess.Abstract
 {
@@ -17,5 +18,6 @@ namespace DataAccess.Abstract
         List<ViewModel> ListActive();
         void Delete(int id);
         ViewModel ListById(int id);
+        TotalCurrentAccountViewModel GetTotalCustomer();
     }
 }

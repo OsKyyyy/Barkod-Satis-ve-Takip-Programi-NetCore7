@@ -1,5 +1,6 @@
 ﻿using Core.DataAccess;
 using Core.Entities.Concrete;
+using Core.Utilities.Refit.Models.Response.HomePage;
 using Core.Utilities.Refit.Models.Response.Sale;
 using System;
 using System.Collections.Generic;
@@ -16,5 +17,6 @@ namespace DataAccess.Abstract
         void HardDelete(int id);
         void Delete(int id);
         ViewModel ListById(int id);
+        SalesTodayViewModel GetSalesToday();
     }
 }

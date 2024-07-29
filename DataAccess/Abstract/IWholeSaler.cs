@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Utilities.Refit.Models.Response.WholeSaler;
+using Core.Utilities.Refit.Models.Response.HomePage;
 
 namespace DataAccess.Abstract
 {
@@ -16,5 +17,6 @@ namespace DataAccess.Abstract
         List<ViewModel> List();
         void Delete(int id);
         ViewModel ListById(int id);
+        TotalCurrentAccountViewModel GetTotalWholeSaler();
     }
 }
