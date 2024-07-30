@@ -53,7 +53,7 @@
 
             $("#basket_1").addClass("active show");
             $("#basket_2").removeClass("active show");
-        }        
+        }      
     },
 
     ToastrError: function () {
@@ -119,7 +119,8 @@
             localStorage.setItem("basket", "1");            
 
             $("#currentBasket").val(1);
-            $("#currentBasketModal").val(1);            
+            $("#currentBasketModal").val(1);  
+            $("#layoutBuilder2Basket").val(1);               
 
             $("#caseTotal").addClass("d-block");
             $("#caseTotal").removeClass("d-none");
@@ -155,7 +156,8 @@
             localStorage.setItem("basket", "2");           
 
             $("#currentBasket").val(2);
-            $("#currentBasketModal").val(2);           
+            $("#currentBasketModal").val(2);  
+            $("#layoutBuilder2Basket").val(2);               
 
             $("#caseTotal").removeClass("d-block");
             $("#caseTotal").addClass("d-none");
@@ -208,6 +210,27 @@
             localStorage.removeItem("customerInfo2");
         }
         window.location.reload();
+    },
+    CalculateAmount: function (e) {
+        var gram = $(e).val();
+        var salePrice = parseFloat($(e).attr("product-price").replace(",","."));
+        var kilogram = gram / 1000;
+        var totalAmount = (kilogram * salePrice).toFixed(2);
+        $("#layoutBuilder2Price").val(totalAmount);
+    },
+    ValidateAmount: function (e) {
+        var counter = $(e).attr("counter-category");
+        var validate = $("#categoryGram_" + counter).val();
+
+        if (validate == "") {
+
+            event.preventDefault();
+            $('#ToastrError').val("Lütfen gramaj alanını doldurun!");
+            Pos.ToastrError();
+        }
+        else {
+            $(this).closest('form').submit();
+        }
     }
 }
 $(document).ready(function () {

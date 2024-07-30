@@ -194,6 +194,19 @@ namespace WebAPI.Controllers
             return Ok(list);
         }
 
+        [Route("ListByCategory")]
+        [HttpGet]
+        public ActionResult ListByCategory(int id)
+        {
+            var list = _productService.ListByCategory(id);
+            if (!list.Status)
+            {
+                return BadRequest(list);
+            }
+
+            return Ok(list);
+        }
+
         [Route("ListByBarcode")]
         [HttpGet]
         public ActionResult ListByBarcode(string barcode)

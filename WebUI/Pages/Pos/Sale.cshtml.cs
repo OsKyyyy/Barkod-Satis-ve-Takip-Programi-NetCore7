@@ -45,6 +45,8 @@ namespace WebUI.Pages.Pos
 
         public List<ProductViewModel> ViewModelFavorite { get; set; }
 
+        public List<ProductViewModel> ViewModelCategory { get; set; }
+
         public List<CustomerViewModel> ViewModelCustomer { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
@@ -55,6 +57,7 @@ namespace WebUI.Pages.Pos
 
             var response = await _pos.List("Bearer " + HttpContext.Session.GetString("userToken"), CreateUserId);
             var responseFavorite = await _product.ListByFavorite("Bearer " + HttpContext.Session.GetString("userToken"));
+            var responseCategory = await _product.ListByCategory("Bearer " + HttpContext.Session.GetString("userToken"), 26);
             var responseCustomer = await _customer.ListActive("Bearer " + HttpContext.Session.GetString("userToken"));
 
             if (response.Message == "Authentication Error" || responseFavorite.Message == "Authentication Error")
@@ -81,6 +84,15 @@ namespace WebUI.Pages.Pos
             else
             {
                 ToastrError = responseFavorite.Message;
+            }
+
+            if (responseCategory.Status)
+            {
+                ViewModelCategory = responseCategory.Data;
+            }
+            else
+            {
+                ToastrError = responseCategory.Message;
             }
 
             if (responseCustomer.Status)

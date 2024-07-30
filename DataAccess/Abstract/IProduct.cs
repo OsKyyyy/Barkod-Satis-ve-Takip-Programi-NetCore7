@@ -24,6 +24,7 @@ namespace DataAccess.Abstract
         ViewModel ListToPos(string barcode);
         List<ViewModel> ListByName(string name);
         List<ViewModel> ListByFavorite();
+        List<ViewModel> ListByCategory(int id);
         ViewModel CheckExistsByBarcode(string barcode);
         bool ListToSavePhoto(string barcode);
         bool CheckExistsByBarcodeAndId(int id, string barcode);

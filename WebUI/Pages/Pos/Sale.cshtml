@@ -42,7 +42,7 @@
             <div id="kt_app_content_container" class="app-container container-xxl" style="max-width:1500px">
                 <div class="d-flex flex-column flex-xl-row">
                     <div class="d-flex flex-row-fluid me-xl-9 mb-10 mb-xl-0">
-                        <div class="card card-flush card-p-0 bg-transparent border-0 ">
+                        <div class="card card-flush card-p-0 bg-transparent border-0 " style="box-shadow: none;">
                             <div class="card-header align-items-center py-5 gap-2 gap-md-5 mb-10">
                                 <div class="card-title">
                                     <form class="form d-flex flex-column flex-lg-row" asp-page-handler="Add" method="post">
@@ -64,40 +64,56 @@
                                     </form>
                                 </div>
                                 <div class="card-toolbar flex-row-fluid justify-content-end gap-5" style="display:block;">
-                                    <a data-bs-toggle="modal" data-bs-target="#searchProduct" type="button" class="btn btn-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                                        <i class="ki-duotone ki-search-list fs-2">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                            <span class="path3"></span>
-                                        </i>
-                                        Ürün Ara
-                                    </a>
-                                    <a data-bs-toggle="modal" data-bs-target="#findPrice" type="button" class="btn btn-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                                        <i class="ki-duotone ki-search-list fs-2">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                            <span class="path3"></span>
-                                        </i>
-                                        Fiyat Bul
-                                    </a>
-                                    <button type="button" class="btn btn-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" id="kt_app_layout_builder_toggle">
-                                        <i class="ki-duotone ki-ranking fs-2">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                            <span class="path3"></span>
-                                            <span class="path4"></span>
-                                        </i>
-                                        Favori Ürünler
-                                    </button>
-                                    <button type="button" class="btn btn-light-info" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-bs-toggle="modal" data-bs-target="#customers">
-                                        <i class="ki-duotone ki-profile-user fs-2">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                            <span class="path3"></span>
-                                            <span class="path4"></span>
-                                        </i>
-                                        Cari Hesaplar
-                                    </button>
+                                    <ul class="nav nav-pills d-flex nav-pills-custom gap-3">
+                                        <li class="nav-item me-0">
+                                            <button data-bs-toggle="modal" data-bs-target="#searchProduct" class="btn btn-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                                                <i class="ki-duotone ki-search-list fs-2">
+                                                    <span class="path1"></span>
+                                                    <span class="path2"></span>
+                                                    <span class="path3"></span>
+                                                </i>
+                                                Ürün Ara
+                                            </button>
+                                        </li>
+                                        <li class="nav-item me-0">
+                                            <button data-bs-toggle="modal" data-bs-target="#findPrice" class="btn btn-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                                                <i class="ki-duotone ki-search-list fs-2">
+                                                    <span class="path1"></span>
+                                                    <span class="path2"></span>
+                                                    <span class="path3"></span>
+                                                </i>
+                                                Fiyat Bul
+                                            </button>
+                                        </li>
+                                        <li class="nav-item me-0">
+                                            <button type="button" class="btn btn-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" id="kt_app_layout_builder_toggle">
+                                                <i class="ki-duotone ki-star fs-3">
+                                                   
+                                                </i>
+                                                Favori Ürünler
+                                            </button>
+                                        </li>
+                                        <li class="nav-item me-0">
+                                            <button type="button" class="btn btn-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" id="kt_app_layout_builder_2_toggle">
+                                                <i class="ki-duotone ki-apple fs-2">
+                                                    <span class="path1"></span>
+                                                    <span class="path2"></span>                                                    
+                                                </i>
+                                                Meyve & Sebze
+                                            </button>
+                                        </li>
+                                        <li class="nav-item me-0">
+                                            <button type="button" class="btn btn-light-info" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-bs-toggle="modal" data-bs-target="#customers">
+                                                <i class="ki-duotone ki-profile-user fs-2">
+                                                    <span class="path1"></span>
+                                                    <span class="path2"></span>
+                                                    <span class="path3"></span>
+                                                    <span class="path4"></span>
+                                                </i>
+                                                Cari Hesaplar
+                                            </button>
+                                        </li>
+                                    </ul>                                                                                                                                                                                  
                                 </div>
                             </div>
                             <div class="card-body">
@@ -448,6 +464,61 @@
         </div>
     </div>
 </div>
+<div id="kt_app_layout_builder_2" class="bg-body" data-kt-drawer="true" data-kt-drawer-name="app-settings" data-kt-drawer-activate="true" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'300px', 'lg': '580px'}" data-kt-drawer-direction="end" data-kt-drawer-toggle="#kt_app_layout_builder_2_toggle" data-kt-drawer-close="#kt_app_layout_builder_2_close">
+
+    <div class="card border-0 shadow-none rounded-0 w-100">
+        <div class="card-header bgi-position-y-bottom bgi-position-x-end bgi-size-cover bgi-no-repeat rounded-0 border-0 py-4" id="kt_app_layout_builder_2_header" style="background-image:url('../assets/media/other/customizer-header-bg.jpg')">
+            <h3 class="card-title fs-3 fw-bold text-white flex-column m-0">
+                Meyve & Sebze Ürünleri
+
+                <small class="text-white opacity-50 fs-7 fw-semibold pt-1">
+                    ürünlerinizi burada bulamıyorsanız, ürününüzün Kategori ayarına bakmayı deneyin!
+                </small>
+            </h3>
+            <div class="card-toolbar">
+                <button type="button" class="btn btn-sm btn-icon btn-color-white p-0 w-20px h-20px rounded-1" id="kt_app_layout_builder_2_close">
+                    <i class="ki-duotone ki-cross-square fs-2"><span class="path1"></span><span class="path2"></span></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body position-relative" id="kt_app_layout_builder_2_body">
+            <div id="kt_app_settings_content" class="position-relative scroll-y me-n5 pe-5" data-kt-scroll="true" data-kt-scroll-height="auto" data-kt-scroll-wrappers="#kt_app_layout_builder_2_body" data-kt-scroll-dependencies="#kt_app_layout_builder_2_header, #kt_app_layout_builder_2_footer" data-kt-scroll-offset="5px">
+
+                <ul class="nav nav-pills nav-pills-custom gap-3 mb-6" role="tablist">
+                    <form class="form" asp-page-handler="AddMoney" method="post" id="layoutBuilder2Form" style="display: contents;">
+                        <input asp-for="AddMoneyRequestModel.Basket" value="1" id="layoutBuilder2Basket" hidden />
+                        <input asp-for="AddMoneyRequestModel.ProductUnitPrice" type="text" class="form-control ps-14 mb-10 numpad-input" id="layoutBuilder2Price" hidden />
+                        @{
+                            var counterCategory = 0;
+                        }
+                        @foreach (var item in Model.ViewModelCategory)
+                        {
+                            counterCategory++;
+                            <li class="nav-item mb-3 me-0" role="presentation">
+                                <div class="nav-link nav-link-border-solid btn btn-outline btn-flex btn-active-color-primary flex-column flex-stack pt-5 pb-3 page-bg show active" data-bs-toggle="pill" style="width:250px;" aria-selected="true" role="tab">
+                                    <div class="nav-icon mb-3">
+                                        <img src="@Configuration.GetValue(typeof(string), "ImageUrl")@item.Image" class="w-100px" alt="">
+                                    </div>
+                                    <div class="">
+                                        <span class="text-gray-800 fw-bold fs-4 d-block" style="min-height: 75px">@item.Name</span>
+                                        <div class="position-relative d-flex align-items-center justify-content-center" style="margin:auto">                                        
+                                            <input id="categoryGram_@counterCategory" product-price="@item.SalePrice" onkeyup="Pos.CalculateAmount(this)" type="text" class="form-control text-center px-0 fs-6 fw-bold text-gray-800 w-75px me-5" placeholder="Gram..">
+                                            <button class="btn btn-icon btn-success fw-bold fs-4 d-block fs-8" type="submit" counter-category="@counterCategory" onclick="Pos.ValidateAmount(this)">
+                                                <i class="ki-duotone ki-handcart text-white fs-2"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        }                        
+                    </form>
+
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade" tabindex="-1" id="addMoneyNumpad">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -531,70 +602,68 @@
                     <input asp-for="ReceivedMoneyRequestModel.ReceivedMoneyNumpadInput" type="text" class="form-control ps-14 mb-10 numpad-input" id="receivedMoneyNumpadInput" autofocus />
                     <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
                         <span asp-validation-for="ReceivedMoneyRequestModel.ReceivedMoneyNumpadInput"></span>
-                    </div>
-                    <button type="submit" hidden></button>
+                    </div>                
+                    <table>
+                        <tbody>
+                        <tr>
+                            <td>
+                                <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('7','receivedMoneyNumpadInput')">7</button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('8','receivedMoneyNumpadInput')">8</button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('9','receivedMoneyNumpadInput')">9</button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-secondary numpad-key numpad-action-button" onclick="NumPad.SetSymbol('CE','receivedMoneyNumpadInput')">CE</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('4','receivedMoneyNumpadInput')">4</button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('5','receivedMoneyNumpadInput')">5</button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('6','receivedMoneyNumpadInput')">6</button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-secondary numpad-key numpad-action-button" onclick="NumPad.SetSymbol('C','receivedMoneyNumpadInput')">C</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('1','receivedMoneyNumpadInput')">1</button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('2','receivedMoneyNumpadInput')">2</button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('3','receivedMoneyNumpadInput')">3</button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-secondary numpad-key numpad-action-button" data-bs-dismiss="modal">&#10060;</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('00','receivedMoneyNumpadInput')">00</button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('0','receivedMoneyNumpadInput')">0</button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('.','receivedMoneyNumpadInput')">.</button>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-secondary numpad-key numpad-action-button">&#9989;</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </form>
-                
-                <table>
-                    <tbody>
-                    <tr>
-                        <td>
-                            <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('7','receivedMoneyNumpadInput')">7</button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('8','receivedMoneyNumpadInput')">8</button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('9','receivedMoneyNumpadInput')">9</button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-secondary numpad-key numpad-action-button" onclick="NumPad.SetSymbol('CE','receivedMoneyNumpadInput')">CE</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('4','receivedMoneyNumpadInput')">4</button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('5','receivedMoneyNumpadInput')">5</button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('6','receivedMoneyNumpadInput')">6</button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-secondary numpad-key numpad-action-button" onclick="NumPad.SetSymbol('C','receivedMoneyNumpadInput')">C</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('1','receivedMoneyNumpadInput')">1</button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('2','receivedMoneyNumpadInput')">2</button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('3','receivedMoneyNumpadInput')">3</button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-secondary numpad-key numpad-action-button" data-bs-dismiss="modal">&#10060;</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('00','receivedMoneyNumpadInput')">00</button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('0','receivedMoneyNumpadInput')">0</button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-dark numpad-key" onclick="NumPad.SetSymbol('.','receivedMoneyNumpadInput')">.</button>
-                        </td>
-                        <td>
-                            <button type="submit" class="btn btn-secondary numpad-key numpad-action-button">&#9989;</button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
             </div>
         </div>
     </div>

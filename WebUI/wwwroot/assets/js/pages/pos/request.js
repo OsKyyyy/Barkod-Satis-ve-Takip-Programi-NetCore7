@@ -59,7 +59,7 @@
                     $('input:hidden[name="__RequestVerificationToken"]').val()
             },
             success: function (response) {
-                
+
                 if (response.status && response.data.length > 0) {
                     Request_.CreateTable(response.data);                
                     $("#searchProductTable").show();
@@ -67,28 +67,31 @@
                 if (response.message == "Authentication Error") {
                     window.location.reload();
                 }
-                if (!response.status) {
-                    
-                    toastr.options = {
-                        "closeButton": true,
-                        "debug": false,
-                        "newestOnTop": false,
-                        "progressBar": true,
-                        "positionClass": "toastr-top-right",
-                        "preventDuplicates": false,
-                        "onclick": null,
-                        "showDuration": "300",
-                        "hideDuration": "1000",
-                        "timeOut": "5000",
-                        "extendedTimeOut": "1000",
-                        "showEasing": "swing",
-                        "hideEasing": "linear",
-                        "showMethod": "fadeIn",
-                        "hideMethod": "fadeOut"
-                    };
-
-                    toastr.error(response.message, "Hata!");
+                if (response.data.length == 0) {
+                    var audio = new Audio("../assets/media/music/barcode-beep.m4a")
+                    audio.play();
+                    response.message = "Ürün Bulunamadı";
                 }
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": true,
+                    "positionClass": "toastr-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                };
+
+                toastr.error(response.message, "Hata!");
+                
             },
         })
     },

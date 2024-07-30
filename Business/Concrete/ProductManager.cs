@@ -198,6 +198,14 @@ namespace Business.Concrete
         }
 
         [SecuredOperation("product_list")]
+        public IDataResult<List<ViewModel>> ListByCategory(int id)
+        {
+            var result = _productDal.ListByCategory(id);
+
+            return new SuccessDataResult<List<ViewModel>>(result, Messages.CategoryProductsListed);
+        }
+
+        [SecuredOperation("product_list")]
         public IDataResult<ViewModel> CheckExistsByBarcode(string barcode)
         {
             var result = _productDal.CheckExistsByBarcode(barcode);

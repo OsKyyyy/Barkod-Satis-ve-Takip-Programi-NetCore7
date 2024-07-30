@@ -33,6 +33,9 @@ namespace Core.Utilities.Refit.Abstract
         [Get("/product/ListByFavorite")]
         Task<DataResult<List<ViewModel>>> ListByFavorite([Header("Authorization")] string token);
 
+        [Get("/product/ListByCategory")]
+        Task<DataResult<List<ViewModel>>> ListByCategory([Header("Authorization")] string token, int id);
+
         [Get("/product/ListByBarcode")]
         Task<DataResult<ViewModel>> ListByBarcode([Header("Authorization")] string token, string barcode);
 

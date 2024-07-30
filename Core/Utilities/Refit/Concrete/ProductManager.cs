@@ -190,6 +190,35 @@ namespace Core.Utilities.Refit.Concrete
             }
         }
 
+        public async Task<DataResult<List<ViewModel>>> ListByCategory([Header("Authorization: Bearer")] string token, int id)
+        {
+            DataResult<List<ViewModel>> dataResult = new DataResult<List<ViewModel>>();
+
+            try
+            {
+                dataResult = await myAPI.ListByCategory(token, id);
+
+                return dataResult;
+            }
+            catch (ApiException exception)
+            {
+                dynamic response = JsonConvert.DeserializeObject(exception.Content);
+
+                if (response != null && response.Status != null)
+                {
+                    dataResult.Message = response.Message;
+                    dataResult.Status = response.Status;
+
+                    return dataResult;
+                }
+
+                dataResult.Message = "Beklenmedik hata ile karşılaşıldı";
+                dataResult.Status = false;
+
+                return dataResult;
+            }
+        }
+
         public async Task<DataResult<ViewModel>> ListByBarcode([Header("Authorization: Bearer")] string token, string barcode)
         {
             DataResult<ViewModel> dataResult = new DataResult<ViewModel>();

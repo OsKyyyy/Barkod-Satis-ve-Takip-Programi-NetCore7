@@ -93,10 +93,14 @@
         $("#" + input).focus();
     },
     ReceivedMoney: function () {
-
+        debugger;
         basket = localStorage.getItem("basket");
         
         var val = $("#receivedMoneyNumpadInput").val();
+
+        if (val == "") {
+            return;
+        }
 
         if (basket == 1) {
             $("#receivedMoneyNumpadSpan").html((Math.round(val * 100) / 100).toFixed(2).replace(".", ",") + " &#8378;");

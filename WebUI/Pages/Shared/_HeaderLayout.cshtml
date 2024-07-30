@@ -18,7 +18,294 @@
 		<div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1" id="kt_app_header_wrapper">
 
 			<div class="app-header-menu app-header-mobile-drawer align-items-stretch" data-kt-drawer="true" data-kt-drawer-name="app-header-menu" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="250px" data-kt-drawer-direction="end" data-kt-drawer-toggle="#kt_app_header_menu_toggle" data-kt-swapper="true" data-kt-swapper-mode="{default: 'append', lg: 'prepend'}" data-kt-swapper-parent="{default: '#kt_app_body', lg: '#kt_app_header_wrapper'}">
-				<div class="menu menu-rounded  menu-column menu-lg-row  my-5 my-lg-0 align-items-stretch fw-semibold px-2 px-lg-0" id="kt_app_header_menu" data-kt-menu="true"></div>
+				<div class="menu menu-rounded  menu-column menu-lg-row  my-5 my-lg-0 align-items-stretch fw-semibold px-2 px-lg-0" id="kt_app_header_menu" data-kt-menu="true">
+                    <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" class="menu-item menu-here-bg menu-lg-down-accordion me-0 me-lg-2">
+                        <a asp-page="../Index" style="font-weight: 600;font-size: 1.1rem;">
+                            <span class="menu-link">
+                                <span class="menu-title">Ana Sayfa</span>
+                                <span class="menu-arrow d-lg-none"></span>
+                            </span>
+                        </a>
+                    </div>
+                    <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" class="menu-item menu-lg-down-accordion me-0 me-lg-2">
+                        <span class="menu-link"><span class="menu-title">Sayfalar</span><span class="menu-arrow d-lg-none"></span></span>
+                        <div class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown p-0">
+                            <div class="menu-active-bg px-4 px-lg-0">
+                                <div class="d-flex w-100 overflow-auto">
+                                    <ul class="nav nav-stretch nav-line-tabs fw-bold fs-6 p-0 p-lg-10 flex-nowrap flex-grow-1">
+                                        <li class="nav-item mx-lg-1">
+                                            <a class="nav-link py-3 py-lg-6 active text-active-primary" href="#" data-bs-toggle="tab" data-bs-target="#kt_app_header_menu_pages_pages">
+                                                Kullanıcı - Cari Hesaplar
+                                            </a>
+                                        </li>
+                                        <li class="nav-item mx-lg-1">
+                                            <a class="nav-link py-3 py-lg-6  text-active-primary" href="#" data-bs-toggle="tab" data-bs-target="#kt_app_header_menu_pages_account">
+                                                Ürün
+                                            </a>
+                                        </li>
+                                        <li class="nav-item mx-lg-1">
+                                            <a class="nav-link py-3 py-lg-6  text-active-primary" href="#" data-bs-toggle="tab" data-bs-target="#kt_app_header_menu_pages_authentication">
+                                                Fiyat - Gelir Gider
+                                            </a>
+                                        </li>
+                                        <li class="nav-item mx-lg-1">
+                                            <a class="nav-link py-3 py-lg-6  text-active-primary" href="#" data-bs-toggle="tab" data-bs-target="#kt_app_header_menu_pages_utilities">
+                                                Rapor
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>                                
+                                <div class="tab-content py-4 py-lg-8 px-lg-7">
+                                    <div class="tab-pane active w-lg-1000px" id="kt_app_header_menu_pages_pages">
+                                        <div class="row">
+                                            <div class="col-lg-8">
+                                                <div class="row">
+                                                    <div class="col-lg-3 mb-6 mb-lg-0">
+                                                        <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4">Kullanıcı İşlemleri</h4>
+                                                        <div class="menu-item p-0 m-0">
+                                                            <a asp-page="/User/Add" class="menu-link ">
+                                                                <span class="menu-title">Kullanıcı Ekle</span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="menu-item p-0 m-0">
+                                                            <a asp-page="/User/List" class="menu-link ">
+                                                                <span class="menu-title">Kullanıcı Listesi</span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="menu-item p-0 m-0">
+                                                            <a asp-page="/User/RoleList" class="menu-link ">
+                                                                <span class="menu-title">Rol Listesi</span>
+                                                            </a>
+                                                        </div>                                                        
+                                                    </div>
+                                                    <div class="col-lg-3 mb-6 mb-lg-0">
+                                                        <div class="mb-6">
+                                                            <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4">Müşteri İşlemleri</h4>
+                                                            <div class="menu-item p-0 m-0">
+                                                                <a asp-page="/Customer/Add" class="menu-link ">
+                                                                    <span class="menu-title">Müşteri Ekle</span>
+                                                                </a>
+                                                            </div>
+                                                            <div class="menu-item p-0 m-0">
+                                                                <a asp-page="/Customer/List" class="menu-link ">
+                                                                    <span class="menu-title">Müşteri Listesi</span>
+                                                                </a>
+                                                            </div>                                                         
+                                                        </div>                                                        
+                                                    </div>                                                    
+                                                    <div class="col-lg-3 mb-6 mb-lg-0">
+                                                        <div class="mb-6">                                                           
+                                                            <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4">Toptancı İşlemleri</h4>
+                                                            <div class="menu-item p-0 m-0">
+                                                                <a asp-page="/WholeSaler/Add" class="menu-link ">
+                                                                    <span class="menu-title">Toptancı Ekle</span>
+                                                                </a>
+                                                            </div>
+                                                            <div class="menu-item p-0 m-0">
+                                                                <a asp-page="/WholeSaler/List" class="menu-link ">
+                                                                    <span class="menu-title">Toptancı Listesi</span>
+                                                                </a>
+                                                            </div>
+                                                        </div>                                                                                                                                                                       
+                                                    </div>                                                  
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <img src="~/assets/media/stock/img-31.jpg" class="rounded mw-100" alt="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane  w-lg-1000px" id="kt_app_header_menu_pages_account">
+                                        <div class="row">
+                                            <div class="col-lg-8">
+                                                <div class="row">
+                                                    <div class="col-lg-3 mb-6 mb-lg-0">
+                                                        <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4">Kategori İşlemleri</h4>
+                                                        <div class="menu-item p-0 m-0">
+                                                            <a asp-page="/Category/Add" class="menu-link ">
+                                                                <span class="menu-title">Kategori Ekle</span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="menu-item p-0 m-0">
+                                                            <a asp-page="/Category/List" class="menu-link ">
+                                                                <span class="menu-title">Kategori Listesi</span>
+                                                            </a>
+                                                        </div>                                                        
+                                                    </div>
+                                                    <div class="col-lg-3 mb-6 mb-lg-0">
+                                                        <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4">Ürün İşlemleri</h4>
+                                                        <div class="menu-item p-0 m-0">
+                                                            <a asp-page="/Product/Add" class="menu-link ">
+                                                                <span class="menu-title">Ürün Ekle</span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="menu-item p-0 m-0">
+                                                            <a asp-page="/Product/List" class="menu-link ">
+                                                                <span class="menu-title">Ürün Listesi</span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="menu-item p-0 m-0">
+                                                            <a asp-page="/Product/StockEntry" class="menu-link ">
+                                                                <span class="menu-title">Stok Girişi</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                           
+                                            <div class="col-lg-4">
+                                                <img src="~/assets/media/stock/img-31.jpg" class="rounded mw-100" alt="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane  w-lg-1000px" id="kt_app_header_menu_pages_authentication">
+                                        <div class="row">
+                                            <div class="col-lg-8">
+                                                <div class="row">
+                                                    <div class="col-lg-3 mb-6 mb-lg-0">
+                                                        <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4">Gelir - Gider İşlemleri</h4>
+                                                        <div class="menu-item p-0 m-0">
+                                                            <a asp-page="/IncomeAndExpenses/Add" class="menu-link ">
+                                                                <span class="menu-title">Gelir - Gider Ekle</span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="menu-item p-0 m-0">
+                                                            <a asp-page="/IncomeAndExpenses/List" class="menu-link ">
+                                                                <span class="menu-title">Gelir - Gider Listesi</span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="menu-item p-0 m-0">
+                                                            <a asp-page="/IncomeAndExpensesType/Add" class="menu-link ">
+                                                                <span class="menu-title">Tür Ekle</span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="menu-item p-0 m-0">
+                                                            <a asp-page="/IncomeAndExpensesType/List" class="menu-link ">
+                                                                <span class="menu-title">Tür Listesi</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 mb-6 mb-lg-0">
+                                                        <a asp-page="/WebScraping/PriceComparison">
+                                                            <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4"> Fiyat Karşılaştır </h4>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-lg-3 mb-6 mb-lg-0">
+                                                        <a asp-page="/WebScraping/PriceTracking">
+                                                            <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4"> Fiyat İzleme </h4>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-lg-3 mb-6 mb-lg-0">
+                                                        <a asp-page="/WebScraping/PriceProduceMarket">
+                                                            <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4"> Hal Fiyatları</h4>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <img src="~/assets/media/stock/img-31.jpg" class="rounded mw-100" alt="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane  w-lg-1000px" id="kt_app_header_menu_pages_utilities">
+                                        <div class="row">
+                                            <div class="col-lg-8">
+                                                <div class="row">
+                                                    <div class="col-lg-3 mb-6 mb-lg-0">
+                                                        <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4">Gelir Gider Raporları</h4>
+                                                        <div class="menu-item p-0 m-0">
+                                                            <a asp-page="/Report/IncomeAndExpensesReport" class="menu-link ">
+                                                                <span class="menu-title">Gelir Gider Raporları</span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="menu-item p-0 m-0">
+                                                            <a asp-page="/Report/IncomeAndExpensesList" class="menu-link ">
+                                                                <span class="menu-title">Gelir Gider Listesi</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 mb-6 mb-lg-0">
+                                                        <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4">Satış Raporları</h4>
+                                                        <div class="menu-item p-0 m-0">
+                                                            <a asp-page="/Report/SalesReport" class="menu-link ">
+                                                                <span class="menu-title">Satış Raporları</span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="menu-item p-0 m-0">
+                                                            <a asp-page="/Report/SalesDetailReport" class="menu-link ">
+                                                                <span class="menu-title">Satış Detay Listesi</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 mb-6 mb-lg-0">
+                                                        <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4">Müşteri Raporları</h4>
+                                                        <div class="menu-item p-0 m-0">
+                                                            <a asp-page="/Report/CustomerReport" class="menu-link ">
+                                                                <span class="menu-title">Müşteri Raporları</span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="menu-item p-0 m-0">
+                                                            <a asp-page="/Report/CustomerShoppingList" class="menu-link ">
+                                                                <span class="menu-title">Alışveriş Listesi</span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="menu-item p-0 m-0">
+                                                            <a asp-page="/Report/CustomerRefundList" class="menu-link ">
+                                                                <span class="menu-title">Geri Ödeme Listesi</span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="menu-item p-0 m-0">
+                                                            <a asp-page="/Report/CustomerTotalDebtList" class="menu-link ">
+                                                                <span class="menu-title">Toplam Borç Listesi</span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="menu-item p-0 m-0">
+                                                            <a asp-page="/Report/CustomerNonPayersList" class="menu-link ">
+                                                                <span class="menu-title">Ödeme Yapılmayan Gün Listesi</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 mb-6 mb-lg-0">
+                                                        <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4">Toptancı Raporları</h4>
+                                                        <div class="menu-item p-0 m-0">
+                                                            <a asp-page="/Report/WholeSalerReport" class="menu-link ">
+                                                                <span class="menu-title">Toptancı Raporları</span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="menu-item p-0 m-0">
+                                                            <a asp-page="/Report/WholeSalerShoppingList" class="menu-link ">
+                                                                <span class="menu-title">Alışveriş Listesi</span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="menu-item p-0 m-0">
+                                                            <a asp-page="/Report/WholeSalerRefundList" class="menu-link ">
+                                                                <span class="menu-title">Geri Ödeme Listesi</span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="menu-item p-0 m-0">
+                                                            <a asp-page="/Report/WholeSalerTotalDebtList" class="menu-link ">
+                                                                <span class="menu-title">Toplam Borç Listesi</span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="menu-item p-0 m-0">
+                                                            <a asp-page="/Report/WholeSalerNonPayersList" class="menu-link ">
+                                                                <span class="menu-title">Ödeme Yapılmayan Gün Listesi</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-4">
+                                                <img src="~/assets/media/stock/img-31.jpg" class="rounded mw-100" alt="">
+                                            </div>
+                                        </div>
+                                    </div>                                
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+				</div>
 			</div>
 			
             <div class="app-navbar flex-shrink-0"> 
