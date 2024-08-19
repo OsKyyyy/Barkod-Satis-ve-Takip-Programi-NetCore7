@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Core.Utilities.Refit.Abstract;
 using Core.Utilities.Refit.Models.Request.Sale;
 using Core.Utilities.Refit.Models.Response;
+using Core.Utilities.Refit.Models.Response.Sale;
 using Newtonsoft.Json;
 using Refit;
 
@@ -15,9 +16,9 @@ namespace Core.Utilities.Refit.Concrete
     {
         private ISale myAPI = RestService.For<ISale>("http://localhost:63067/api");
 
-        public async Task<Result> Add([Header("Authorization")] string token, [Body] AddRequestModel addRequestModel)
+        public async Task<DataResult<ViewModel>> Add([Header("Authorization")] string token, [Body] AddRequestModel addRequestModel)
         {
-            Result dataResult = new Result();
+            DataResult<ViewModel> dataResult = new DataResult<ViewModel>();
 
             try
             {

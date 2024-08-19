@@ -164,7 +164,50 @@
                 }
             });
         })
+    },
+    PrintReceipt: function (saleId) {
+
+        $.ajax({
+            type: "GET",
+            url: "SalesDetailReport?handler=SaleProducts",
+            data: { saleId: saleId },
+            contentType: "application/json; charset=utf-8",
+            headers: {
+                RequestVerificationToken:
+                    $('input:hidden[name="__RequestVerificationToken"]').val()
+            },
+            success: function (response) {
+
+                const now = new Date(response.data[0].createDate);
+                const day = String(now.getDate()).padStart(2, '0');
+                const month = String(now.getMonth() + 1).padStart(2, '0'); // Ay 0'dan başladığı için +1
+                const year = now.getFullYear();
+                const formattedDate = `${day}/${month}/${year}`;
+                const formattedTime = now.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+
+                var items = [];
+                $.each(response.data, function (key, value) {
+
+                    var item = {
+                        "Name": value.productName,
+                        "Price": (value.productQuantity * value.productUnitPrice).toFixed(2),
+                        "Quantity": value.productQuantity
+                    }
+                    items.push(item);
+                })
+                var receiptModel = { "Type": 1, "ReceiptNo": saleId, "Date": formattedDate, "Time": formattedTime, "Total": response.data[0].amount.toFixed(2), "Items": items };
+
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost:5000/",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: JSON.stringify(receiptModel),
+                })
+            },
+        })
     }
+
 }
 $(document).ready(function () {
     Report.Init();

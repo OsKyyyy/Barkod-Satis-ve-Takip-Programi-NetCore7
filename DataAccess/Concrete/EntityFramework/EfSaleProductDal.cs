@@ -47,7 +47,7 @@ namespace DataAccess.Concrete.EntityFramework
                              {
                                  Id = sp.Id,
                                  SaleId = sp.SaleId,
-                                 ProductId = pr.Id,
+                                 ProductId = pr.Id == null ? 0: pr.Id,
                                  ProductImage = pr.Image,
                                  ProductBarcode = sp.Barcode,
                                  ProductName = sp.ProductName,

@@ -20,13 +20,15 @@ namespace WebUI.Pages.Pos
         private readonly ICustomer _customer;
         private readonly IProduct _product;
         private readonly ISale _sale;
+        private readonly IReport _report;
 
-        public SaleModel(IPos pos, ICustomer customer, IProduct product, ISale sale)
+        public SaleModel(IPos pos, ICustomer customer, IProduct product, ISale sale, IReport report)
         {
             _pos = pos;
             _customer = customer;
             _product = product;
             _sale = sale;
+            _report = report;
         }
 
         [ViewData]
@@ -200,5 +202,11 @@ namespace WebUI.Pages.Pos
             return new JsonResult(response);
         }
 
+        public async Task<IActionResult> OnGetSaleProductsAsync(int saleId)
+        {
+            var response = await _report.SaleProductListById("Bearer " + HttpContext.Session.GetString("userToken"), saleId);
+
+            return new JsonResult(response);
+        }
     }
 }

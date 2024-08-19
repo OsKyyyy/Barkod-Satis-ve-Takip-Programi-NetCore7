@@ -71,27 +71,27 @@
                     var audio = new Audio("../assets/media/music/barcode-beep.m4a")
                     audio.play();
                     response.message = "Ürün Bulunamadı";
-                }
-                toastr.options = {
-                    "closeButton": true,
-                    "debug": false,
-                    "newestOnTop": false,
-                    "progressBar": true,
-                    "positionClass": "toastr-top-right",
-                    "preventDuplicates": false,
-                    "onclick": null,
-                    "showDuration": "300",
-                    "hideDuration": "1000",
-                    "timeOut": "5000",
-                    "extendedTimeOut": "1000",
-                    "showEasing": "swing",
-                    "hideEasing": "linear",
-                    "showMethod": "fadeIn",
-                    "hideMethod": "fadeOut"
-                };
 
-                toastr.error(response.message, "Hata!");
-                
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": true,
+                        "positionClass": "toastr-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    };
+
+                    toastr.error(response.message, "Hata!");
+                }                                
             },
         })
     },
@@ -239,7 +239,8 @@
         var amount;
         var partialPaymentAmount;
         var paymentType = parseInt($('input[name="paymentType"]:checked').val());
-        var basket = localStorage.getItem("basket");         
+        var basket = localStorage.getItem("basket");   
+        var printReceipt = $("#flexCheckDefault").is(":checked");
 
         if (basket == 1) {
             customerId = parseInt(localStorage.getItem("customerId"));
@@ -410,7 +411,7 @@
                             $('input:hidden[name="__RequestVerificationToken"]').val()
                     },
                     success: function (response) {
-
+                        
                         if (response.message == "Authentication Error") {
 
                             window.location.reload();
@@ -424,7 +425,12 @@
                                 localStorage.removeItem("customerId2");
                             }
 
-                            window.location.reload();
+                            if (printReceipt) { // FİŞ YAZDIRMA
+                                Request_.PrintReceipt(response.data.id);
+                            }
+                            else {
+                                window.location.reload();
+                            }
                         }
                         if (!response.status) {
 
@@ -578,6 +584,50 @@
             $("#searchProductTBody").append(row);
         })
     },
+    PrintReceipt: function (saleId) {
+
+        $.ajax({
+            type: "GET",
+            url: "Sale?handler=SaleProducts",
+            data: { saleId: saleId },
+            contentType: "application/json; charset=utf-8",
+            headers: {
+                RequestVerificationToken:
+                    $('input:hidden[name="__RequestVerificationToken"]').val()
+            },
+            success: function (response) {
+
+                const now = new Date(response.data[0].createDate);
+                const day = String(now.getDate()).padStart(2, '0');
+                const month = String(now.getMonth() + 1).padStart(2, '0'); // Ay 0'dan başladığı için +1
+                const year = now.getFullYear();
+                const formattedDate = `${day}/${month}/${year}`;
+                const formattedTime = now.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+
+                var items = [];
+                $.each(response.data, function (key,value) {
+                    
+                    var item = {
+                        "Name": value.productName,
+                        "Price": (value.productQuantity * value.productUnitPrice).toFixed(2),
+                        "Quantity": value.productQuantity
+                    }
+                    items.push(item);
+                })
+                var receiptModel = { "Type": 1, "ReceiptNo": saleId, "Date": formattedDate, "Time": formattedTime, "Total": response.data[0].amount.toFixed(2), "Items": items };                
+
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost:5000/",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: JSON.stringify(receiptModel),                   
+                })
+
+                window.location.reload();
+            },
+        })
+    }
 }
 $(document).ready(function () {
     Request_.Init();

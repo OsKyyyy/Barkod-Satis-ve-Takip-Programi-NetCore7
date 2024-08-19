@@ -64,6 +64,13 @@ namespace WebUI.Pages.Report
 
             return new JsonResult(response);
         }
+
+        public async Task<IActionResult> OnGetSaleProductsAsync(int saleId)
+        {
+            var response = await _report.SaleProductListById("Bearer " + HttpContext.Session.GetString("userToken"), saleId);
+
+            return new JsonResult(response);
+        }
     }
 }
 

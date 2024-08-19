@@ -21,7 +21,7 @@ namespace Core.Utilities.Refit.Models.Response.SaleProduct
         public string ProductBarcode { get; set; }
 
         [JsonProperty("ProductId")]
-        public int ProductId { get; set; }
+        public int? ProductId { get; set; }
 
         [JsonProperty("ProductImage")]
         public string? ProductImage { get; set; }

@@ -47,5 +47,12 @@ namespace WebUI.Pages.Product
             }
             return Page();
         }
+
+        public async Task<IActionResult> OnGetProductAsync(int productId)
+        {
+            var response = await _product.ListById("Bearer " + HttpContext.Session.GetString("userToken"), productId);
+
+            return new JsonResult(response);
+        }
     }
 }

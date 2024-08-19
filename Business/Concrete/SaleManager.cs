@@ -40,7 +40,7 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(AddValidator))]
-        public IResult Add(SaleAddDto saleAddDto)
+        public IDataResult<ViewModel> Add(SaleAddDto saleAddDto)
         {
             var sale = new Sale
             {
@@ -53,6 +53,10 @@ namespace Business.Concrete
                 Deleted = false
             };
             var saleId = _saleDal.Add(sale);
+            var viewModel = new ViewModel()
+            {
+                Id = saleId,
+            };
 
             var listByBasket = _posDal.ListByBasket(saleAddDto.Basket, saleAddDto.CreateUserId);
 
@@ -132,15 +136,15 @@ namespace Business.Concrete
                 else // STOKDA OLMAYAN ÜRÜN VARSA SATIŞI İPTAL ET
                 {
                     _saleDal.HardDelete(saleId);
-                    return new ErrorResult(Messages.ProductOutOfStock);
+                    return new ErrorDataResult<ViewModel>(Messages.ProductOutOfStock);
                 }
             }
             else
             {
-                return new ErrorResult(Messages.PosNotFound);
+                return new ErrorDataResult<ViewModel>(viewModel, Messages.PosNotFound);
             }
 
-            return new SuccessResult(Messages.SaleAdded);
+            return new SuccessDataResult<ViewModel>(viewModel,Messages.SaleAdded);
         }
 
         public IResult Delete(int id)

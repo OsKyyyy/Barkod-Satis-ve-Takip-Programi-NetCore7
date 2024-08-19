@@ -154,6 +154,42 @@
         }
 
         $("#salePriceInput").val(salePrice);
+    },
+    PrintTag: function (productId) {
+
+        $.ajax({
+            type: "GET",
+            url: "List?handler=Product",
+            data: { productId: productId },
+            contentType: "application/json; charset=utf-8",
+            headers: {
+                RequestVerificationToken:
+                    $('input:hidden[name="__RequestVerificationToken"]').val()
+            },
+            success: function (response) {
+
+                const now = new Date(response.data.updateDate);
+                const day = String(now.getDate()).padStart(2, '0');
+                const month = String(now.getMonth() + 1).padStart(2, '0'); // Ay 0'dan başladığı için +1
+                const year = now.getFullYear();
+                const formattedDate = `${day}/${month}/${year}`;
+
+                var productName = response.data.name
+                    .split(' ')
+                    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                    .join(' ')
+
+                var tagModel = { "Type": 2, "Code": response.data.barcode, "ProductName": productName, "ProductPrice": response.data.salePrice.toFixed(2).replace(".",","), "PriceChangeDate": formattedDate };
+
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost:5000/",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: JSON.stringify(tagModel),
+                })
+            },
+        })
     }
 }
 

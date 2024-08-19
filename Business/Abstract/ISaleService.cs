@@ -12,7 +12,7 @@ namespace Business.Abstract
 {
     public interface ISaleService
     {
-        IResult Add(SaleAddDto sale);
+        IDataResult<ViewModel> Add(SaleAddDto sale);
         IResult Delete(int id);
         IDataResult<ViewModel> ListById(int id);
     }

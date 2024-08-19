@@ -58,7 +58,10 @@ namespace WebAPI.Controllers
 
                 foreach (var item in salesProducts.Data)
                 {
-                    _productService.UpdateAddStock(item.ProductBarcode, item.ProductQuantity);
+                    if (item.ProductBarcode != "0")
+                    {
+                        _productService.UpdateAddStock(item.ProductBarcode, item.ProductQuantity);
+                    }
                 }
 
                 return Ok(result);
