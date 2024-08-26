@@ -81,7 +81,12 @@ namespace Business.Concrete
         [ValidationAspect(typeof(StockEntryValidator))]
         public IResult StockEntry(StockEntryRequestModel stockEntryRequestModel)
         {                        
-            _productDal.StockEntry(stockEntryRequestModel);
+            var result = _productDal.StockEntry(stockEntryRequestModel);
+
+            if (!result)
+            {
+                return new ErrorResult(Messages.ProductStockEntryError);
+            }
 
             return new SuccessResult(Messages.ProductStockEntry);
         }

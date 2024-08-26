@@ -1,5 +1,6 @@
 ﻿var Product = {
 
+    czContainerProduct: [],
     Init: function () {
         Product.ToastrError();
         Product.ToastrSuccess();
@@ -19,6 +20,18 @@
         })
         $("#vat").on("change", Product.VarCalculator);
         $("#purchasePriceInput").on("keyup", Product.VarCalculator);
+
+        $("#btnPlus").trigger("click");
+        $("#div_id_barcode_1_number").parent().prev().prop('disabled', true);
+
+        var url = new URL(window.location.href);
+        var r = url.searchParams.get("r");
+
+        if (r != null) {
+            var msg = Product.DecodeParam(r);
+            $('#ToastrSuccess').val(msg)
+            Product.ToastrSuccess();
+        }
     },
 
     ToastrError: function () {
@@ -190,6 +203,153 @@
                 })
             },
         })
+    },
+    PrintTagFromPage: function () {
+        
+        var productBarcode = $("#productBarcode").val();
+        var productName = $("#productName").val();
+        var productPrice = $("#productPrice").val();
+        var priceChangeDate = $("#priceChangeDate").val();
+
+        var validate = Product.PrintTagFromPageValidate(productBarcode, productName, productPrice, priceChangeDate);     
+
+        if (!validate) {
+            return;
+        }
+
+        const [datePart] = priceChangeDate.split(' ');
+        const [month, day, year] = datePart.split('/');
+        const formattedDate = `${day}/${month}/${year}`;
+
+        var productName = productName
+            .split(' ')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+            .join(' ')
+        
+        var tagModel = { "Type": 2, "Code": productBarcode, "ProductName": productName, "ProductPrice": parseFloat(productPrice.replace(",", ".")).toFixed(2).replace(".", ","), "PriceChangeDate": formattedDate };
+        console.log(tagModel);
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:5000/",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(tagModel),         
+        })
+       // window.location.reload();
+    },
+    PrintTagFromPageValidate: function (productBarcode, productName, productPrice, priceChangeDate) {
+        
+        const priceRegex = /^\d+([.,]\d{1,2})?$/;
+
+        if (productBarcode.length < 8 || productBarcode.length > 14) {
+            $('#ToastrError').val("Lütfen geçerli bir barkod numarası girin");
+            Product.ToastrError();
+            return false;
+        }
+
+        if (productName == null || productName == undefined || productName == "") {
+            $('#ToastrError').val("Lütfen geçerli bir ürün adı girin");
+            Product.ToastrError();
+            return false;
+        }
+
+        if (!priceRegex.test(productPrice)) {
+            $('#ToastrError').val("Fiyat 0.00 - 9999999999.99 aralığında olmalıdır.");
+            Product.ToastrError();
+            return false;
+        }     
+
+        if (priceChangeDate == null || priceChangeDate == undefined || priceChangeDate == "") {
+            $('#ToastrError').val("Lütfen geçerli bir fiyat değişim tarihi girin");
+            Product.ToastrError();
+            return false;
+        }   
+        return true;
+    },
+    StockEntry: function () {
+
+        Product.czContainerProduct = [];
+        var wholeSaler = $("#wholeSalerId").val();
+        var totalCost = $("#totalCost").val();
+        var paymentAmount = $("#paymentAmount").val();
+        var txtCount = parseFloat($("#czContainer_czMore_txtCount").val());
+
+        var validate = Product.StockEntryValidate(wholeSaler, totalCost, paymentAmount, txtCount);
+        
+        if (!validate) {
+            return;
+        }
+
+        var stockEntryModel = { "Product": Product.czContainerProduct, "WholeSalerId": wholeSaler, "TotalCost": totalCost, "PaymentAmount": paymentAmount };
+
+        $.ajax({
+            type: "POST",
+            url: "StockEntry?handler=StockEntry",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(stockEntryModel),
+            headers: {
+                RequestVerificationToken:
+                    $('input:hidden[name="__RequestVerificationToken"]').val()
+            },
+            success: function (response) {
+
+                window.open(window.location.origin + window.location.pathname + "?r=" + Product.EncodeParam(response.message), "_self");
+            }
+        })
+    },
+    StockEntryValidate: function (wholeSaler, totalCost, paymentAmount, txtCount) {
+
+        const priceRegex = /^\d+([.,]\d{1,2})?$/;
+
+        if (wholeSaler == null || wholeSaler == undefined || wholeSaler == "") {
+            $('#ToastrError').val("Lütfen geçerli bir toptancı seçimi yapın");
+            Product.ToastrError();
+            return false;
+        }
+        if (!priceRegex.test(totalCost)) {
+            $('#ToastrError').val("Toplam Maliyet 0.00 - 9999999999.99 aralığında olmalıdır.");
+            Product.ToastrError();
+            return false;
+        }
+        if (!priceRegex.test(paymentAmount)) {
+            $('#ToastrError').val("Ödenen Tutar 0.00 - 9999999999.99 aralığında olmalıdır.");
+            Product.ToastrError();
+            return false;
+        }
+
+        var validate = true;
+        var i = 1;
+        $.each(new Array(txtCount), function (key, value) {
+            var barcode = $("input[name=barcode_" + i + "_number]").val();
+            var quantity = $("input[name=quantity_" + i + "_quantity]").val();
+
+            if (barcode == null || barcode == undefined || barcode == "" || quantity == null || quantity == undefined || quantity == "") {
+                $('#ToastrError').val("Lütfen geçerli ürün bilgileri girin");
+                Product.ToastrError();
+                validate = false;
+                return false;
+            }
+            else {
+                Product.czContainerProduct.push({
+                    "Barcode": barcode,
+                    "Quantity": quantity
+                });
+            }
+            i++;
+        })
+
+        if (!validate) {
+            return false;
+        }
+
+        return true;
+    },
+    EncodeParam: function (param) {
+        return btoa(encodeURIComponent(param));
+    },
+    DecodeParam: function (encodedParam) {
+        return decodeURIComponent(atob(encodedParam));
     }
 }
 

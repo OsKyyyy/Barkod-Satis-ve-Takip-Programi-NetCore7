@@ -28,16 +28,22 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
-        public void StockEntry(StockEntryRequestModel stockEntryRequestModel)
+        public bool StockEntry(StockEntryRequestModel stockEntryRequestModel)
         {
             using (var context = new DataBaseContext())
-            {
-                var result = context.Products.FirstOrDefault(x => x.Barcode == stockEntryRequestModel.Barcode);
+            {                
+                foreach (var product in stockEntryRequestModel.Product)
+                {
+                    var result = context.Products.FirstOrDefault(x => x.Barcode == product.Barcode);
 
-                result.Stock += stockEntryRequestModel.Quantity;
-                result.UpdateUserId = stockEntryRequestModel.UpdateUserId;
-
+                    if (result != null)
+                    {
+                        result.Stock += product.Quantity;
+                        result.UpdateUserId = stockEntryRequestModel.UpdateUserId;
+                    }                    
+                }
                 context.SaveChanges();
+                return true;                                                        
             }
         }
 

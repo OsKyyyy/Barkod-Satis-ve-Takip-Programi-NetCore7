@@ -5,6 +5,7 @@ using Core.Utilities.Refit.Models.Request.Product;
 using Entities.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
+using System.Transactions;
 
 namespace WebAPI.Controllers
 {
@@ -47,72 +48,61 @@ namespace WebAPI.Controllers
         [HttpPost]
         public ActionResult StockEntry(StockEntryRequestModel stockEntryRequestModel)
         {
-            var checkExistsByBarcode = _productService.CheckExistsByBarcode(stockEntryRequestModel.Barcode);
-            if (!checkExistsByBarcode.Status)
+            using (var scope = new TransactionScope())
             {
-                return BadRequest(checkExistsByBarcode);
-            }
+                foreach (var item in stockEntryRequestModel.Product)
+                {
+                    var checkExistsByBarcode = _productService.CheckExistsByBarcode(item.Barcode);
+                    if (!checkExistsByBarcode.Status)
+                    {
+                        return BadRequest(checkExistsByBarcode);
+                    }
+                }
 
-            var stockEntry = _productService.StockEntry(stockEntryRequestModel);
-            if (!stockEntry.Status)
-            {
-                return BadRequest(stockEntry);
-            }
+                var stockEntry = _productService.StockEntry(stockEntryRequestModel);
+                if (!stockEntry.Status)
+                {
+                    return BadRequest(stockEntry);
+                }
 
-            //var amount = Convert.ToDecimal(stockEntryRequestModel.TotalCost,_culture) - Convert.ToDecimal(stockEntryRequestModel.PaymentAmount,_culture);
-            //byte paymentType = 1;
-
-            //if (amount < 1)
-            //{
-            //    amount = -amount;
-            //    paymentType = 2;
-            //}
-
-            //WholeSalerMovementAddDto wholeSalerMovementAddDto = new WholeSalerMovementAddDto
-            //{
-            //    WholeSalerId = stockEntryRequestModel.WholeSalerId,
-            //    Image = stockEntryRequestModel.Image,
-            //    Amount = Convert.ToString(amount,_culture),
-            //    ProcessType = paymentType,
-            //    InvoiceDate = DateTime.Now,
-            //    CreateUserId = stockEntryRequestModel.UpdateUserId
-            //};
-
-            WholeSalerMovementAddDto wholeSalerMovementAddDtoTotalCost = new WholeSalerMovementAddDto
-            {
-                WholeSalerId = stockEntryRequestModel.WholeSalerId,
-                Image = stockEntryRequestModel.Image,
-                Amount = stockEntryRequestModel.TotalCost,
-                ProcessType = 1,
-                InvoiceDate = DateTime.Now,
-                CreateUserId = stockEntryRequestModel.UpdateUserId
-            };
-
-            var resultTotalCost = _wholeSalerMovementService.Add(wholeSalerMovementAddDtoTotalCost);
-
-            if (resultTotalCost.Status)
-            {
-                WholeSalerMovementAddDto wholeSalerMovementAddDtoPaymentAmount = new WholeSalerMovementAddDto
+                WholeSalerMovementAddDto wholeSalerMovementAddDtoTotalCost = new WholeSalerMovementAddDto
                 {
                     WholeSalerId = stockEntryRequestModel.WholeSalerId,
                     Image = stockEntryRequestModel.Image,
-                    Amount = stockEntryRequestModel.PaymentAmount,
-                    ProcessType = 2,
+                    Amount = stockEntryRequestModel.TotalCost,
+                    ProcessType = 1,
                     InvoiceDate = DateTime.Now,
                     CreateUserId = stockEntryRequestModel.UpdateUserId
                 };
 
-                var resultPaymentAmount = _wholeSalerMovementService.Add(wholeSalerMovementAddDtoPaymentAmount);
+                var resultTotalCost = _wholeSalerMovementService.Add(wholeSalerMovementAddDtoTotalCost);
 
-                if (resultPaymentAmount.Status)
+                if (resultTotalCost.Status)
                 {
-                    return Ok(resultTotalCost);
+                    WholeSalerMovementAddDto wholeSalerMovementAddDtoPaymentAmount = new WholeSalerMovementAddDto
+                    {
+                        WholeSalerId = stockEntryRequestModel.WholeSalerId,
+                        Image = stockEntryRequestModel.Image,
+                        Amount = stockEntryRequestModel.PaymentAmount,
+                        ProcessType = 2,
+                        InvoiceDate = DateTime.Now,
+                        CreateUserId = stockEntryRequestModel.UpdateUserId
+                    };
+
+                    var resultPaymentAmount = _wholeSalerMovementService.Add(wholeSalerMovementAddDtoPaymentAmount);
+
+                    if (resultPaymentAmount.Status)
+                    {
+                        scope.Complete();
+                        return Ok(stockEntry);
+                    }
+
+                    return BadRequest(resultTotalCost);
                 }
 
                 return BadRequest(resultTotalCost);
-            }
-
-            return BadRequest(resultTotalCost);
+            
+            }            
         }
         
         [Route("Update")]

@@ -63,7 +63,7 @@ namespace WebUI.Pages.Product
             return Page();
         }
 
-        public async Task<IActionResult> OnPostStockEntryAsync(StockEntryRequestModel stockEntryRequestModel)
+        public async Task<IActionResult> OnPostStockEntrAsync(StockEntryRequestModel stockEntryRequestModel)
         {
             if (Image.File != null)
             {
@@ -95,6 +95,15 @@ namespace WebUI.Pages.Product
 
             ToastrError = response.Message;
             return Page();
+        }
+
+        public async Task<IActionResult> OnPostStockEntryAsync([FromBody] StockEntryRequestModel stockEntryRequestModel)
+        {   
+            stockEntryRequestModel.UpdateUserId = JsonConvert.DeserializeObject<ViewModel>(HttpContext.Session.GetString("userInfo")).Id;
+
+            var response = await _product.StockEntry("Bearer " + HttpContext.Session.GetString("userToken"), stockEntryRequestModel);
+
+            return new JsonResult(response);
         }
 
         public async Task GetWholeSalerList()

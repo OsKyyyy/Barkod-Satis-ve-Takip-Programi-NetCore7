@@ -97,7 +97,7 @@
                         $('[page-name="' + value + '"]').remove();                        
                     })
                     $.each(unauthorizedRoles, function (key, value) {
-                        debugger;
+                        
                         var split = value.split("_")[0];
 
                         if (split != "report") {

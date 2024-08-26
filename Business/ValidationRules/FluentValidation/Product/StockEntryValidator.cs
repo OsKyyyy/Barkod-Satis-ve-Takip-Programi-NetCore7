@@ -13,9 +13,21 @@ namespace Business.ValidationRules.FluentValidation.Product
     {
         public StockEntryValidator()
         {
-            RuleFor(r => r.Barcode).NotEmpty().WithMessage("Bu alan boş olamaz").Matches("^([0 - 9]\\d|\\d{8,14})$").WithMessage("Bu alan en az 8 en fazla 14 karakter olmalıdır"); ;
-            RuleFor(r => r.Quantity).NotEmpty().WithMessage("Bu alan boş olamaz").GreaterThan(0).WithMessage("Bu alan 0'dan büyük değer olmalıdır");
-            RuleFor(r => r.UpdateUserId).NotEmpty().WithMessage("Bu alan boş olamaz").GreaterThan(0).WithMessage("Bu alan 0'dan büyük değer olmalıdır"); ;
+            RuleFor(r => r.UpdateUserId).NotEmpty().WithMessage("Bu alan boş olamaz").GreaterThan(0).WithMessage("Bu alan 0'dan büyük değer olmalıdır");
+            RuleForEach(r => r.Product).SetValidator(new ProductValidator());
+        }
+    }
+    public class ProductValidator : AbstractValidator<StockEntryProductsRequestModel>
+    {
+        public ProductValidator()
+        {
+            RuleFor(p => p.Barcode)
+                .NotEmpty().WithMessage("Bu alan boş olamaz")
+                .Matches("^([0-9]\\d{7,13})$").WithMessage("Bu alan en az 8 en fazla 14 karakter olmalıdır");
+
+            RuleFor(p => p.Quantity)
+                .NotEmpty().WithMessage("Bu alan boş olamaz")
+                .GreaterThan(0).WithMessage("Bu alan 0'dan büyük bir değer olmalıdır");
         }
     }
 }

@@ -87,33 +87,7 @@
                                             <div class="d-flex align-items-center py-2">
                                                 <span class="bullet bg-primary me-3"></span>
                                                 Bu rolün toplam &nbsp<b>@item.PageNames.Count()</b>&nbsp adet sayfa yetkisi var
-                                            </div>
-                                            @* @{
-                                                int i = 0;
-                                            }
-                                            @foreach (var itemPageNames in item.PageNames)
-                                            {
-                                                if(i >= 5)
-                                                {
-                                                    break;                                                   
-                                                }
-                                                <div class="d-flex align-items-center py-2">
-                                                    <span class="bullet bg-primary me-3"></span>@itemPageNames                                                  
-                                                </div>                                              
-                                                i++;
-                                            }                                                                                       
-                                            @{
-                                                int morePageNames = item.PageNames.Count() - i;
-
-                                                if (morePageNames != 0)
-                                                {
-                                                    <div class='d-flex align-items-center py-2'>
-                                                        <span class='bullet bg-primary me-3'></span>
-                                                        <em>@morePageNames tane daha...</em>
-                                                    </div>
-                                                }
-                                            } *@
-                                            
+                                            </div>                                                                                        
                                         </div>
                                     </div>
                                     <div class="card-footer flex-wrap pt-0">

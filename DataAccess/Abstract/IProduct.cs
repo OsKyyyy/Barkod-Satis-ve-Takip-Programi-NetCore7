@@ -14,7 +14,7 @@ namespace DataAccess.Abstract
     public interface IProductDal : IEntityRepository<Product>
     {
         void Add(Product product);
-        void StockEntry(StockEntryRequestModel stockEntryRequestModel);
+        bool StockEntry(StockEntryRequestModel stockEntryRequestModel);
         void Update(Product product);
         void UpdateStock(string barcode, int quantity);
         void UpdateAddStock(string barcode, int quantity);
