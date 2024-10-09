@@ -23,6 +23,9 @@ namespace Entities.Dtos
         public int Stock { get; set; }
         public int CriticalStock { get; set; }
         public bool Favorite { get; set; }
+        public string? Origin { get; set; }
+        public string? UnitPrice { get; set; }
+        public string? UnitType { get; set; }
         public bool Status { get; set; }
         public int UpdateUserId { get; set; }
     }

@@ -64,8 +64,11 @@ namespace WebUI.Pages.Product
                 setModel.Status = response.Data.Status;
                 setModel.CategoryId = response.Data.CategoryId;
                 setModel.UpdateUserId = response.Data.UpdateUserId;
+                setModel.Origin = response.Data.Origin;
+				setModel.UnitType = response.Data.UnitType;
+				setModel.UnitPrice = Convert.ToString(response.Data.UnitPrice, CultureInfo.InvariantCulture);
 
-                UpdateRequestModel = setModel;
+				UpdateRequestModel = setModel;
 
                 await GetCategories(response.Data.CategoryId);
 

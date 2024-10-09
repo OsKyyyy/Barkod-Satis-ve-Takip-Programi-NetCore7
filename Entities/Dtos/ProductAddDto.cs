@@ -16,11 +16,14 @@ namespace Entities.Dtos
         public string Name { get; set; }
         public string PurchasePrice { get; set; }
         public string SalePrice { get; set; }
-        public string Barcode { get; set; }
+		public string? UnitPrice { get; set; }
+		public string? UnitType { get; set; }
+		public string Barcode { get; set; }
         public string? Image { get; set; }
         public int Stock { get; set; }
         public int CriticalStock { get; set; }
         public bool Favorite { get; set; }
+        public string? Origin { get; set; }
         public bool Status { get; set; }
         public int CreateUserId { get; set; }
     }

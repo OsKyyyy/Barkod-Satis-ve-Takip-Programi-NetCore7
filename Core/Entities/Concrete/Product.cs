@@ -14,11 +14,14 @@ namespace Core.Entities.Concrete
         public Decimal PurchasePrice { get; set; }
         public Decimal SalePrice { get; set; }
         public Decimal PreviousSellingPrice { get; set; }
-        public string Barcode { get; set; }
+		public Decimal? UnitPrice { get; set; }
+		public string? UnitType { get; set; }		
+		public string Barcode { get; set; }
         public int Stock { get; set; }
         public int CriticalStock { get; set; }
         public string? Image { get; set; }
         public bool Favorite { get; set; }
+        public string? Origin { get; set; }
         public bool Status { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }

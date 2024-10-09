@@ -39,8 +39,17 @@ namespace Core.Utilities.Refit.Models.Response.Product
         
         [JsonProperty("Favorite")]
         public bool Favorite { get; set; }
-        
-        [JsonProperty("Status")]
+
+		[JsonProperty("Origin")]
+		public string? Origin { get; set; }
+
+		[JsonProperty("UnitType")]
+		public string? UnitType { get; set; }
+
+		[JsonProperty("UnitPrice")]
+		public Decimal? UnitPrice { get; set; }
+
+		[JsonProperty("Status")]
         public bool Status { get; set; }
         
         [JsonProperty("UpdateDate")]

@@ -46,7 +46,14 @@ namespace Core.Utilities.Refit.Models.Request.Product
 
         public bool Favorite { get; set; }
 
-        public bool Status { get; set; }
+		public string? Origin { get; set; }
+
+		public string? UnitType { get; set; }
+
+		[RegularExpression(@"^\d{0,8}(\.\d{1,2})?$", ErrorMessage = "Tutar 0.00 - 9999999999.99 aralığında olmalıdır. ")]
+		public string? UnitPrice { get; set; }
+
+		public bool Status { get; set; }
 
         public int UpdateUserId { get; set; }
     }

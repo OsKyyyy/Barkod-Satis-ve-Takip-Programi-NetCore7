@@ -12,6 +12,9 @@
         $("#salePriceInput").on("keyup", function () {
             $(this).val($(this).val().replace(",", "."));
         })
+        $("#unitPriceInput").on("keyup", function () {
+            $(this).val($(this).val().replace(",", "."));
+        })
         $("#totalCostInput").on("keyup", function () {
             $(this).val($(this).val().replace(",", "."));
         })
@@ -180,7 +183,6 @@
                     $('input:hidden[name="__RequestVerificationToken"]').val()
             },
             success: function (response) {
-
                 const now = new Date(response.data.updateDate);
                 const day = String(now.getDate()).padStart(2, '0');
                 const month = String(now.getMonth() + 1).padStart(2, '0'); // Ay 0'dan başladığı için +1
@@ -192,7 +194,15 @@
                     .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
                     .join(' ')
 
-                var tagModel = { "Type": 2, "Code": response.data.barcode, "ProductName": productName, "ProductPrice": response.data.salePrice.toFixed(2).replace(".",","), "PriceChangeDate": formattedDate };
+                var tagModel = {
+                    "Type": 2,
+                    "Code": response.data.barcode,
+                    "ProductName": productName,
+                    "ProductPrice": response.data.salePrice.toFixed(2).replace(".", ","),
+                    "PriceChangeDate": formattedDate,
+                    "UnitPrice": response.data.unitPrice.toFixed(2).replace(".", ",") + " TL/" + response.data.unitType,
+                    "Origin": response.data.origin
+                };
 
                 $.ajax({
                     type: "POST",
@@ -210,8 +220,11 @@
         var productName = $("#productName").val();
         var productPrice = $("#productPrice").val();
         var priceChangeDate = $("#priceChangeDate").val();
+        var productOrigin = $("#productOrigin").val();
+        var productUnitType = $("#productUnitType").val();
+        var productUnitPrice = $("#productUnitPrice").val();
 
-        var validate = Product.PrintTagFromPageValidate(productBarcode, productName, productPrice, priceChangeDate);     
+        var validate = Product.PrintTagFromPageValidate(productBarcode, productName, productPrice, priceChangeDate, productUnitPrice);     
 
         if (!validate) {
             return;
@@ -226,18 +239,24 @@
             .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
             .join(' ')
         
-        var tagModel = { "Type": 2, "Code": productBarcode, "ProductName": productName, "ProductPrice": parseFloat(productPrice.replace(",", ".")).toFixed(2).replace(".", ","), "PriceChangeDate": formattedDate };
-        console.log(tagModel);
+        var tagModel = {
+            "Type": 2,
+            "Code": productBarcode,
+            "ProductName": productName,
+            "ProductPrice": parseFloat(productPrice.replace(",", ".")).toFixed(2).replace(".", ","),
+            "PriceChangeDate": formattedDate,
+            "UnitPrice": parseFloat(productUnitPrice.replace(",", ".")).toFixed(2).replace(".", ",") + " TL/" + productUnitType,
+            "Origin": productOrigin
+        };
         $.ajax({
             type: "POST",
             url: "http://localhost:5000/",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             data: JSON.stringify(tagModel),         
-        })
-       // window.location.reload();
+        })       
     },
-    PrintTagFromPageValidate: function (productBarcode, productName, productPrice, priceChangeDate) {
+    PrintTagFromPageValidate: function (productBarcode, productName, productPrice, priceChangeDate, productUnitPrice) {
         
         const priceRegex = /^\d+([.,]\d{1,2})?$/;
 
@@ -257,7 +276,13 @@
             $('#ToastrError').val("Fiyat 0.00 - 9999999999.99 aralığında olmalıdır.");
             Product.ToastrError();
             return false;
-        }     
+        }   
+
+        if (!priceRegex.test(productUnitPrice)) {
+            $('#ToastrError').val("Birim Fiyat 0.00 - 9999999999.99 aralığında olmalıdır.");
+            Product.ToastrError();
+            return false;
+        } 
 
         if (priceChangeDate == null || priceChangeDate == undefined || priceChangeDate == "") {
             $('#ToastrError').val("Lütfen geçerli bir fiyat değişim tarihi girin");
