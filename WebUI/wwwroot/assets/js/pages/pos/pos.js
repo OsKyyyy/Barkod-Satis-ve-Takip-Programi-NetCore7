@@ -234,6 +234,7 @@
     }
 }
 $(document).ready(function () {
+    $("#pageLoader").attr("style", "display:none");
     Pos.Init();
 });
 

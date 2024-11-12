@@ -39,7 +39,7 @@
                 localStorage.removeItem("data-kt-app-sidebar-minimize");
                 localStorage.setItem("data-kt-app-sidebar-minimize", "on");
             }
-        });
+        });       
     },
     GetUserId: function () {
 
@@ -147,10 +147,38 @@
             $("#headerRole").html(Index.UserDetail.roleName);            
             resolve();
         });
+    },
+    ToggleChangeScreen: function (e) {
+        var size = $(e).attr("size");
+
+        if (size == "windowed") {
+            if (document.documentElement.requestFullscreen) {
+                $(document.documentElement)[0].requestFullscreen();
+            } else if ($(document.documentElement)[0].mozRequestFullScreen) { // Firefox
+                $(document.documentElement)[0].mozRequestFullScreen();
+            } else if ($(document.documentElement)[0].webkitRequestFullscreen) { // Chrome, Safari ve Opera
+                $(document.documentElement)[0].webkitRequestFullscreen();
+            } else if ($(document.documentElement)[0].msRequestFullscreen) { // IE/Edge
+                $(document.documentElement)[0].msRequestFullscreen();
+            }
+            $(e).attr("size", "fullscreen");
+        }
+        else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.mozCancelFullScreen) { // Firefox
+                document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen) { // Chrome, Safari ve Opera
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) { // IE/Edge
+                document.msExitFullscreen();
+            }
+            $(e).attr("size", "windowed");
+        }
     }
 }
 $(document).ready(function () {
-    Index.Init();
+    Index.Init(); 
 });
 
 $(window).on("load", function () {
