@@ -8,6 +8,7 @@
     int i = 0;
     int creditMovements = 0;
     int debitMovements = 0;
+    var arrayList = new List<string>();
 }
 @section _Head
 {
@@ -163,10 +164,13 @@
                                                     <th class="min-w-100px">SON İŞLEM TARİHİ</th>
                                                     <th class="min-w-150px pe-4">İŞLEMLER</th>
                                                 </tr>
-                                            </thead>
+                                            </thead>                                           
                                             <tbody class="fs-6 fw-semibold text-gray-600">
+                                               
                                                 @foreach (var item in Model.CustomerMovementViewModel)
                                                 {
+                                                    var jsonObject = new { Amount = item.Amount, ProcessType = item.ProcessType };
+                                                    arrayList.Add(Newtonsoft.Json.JsonConvert.SerializeObject(jsonObject));
                                                     i++;
                                                     <tr>
                                                         <td>
@@ -243,8 +247,14 @@
                                                         debitMovements += 1;
                                                     }
                                                 }
-                                            </tbody>
+                                            </tbody>                                           
                                         </table>
+                                        <div id="totalAmountDiv" style="display:none;">
+                                            @foreach (var jsonItem in arrayList)
+                                            {
+                                                @jsonItem
+                                            }
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -397,4 +407,11 @@
     <script src="~/assets/plugins/custom/datatables/datatables.bundle.js"></script>
     <script src="~/assets/js/pages/customer/customer.js"></script>
     <script src="~/assets/js/pages/customer/listDataMovements.js"></script>
+    <script>
+        $('#kt_datatable_example').on('length.dt', function (e, settings, len) {
+            setTimeout(function () {
+                Customer.CalculatorAmount();
+            }, 1);
+        });
+    </script>
 }

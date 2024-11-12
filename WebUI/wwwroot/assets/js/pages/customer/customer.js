@@ -148,39 +148,62 @@
             }
         });
     },
-    CalculatorAmount: function () {
-
+    CalculatorAmount: function () {        
+        var totalAmountDiv = $("#totalAmountDiv").html();
+        var jsonString = '[' + totalAmountDiv.replace(/}{/g, '},{') + ']';
+        var cleanedData = JSON.parse(jsonString.replace(/\s+/g, ''));
         var total = 0.00;
-        var valuemovementsTotal = parseInt($("#movementsTotal").val());
-        for (var i = valuemovementsTotal; i >= 1; i--) {
+        var amuntTotal = 0.00;
+        $.each(cleanedData, function (key, value) {
+            
+            if (value.ProcessType == 1) {
+                total -= value.Amount;
+                amuntTotal -= value.Amount;
+            }
+            else {
+                total += value.Amount;
+                amuntTotal += value.Amount;
+            }
+        })        
 
-            var value = parseFloat($("#amountHidden_" + i).val().replace(",", "."));
+        $("#amountTotal").html((Math.round(total * 100) / 100).toFixed(2).replace(".", ",") + " &#8378;");
+        $("#amountTotalHidden_1").html((Math.round(total * 100) / 100).toFixed(2).replace(".", ",") + " &#8378;");
+
+        var valuemovementsTotal = parseInt($("#movementsTotal").val());
+        var j = 2;
+
+        for (var i = 1; i <= valuemovementsTotal; i++) {                        
+  
+            if ($("#amountHidden_" + i).val() == undefined) {
+                break;
+            }
+            var value = parseFloat($("#amountHidden_" + i).val().replace(",", ".") + " &#8378;");            
             var plus = $("#amountHidden_" + i).attr("plus");
 
             if (plus == "true") {
-                total += value;
-                $("#amountTotalHidden_" + i).html((Math.round(total * 100) / 100).toFixed(2).replace(".", ",") + " &#8378;")
+                total -= value;
+                $("#amountTotalHidden_" + j).html((Math.round(total * 100) / 100).toFixed(2).replace(".", ",") + " &#8378;")
             }
             else {
-                total -= value
-                $("#amountTotalHidden_" + i).html((Math.round(total * 100) / 100).toFixed(2).replace(".", ",") + " &#8378;")
+                total += value
+                $("#amountTotalHidden_" + j).html((Math.round(total * 100) / 100).toFixed(2).replace(".", ",") + " &#8378;")    
             }
-        }
+                                 
+            j++;
+        }        
 
-        if (total.toString().indexOf(".") == -1) {
-            total = total + ".00";
+        if (amuntTotal.toString().indexOf(".") == -1) {
+            amuntTotal = amuntTotal + ".00";
         }
-        if (total.toString().substr(-3, 1) != ".") {
-            total = total + "0";
+        if (amuntTotal.toString().substr(-3, 1) != ".") {
+            amuntTotal = amuntTotal + "0";
         }
-        if (total.toString().indexOf("-") != -1) {
+        if (amuntTotal.toString().indexOf("-") != -1) {
             $("#amountTotal").addClass("text-danger");
         }
         else {
             $("#amountTotal").addClass("text-success");
         }
-
-        $("#amountTotal").html((Math.round(total * 100) / 100).toFixed(2).replace(".", ",") + " &#8378;");
     },
     TagifyChange: function () {
 
