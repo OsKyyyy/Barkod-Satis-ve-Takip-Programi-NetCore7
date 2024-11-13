@@ -41,7 +41,7 @@ namespace Business.Concrete
         [ValidationAspect(typeof(AddValidator))]
         public IResult Add(ProductAddDto productAddDto)
         {
-            var imageUrl = "Uploads/Products/unknow.png";
+            var imageUrl = "Products/unknow.png";
 
             if (!string.IsNullOrEmpty(productAddDto.Image))
             {

@@ -13,6 +13,7 @@ using Core.Utilities.Results.Concrete;
 using Core.Utilities.WebScraping.Abstract;
 using HtmlAgilityPack;
 using Core.Utilities.Refit.Models.Request.Product;
+using Core.Utilities.Refit.Abstract;
 
 namespace Core.Utilities.WebScraping.Concrete
 {
@@ -300,8 +301,8 @@ namespace Core.Utilities.WebScraping.Concrete
 
         public async Task<IDataResult<UpdateImageRequestModel>> SavePhoto(string imgUrl, string barcode)
         {
-            var directoryPath = "C:\\Users\\oguzh\\source\\repos\\OsKyyyy\\MarketOtomasyon\\WebAPI\\Uploads\\Products";
-
+            var directoryPath = "C:\\Users\\POSWIN10\\Desktop\\MarketOtomasyon\\WebAPI\\Uploads\\Products";
+            //C:\\Users\\oguzh\\source\\repos\\OsKyyyy\\MarketOtomasyon\\WebAPI\\Uploads\\Products"
             using (HttpClient client = new HttpClient())
             {
                 try
