@@ -36,7 +36,7 @@ namespace Business.Concrete
         [ValidationAspect(typeof(AddValidator))]
         public IResult Add(WholeSalerMovementAddDto wholeSalerMovementAddDto)
         {
-            var imageUrl = "Uploads/Invoices/unknow.png";
+            var imageUrl = "Invoices/unknow.png";
 
             if (!string.IsNullOrEmpty(wholeSalerMovementAddDto.Image))
             {
@@ -133,6 +133,8 @@ namespace Business.Concrete
 
             var fullPath = "Uploads/Invoices/" + productName + "-" + DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString() + Type;
             File.WriteAllBytes(fullPath, Convert.FromBase64String(base64String));
+
+            fullPath = fullPath.Replace("Uploads/", "");
 
             return fullPath;
         }

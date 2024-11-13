@@ -269,6 +269,8 @@ namespace Business.Concrete
             var fullPath = "Uploads/Products/" + barcode + "_" + DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString() + Type;
             File.WriteAllBytes(fullPath, Convert.FromBase64String(base64String));
 
+            fullPath = fullPath.Replace("Uploads/", "");
+
             return fullPath;
         }
 

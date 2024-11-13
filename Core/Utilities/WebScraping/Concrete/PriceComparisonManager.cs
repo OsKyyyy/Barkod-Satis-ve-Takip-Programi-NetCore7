@@ -326,7 +326,7 @@ namespace Core.Utilities.WebScraping.Concrete
 
                     UpdateImageRequestModel updateImageRequestModel = new UpdateImageRequestModel
                     {
-                        Image = $"Uploads/Products/{fileName}"
+                        Image = $"Products/{fileName}"
                     };
 
                     return new SuccessDataResult<UpdateImageRequestModel>(updateImageRequestModel, "Resim Başarılı Bir Şekilde Kaydedildi");

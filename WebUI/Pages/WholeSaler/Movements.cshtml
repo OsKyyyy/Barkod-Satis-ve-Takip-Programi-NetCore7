@@ -7,6 +7,7 @@
     int i = 0;
     int totalMovements = 0;
     int totalReturned = 0;
+    var arrayList = new List<string>();
 }
 @section _Head
 {
@@ -168,6 +169,8 @@
                                             <tbody class="fs-6 fw-semibold text-gray-600">
                                                 @foreach (var item in Model.WholeSalerMovementViewModel)
                                                 {
+                                                    var jsonObject = new { Amount = item.Amount, ProcessType = item.ProcessType };
+                                                    arrayList.Add(Newtonsoft.Json.JsonConvert.SerializeObject(jsonObject));
                                                     i++;
                                                     <tr>
                                                         <td>@item.InvoiceDate</td>
@@ -218,7 +221,7 @@
                                                         <td>@item.UpdateDate</td>
 
                                                         <td class="pe-0">
-                                                            @if (item.Image != "Uploads/Invoices/unknow.png")
+                                                            @if (item.Image != "Invoices/unknow.png")
                                                             {
                                                                 <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" target="_blank" href="@Configuration.GetValue(typeof(string), "ImageUrl")@item.Image">
                                                                     <i class="ki-duotone ki-search-list fs-2">
@@ -253,6 +256,12 @@
                                                 }
                                             </tbody>
                                         </table>
+                                        <div id="totalAmountDiv" style="display:none;">
+                                            @foreach (var jsonItem in arrayList)
+                                            {
+                                                @jsonItem
+                                            }
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -460,4 +469,11 @@
     <script src="~/assets/plugins/custom/datatables/datatables.bundle.js"></script>
     <script src="~/assets/js/pages/wholesaler/wholesaler.js"></script>
     <script src="~/assets/js/pages/wholesaler/listDataMovements.js"></script>
+    <script>
+        $('#kt_datatable_example').on('length.dt', function (e, settings, len) {
+            setTimeout(function () {
+                WholeSaler.CalculatorAmount();
+            }, 1);
+        });
+    </script>
 }
